@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — Triveni Radiators</title>
+<meta name="description" content="High-performance transformer radiators by Triveni Radiators — header type, offset, swan neck and goose neck, engineered to IEEMA 9, DIN 42559 & BS EN 50216-6, PGCIL-approved up to 765kV class.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --bg:     #FCFBF9;
+  --bg2:    #F4F0EA;
+  --bg3:    #EDE7DC;
+  --ink:    #1E1828;
+  --muted:  #6B6577;
+  --muted2: #9C95A6;
+  --purple: #4A2E82;
+  --p2:     #6A45C0;
+  --p3:     #8B6CE0;
+  --gold:   #B8935A;
+  --gold2:  #D4A96A;
+  --dark:   #1A1028;
+  --dark2:  #241640;
+  --line:   #E8E3DB;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink);
+  overflow-x: hidden; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+
+/* ── NAV ─────────────────────────────────────────────────── */
+#navbar { position: sticky; top: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.7rem 4rem;
+  background: rgba(252,251,249,.93);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  transition: padding .3s, box-shadow .3s; }
+#navbar.scrolled { padding: 1.15rem 4rem; box-shadow: 0 1px 0 var(--line); }
+.nav-logo { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 500; color: var(--ink); white-space: nowrap; }
+.nav-logo em { font-style: italic; color: var(--p2); }
+.nav-links { display: flex; gap: 2.6rem; list-style: none; align-items: center; }
+.nav-links a { font-size: .92rem; font-weight: 500; color: var(--muted); position: relative; transition: color .2s; }
+.nav-links a::after { content: ''; position: absolute; left: 0; bottom: -4px;
+  width: 0; height: 1px; background: var(--p2); transition: width .25s; }
+.nav-links a:hover, .nav-links a.active { color: var(--ink); }
+.nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
+.nav-cta { font-size: .86rem; font-weight: 500; color: #fff; background: var(--purple);
+  padding: .72rem 1.7rem; border-radius: 999px; transition: background .2s, transform .2s; }
+.nav-cta:hover { background: var(--p2); transform: translateY(-1px); }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer;
+  flex-direction: column; gap: 5px; padding: 6px; }
+.nav-toggle span { display: block; width: 24px; height: 2px; background: var(--ink); transition: .3s; }
+
+/* ── HERO ────────────────────────────────────────────────── */
+.c-hero {
+  position: relative; min-height: 88vh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center;
+  padding: 7rem 4rem 5rem;
+  background: var(--dark); overflow: hidden;
+}
+.c-hero::before {
+  content: ''; position: absolute; top: -25%; left: -8%;
+  width: 80vw; height: 80vw; max-width: 1000px; max-height: 1000px;
+  background: radial-gradient(circle at 35% 40%, rgba(106,69,192,.32), rgba(74,46,130,.12) 40%, transparent 65%);
+  pointer-events: none; animation: orbFloat 14s ease-in-out infinite alternate;
+}
+.c-hero::after {
+  content: ''; position: absolute; bottom: -20%; right: -5%;
+  width: 55vw; height: 55vw; max-width: 650px; max-height: 650px;
+  background: radial-gradient(circle, rgba(184,147,90,.1), transparent 65%);
+  pointer-events: none; animation: orbFloat 18s ease-in-out infinite alternate-reverse;
+}
+@keyframes orbFloat {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(2%,4%) scale(1.05); }
+}
+/* Fine grid pattern */
+.c-hero-grid {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.c-hero-content { position: relative; z-index: 2; max-width: 860px; width: 100%; margin: 0 auto; }
+.c-eyebrow { font-size: .7rem; font-weight: 600; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem;
+  opacity: 0; animation: fadeUp .8s .1s forwards; }
+.c-hero-title {
+  font-family: 'Poppins', sans-serif; font-weight: 200;
+  font-size: clamp(3rem, 6.5vw, 7.5rem);
+  line-height: .93; letter-spacing: -.03em; color: #fff;
+  opacity: 0; animation: fadeUp .9s .25s forwards;
+}
+.c-hero-title em { font-style: italic; color: var(--gold2); font-weight: 300; }
+.c-hero-sub {
+  font-size: 1.05rem; line-height: 1.7; color: rgba(255,255,255,.5);
+  max-width: 560px; margin: 1.8rem auto 0;
+  opacity: 0; animation: fadeUp .8s .42s forwards;
+}
+.c-hero-tags {
+  display: flex; gap: .7rem; flex-wrap: wrap; justify-content: center; margin-top: 2.5rem;
+  opacity: 0; animation: fadeUp .8s .56s forwards;
+}
+.c-hero-tag {
+  font-size: .68rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.15);
+  padding: .35rem .9rem; border-radius: 999px;
+  transition: border-color .25s, color .25s;
+}
+.c-hero-tag:hover { color: var(--gold2); border-color: rgba(184,147,90,.4); }
+.c-hero-stats {
+  display: flex; gap: 0; margin-top: 5rem;
+  border-top: 1px solid rgba(255,255,255,.1); padding-top: 2.5rem;
+  opacity: 0; animation: fadeUp .8s .68s forwards;
+}
+.c-hs { flex: 1; padding-right: 2.5rem; margin-right: 2.5rem;
+  border-right: 1px solid rgba(255,255,255,.08); text-align: center; }
+.c-hs:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.c-hs-num { font-family: 'Poppins', sans-serif; font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 300; color: #fff; line-height: 1; letter-spacing: -.01em; }
+.c-hs-label { font-size: .7rem; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.38); margin-top: .45rem; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── PRODUCT INTRO ───────────────────────────────────────── */
+.c-products-section { padding: 8rem 4rem 5rem; }
+.c-products-inner { max-width: 1180px; margin: 0 auto; }
+.c-products-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+  align-items: end;
+}
+.c-products-title {
+  font-family: 'Poppins', sans-serif; font-weight: 300;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem); line-height: 1; letter-spacing: -.025em; color: var(--ink);
+}
+.c-products-title em { font-style: italic; color: var(--p2); }
+.c-products-intro { font-size: 1rem; line-height: 1.75; color: var(--muted); }
+.c-products-intro strong { color: var(--ink); font-weight: 600; }
+
+/* ── PRODUCT FEATURE SECTIONS ────────────────────────────── */
+.product-sec { padding: 5.5rem 4rem; }
+.product-sec.alt { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.product-inner {
+  max-width: 1180px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.02fr .98fr; gap: 5rem;
+  align-items: start;
+}
+@media(min-width:1025px) {
+  .product-inner.flip .product-text { order: 2; }
+  .product-inner.flip .product-media { order: 1; }
+}
+.product-index {
+  font-family: 'Poppins', sans-serif; font-weight: 200;
+  font-size: 4.2rem; line-height: .9; letter-spacing: -.02em;
+  color: rgba(74,46,130,.13); margin-bottom: 1.2rem;
+}
+.product-name {
+  font-family: 'Poppins', sans-serif; font-weight: 400;
+  font-size: clamp(2rem, 3.4vw, 2.9rem); line-height: 1.05;
+  letter-spacing: -.02em; color: var(--ink); margin-top: .2rem;
+}
+.product-tagline {
+  font-family: 'Poppins', sans-serif; font-style: italic; font-weight: 300;
+  font-size: 1.08rem; color: var(--p2); margin: .7rem 0 1.3rem;
+}
+.product-desc { font-size: .95rem; line-height: 1.75; color: var(--muted); max-width: 480px; }
+.product-feats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .7rem 1.2rem;
+  margin-top: 2rem;
+}
+.pf {
+  display: flex; gap: .6rem; align-items: flex-start;
+  font-size: .83rem; line-height: 1.5; color: var(--muted);
+}
+.pf svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: .25rem; color: var(--p2); }
+.product-apps { margin-top: 2.2rem; }
+.product-apps-label {
+  font-size: .62rem; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--muted2); margin-bottom: .8rem;
+}
+.app-pills { display: flex; flex-wrap: wrap; gap: .5rem; }
+.app-pill {
+  font-size: .65rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--p2); background: rgba(106,69,192,.07);
+  border: 1px solid rgba(106,69,192,.15); padding: .32rem .85rem; border-radius: 999px;
+}
+
+/* Visual plate + spec sheet */
+.product-plate {
+  background: #fff; border: 1px solid var(--line); border-radius: 20px;
+  overflow: hidden; box-shadow: 0 26px 60px -32px rgba(74,46,130,.2);
+}
+.plate-vis {
+  padding: 2.2rem 2.4rem; display: flex; justify-content: center;
+  background-image:
+    linear-gradient(rgba(30,24,40,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,24,40,.04) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+.plate-vis svg { width: 100%; max-width: 400px; height: auto; display: block; }
+.plate-cap {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: .85rem 1.4rem; border-top: 1px solid var(--line); background: var(--bg);
+  font-size: .62rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted2);
+}
+.plate-cap b { color: var(--p2); font-weight: 700; }
+.spec-table {
+  margin-top: 1.5rem; background: #fff;
+  border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+}
+.spec-head {
+  padding: .85rem 1.4rem; background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  font-size: .62rem; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--gold);
+}
+.spec-row {
+  display: grid; grid-template-columns: 44% 56%; gap: 1rem;
+  padding: .78rem 1.4rem; border-bottom: 1px solid var(--line);
+}
+.spec-row:last-child { border-bottom: none; }
+.spec-k {
+  font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted2); padding-top: .2rem;
+}
+.spec-v { font-size: .86rem; font-weight: 500; color: var(--ink); line-height: 1.5; }
+
+/* ── SPECS BAND ──────────────────────────────────────────── */
+.c-specs-band {
+  background: var(--dark); padding: 6rem 4rem;
+}
+.c-specs-inner { max-width: 1180px; margin: 0 auto; }
+.c-specs-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5px;
+  background: rgba(255,255,255,.05); border-radius: 20px; overflow: hidden;
+  margin-top: 4rem;
+}
+.c-spec-cell {
+  background: rgba(255,255,255,.03); padding: 2.5rem 2rem;
+  border: 1px solid rgba(255,255,255,.06);
+  transition: background .3s;
+}
+.c-spec-cell:hover { background: rgba(255,255,255,.07); }
+.c-spec-label {
+  font-size: .65rem; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: .8rem;
+}
+.c-spec-value {
+  font-family: 'Poppins', sans-serif; font-weight: 300;
+  font-size: clamp(1.4rem, 2.5vw, 2rem); color: #fff; line-height: 1.1;
+  margin-bottom: .5rem; letter-spacing: -.01em;
+}
+.c-spec-note { font-size: .78rem; color: rgba(255,255,255,.4); line-height: 1.5; }
+
+/* ── PROCESS SECTION ─────────────────────────────────────── */
+.c-process-section { padding: 8rem 4rem; background: var(--bg2); }
+.c-process-inner { max-width: 1180px; margin: 0 auto; }
+.c-process-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 7rem;
+  align-items: start; margin-top: 5rem;
+}
+.c-process-left {}
+.c-process-steps { display: flex; flex-direction: column; gap: 2.5rem; }
+.c-process-step {
+  display: grid; grid-template-columns: 44px 1fr; gap: 1.5rem; align-items: start;
+}
+.c-ps-num {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(74,46,130,.1); border: 1px solid rgba(74,46,130,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .72rem; font-weight: 700; color: var(--p2); flex-shrink: 0;
+  transition: background .3s, border-color .3s;
+}
+.c-process-step:hover .c-ps-num { background: var(--purple); border-color: var(--purple); color: #fff; }
+.c-ps-body {}
+.c-ps-title { font-family: 'Poppins', sans-serif; font-weight: 500;
+  font-size: 1.1rem; color: var(--ink); margin-bottom: .4rem; }
+.c-ps-desc { font-size: .83rem; line-height: 1.65; color: var(--muted); }
+
+.c-process-right {
+  position: sticky; top: 8rem;
+}
+.c-quality-card {
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 24px; padding: 3rem 2.8rem;
+  box-shadow: 0 24px 60px -28px rgba(74,46,130,.15);
+}
+.c-quality-card-title {
+  font-family: 'Poppins', sans-serif; font-weight: 500;
+  font-size: 1.5rem; color: var(--ink); margin-bottom: 2rem;
+}
+.c-quality-items { display: flex; flex-direction: column; gap: 1.4rem; }
+.c-qi {
+  display: flex; gap: 1rem; align-items: start;
+  padding-bottom: 1.4rem; border-bottom: 1px solid var(--line);
+}
+.c-qi:last-child { border-bottom: none; padding-bottom: 0; }
+.c-qi-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--p2);
+  flex-shrink: 0; margin-top: .55rem;
+}
+.c-qi-text { font-size: .85rem; line-height: 1.6; color: var(--muted); }
+.c-qi-text strong { color: var(--ink); font-weight: 600; }
+.c-cert-strip {
+  display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem;
+  padding-top: 2rem; border-top: 1px solid var(--line);
+}
+.c-cert-pill {
+  font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--p2); background: rgba(106,69,192,.07);
+  border: 1px solid rgba(106,69,192,.15); padding: .3rem .8rem; border-radius: 999px;
+}
+
+/* ── FINISHING OPTIONS ───────────────────────────────────── */
+.c-finishing-section { padding: 8rem 4rem; }
+.c-finishing-inner { max-width: 1180px; margin: 0 auto; }
+.c-finishing-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 4rem;
+}
+.c-fin-card {
+  background: var(--bg); border: 1px solid var(--line); border-radius: 20px;
+  padding: 2.8rem 2.4rem; position: relative; overflow: hidden;
+  transition: box-shadow .3s, transform .3s;
+}
+.c-fin-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--purple), var(--p3));
+  transform: scaleX(0); transform-origin: left; transition: transform .35s;
+}
+.c-fin-card:hover { box-shadow: 0 20px 50px -18px rgba(74,46,130,.18); transform: translateY(-3px); }
+.c-fin-card:hover::after { transform: scaleX(1); }
+.c-fin-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: rgba(106,69,192,.08); border: 1px solid rgba(106,69,192,.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; margin-bottom: 1.4rem;
+}
+.c-fin-name {
+  font-family: 'Poppins', sans-serif; font-weight: 500;
+  font-size: 1.2rem; color: var(--ink); margin-bottom: .6rem;
+}
+.c-fin-desc { font-size: .84rem; line-height: 1.65; color: var(--muted); }
+.c-fin-tag {
+  display: inline-block; margin-top: 1.1rem;
+  font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--p2); background: rgba(106,69,192,.07);
+  border: 1px solid rgba(106,69,192,.15); padding: .25rem .7rem; border-radius: 999px;
+}
+
+/* ── WHY US ──────────────────────────────────────────────── */
+.c-why-section { padding: 8rem 4rem; background: var(--bg2); border-top: 1px solid var(--line); }
+.c-why-inner { max-width: 1180px; margin: 0 auto; }
+.c-why-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1.5px; background: var(--line);
+  border: 1px solid var(--line); border-radius: 22px; overflow: hidden;
+  margin-top: 4rem;
+}
+.c-why-cell {
+  background: var(--bg2); padding: 3rem 2.2rem;
+  transition: background .25s;
+}
+.c-why-cell:hover { background: var(--bg); }
+.c-why-num {
+  font-family: 'Poppins', sans-serif; font-weight: 200;
+  font-size: clamp(2.5rem, 4vw, 3.5rem); line-height: .9;
+  color: rgba(74,46,130,.15); letter-spacing: -.02em; margin-bottom: 1.2rem;
+}
+.c-why-title {
+  font-family: 'Poppins', sans-serif; font-weight: 500;
+  font-size: 1.1rem; color: var(--ink); margin-bottom: .55rem;
+}
+.c-why-desc { font-size: .82rem; line-height: 1.65; color: var(--muted); }
+
+/* ── CTA ─────────────────────────────────────────────────── */
+.c-cta {
+  background: var(--dark); padding: 8rem 4rem;
+  position: relative; overflow: hidden;
+}
+.c-cta::before {
+  content: ''; position: absolute; bottom: -30%; right: -5%;
+  width: 60vw; height: 60vw; max-width: 700px; max-height: 700px;
+  background: radial-gradient(circle, rgba(184,147,90,.13), transparent 60%);
+  pointer-events: none;
+}
+.c-cta-inner { max-width: 1040px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  position: relative; z-index: 2; }
+.c-cta-title {
+  font-family: 'Poppins', sans-serif; font-weight: 200;
+  font-size: clamp(2.5rem, 4.5vw, 4.2rem); line-height: .95;
+  letter-spacing: -.03em; color: #fff;
+}
+.c-cta-title em { font-style: italic; color: var(--gold2); font-weight: 300; }
+.c-cta-right {}
+.c-cta-sub { font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,.5); margin-bottom: 2.5rem; }
+.c-cta-contacts { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+.c-cta-contact {
+  display: flex; align-items: center; gap: 1rem;
+  font-size: .9rem; color: rgba(255,255,255,.7); transition: color .25s;
+}
+.c-cta-contact:hover { color: var(--gold2); }
+.c-cta-contact-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.c-cta-btn {
+  display: inline-block; font-size: .88rem; font-weight: 600; letter-spacing: .04em;
+  color: var(--dark); background: var(--gold2);
+  padding: 1rem 2.6rem; border-radius: 999px;
+  transition: background .2s, transform .2s, box-shadow .2s;
+  box-shadow: 0 8px 28px -8px rgba(184,147,90,.4);
+}
+.c-cta-btn:hover {
+  background: #e0b872; transform: translateY(-2px);
+  box-shadow: 0 14px 38px -10px rgba(184,147,90,.55);
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer { padding: 2.4rem 4rem; background: #241640;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(255,255,255,.05); flex-wrap: wrap; gap: .8rem; }
+.footer-logo { font-family: 'Poppins', sans-serif; font-size: 1.2rem; color: rgba(252,251,249,.9); }
+.footer-logo em { font-style: italic; color: var(--gold); }
+.footer-tag { font-family: 'Poppins', sans-serif; font-style: italic; font-size: .95rem; color: rgba(252,251,249,.55); }
+.footer-copy { font-size: .75rem; color: rgba(252,251,249,.4); }
+
+/* ── REVEAL ──────────────────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(26px);
+  transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+.reveal.in { opacity: 1; transform: none; }
+.d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s} .d4{transition-delay:.4s}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media(max-width:1200px) {
+  .product-inner { gap: 3.5rem; }
+  .c-specs-grid { grid-template-columns: repeat(2,1fr); }
+  .c-why-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media(max-width:1024px) {
+  #navbar, #navbar.scrolled { padding: 1.4rem 2rem; }
+  .c-hero { padding: 7rem 2rem 4rem; }
+  .c-products-section, .c-specs-band, .c-process-section,
+  .c-finishing-section, .c-why-section, .c-cta { padding: 5rem 2rem; }
+  .c-products-header { grid-template-columns: 1fr; gap: 2rem; }
+  .product-sec { padding: 4.5rem 2rem; }
+  .product-inner { grid-template-columns: 1fr; gap: 2.8rem; }
+  .product-index { font-size: 3.2rem; }
+  .c-process-layout { grid-template-columns: 1fr; gap: 3.5rem; }
+  .c-process-right { position: static; }
+  .c-finishing-grid { grid-template-columns: 1fr 1fr; }
+  .c-cta-inner { grid-template-columns: 1fr; gap: 3rem; }
+  footer { padding: 2rem; }
+}
+@media(max-width:768px) {
+  .nav-toggle { display: flex; }
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column; align-items: flex-start;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(252,251,249,.98);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    padding: 1.4rem 1.3rem 1.7rem; gap: 1.4rem;
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 16px 36px -14px rgba(0,0,0,.18);
+  }
+  .nav-links.open a { font-size: 1.05rem; }
+  #navbar, #navbar.scrolled { padding: 1rem 1.3rem; }
+  .nav-logo { font-size: 1.25rem; }
+  .nav-cta { padding: .55rem 1.1rem; font-size: .78rem; white-space: nowrap; }
+  .c-hero { padding: 6rem 1.4rem 3.5rem; min-height: auto; padding-top: 5rem; }
+  .c-hero-stats { flex-direction: column; gap: 1.5rem; }
+  .c-hs { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08);
+    padding: 0 0 1.5rem; margin: 0; }
+  .c-hs:last-child { border-bottom: none; padding-bottom: 0; }
+  .c-products-section, .c-specs-band, .c-process-section,
+  .c-finishing-section, .c-why-section, .c-cta { padding: 4rem 1.4rem; }
+  .product-sec { padding: 3.5rem 1.4rem; }
+  .product-feats { grid-template-columns: 1fr; }
+  .plate-vis { padding: 1.5rem 1.4rem; }
+  .spec-row { grid-template-columns: 1fr; gap: .18rem; padding: .7rem 1.1rem; }
+  .c-specs-grid { grid-template-columns: 1fr 1fr; }
+  .c-finishing-grid { grid-template-columns: 1fr; }
+  .c-why-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; text-align: center; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { animation-duration: .01ms !important; }
+}
+
+/* ══════════ SITE FOOTER (common) ══════════ */
+footer.site-footer {
+  display: block; padding: 0; border-top: none; text-align: left;
+  background: #0F0A1E; position: relative; overflow: hidden;
+}
+.site-footer::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(106,69,192,.6), rgba(184,147,90,.4), transparent);
+}
+.site-footer::after {
+  content: ''; position: absolute; top: -40%; left: 20%; width: 60%; height: 80%;
+  background: radial-gradient(ellipse, rgba(74,46,130,.12), transparent 65%);
+  pointer-events: none;
+}
+.footer-main {
+  position: relative; z-index: 2; max-width: 1280px; margin: 0 auto;
+  padding: 5rem 4rem 4rem;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 5rem;
+}
+.footer-logo {
+  font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: 400;
+  color: rgba(252,251,249,.95); letter-spacing: -.01em; margin-bottom: 1rem;
+  display: block; text-decoration: none;
+}
+.footer-logo em { font-style: italic; color: #D4A96A; }
+.footer-tagline {
+  font-family: 'Poppins', sans-serif; font-style: italic;
+  font-size: 1rem; color: rgba(255,255,255,.35); margin-bottom: 1.6rem;
+}
+.footer-desc {
+  font-size: .82rem; line-height: 1.75; color: rgba(255,255,255,.38);
+  max-width: 300px; margin-bottom: 2rem;
+}
+.footer-certs { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2.5rem; }
+.footer-cert {
+  font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(184,147,90,.7); border: 1px solid rgba(184,147,90,.2);
+  padding: .25rem .7rem; border-radius: 999px;
+}
+.footer-socials { display: flex; gap: .8rem; }
+.footer-social {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.45); text-decoration: none;
+  transition: background .25s, border-color .25s, color .25s, transform .2s;
+}
+.footer-social:hover {
+  background: rgba(106,69,192,.25); border-color: rgba(106,69,192,.4);
+  color: #fff; transform: translateY(-2px);
+}
+.footer-social svg { width: 15px; height: 15px; }
+.footer-col-title {
+  font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.3); margin-bottom: 1.5rem; padding-bottom: .75rem;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.footer-col-links { display: flex; flex-direction: column; gap: .75rem; }
+.footer-col-link {
+  font-size: .84rem; color: rgba(255,255,255,.45); text-decoration: none;
+  transition: color .2s, padding-left .2s; position: relative;
+}
+.footer-col-link::before {
+  content: ''; position: absolute; left: 0; top: 50%;
+  width: 0; height: 1px; background: #D4A96A;
+  transform: translateY(-50%); transition: width .25s;
+}
+.footer-col-link:hover { color: rgba(255,255,255,.85); padding-left: .9rem; }
+.footer-col-link:hover::before { width: .55rem; }
+.footer-contact-item {
+  display: flex; gap: .7rem; align-items: flex-start;
+  font-size: .82rem; color: rgba(255,255,255,.4); text-decoration: none;
+  margin-bottom: .9rem; line-height: 1.5; transition: color .2s;
+}
+.footer-contact-item:hover { color: rgba(255,255,255,.7); }
+.footer-contact-item svg { width: 13px; height: 13px; flex-shrink: 0; margin-top: .22rem;
+  color: #B8935A; opacity: .7; }
+.footer-divider { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+.footer-divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08) 20%, rgba(255,255,255,.08) 80%, transparent);
+}
+.footer-bottom {
+  position: relative; z-index: 2; max-width: 1280px; margin: 0 auto;
+  padding: 2rem 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-copy { font-size: .75rem; color: rgba(255,255,255,.22); letter-spacing: .03em; }
+.footer-bottom-links { display: flex; gap: 2rem; }
+.footer-bottom-link { font-size: .73rem; color: rgba(255,255,255,.25); text-decoration: none; transition: color .2s; letter-spacing: .02em; }
+.footer-bottom-link:hover { color: rgba(255,255,255,.55); }
+.footer-made { font-size: .72rem; color: rgba(255,255,255,.18); font-family: 'Poppins', sans-serif; font-style: italic; }
+@media(max-width:1024px) {
+  .footer-main { grid-template-columns: 1fr 1fr; gap: 3.5rem; padding: 4rem 2.5rem 3rem; }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-bottom { padding: 1.8rem 2.5rem; flex-direction: row; text-align: left; }
+  .footer-divider { padding: 0 2.5rem; }
+}
+@media(max-width:640px) {
+  .footer-main { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem 2.5rem; }
+  .footer-brand { grid-column: 1; }
+  .footer-desc { max-width: 100%; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; padding: 1.5rem; gap: .6rem; }
+  .footer-bottom-links { gap: 1.2rem; }
+  .footer-divider { padding: 0 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators" style="height:38px;width:auto;display:block;border-radius:5px;"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html" class="active">Product</a></li>
+    <li><a href="credentials.html">Credential</a></li>
+    <li><a href="milestones.html">Milestones</a></li>
+    <li><a href="clientele.html">Clientele</a></li>
+    <li><a href="careers.html">Careers</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:.6rem;">
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────── -->
+<header class="c-hero">
+  <div class="c-hero-grid"></div>
+  <div class="c-hero-content">
+    <div class="c-eyebrow">Products</div>
+    <h1 class="c-hero-title">
+      Radiators built<br>for <em>India's grid.</em>
+    </h1>
+    <p class="c-hero-sub">
+      High-performance transformer cooling radiators engineered to IEEMA 9, DIN 42559 and BS EN 50216-6 — standard and fully customised cooling solutions for power, distribution, industrial and renewable-energy transformers.
+    </p>
+    <div class="c-hero-tags">
+      <div class="c-hero-tag">IEEMA 9</div>
+      <div class="c-hero-tag">DIN 42559</div>
+      <div class="c-hero-tag">BS EN 50216-6</div>
+      <div class="c-hero-tag">PGCIL Grade A · 765 kV</div>
+      <div class="c-hero-tag">ISO 9001 · 14001 · 45001</div>
+      <div class="c-hero-tag">EN ISO 3834-2</div>
+      <div class="c-hero-tag">ZED Gold</div>
+    </div>
+    <div class="c-hero-stats">
+      <div class="c-hs">
+        <div class="c-hs-num">4</div>
+        <div class="c-hs-label">Radiator Types</div>
+      </div>
+      <div class="c-hs">
+        <div class="c-hs-num">1–38</div>
+        <div class="c-hs-label">Elements per Bank</div>
+      </div>
+      <div class="c-hs">
+        <div class="c-hs-num">4,000mm</div>
+        <div class="c-hs-label">Max Centre Distance</div>
+      </div>
+      <div class="c-hs">
+        <div class="c-hs-num">765kV</div>
+        <div class="c-hs-label">PGCIL-Approved Class</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── PRODUCT RANGE INTRO ───────────────────────────────── -->
+<section class="c-products-section">
+  <div class="c-products-inner">
+    <div class="c-products-header reveal">
+      <div>
+        <div class="c-eyebrow" style="color:var(--p2);">Our Range</div>
+        <h2 class="c-products-title">Four types,<br><em>one standard.</em></h2>
+      </div>
+      <p class="c-products-intro">
+        <strong>Triveni Electroplast Pvt. Ltd.</strong> manufactures premium transformer radiators engineered to <strong>IEEMA 9, DIN 42559 &amp; BS EN 50216-6</strong> — reliable standard and fully customised cooling solutions trusted by transformer manufacturers across India and international markets.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 01 · HEADER TYPE ──────────────────────────────────── -->
+<section class="product-sec" id="header-type">
+  <div class="product-inner">
+    <div class="product-text reveal">
+      <div class="product-index">01</div>
+      <div class="c-pr-kicker" style="font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.65rem;">Core Range</div>
+      <h2 class="product-name">Header Type Radiators</h2>
+      <div class="product-tagline">Reliable cooling for maximum transformer performance.</div>
+      <p class="product-desc">Header Type Radiators are designed to provide efficient heat dissipation and reliable cooling for power and distribution transformers — the workhorse of the range, available in flanged, non-flanged and offset options, every unit pressure-tested leak-proof.</p>
+      <div class="product-feats">
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Superior heat dissipation</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Heavy-duty welded construction</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>100% leak-proof pressure tested</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Corrosion-resistant</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Flanged, non-flanged &amp; offset options</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom-built solutions</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Low maintenance</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Long service life</div>
+      </div>
+      <div class="product-apps">
+        <div class="product-apps-label">Applications</div>
+        <div class="app-pills">
+          <div class="app-pill">Power Transformers</div>
+          <div class="app-pill">Distribution Transformers</div>
+          <div class="app-pill">Industrial Transformers</div>
+          <div class="app-pill">Renewable Energy</div>
+        </div>
+      </div>
+    </div>
+    <div class="product-media reveal d1">
+      <!-- PHOTO SLOT: replace .plate-vis contents with real product photo when client supplies one -->
+      <div class="product-plate">
+        <div class="plate-vis">
+          <svg viewBox="0 0 440 300" fill="none" role="img" aria-label="Stylised profile of a header type radiator">
+            <rect x="70" y="44" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2"/>
+            <rect x="70" y="236" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2"/>
+            <rect x="84" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="114" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="144" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="174" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="204" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="234" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="264" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="294" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="324" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <line x1="70" y1="54" x2="42" y2="54" stroke="#4A2E82" stroke-width="2.2"/>
+            <line x1="42" y1="44" x2="42" y2="64" stroke="#B8935A" stroke-width="3"/>
+            <line x1="35" y1="47" x2="35" y2="61" stroke="#B8935A" stroke-width="2" opacity=".7"/>
+            <line x1="70" y1="246" x2="42" y2="246" stroke="#4A2E82" stroke-width="2.2"/>
+            <line x1="42" y1="236" x2="42" y2="256" stroke="#B8935A" stroke-width="3"/>
+            <line x1="35" y1="239" x2="35" y2="253" stroke="#B8935A" stroke-width="2" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="plate-cap"><span><b>01</b> · Header Type</span><span>Stylised profile</span></div>
+      </div>
+      <div class="spec-table">
+        <div class="spec-head">Specifications</div>
+        <div class="spec-row"><div class="spec-k">Manufacturing standards</div><div class="spec-v">IEEMA 9 · DIN 42559 · BS EN 50216-6</div></div>
+        <div class="spec-row"><div class="spec-k">Centre distance</div><div class="spec-v">1,200 – 4,000 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Element width</div><div class="spec-v">520 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Number of elements</div><div class="spec-v">1 – 38</div></div>
+        <div class="spec-row"><div class="spec-k">Pitch</div><div class="spec-v">40 / 45 / 50 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Pipe size</div><div class="spec-v">80 NB / 100 NB</div></div>
+        <div class="spec-row"><div class="spec-k">Sheet thickness</div><div class="spec-v">1.0 mm / 1.2 mm</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 · OFFSET ───────────────────────────────────────── -->
+<section class="product-sec alt" id="offset">
+  <div class="product-inner flip">
+    <div class="product-text reveal">
+      <div class="product-index">02</div>
+      <div class="c-pr-kicker" style="font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.65rem;">Space-Optimised</div>
+      <h2 class="product-name">Offset Radiators</h2>
+      <div class="product-tagline">Compact design for space-constrained installations.</div>
+      <p class="product-desc">Offset Radiators are specially designed for installations where standard radiator mounting is not feasible. Their compact configuration allows efficient cooling while optimising the available installation space.</p>
+      <div class="product-feats">
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Space-saving design</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Flexible mounting options</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom offset dimensions</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Excellent heat dissipation</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Heavy-duty construction</div>
+      </div>
+      <div class="product-apps">
+        <div class="product-apps-label">Applications</div>
+        <div class="app-pills">
+          <div class="app-pill">Power Transformers</div>
+          <div class="app-pill">Distribution Transformers</div>
+          <div class="app-pill">Industrial Transformers</div>
+          <div class="app-pill">Renewable Energy</div>
+        </div>
+      </div>
+    </div>
+    <div class="product-media reveal d1">
+      <!-- PHOTO SLOT: replace .plate-vis contents with real product photo when client supplies one -->
+      <div class="product-plate">
+        <div class="plate-vis">
+          <svg viewBox="0 0 440 300" fill="none" role="img" aria-label="Stylised profile of an offset radiator">
+            <rect x="64" y="44" width="240" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2"/>
+            <rect x="64" y="236" width="240" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2"/>
+            <rect x="78" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="105" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="132" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="159" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="186" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="213" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="240" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="267" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <path d="M304 54 H352 V24" stroke="#4A2E82" stroke-width="2.2"/>
+            <line x1="342" y1="24" x2="362" y2="24" stroke="#B8935A" stroke-width="3"/>
+            <line x1="345" y1="17" x2="359" y2="17" stroke="#B8935A" stroke-width="2" opacity=".7"/>
+            <path d="M304 246 H352 V276" stroke="#4A2E82" stroke-width="2.2"/>
+            <line x1="342" y1="276" x2="362" y2="276" stroke="#B8935A" stroke-width="3"/>
+            <line x1="345" y1="283" x2="359" y2="283" stroke="#B8935A" stroke-width="2" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="plate-cap"><span><b>02</b> · Offset</span><span>Stylised profile</span></div>
+      </div>
+      <div class="spec-table">
+        <div class="spec-head">Specifications</div>
+        <div class="spec-row"><div class="spec-k">Manufacturing standards</div><div class="spec-v">IEEMA 9 · DIN 42559 · BS EN 50216-6</div></div>
+        <div class="spec-row"><div class="spec-k">Centre distance</div><div class="spec-v">1,200 – 4,000 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Element width</div><div class="spec-v">520 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Number of elements</div><div class="spec-v">1 – 38</div></div>
+        <div class="spec-row"><div class="spec-k">Pitch</div><div class="spec-v">40 / 45 / 50 / 55 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Pipe size</div><div class="spec-v">80 NB</div></div>
+        <div class="spec-row"><div class="spec-k">Sheet thickness</div><div class="spec-v">1.0 mm / 1.2 mm</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 · SWAN NECK ────────────────────────────────────── -->
+<section class="product-sec" id="swan-neck">
+  <div class="product-inner">
+    <div class="product-text reveal">
+      <div class="product-index">03</div>
+      <div class="c-pr-kicker" style="font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.65rem;">Complex Configurations</div>
+      <h2 class="product-name">Swan Neck Radiators</h2>
+      <div class="product-tagline">Designed for complex transformer configurations.</div>
+      <p class="product-desc">Swan Neck Radiators feature curved inlet and outlet connections, making them ideal for transformers with unique mounting arrangements and special piping layouts.</p>
+      <div class="product-feats">
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Curved tube design</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom bend angles</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Suitable for restricted spaces</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>High mechanical strength</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Precision manufactured</div>
+      </div>
+      <div class="product-apps">
+        <div class="product-apps-label">Applications</div>
+        <div class="app-pills">
+          <div class="app-pill">Power Transformers</div>
+          <div class="app-pill">Industrial Transformers</div>
+        </div>
+      </div>
+    </div>
+    <div class="product-media reveal d1">
+      <!-- PHOTO SLOT: replace .plate-vis contents with real product photo when client supplies one -->
+      <div class="product-plate">
+        <div class="plate-vis">
+          <svg viewBox="0 0 440 300" fill="none" role="img" aria-label="Stylised profile of a swan neck radiator">
+            <rect x="70" y="88" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2"/>
+            <rect x="70" y="236" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2"/>
+            <rect x="84" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="114" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="144" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="174" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="204" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="234" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="264" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="294" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="324" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <path d="M100 88 V64 C100 34 130 44 136 18" stroke="#4A2E82" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+            <circle cx="138" cy="13" r="5" stroke="#B8935A" stroke-width="2.5"/>
+            <path d="M340 88 V64 C340 34 310 44 304 18" stroke="#4A2E82" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+            <circle cx="302" cy="13" r="5" stroke="#B8935A" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="plate-cap"><span><b>03</b> · Swan Neck</span><span>Stylised profile</span></div>
+      </div>
+      <div class="spec-table">
+        <div class="spec-head">Specifications</div>
+        <div class="spec-row"><div class="spec-k">Manufacturing standards</div><div class="spec-v">IEEMA 9 · DIN 42559 · BS EN 50216-6</div></div>
+        <div class="spec-row"><div class="spec-k">Centre distance</div><div class="spec-v">1,200 – 4,000 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Element width</div><div class="spec-v">520 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Number of elements</div><div class="spec-v">1 – 38</div></div>
+        <div class="spec-row"><div class="spec-k">Pitch</div><div class="spec-v">40 / 45 / 50 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Pipe size</div><div class="spec-v">80 NB / 100 NB</div></div>
+        <div class="spec-row"><div class="spec-k">Sheet thickness</div><div class="spec-v">1.0 mm / 1.2 mm</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 · GOOSE NECK ───────────────────────────────────── -->
+<section class="product-sec alt" id="goose-neck">
+  <div class="product-inner flip">
+    <div class="product-text reveal">
+      <div class="product-index">04</div>
+      <div class="c-pr-kicker" style="font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.65rem;">Custom Connections</div>
+      <h2 class="product-name">Goose Neck Radiators</h2>
+      <div class="product-tagline">Custom engineered for flexible transformer connections.</div>
+      <p class="product-desc">Goose Neck Radiators are designed for applications requiring special inlet and outlet orientations, while maintaining superior cooling efficiency and structural strength.</p>
+      <div class="product-feats">
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom connection geometry</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Heavy-duty construction</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>High cooling efficiency</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Leak-proof fabrication</div>
+        <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Available in various sizes</div>
+      </div>
+    </div>
+    <div class="product-media reveal d1">
+      <!-- PHOTO SLOT: replace .plate-vis contents with real product photo when client supplies one -->
+      <div class="product-plate">
+        <div class="plate-vis">
+          <svg viewBox="0 0 440 300" fill="none" role="img" aria-label="Stylised profile of a goose neck radiator">
+            <rect x="70" y="88" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2"/>
+            <rect x="70" y="236" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2"/>
+            <rect x="84" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="114" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="144" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="174" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="204" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="234" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="264" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="294" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <rect x="324" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+            <path d="M100 88 V56 C100 30 66 30 62 54 V70" stroke="#4A2E82" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+            <line x1="53" y1="73" x2="71" y2="73" stroke="#B8935A" stroke-width="3"/>
+            <path d="M340 88 V56 C340 30 374 30 378 54 V70" stroke="#4A2E82" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+            <line x1="369" y1="73" x2="387" y2="73" stroke="#B8935A" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="plate-cap"><span><b>04</b> · Goose Neck</span><span>Stylised profile</span></div>
+      </div>
+      <div class="spec-table">
+        <div class="spec-head">Specifications</div>
+        <div class="spec-row"><div class="spec-k">Manufacturing standards</div><div class="spec-v">IEEMA 9 · DIN 42559 · BS EN 50216-6</div></div>
+        <div class="spec-row"><div class="spec-k">Centre distance</div><div class="spec-v">1,200 – 4,000 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Element width</div><div class="spec-v">520 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Number of elements</div><div class="spec-v">1 – 38</div></div>
+        <div class="spec-row"><div class="spec-k">Pitch</div><div class="spec-v">40 / 45 / 50 mm</div></div>
+        <div class="spec-row"><div class="spec-k">Pipe size</div><div class="spec-v">80 NB / 100 NB</div></div>
+        <div class="spec-row"><div class="spec-k">Sheet thickness</div><div class="spec-v">1.0 mm / 1.2 mm</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TECHNICAL SPECS BAND ──────────────────────────────── -->
+<section class="c-specs-band">
+  <div class="c-specs-inner">
+    <div class="reveal">
+      <div class="c-eyebrow" style="color:rgba(184,147,90,.9);">Technical Specification</div>
+      <h2 style="font-family:'Poppins',sans-serif;font-weight:300;font-size:clamp(2.4rem,4.5vw,3.8rem);line-height:1;letter-spacing:-.025em;color:#fff;">Built to a <em style="font-style:italic;color:var(--gold2);">single standard.</em></h2>
+    </div>
+    <div class="c-specs-grid">
+      <div class="c-spec-cell reveal">
+        <div class="c-spec-label">Design Standards</div>
+        <div class="c-spec-value">IEEMA 9 · DIN 42559</div>
+        <div class="c-spec-note">& BS EN 50216-6 — every radiator built to spec</div>
+      </div>
+      <div class="c-spec-cell reveal d1">
+        <div class="c-spec-label">Centre Distance</div>
+        <div class="c-spec-value">1,200–4,000mm</div>
+        <div class="c-spec-note">Full range available to order</div>
+      </div>
+      <div class="c-spec-cell reveal d2">
+        <div class="c-spec-label">Number of Elements</div>
+        <div class="c-spec-value">1–38</div>
+        <div class="c-spec-note">Per radiator bank</div>
+      </div>
+      <div class="c-spec-cell reveal d3">
+        <div class="c-spec-label">Element Width</div>
+        <div class="c-spec-value">520mm</div>
+        <div class="c-spec-note">Standard across all radiator types</div>
+      </div>
+      <div class="c-spec-cell reveal">
+        <div class="c-spec-label">Panel Pitch</div>
+        <div class="c-spec-value">40 / 45 / 50mm</div>
+        <div class="c-spec-note">Offset type also available in 55mm</div>
+      </div>
+      <div class="c-spec-cell reveal d1">
+        <div class="c-spec-label">Pipe Size</div>
+        <div class="c-spec-value">80 / 100 NB</div>
+        <div class="c-spec-note">Header connection sizes</div>
+      </div>
+      <div class="c-spec-cell reveal d2">
+        <div class="c-spec-label">Sheet Thickness</div>
+        <div class="c-spec-value">1.0 / 1.2mm</div>
+        <div class="c-spec-note">Pressed steel construction</div>
+      </div>
+      <div class="c-spec-cell reveal d3">
+        <div class="c-spec-label">Quality Systems</div>
+        <div class="c-spec-value">ISO 9001·14001·45001</div>
+        <div class="c-spec-note">EN ISO 3834-2 welding · ZED Gold · PGCIL Grade A</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MANUFACTURING PROCESS ─────────────────────────────── -->
+<section class="c-process-section">
+  <div class="c-process-inner">
+    <div class="reveal">
+      <div class="c-eyebrow" style="color:var(--p2);">Manufacturing</div>
+      <h2 style="font-family:'Poppins',sans-serif;font-weight:300;font-size:clamp(2.4rem,4.5vw,3.8rem);line-height:1;letter-spacing:-.025em;color:var(--ink);">How every radiator <em style="font-style:italic;color:var(--p2);">is made.</em></h2>
+    </div>
+    <div class="c-process-layout">
+
+      <div class="c-process-left">
+        <div class="c-process-steps">
+          <div class="c-process-step reveal">
+            <div class="c-ps-num">01</div>
+            <div class="c-ps-body">
+              <div class="c-ps-title">Pressed-Steel Panel Forming</div>
+              <div class="c-ps-desc">Radiator elements pressed from 1.0 / 1.2mm steel in 520mm-wide elements — profiles built to IEEMA 9, DIN 42559 and BS EN 50216-6.</div>
+            </div>
+          </div>
+          <div class="c-process-step reveal d1">
+            <div class="c-ps-num">02</div>
+            <div class="c-ps-body">
+              <div class="c-ps-title">Certified Fusion Welding</div>
+              <div class="c-ps-desc">Heavy-duty welded construction, with fusion welding of metallic materials certified to EN ISO 3834-2:2021.</div>
+            </div>
+          </div>
+          <div class="c-process-step reveal d2">
+            <div class="c-ps-num">03</div>
+            <div class="c-ps-body">
+              <div class="c-ps-title">Custom Configuration</div>
+              <div class="c-ps-desc">Flanged, non-flanged, offset, swan-neck and goose-neck options — centre distances from 1,200 to 4,000mm, 1–38 elements per bank, built to order.</div>
+            </div>
+          </div>
+          <div class="c-process-step reveal">
+            <div class="c-ps-num">04</div>
+            <div class="c-ps-body">
+              <div class="c-ps-title">100% Leak-Proof Pressure Testing</div>
+              <div class="c-ps-desc">Every radiator is pressure-tested leak-proof before it leaves the works — quality assurance on each unit, not sample batches.</div>
+            </div>
+          </div>
+          <div class="c-process-step reveal d1">
+            <div class="c-ps-num">05</div>
+            <div class="c-ps-body">
+              <div class="c-ps-title">Corrosion-Resistant Finishing</div>
+              <div class="c-ps-desc">Corrosion-resistant coating for a long, low-maintenance service life in outdoor transformer environments.</div>
+            </div>
+          </div>
+          <div class="c-process-step reveal d2">
+            <div class="c-ps-num">06</div>
+            <div class="c-ps-body">
+              <div class="c-ps-title">Inspection &amp; Dispatch</div>
+              <div class="c-ps-desc">POWERGRID witnesses testing on complete radiators under our Grade A sampling plan; units dispatch from our Naini, Prayagraj works.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="c-process-right reveal d2">
+        <div class="c-quality-card">
+          <div class="c-quality-card-title">Quality at a glance</div>
+          <div class="c-quality-items">
+            <div class="c-qi">
+              <div class="c-qi-dot"></div>
+              <div class="c-qi-text"><strong>PGCIL Grade A</strong> vendor — approved for radiators up to <strong>765 kV class</strong> (valid to Nov 2027)</div>
+            </div>
+            <div class="c-qi">
+              <div class="c-qi-dot"></div>
+              <div class="c-qi-text"><strong>ISO 9001 · 14001 · 45001</strong> certified management systems</div>
+            </div>
+            <div class="c-qi">
+              <div class="c-qi-dot"></div>
+              <div class="c-qi-text"><strong>EN ISO 3834-2:2021</strong> certified fusion welding</div>
+            </div>
+            <div class="c-qi">
+              <div class="c-qi-dot"></div>
+              <div class="c-qi-text"><strong>ZED Gold</strong> under the MSME Sustainable Certification Scheme</div>
+            </div>
+            <div class="c-qi">
+              <div class="c-qi-dot"></div>
+              <div class="c-qi-text"><strong>RDSO, NTPC &amp; PSTCL</strong> approved vendor</div>
+            </div>
+            <div class="c-qi">
+              <div class="c-qi-dot"></div>
+              <div class="c-qi-text">Supplying India's leading transformer OEMs <strong>since 2015</strong></div>
+            </div>
+          </div>
+          <div class="c-cert-strip">
+            <div class="c-cert-pill">PGCIL Grade A</div>
+            <div class="c-cert-pill">RDSO</div>
+            <div class="c-cert-pill">NTPC</div>
+            <div class="c-cert-pill">PSTCL</div>
+            <div class="c-cert-pill">EN ISO 3834-2</div>
+            <div class="c-cert-pill">ZED Gold</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── BUILD QUALITY ──────────────────────────────────────── -->
+<section class="c-finishing-section">
+  <div class="c-finishing-inner">
+    <div class="reveal" style="text-align:center;">
+      <div class="c-eyebrow" style="color:var(--p2);">Build Quality</div>
+      <h2 style="font-family:'Poppins',sans-serif;font-weight:300;font-size:clamp(2.4rem,4.5vw,3.8rem);line-height:1;letter-spacing:-.025em;color:var(--ink);">Built to <em style="font-style:italic;color:var(--p2);">last.</em></h2>
+    </div>
+    <div class="c-finishing-grid">
+      <div class="c-fin-card reveal">
+        <div class="c-fin-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--p2)" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="c-fin-name">100% Leak-Proof Tested</div>
+        <div class="c-fin-desc">Every radiator is pressure-tested leak-proof — not sampled. Quality assurance is built into each unit that leaves the Naini works.</div>
+        <div class="c-fin-tag">Every Unit Tested</div>
+      </div>
+      <div class="c-fin-card reveal d1">
+        <div class="c-fin-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--p2)" stroke-width="1.8"><path d="M12 2v8m0 0 3-3m-3 3-3-3"/><circle cx="12" cy="16" r="5"/></svg></div>
+        <div class="c-fin-name">Certified Welded Construction</div>
+        <div class="c-fin-desc">Heavy-duty welded construction with fusion welding certified to EN ISO 3834-2:2021 — the international benchmark for welding quality.</div>
+        <div class="c-fin-tag">EN ISO 3834-2</div>
+      </div>
+      <div class="c-fin-card reveal d2">
+        <div class="c-fin-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--p2)" stroke-width="1.8"><path d="M12 2.7 5 9c-3.9 3.9-1.1 10.6 4.4 10.6h5.2c5.5 0 8.3-6.7 4.4-10.6L12 2.7z"/></svg></div>
+        <div class="c-fin-name">Corrosion-Resistant Coating</div>
+        <div class="c-fin-desc">Corrosion-resistant finish for a long, low-maintenance service life outdoors — on the grid, trackside and at generation sites.</div>
+        <div class="c-fin-tag">Long Service Life</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY TRIVENI ────────────────────────────────────────── -->
+<section class="c-why-section">
+  <div class="c-why-inner">
+    <div class="reveal" style="text-align:center;">
+      <div class="c-eyebrow" style="color:var(--p2);">Why Triveni</div>
+      <h2 style="font-family:'Poppins',sans-serif;font-weight:300;font-size:clamp(2.4rem,4.5vw,3.8rem);line-height:1;letter-spacing:-.025em;color:var(--ink);">Four reasons <em style="font-style:italic;color:var(--p2);">OEMs come back.</em></h2>
+    </div>
+    <div class="c-why-grid">
+      <div class="c-why-cell reveal">
+        <div class="c-why-num">01</div>
+        <div class="c-why-title">Trusted Supplier</div>
+        <div class="c-why-desc">Radiators supplied to leading transformer makers — Siemens, GE T&amp;D, ABB, TBEA and CG Power — across India and international markets.</div>
+      </div>
+      <div class="c-why-cell reveal d1">
+        <div class="c-why-num">02</div>
+        <div class="c-why-title">Built to Standard</div>
+        <div class="c-why-desc">Manufactured to IEEMA 9, DIN 42559 &amp; BS EN 50216-6. PGCIL Grade A (approved to 765 kV), RDSO, NTPC &amp; PSTCL approved; ISO 9001 / 14001 / 45001 &amp; EN ISO 3834-2 certified; ZED Gold.</div>
+      </div>
+      <div class="c-why-cell reveal d2">
+        <div class="c-why-num">03</div>
+        <div class="c-why-title">100% Leak-Tested</div>
+        <div class="c-why-desc">Every radiator pressure-tested leak-proof, with corrosion-resistant coating for long service life in outdoor transformer environments.</div>
+      </div>
+      <div class="c-why-cell reveal d3">
+        <div class="c-why-num">04</div>
+        <div class="c-why-title">Custom-Built</div>
+        <div class="c-why-desc">Standard and fully customised cooling solutions — header, offset, swan-neck and goose-neck — with timely delivery and dedicated support.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────── -->
+<section class="c-cta">
+  <div class="c-cta-inner">
+    <div class="reveal">
+      <h2 class="c-cta-title">Need a specific<br><em>radiator spec?</em></h2>
+    </div>
+    <div class="c-cta-right reveal d1">
+      <p class="c-cta-sub">
+        Share your transformer ratings, quantity and timeline — our team responds with a detailed quotation within one business day.
+      </p>
+      <div class="c-cta-contacts">
+        <a href="mailto:sales@triveniradiators.com" class="c-cta-contact">
+          <div class="c-cta-contact-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          </div>
+          sales@triveniradiators.com
+        </a>
+        <a href="mailto:info@triveniradiators.com" class="c-cta-contact">
+          <div class="c-cta-contact-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          </div>
+          info@triveniradiators.com
+        </a>
+        <div class="c-cta-contact">
+          <div class="c-cta-contact-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          B-2, UPSIDC Industrial Area, P.O. T.S.L., Naini, Prayagraj – 211010
+        </div>
+      </div>
+      <a href="contact.html" class="c-cta-btn">Request a quote</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+
+  <div class="footer-main">
+
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators" style="height:42px;width:auto;display:block;border-radius:5px;"></a>
+      <div class="footer-tagline">"We Value Values"</div>
+      <p class="footer-desc">
+        Manufacturers of pressed-steel transformer radiators up to 765 kV class — trusted by Siemens Energy, GE, ABB, TBEA, CG Power and Shirdi Sai Electricals. Made in Naini, Prayagraj.
+      </p>
+      <div class="footer-certs">
+        <div class="footer-cert">PGCIL Grade A</div>
+        <div class="footer-cert">RDSO</div>
+        <div class="footer-cert">NTPC</div>
+        <div class="footer-cert">PSTCL</div>
+        <div class="footer-cert">EN ISO 3834-2</div>
+        <div class="footer-cert">ZED Gold</div>
+        <div class="footer-cert">765kV Class</div>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/triveni-electroplast-pvt-ltd" class="footer-social" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 9.5H5.67V18h2.67V9.5zM7 5.9a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1zM18.33 18v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.07.79-2.43 1.34V9.5h-2.67V18h2.67v-4.5c0-1.18.83-1.5 1.4-1.5.55 0 1.47.32 1.47 1.5V18h2.67z"/></svg>
+        </a>
+        <a href="mailto:info@triveniradiators.com" class="footer-social" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col-links">
+        <a href="index.html" class="footer-col-link">Home</a>
+        <a href="milestones.html" class="footer-col-link">Our Journey</a>
+        <a href="leadership.html" class="footer-col-link">Leadership</a>
+        <a href="csr.html" class="footer-col-link">CSR</a>
+        <a href="careers.html" class="footer-col-link">Careers</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Products</div>
+      <div class="footer-col-links">
+        <a href="products.html" class="footer-col-link">All Products</a>
+        <a href="products.html#header-type" class="footer-col-link">Header Type Radiators</a>
+        <a href="products.html#offset" class="footer-col-link">Offset Radiators</a>
+        <a href="products.html#swan-neck" class="footer-col-link">Swan Neck Radiators</a>
+        <a href="products.html#goose-neck" class="footer-col-link">Goose Neck Radiators</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Get in Touch</div>
+      <a href="mailto:sales@triveniradiators.com" class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        sales@triveniradiators.com
+      </a>
+      <a href="mailto:info@triveniradiators.com" class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        info@triveniradiators.com
+      </a>
+      <div class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        B-2, UPSIDC Industrial Area,<br>P.O. T.S.L., Naini, Prayagraj — 211010<br>Uttar Pradesh, India
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-divider">
+    <div class="footer-divider-line"></div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 Triveni Electroplast Pvt Ltd — Triveni Radiators. All rights reserved.</div>
+    <div class="footer-bottom-links">
+      <a href="privacy.html" class="footer-bottom-link">Privacy Policy</a>
+      <a href="terms.html" class="footer-bottom-link">Terms of Use</a>
+      <a href="sitemap.html" class="footer-bottom-link">Sitemap</a>
+    </div>
+    <div class="footer-made">Naini, Prayagraj, India</div>
+  </div>
+
+</footer>
+
+<script>
+const toggle = document.querySelector('.nav-toggle');
+const navLinks = document.querySelector('.nav-links');
+if (toggle && navLinks) {
+  toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', scrollY > 40);
+}, { passive: true });
+
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

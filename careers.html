@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers — Triveni Radiators</title>
+<meta name="description" content="Build a career with Triveni Radiators — one of India's largest transformer radiator manufacturers.">
+<link rel="stylesheet" href="styles.css?v=5">
+<style>
+/* page hero — dark, matches the products/credentials/clientele/milestones heroes */
+.page-hero { text-align: center; min-height: 68vh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  background: #1A1028; }
+.page-hero::before { content: ''; position: absolute; top: -25%; left: -8%;
+  width: 80vw; height: 80vw; max-width: 1000px; max-height: 1000px;
+  background: radial-gradient(circle at 35% 40%, rgba(106,69,192,.32), rgba(74,46,130,.12) 40%, transparent 65%);
+  pointer-events: none; animation: phOrb 14s ease-in-out infinite alternate; }
+.page-hero::after { content: ''; position: absolute; bottom: -20%; right: -5%;
+  width: 55vw; height: 55vw; max-width: 650px; max-height: 650px;
+  background: radial-gradient(circle, rgba(184,147,90,.1), transparent 65%);
+  pointer-events: none; animation: phOrb 18s ease-in-out infinite alternate-reverse; }
+@keyframes phOrb {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(2%,4%) scale(1.05); } }
+.ph-grid { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 60px 60px; }
+.page-hero > *:not(.ph-grid) { position: relative; z-index: 2; }
+.page-hero .page-eyebrow { color: var(--gold); }
+.page-hero .page-title { font-size: clamp(2.8rem, 5.8vw, 5.6rem); color: #fff; }
+.page-hero .page-title em { color: #D4A96A; }
+.page-hero .page-sub { font-size: 1.12rem; max-width: 640px; color: rgba(255,255,255,.5); }
+.page-hero .stat-num { color: #fff; }
+.page-hero .stat-num em { color: #D4A96A; }
+.page-hero .stat-label { color: rgba(255,255,255,.38); }
+@media(prefers-reduced-motion:reduce){ .page-hero::before, .page-hero::after { animation: none; } }
+.page-sub { margin-left: auto; margin-right: auto; }
+
+/* values */
+.cv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.3rem; }
+.cv { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 1.9rem 1.8rem;
+  transition: transform .25s, box-shadow .25s; }
+.cv:hover { transform: translateY(-4px); box-shadow: 0 28px 60px -34px rgba(36,31,46,.35); }
+.cv-num { font-family: 'Poppins', sans-serif; font-weight: 200; font-size: 1.9rem; line-height: 1;
+  color: var(--purple2); margin-bottom: 1rem; }
+.cv-name { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1.1rem; margin-bottom: .45rem; }
+.cv-desc { font-size: .86rem; line-height: 1.62; color: var(--muted); }
+
+/* departments */
+.cd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.cd { background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: 2.2rem;
+  transition: transform .25s, box-shadow .25s; }
+.cd:hover { transform: translateY(-4px); box-shadow: 0 28px 60px -34px rgba(36,31,46,.35); }
+.cd-kicker { font-size: .7rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .8rem; }
+.cd h3 { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1.35rem; margin-bottom: .6rem; }
+.cd p { font-size: .92rem; line-height: 1.65; color: var(--muted); }
+
+/* works band — dark */
+.works-band { background: #1A1028; padding: 6rem 4rem; }
+.works-inner { max-width: 1180px; margin: 0 auto; }
+.works-band .sec-label { color: var(--gold); }
+.works-band .works-title { font-family: 'Poppins', sans-serif; font-weight: 300;
+  font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; color: #fff;
+  text-align: center; margin-bottom: .9rem; }
+.works-band .works-title em { font-style: italic; color: #D4A96A; font-weight: 400; }
+.works-sub { text-align: center; font-size: .95rem; line-height: 1.7; color: rgba(255,255,255,.5);
+  max-width: 560px; margin: 0 auto 3.5rem; }
+.works-grid { display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,.1); padding-top: 2.6rem; }
+.wk { flex: 1; min-width: 180px; text-align: center; padding: 0 1.5rem;
+  border-right: 1px solid rgba(255,255,255,.08); margin-bottom: 1.5rem; }
+.wk:last-child { border-right: none; }
+.wk-num { font-family: 'Poppins', sans-serif; font-weight: 300; font-size: clamp(1.9rem, 3vw, 2.7rem);
+  line-height: 1; color: #fff; letter-spacing: -.01em; }
+.wk-num em { font-style: normal; color: #D4A96A; }
+.wk-label { font-size: .7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.38); margin-top: .55rem; }
+@media(max-width:700px){ .works-band { padding: 4.5rem 1.5rem; } .wk { min-width: 46%; border-right: none; } }
+
+/* openings */
+.apply-card { max-width: 680px; margin: 0 auto; background: var(--bg); border: 1px solid var(--line);
+  border-radius: 22px; padding: 3rem 3.2rem; text-align: center;
+  box-shadow: 0 20px 50px -30px rgba(36,31,46,.3); }
+.apply-title { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1.5rem; margin-bottom: .7rem; }
+.apply-text { font-size: .95rem; line-height: 1.7; color: var(--muted); max-width: 520px; margin: 0 auto 1.8rem; }
+.apply-btns { display: flex; justify-content: center; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
+.apply-link { font-size: .9rem; font-weight: 500; color: var(--purple2);
+  border-bottom: 1px solid rgba(106,69,192,.3); padding-bottom: 2px; transition: color .2s, border-color .2s; }
+.apply-link:hover { color: var(--purple); border-color: var(--purple); }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators" style="height:38px;width:auto;display:block;border-radius:5px;"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html">Product</a></li>
+    <li><a href="credentials.html">Credential</a></li>
+    <li><a href="milestones.html">Milestones</a></li>
+    <li><a href="clientele.html">Clientele</a></li>
+    <li><a href="careers.html" class="active">Careers</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+</nav>
+
+<header class="page-hero">
+  <div class="hero-orb" data-depth="0.18"></div>
+  <div class="ph-grid"></div>
+  <div class="page-eyebrow">Careers</div>
+  <h1 class="page-title">Build with <em>people who value values.</em></h1>
+  <p class="page-sub">We hire for integrity first. If you want to make products the entire Indian transformer industry depends on, we'd like to meet you.</p>
+  <div class="hero-stats reveal" style="justify-content:center;animation:none;opacity:1;margin-top:4rem;gap:5rem;">
+    <div><div class="stat-num" data-count="2012" data-plain="1">0</div><div class="stat-label">Year Founded</div></div>
+    <div><div class="stat-num" data-count="765" data-suffix="kV">0</div><div class="stat-label">Highest Class</div></div>
+    <div><div class="stat-num" data-count="6" data-plain="1">0</div><div class="stat-label">OEM Customers</div></div>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="sec-head reveal">
+    <div class="sec-label">How We Work</div>
+    <h2 class="sec-title">We hire for <em>values.</em></h2>
+  </div>
+  <div class="cv-grid reveal">
+    <div class="cv"><div class="cv-num">i</div><div class="cv-name">Integrity</div><div class="cv-desc">Honest dealings, every time. Non-negotiable — and the first thing we look for in people, too.</div></div>
+    <div class="cv"><div class="cv-num">ii</div><div class="cv-name">Excellence</div><div class="cv-desc">Best-in-class quality: automated manufacturing, rigorous testing and PGCIL Grade A discipline.</div></div>
+    <div class="cv"><div class="cv-num">iii</div><div class="cv-name">Innovation</div><div class="cv-desc">From India's first fully automatic radiator line in 2012 to welding automation in 2024.</div></div>
+    <div class="cv"><div class="cv-num">iv</div><div class="cv-name">Teamwork</div><div class="cv-desc">Trust within the team and beyond. The people behind Triveni matter as much as the product.</div></div>
+  </div>
+</section>
+
+<section class="sec sec-bg">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <div class="sec-label">Where You'd Work</div>
+      <h2 class="sec-title">Three ways <em>in.</em></h2>
+    </div>
+    <div class="cd-grid reveal">
+      <div class="cd"><div class="cd-kicker">01 · Engineering</div><h3>Design &amp; Production</h3><p>Work on automated radiator lines, welding automation and the manufacturing systems behind 765 kV-class projects.</p></div>
+      <div class="cd"><div class="cd-kicker">02 · Quality</div><h3>QA &amp; Testing</h3><p>Own the leak-proof pressure testing and documentation discipline behind PGCIL Grade A, RDSO and EN ISO 3834-2.</p></div>
+      <div class="cd"><div class="cd-kicker">03 · Commercial</div><h3>Sales &amp; Exports</h3><p>Help grow Triveni's OEM partnerships across India and its direct exports to global markets.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="works-band">
+  <div class="works-inner">
+    <div class="sec-label reveal" style="text-align:center;margin-bottom:1rem;">The Works</div>
+    <h2 class="works-title reveal">Made in <em>Naini, Prayagraj.</em></h2>
+    <p class="works-sub reveal">You'd be joining the plant that runs India's first fully automatic panel radiator line — B-2, UPSIDC Industrial Area, Naini.</p>
+    <div class="works-grid reveal">
+      <div class="wk"><div class="wk-num" data-count="8300" data-suffix=" m²">0</div><div class="wk-label">Works Area</div></div>
+      <div class="wk"><div class="wk-num" data-count="4000" data-suffix=" MT">0</div><div class="wk-label">Annual Capacity</div></div>
+      <div class="wk"><div class="wk-num" data-count="1" data-suffix="st" data-plain="1">0</div><div class="wk-label">Fully Automatic Line in India</div></div>
+      <div class="wk"><div class="wk-num" data-count="15" data-suffix="+" data-plain="1">0</div><div class="wk-label">States Supplied</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sec-head reveal">
+    <div class="sec-label">Open Roles</div>
+    <h2 class="sec-title">Current <em>openings.</em></h2>
+  </div>
+  <div class="apply-card reveal">
+    <div class="apply-title">No live listings right now.</div>
+    <p class="apply-text">We're always open to meeting good engineering, quality and commercial people. Send your CV with a few lines about yourself, and we'll keep it on file for the next opening.</p>
+    <div class="apply-btns">
+      <a href="mailto:careers@triveniradiators.com" class="nav-cta">Email your CV</a>
+      <a href="contact.html" class="apply-link">or use the contact form →</a>
+    </div>
+  </div>
+  <div class="wip reveal"><span><b>Placeholder.</b> Share current job openings (title, location, description) and the careers/HR email, and we'll list them here — optionally with an application form.</span></div>
+</section>
+
+<footer class="site-footer">
+
+  <div class="footer-main">
+
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators" style="height:42px;width:auto;display:block;border-radius:5px;"></a>
+      <div class="footer-tagline">"We Value Values"</div>
+      <p class="footer-desc">
+        Manufacturers of pressed-steel transformer radiators up to 765 kV class — trusted by Siemens Energy, GE, ABB, TBEA, CG Power and Shirdi Sai Electricals. Made in Naini, Prayagraj.
+      </p>
+      <div class="footer-certs">
+        <div class="footer-cert">PGCIL Grade A</div>
+        <div class="footer-cert">RDSO</div>
+        <div class="footer-cert">NTPC</div>
+        <div class="footer-cert">PSTCL</div>
+        <div class="footer-cert">EN ISO 3834-2</div>
+        <div class="footer-cert">ZED Gold</div>
+        <div class="footer-cert">765kV Class</div>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/triveni-electroplast-pvt-ltd" class="footer-social" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 9.5H5.67V18h2.67V9.5zM7 5.9a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1zM18.33 18v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.07.79-2.43 1.34V9.5h-2.67V18h2.67v-4.5c0-1.18.83-1.5 1.4-1.5.55 0 1.47.32 1.47 1.5V18h2.67z"/></svg>
+        </a>
+        <a href="mailto:info@triveniradiators.com" class="footer-social" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col-links">
+        <a href="index.html" class="footer-col-link">Home</a>
+        <a href="milestones.html" class="footer-col-link">Our Journey</a>
+        <a href="leadership.html" class="footer-col-link">Leadership</a>
+        <a href="csr.html" class="footer-col-link">CSR</a>
+        <a href="careers.html" class="footer-col-link">Careers</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Products</div>
+      <div class="footer-col-links">
+        <a href="products.html" class="footer-col-link">All Products</a>
+        <a href="products.html#header-type" class="footer-col-link">Header Type Radiators</a>
+        <a href="products.html#offset" class="footer-col-link">Offset Radiators</a>
+        <a href="products.html#swan-neck" class="footer-col-link">Swan Neck Radiators</a>
+        <a href="products.html#goose-neck" class="footer-col-link">Goose Neck Radiators</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Get in Touch</div>
+      <a href="mailto:sales@triveniradiators.com" class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        sales@triveniradiators.com
+      </a>
+      <a href="mailto:info@triveniradiators.com" class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        info@triveniradiators.com
+      </a>
+      <div class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        B-2, UPSIDC Industrial Area,<br>P.O. T.S.L., Naini, Prayagraj — 211010<br>Uttar Pradesh, India
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-divider">
+    <div class="footer-divider-line"></div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 Triveni Electroplast Pvt Ltd — Triveni Radiators. All rights reserved.</div>
+    <div class="footer-bottom-links">
+      <a href="privacy.html" class="footer-bottom-link">Privacy Policy</a>
+      <a href="terms.html" class="footer-bottom-link">Terms of Use</a>
+      <a href="sitemap.html" class="footer-bottom-link">Sitemap</a>
+    </div>
+    <div class="footer-made">Naini, Prayagraj, India</div>
+  </div>
+
+</footer>
+
+<script src="script.js?v=5"></script>
+</body>
+</html>

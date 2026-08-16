@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milestones — Triveni Radiators</title>
+<meta name="description" content="The Triveni Radiators journey, 2012–2025 — from India's first automatic radiator line to 765kV PGCIL Grade A and direct US exports.">
+<link rel="stylesheet" href="styles.css?v=5">
+<style>
+/* page hero centered + full-height, dark like the products hero (this page only) */
+.page-hero { text-align: center; min-height: 76vh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  background: #1A1028; }
+.page-hero::before { content: ''; position: absolute; top: -25%; left: -8%;
+  width: 80vw; height: 80vw; max-width: 1000px; max-height: 1000px;
+  background: radial-gradient(circle at 35% 40%, rgba(106,69,192,.32), rgba(74,46,130,.12) 40%, transparent 65%);
+  pointer-events: none; animation: phOrb 14s ease-in-out infinite alternate; }
+.page-hero::after { content: ''; position: absolute; bottom: -20%; right: -5%;
+  width: 55vw; height: 55vw; max-width: 650px; max-height: 650px;
+  background: radial-gradient(circle, rgba(184,147,90,.1), transparent 65%);
+  pointer-events: none; animation: phOrb 18s ease-in-out infinite alternate-reverse; }
+@keyframes phOrb {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(2%,4%) scale(1.05); } }
+.ph-grid { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 60px 60px; }
+.page-hero > *:not(.ph-grid) { position: relative; z-index: 2; }
+.page-hero .page-eyebrow { color: var(--gold); }
+.page-hero .page-title { font-size: clamp(3rem, 6.5vw, 6.5rem); color: #fff; }
+.page-hero .page-title em { color: #D4A96A; }
+.page-hero .page-sub { font-size: 1.15rem; max-width: 700px; color: rgba(255,255,255,.5); }
+.page-hero .stat-num { color: #fff; }
+.page-hero .stat-num em { color: #D4A96A; }
+.page-hero .stat-label { color: rgba(255,255,255,.38); }
+@media(prefers-reduced-motion:reduce){ .page-hero::before, .page-hero::after { animation: none; } }
+.page-sub { margin-left: auto; margin-right: auto; }
+
+/* ── ZIG-ZAG TIMELINE ── */
+.zt { position: relative; max-width: 1080px; margin: 0 auto; }
+.zt-spine { position: absolute; left: 50%; top: 10px; bottom: 10px; width: 2px;
+  background: var(--line); transform: translateX(-50%); }
+.zt-fill { position: absolute; top: 0; left: 0; width: 100%; height: 0;
+  background: linear-gradient(var(--purple2), var(--gold));
+  transition: height .45s cubic-bezier(.25,.6,.3,1); }
+.zt-rows { position: relative; }
+.zt-row { display: grid; grid-template-columns: 1fr 96px 1fr; align-items: center; padding: 2rem 0; }
+.zt-node { grid-column: 2; grid-row: 1; justify-self: center; position: relative; z-index: 2;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: var(--bg-2); border: 1px solid var(--line); color: var(--purple2);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 24px -12px rgba(36,31,46,.25);
+  transition: background .7s cubic-bezier(.22,1,.36,1), border-color .7s cubic-bezier(.22,1,.36,1),
+    color .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1), box-shadow .7s; }
+.zt-row.lit .zt-node { background: var(--purple); border-color: var(--purple); color: #fff; transform: scale(1.06);
+  box-shadow: 0 14px 30px -12px rgba(74,46,130,.5); }
+.zt-card { grid-column: 1; grid-row: 1; justify-self: end; max-width: 440px; width: 100%;
+  background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 1.8rem 2rem;
+  box-shadow: 0 18px 40px -28px rgba(36,31,46,.35); }
+.zt-visual { grid-column: 3; grid-row: 1; justify-self: start;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1.2rem; max-width: 440px; }
+.zt-year { font-family: 'Poppins', sans-serif; font-weight: 200;
+  font-size: clamp(2.6rem, 4.6vw, 4.2rem); line-height: 1; letter-spacing: -.02em;
+  color: rgba(30,24,40,.16); transition: color 1s ease; white-space: nowrap; }
+.zt-row.lit .zt-year { color: var(--purple2); }
+.zt-rows .zt-row:nth-child(even) .zt-card { grid-column: 3; justify-self: start; }
+.zt-rows .zt-row:nth-child(even) .zt-visual { grid-column: 1; justify-self: end; align-items: flex-end; }
+.zt-pic { display: block; width: min(230px, 20vw); background: #fff; border: 1px solid var(--line);
+  border-radius: 12px; padding: 7px; cursor: pointer; font: inherit; text-align: center;
+  box-shadow: 0 20px 44px -24px rgba(36,31,46,.4);
+  transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s, border-color .3s; }
+.zt-pic img { display: block; width: 100%; aspect-ratio: 210/290; object-fit: cover; object-position: top;
+  border: 1px solid #EFEBE4; border-radius: 7px; }
+.zt-pic:hover { transform: translateY(-5px); border-color: rgba(184,147,90,.5);
+  box-shadow: 0 28px 54px -26px rgba(74,46,130,.4); }
+.zt-pic-label { display: block; padding: .55rem .3rem .25rem; font-size: .62rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--purple2); }
+.zt-logos { display: flex; flex-wrap: wrap; gap: .6rem; }
+.zt-rows .zt-row:nth-child(even) .zt-logos { justify-content: flex-end; }
+.zt-chip { display: inline-flex; align-items: center; justify-content: center;
+  background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: .55rem 1rem;
+  box-shadow: 0 10px 22px -14px rgba(36,31,46,.3); }
+.zt-chip img { max-height: 24px; max-width: 96px; display: block; }
+.zt-tag { font-size: .62rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .5rem; }
+.zt-title { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1.35rem;
+  color: var(--ink); line-height: 1.2; margin-bottom: .45rem; }
+.zt-desc { font-size: .92rem; line-height: 1.65; color: var(--muted); }
+.zt-more { font-size: .85rem; line-height: 1.7; color: var(--muted-2); margin-top: .65rem; }
+.zt-doc { display: flex; align-items: center; gap: 1.1rem; margin-top: 1.2rem; padding-top: 1.2rem;
+  border-top: 1px solid var(--line); text-decoration: none; width: 100%;
+  background: none; border-left: none; border-right: none; border-bottom: none;
+  cursor: pointer; font: inherit; text-align: left; }
+.zt-doc img { width: 96px; aspect-ratio: 210/290; object-fit: cover; object-position: top;
+  border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: 3px;
+  box-shadow: 0 10px 22px -12px rgba(36,31,46,.4);
+  transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s, border-color .3s; }
+.zt-doc:hover img { transform: translateY(-4px); border-color: rgba(184,147,90,.5);
+  box-shadow: 0 16px 32px -14px rgba(74,46,130,.4); }
+.zt-doc span { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--purple2); line-height: 1.7; }
+
+/* document lightbox */
+.dlb { position: fixed; inset: 0; z-index: 500; display: none; }
+.dlb.open { display: block; }
+.dlb-backdrop { position: absolute; inset: 0; background: rgba(15,10,30,.92);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.dlb-stage { position: absolute; inset: 0 0 86px; display: flex; align-items: center; justify-content: center;
+  padding: 3.4rem 5.5rem 1rem; overflow: auto; }
+.dlb-stage img { max-width: 100%; max-height: 100%; border-radius: 8px;
+  box-shadow: 0 40px 120px -30px rgba(0,0,0,.8); background: #fff; cursor: zoom-in; }
+.dlb.zoomed .dlb-stage { align-items: flex-start; justify-content: flex-start; }
+.dlb.zoomed .dlb-stage img { max-width: none; max-height: none; width: min(1150px, 170%); margin: 0 auto; cursor: zoom-out; }
+.dlb-cap { position: absolute; left: 0; right: 0; bottom: 0; height: 86px;
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: .25rem;
+  background: linear-gradient(transparent, rgba(15,10,30,.88)); pointer-events: none; }
+.dlb-title { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1.05rem; color: #fff; }
+.dlb-sub { font-size: .66rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+.dlb-btn { position: absolute; z-index: 2; width: 46px; height: 46px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.07); color: #fff;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: background .2s, border-color .2s; }
+.dlb-btn:hover { background: rgba(106,69,192,.5); border-color: rgba(106,69,192,.7); }
+.dlb-close { top: 1.4rem; right: 1.4rem; }
+.dlb-prev { left: 1.2rem; top: 50%; margin-top: -23px; }
+.dlb-next { right: 1.2rem; top: 50%; margin-top: -23px; }
+.dlb-count { position: absolute; top: 2rem; left: 1.6rem; font-size: .68rem; font-weight: 600;
+  letter-spacing: .16em; color: rgba(255,255,255,.45); text-transform: uppercase; }
+@media (max-width: 768px) {
+  .dlb-stage { inset: 0 0 74px; padding: 4rem 1rem 1rem; }
+  .dlb-prev, .dlb-next { top: auto; bottom: 88px; margin-top: 0; }
+  .dlb-prev { left: auto; right: calc(50% + 8px); }
+  .dlb-next { right: calc(50% - 54px); }
+  .dlb-cap { height: 74px; padding: 0 1rem; text-align: center; }
+}
+@media (max-width: 860px) {
+  .zt-spine { left: 27px; transform: none; }
+  .zt-row { grid-template-columns: 54px 1fr; gap: 0 1.2rem; padding: 1.5rem 0; align-items: start; }
+  .zt-node { grid-column: 1; grid-row: 1; align-self: center; }
+  .zt-visual { grid-column: 2; grid-row: 1; justify-self: start; align-self: center; align-items: flex-start; gap: .9rem; }
+  .zt-year { font-size: 2rem; }
+  .zt-card { grid-column: 2; grid-row: 2; justify-self: start; margin-top: .8rem; max-width: none; }
+  .zt-rows .zt-row:nth-child(even) .zt-card { grid-column: 2; justify-self: start; }
+  .zt-rows .zt-row:nth-child(even) .zt-visual { grid-column: 2; justify-self: start; align-items: flex-start; }
+  .zt-rows .zt-row:nth-child(even) .zt-logos { justify-content: flex-start; }
+  .zt-pic { width: 180px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators" style="height:38px;width:auto;display:block;border-radius:5px;"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html">Product</a></li>
+    <li><a href="credentials.html">Credential</a></li>
+    <li><a href="milestones.html" class="active">Milestones</a></li>
+    <li><a href="clientele.html">Clientele</a></li>
+    <li><a href="careers.html">Careers</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+</nav>
+
+<header class="page-hero">
+  <div class="hero-orb" data-depth="0.18"></div>
+  <div class="ph-grid"></div>
+  <div class="page-eyebrow">Milestones</div>
+  <h1 class="page-title">The Decade <em>in Detail.</em></h1>
+  <p class="page-sub">Thirteen years, zero major customers lost. Every milestone below follows from four values — Integrity, Excellence, Innovation, Teamwork.</p>
+  <div class="hero-stats reveal" style="justify-content:center;animation:none;opacity:1;margin-top:4.5rem;gap:5rem;">
+    <div><div class="stat-num" data-count="2012" data-plain="1">0</div><div class="stat-label">Year Founded</div></div>
+    <div><div class="stat-num" data-count="2700" data-suffix="+">0</div><div class="stat-label">Indirect Exports</div></div>
+    <div><div class="stat-num" data-count="765" data-suffix="kV">0</div><div class="stat-label">Highest Rating</div></div>
+    <div><div class="stat-num" data-count="9">0</div><div class="stat-label">Export Markets</div></div>
+  </div>
+</header>
+
+<!-- TRIVENI RADIATORS TIMELINE -->
+<section class="sec sec-bg">
+  <div class="sec-inner">
+  <div class="sec-head reveal">
+    <div class="sec-label">Triveni Radiators</div>
+    <h2 class="sec-title">Our <em>Journey.</em></h2>
+  </div>
+  <div class="zt" id="zt">
+    <div class="zt-spine"><div class="zt-fill" id="ztfill"></div></div>
+    <div class="zt-rows">
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">Origin</div>
+          <div class="zt-title">Founded</div>
+          <div class="zt-desc">MOU with a French multinational. India's first fully automatic radiator line, Naini, Prayagraj.</div>
+          <div class="zt-more">The works at B-2, UPSIDC Industrial Area was laid out around one idea: cooling should never be the reason a transformer fails. Automated forming and welding were part of the plant's design from the start — not retrofitted later.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2012</div>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">Certification</div>
+          <div class="zt-title">PGCIL 400kV Approval</div>
+          <div class="zt-desc">PGCIL approval for 400kV class transformers &amp; reactors, via Alstom T&amp;D. First major certification.</div>
+          <div class="zt-more">POWERGRID owns and operates India's inter-state transmission grid, and it approves radiator makers by name before any OEM may fit their radiators to a POWERGRID transformer. Reaching that list within a year of starting set the pattern for everything that followed.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2013</div>
+          <div class="zt-logos"><span class="zt-chip"><img src="assets/logos/powergrid.svg" alt="POWERGRID" loading="lazy"></span></div>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">Milestone</div>
+          <div class="zt-title">PGCIL 765kV Approval</div>
+          <div class="zt-desc">Elevated to 765kV — India's highest rating class — via Siemens T&amp;D.</div>
+          <div class="zt-more">At 765 kV, transformers run to 500 MVA and their cooling banks grow with them — more elements per bank, tighter leak-tightness demands, stricter documentation at every weld. Qualification at this class put Triveni in a small group of Indian radiator makers approved for the country's highest transmission voltage.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2015</div>
+          <button type="button" class="zt-pic" data-doc="assets/docs/pgcil-approval-2027.jpg" data-title="PGCIL Approval Extension" data-sub="Radiators up to 765 kV Class · Valid to November 2027"><img src="assets/docs/thumbs/pgcil-approval-2027.jpg" alt="PGCIL approval letter" loading="lazy"><span class="zt-pic-label">The approval today · to 2027</span></button>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">Record Order</div>
+          <div class="zt-title">Landmark Siemens Order</div>
+          <div class="zt-desc">Largest order to date: 1008 radiators for Siemens' 765kV/500MVA PGCIL project at BHUJ.</div>
+          <div class="zt-more">Siemens' own performance letter records the series — work orders I130166 through I130169, four batches of 252 radiators each for 765 kV / 500 MVA units, delivered across 2016–17 — and confirms performance "found satisfactory".</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5"/><line x1="12" y1="22" x2="12" y2="12"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2016</div>
+          <button type="button" class="zt-pic" data-doc="assets/docs/siemens-2021.jpg" data-title="Siemens Performance Letter" data-sub="765 kV / 500 MVA Supplies 2016–17 · August 2021"><img src="assets/docs/thumbs/siemens-2021.jpg" alt="Siemens performance letter" loading="lazy"><span class="zt-pic-label">Siemens letter · view</span></button>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">First Export</div>
+          <div class="zt-title">First International Project</div>
+          <div class="zt-desc">Bangladesh project completed for Siemens Ltd — our first international exposure.</div>
+          <div class="zt-more">Radiators built in Naini crossed a border for the first time — and the quality system travelled with them. The same drawings, the same pressure tests, delivered into another country's grid.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2017</div>
+          <div class="zt-logos"><span class="zt-chip"><img src="assets/logos/siemens-energy.svg" alt="Siemens Energy" loading="lazy"></span></div>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">Industry Leader</div>
+          <div class="zt-title">Largest Supplier Status</div>
+          <div class="zt-desc">Largest radiator supplier for GE T&amp;D, Toshiba, Hitachi Energy, Siemens &amp; TBEA India.</div>
+          <div class="zt-more">Six years after the first line started up, most of the biggest transformer nameplates operating in India were cooling their units on Triveni radiators — a position earned one delivery schedule at a time.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21 1.18.54 2.03 2.03 2.03 3.79"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2018</div>
+          <div class="zt-logos">
+            <span class="zt-chip"><img src="assets/logos/ge.svg" alt="GE T&D India" loading="lazy"></span>
+            <span class="zt-chip"><img src="assets/logos/siemens-energy.svg" alt="Siemens Energy" loading="lazy"></span>
+            <span class="zt-chip"><img src="assets/logos/tbea.png" alt="TBEA" loading="lazy"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">New Vertical</div>
+          <div class="zt-title">RDSO Specialist</div>
+          <div class="zt-desc">One of the largest RDSO traction transformer sources via Hitachi Energy India. Railways now a core vertical.</div>
+          <div class="zt-more">RDSO — the Research Designs &amp; Standards Organisation — writes the standards for everything that runs on Indian Railways; traction transformers feed the 25 kV overhead lines trains draw from. The approval stands current today, re-confirmed in 2024 as radiator sub-vendor on CG Power's traction programme.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="13" rx="2"/><path d="M5 11h14"/><path d="m8 19-2 3"/><path d="m16 19 2 3"/><path d="M9 15h.01"/><path d="M15 15h.01"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2019</div>
+          <button type="button" class="zt-pic" data-doc="assets/docs/rdso-approval.jpg" data-title="RDSO Approval" data-sub="Traction Power Transformers 38/53/63 MVA, 132 kV · Re-confirmed 2024"><img src="assets/docs/thumbs/rdso-approval.jpg" alt="RDSO approval letter" loading="lazy"><span class="zt-pic-label">RDSO approval · 2024</span></button>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">Resilience</div>
+          <div class="zt-title">Unbroken Through COVID-19</div>
+          <div class="zt-desc">Maintained consistent supply to every customer through COVID-19.</div>
+          <div class="zt-more">When national lockdowns broke supply chains across the industry, committed deliveries kept moving. Transformer OEM production lines schedule around radiator arrivals — and those schedules held.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2020</div>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">Global Expansion</div>
+          <div class="zt-title">IEEE &amp; Global Approvals</div>
+          <div class="zt-desc">IEEE approval for USA markets. HDG services launched. Offset radiators added with Toshiba India.</div>
+          <div class="zt-more">Hot-dip galvanising brought corrosion protection in-house — one less process leaving the plant. The offset radiator range opened installations where a standard header simply doesn't fit.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2021–22</div>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">Top Certification</div>
+          <div class="zt-title">PGCIL Grade A Certificate</div>
+          <div class="zt-desc">PGCIL Grade A certificate received. 1500+ offset radiators supplied. Customer base expanded nationwide.</div>
+          <div class="zt-more">Grade A is POWERGRID's top vendor grading, awarded after a process audit at the Naini works in June 2022. In practice it means POWERGRID trusts the process enough to witness-test just one transformer's radiator set per contract per type — a reduced-inspection privilege reserved for its best-graded vendors.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m3 15 2 2 4-4"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2022–23</div>
+          <button type="button" class="zt-pic" data-doc="assets/docs/pgcil-grade-a.jpg" data-title="PGCIL Grade A Letter" data-sub="POWERGRID Process-Audit Grading · July 2022"><img src="assets/docs/thumbs/pgcil-grade-a.jpg" alt="PGCIL Grade A letter" loading="lazy"><span class="zt-pic-label">PGCIL Grade A letter · view</span></button>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">Automation</div>
+          <div class="zt-title">Automation &amp; Scale</div>
+          <div class="zt-desc">Welding automation introduced. Recognised as a major export supplier by India's transformer industry.</div>
+          <div class="zt-more">Automated welding means the ten-thousandth seam is laid exactly like the first — repeatability the EN ISO 3834-2 system would later certify. Throughput rose without loosening the documentation trail behind each radiator.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2023–24</div>
+          <button type="button" class="zt-pic" data-doc="assets/docs/iso-3834.jpg" data-title="EN ISO 3834-2:2021" data-sub="Welding Quality · First Welding, Slovakia · Valid to August 2028"><img src="assets/docs/thumbs/iso-3834.jpg" alt="EN ISO 3834-2 certificate" loading="lazy"><span class="zt-pic-label">Welding certified · EN ISO 3834-2</span></button>
+        </div>
+      </div>
+
+      <div class="zt-row reveal">
+        <div class="zt-card">
+          <div class="zt-tag">Direct Exports</div>
+          <div class="zt-title">Export Journey Begins</div>
+          <div class="zt-desc">190 radiators supplied to Toshiba for GE USA's solar transformer project. Direct exports to AYR Energy USA begin — 5% of sales. New line and paint shop commissioned.</div>
+          <div class="zt-more">The period's domestic breadth is on paper too: 2025 performance letters from CG Power and Shirdi Sai Electricals record supplies spanning RDSO trackside sets, 420 kV Amara Raja units, and 220 kV Powerica and Serentica projects.</div>
+        </div>
+        <div class="zt-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1s1.2 1 2.5 1c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M12 10v4"/><path d="M12 2v3"/></svg></div>
+        <div class="zt-visual">
+          <div class="zt-year">2024–25</div>
+          <button type="button" class="zt-pic" data-doc="assets/docs/cgpower-2025.jpg" data-title="CG Power Performance Letter" data-sub="Supplies 2022–2025 · RDSO, Amara Raja, Powerica &amp; Serentica"><img src="assets/docs/thumbs/cgpower-2025.jpg" alt="CG Power performance letter" loading="lazy"><span class="zt-pic-label">CG Power letter · 2025</span></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- TRIVENI GROUP -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <div class="sec-label">Triveni Group</div>
+      <h2 class="sec-title">Part of something <em>larger.</em></h2>
+    </div>
+    <div class="prose reveal">
+      <p>Triveni Radiators is part of the wider <strong>Triveni Group</strong> — a family of businesses built on the same foundation of integrity and engineering excellence.</p>
+      <p>This section will introduce the Group's companies, history and combined capabilities once details are confirmed.</p>
+    </div>
+    <div class="wip reveal"><span><b>Placeholder.</b> Please share the Triveni Group overview — group companies, year established, leadership and any group milestones — so we can complete this section.</span></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+
+  <div class="footer-main">
+
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators" style="height:42px;width:auto;display:block;border-radius:5px;"></a>
+      <div class="footer-tagline">"We Value Values"</div>
+      <p class="footer-desc">
+        Manufacturers of pressed-steel transformer radiators up to 765 kV class — trusted by Siemens Energy, GE, ABB, TBEA, CG Power and Shirdi Sai Electricals. Made in Naini, Prayagraj.
+      </p>
+      <div class="footer-certs">
+        <div class="footer-cert">PGCIL Grade A</div>
+        <div class="footer-cert">RDSO</div>
+        <div class="footer-cert">NTPC</div>
+        <div class="footer-cert">PSTCL</div>
+        <div class="footer-cert">EN ISO 3834-2</div>
+        <div class="footer-cert">ZED Gold</div>
+        <div class="footer-cert">765kV Class</div>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/triveni-electroplast-pvt-ltd" class="footer-social" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 9.5H5.67V18h2.67V9.5zM7 5.9a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1zM18.33 18v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.07.79-2.43 1.34V9.5h-2.67V18h2.67v-4.5c0-1.18.83-1.5 1.4-1.5.55 0 1.47.32 1.47 1.5V18h2.67z"/></svg>
+        </a>
+        <a href="mailto:info@triveniradiators.com" class="footer-social" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col-links">
+        <a href="index.html" class="footer-col-link">Home</a>
+        <a href="milestones.html" class="footer-col-link">Our Journey</a>
+        <a href="leadership.html" class="footer-col-link">Leadership</a>
+        <a href="csr.html" class="footer-col-link">CSR</a>
+        <a href="careers.html" class="footer-col-link">Careers</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Products</div>
+      <div class="footer-col-links">
+        <a href="products.html" class="footer-col-link">All Products</a>
+        <a href="products.html#header-type" class="footer-col-link">Header Type Radiators</a>
+        <a href="products.html#offset" class="footer-col-link">Offset Radiators</a>
+        <a href="products.html#swan-neck" class="footer-col-link">Swan Neck Radiators</a>
+        <a href="products.html#goose-neck" class="footer-col-link">Goose Neck Radiators</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Get in Touch</div>
+      <a href="mailto:sales@triveniradiators.com" class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        sales@triveniradiators.com
+      </a>
+      <a href="mailto:info@triveniradiators.com" class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        info@triveniradiators.com
+      </a>
+      <div class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        B-2, UPSIDC Industrial Area,<br>P.O. T.S.L., Naini, Prayagraj — 211010<br>Uttar Pradesh, India
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-divider">
+    <div class="footer-divider-line"></div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 Triveni Electroplast Pvt Ltd — Triveni Radiators. All rights reserved.</div>
+    <div class="footer-bottom-links">
+      <a href="privacy.html" class="footer-bottom-link">Privacy Policy</a>
+      <a href="terms.html" class="footer-bottom-link">Terms of Use</a>
+      <a href="sitemap.html" class="footer-bottom-link">Sitemap</a>
+    </div>
+    <div class="footer-made">Naini, Prayagraj, India</div>
+  </div>
+
+</footer>
+
+<!-- document lightbox -->
+<div class="dlb" id="dlb" role="dialog" aria-modal="true" aria-label="Document viewer">
+  <div class="dlb-backdrop" id="dlbBackdrop"></div>
+  <div class="dlb-count" id="dlbCount"></div>
+  <button class="dlb-btn dlb-close" id="dlbClose" aria-label="Close viewer">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <button class="dlb-btn dlb-prev" id="dlbPrev" aria-label="Previous document">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <button class="dlb-btn dlb-next" id="dlbNext" aria-label="Next document">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+  </button>
+  <div class="dlb-stage"><img id="dlbImg" src="" alt=""></div>
+  <div class="dlb-cap">
+    <div class="dlb-title" id="dlbTitle"></div>
+    <div class="dlb-sub" id="dlbSub"></div>
+  </div>
+</div>
+
+<script src="script.js?v=5"></script>
+<script>
+/* zig-zag timeline: spine fill + node lighting on scroll */
+const zt = document.getElementById('zt');
+const ztFill = document.getElementById('ztfill');
+const ztRows = [...document.querySelectorAll('.zt-row')];
+let ztTick = false;
+function onZt() {
+  if (ztTick) return; ztTick = true;
+  requestAnimationFrame(() => {
+    const rect = zt.getBoundingClientRect();
+    const vh = innerHeight * 0.55;
+    const prog = Math.min(Math.max((vh - rect.top) / rect.height, 0), 1);
+    ztFill.style.height = (prog * 100) + '%';
+    const tip = rect.top + prog * rect.height; // y of the fill line's leading edge
+    ztRows.forEach(r => {
+      const node = r.querySelector('.zt-node').getBoundingClientRect();
+      r.classList.toggle('lit', node.top + node.height / 2 <= tip);
+    });
+    ztTick = false;
+  });
+}
+addEventListener('scroll', onZt, { passive: true });
+onZt();
+
+/* document lightbox (timeline doc chips) */
+const ztDocs = [...document.querySelectorAll('.zt-doc, .zt-pic')];
+const dlb = document.getElementById('dlb');
+const dlbImg = document.getElementById('dlbImg');
+const dlbTitle = document.getElementById('dlbTitle');
+const dlbSub = document.getElementById('dlbSub');
+const dlbCount = document.getElementById('dlbCount');
+let dlbIdx = 0, dlbLastFocus = null;
+function dlbShow(i) {
+  dlbIdx = (i + ztDocs.length) % ztDocs.length;
+  const el = ztDocs[dlbIdx];
+  dlb.classList.remove('zoomed');
+  dlbImg.src = el.dataset.doc;
+  dlbImg.alt = el.dataset.title;
+  dlbTitle.textContent = el.dataset.title;
+  dlbSub.textContent = el.dataset.sub;
+  dlbCount.textContent = (dlbIdx + 1) + ' / ' + ztDocs.length;
+}
+function dlbOpen(i) {
+  dlbLastFocus = document.activeElement;
+  dlbShow(i);
+  dlb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('dlbClose').focus();
+}
+function dlbClose() {
+  dlb.classList.remove('open', 'zoomed');
+  dlbImg.src = '';
+  document.body.style.overflow = '';
+  if (dlbLastFocus) dlbLastFocus.focus();
+}
+ztDocs.forEach((el, i) => el.addEventListener('click', () => dlbOpen(i)));
+document.getElementById('dlbClose').addEventListener('click', dlbClose);
+document.getElementById('dlbBackdrop').addEventListener('click', dlbClose);
+document.getElementById('dlbPrev').addEventListener('click', () => dlbShow(dlbIdx - 1));
+document.getElementById('dlbNext').addEventListener('click', () => dlbShow(dlbIdx + 1));
+dlbImg.addEventListener('click', () => dlb.classList.toggle('zoomed'));
+document.addEventListener('keydown', e => {
+  if (!dlb.classList.contains('open')) return;
+  if (e.key === 'Escape') dlbClose();
+  else if (e.key === 'ArrowLeft') dlbShow(dlbIdx - 1);
+  else if (e.key === 'ArrowRight') dlbShow(dlbIdx + 1);
+});
+</script>
+</body>
+</html>

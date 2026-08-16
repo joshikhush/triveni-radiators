@@ -1,0 +1,313 @@
+==========================================================================
+TRIVENI RADIATORS WEBSITE — PROJECT HANDOFF / CONTEXT FILE
+(Feed this file to a new Claude / AI session to continue the work)
+Last updated: 2026-07-22
+==========================================================================
+
+WHAT THIS PROJECT IS
+--------------------
+A static marketing website for "Triveni Radiators" — the Radiator Division
+(Unit III) of Triveni Electroplast Pvt. Ltd., Naini, Prayagraj, India.
+They manufacture pressed-steel transformer radiators up to 765 kV class.
+
+- Code location: C:\extra's\triveni-radiators  (plain HTML/CSS/JS, no framework, no build step)
+  (moved 2026-07-25 from c:\Zandy\triveni-radiators; note apostrophe in "extra's" — quote paths)
+- Live site:     https://triveni-radiators.vercel.app
+- Vercel project: "triveni-radiators" (projectId prj_1Aam7ByzQYboZkBJfcJ6V4sFhCVr,
+  org team_KqInX5MJFT7Q6V1Ms5lSuw5u, account sakshi-8027 / sakshis-projects-504cd0d1)
+- Deploy command: `npx vercel --prod --yes` run from inside the project folder.
+- Local preview:  a tiny Node server (port 8000, no-cache) serving the folder;
+  any static server works: `npx serve` or `python -m http.server 8000`.
+
+*** CRITICAL RULES (user-mandated, do not break) ***
+1. NEVER deploy without the user's explicit approval ("deploy" / "deploy on vercel").
+2. Deploy ONLY to the Vercel project "triveni-radiators". Never mix with any
+   other Vercel project/deployment. Verify .vercel/project.json before pushing.
+3. The folder triveni_docs contains the client's REAL certificates & approval
+   letters (PDFs). The RAW folder must NEVER be published — excluded via
+   .vercelignore (triveni_docs, triveni_template*, *.docx). After each deploy,
+   verify https://triveni-radiators.vercel.app/triveni_docs/ → 404.
+   UPDATE 2026-07-25: user approved rendering the documents on the credentials
+   page. Curated JPEG copies (first page, 150dpi) live in assets/docs/ (+ 480px
+   thumbs in assets/docs/thumbs/) and DO get published. Personal contact data
+   was redacted from the images before copying (Rakesh Patil's mobile on both
+   Siemens letters, Rohan Kundra's mobile on the PGCIL Nov-27 letter, personal
+   gmail on the PSTCL letter). Redaction = background-colored boxes painted at
+   render time; originals in triveni_docs remain untouched.
+4. The home page (index.html) is the APPROVED "Soft Motion" design. Do not
+   redesign it. Only change exactly what the user asks for.
+5. Every factual claim on the site (certifications, kV ratings, client names)
+   must be backed by the client's documents in triveni_docs. No fabrication.
+6. Build/preview locally first; user reviews at http://localhost:8000, then
+   approves deploys.
+
+PAGES (12 total)
+----------------
+Self-contained pages with inline <style>:
+  index.html        - home ("Soft Motion" design, protected)
+  products.html     - product rows have ids: header-type, offset, swan-neck, goose-neck
+  clientele.html    - logo marquee, OEM customer list, end-customer cards
+  credentials.html  - certifications grid, dark "Utility & Railway Approvals"
+                      band, performance-letters list
+Pages sharing styles.css:
+  milestones.html, careers.html, contact.html, leadership.html, csr.html
+Added 2026-07-26 (share styles.css + small inline <style> block each):
+  privacy.html      - Privacy Policy (.legal styles; effective 26 Jul 2026;
+                      honest: no cookies/analytics, Google Fonts + hosting
+                      logs disclosed, contact info@triveniradiators.com)
+  terms.html        - Terms of Use (specs indicative/quotes govern; client
+                      logos & cert marks = property of owners, shown as
+                      factual reference; documents genuine, no reuse;
+                      Prayagraj jurisdiction)
+  sitemap.html      - human-readable sitemap (grouped links, .smap styles)
+  sitemap.xml       - SEO sitemap, base URL triveni-radiators.vercel.app
+                      (update <loc> entries when a custom domain lands)
+Footer bottom links on ALL pages now point to privacy.html / terms.html /
+sitemap.html (were # / # / sitemap.xml).
+index.html CTA ("Be Part of What Comes Next.") switched from dark (#241640)
+to LIGHT at user request 2026-07-26: bg var(--bg-2), title em purple2,
+sub/contacts muted, form card #fff, glow tint purple — section is otherwise
+untouched (home remains the protected Soft Motion design).
+
+DESIGN SYSTEM
+-------------
+Fonts: Poppins (ALL headings and ALL stat/numbers — weights 200/300 for
+  numbers, 300 for display headings) + Inter (body). Fraunces was fully
+  removed (user found it too casual). styles.css also loads Sora.
+Colors: --bg:#FCFBF9  --bg2:#F4F0EA  --ink:#1E1828  --purple:#4A2E82
+  --p2/--purple2:#6A45C0  --gold:#B8935A  --gold2:#D4A96A  --dark:#1A1028
+  --dark2:#241640  --line:#E8E3DB ; footer background #0F0A1E.
+Numbers styling rule: user wants light, geometric Poppins for every numeric
+  stat anywhere on the site.
+
+LOGOS (assets/logos/)
+---------------------
+User rule: anywhere a client is mentioned, show their logo, ALWAYS in full
+original color (no grayscale, no hover color tricks).
+Files: siemens-energy.svg, ge.svg, abb.svg, ntpc.svg, cgpower.svg,
+  powergrid.svg, rdso.png, tbea.png (transparent 149x35), pstcl.png (emblem),
+  amararaja.svg (recolored from white), serentica.png, powerica.jpg,
+  shirdisai.png (806px green oval),
+  pstcl-lockup.svg  (emblem + full name text, use where space allows),
+  shirdisai-lockup.svg (oval + "SHIRDI SAI ELECTRICALS LTD" text).
+Technique: `mix-blend-mode: multiply` on light backgrounds makes white-boxed
+  JPG/PNG logos blend in. On the dark credentials band, logos sit in white
+  chips (.c-appr-logo, background rgba(255,255,255,.94)) — keep those chips,
+  logos vanish on dark otherwise. Exception: PSTCL uses emblem-only pstcl.png
+  in its chip (lockup unreadable at 26px).
+Home marquee (.cli-logo): boxes were REMOVED (2026-07-22) — logos now sit
+  directly on the background with multiply, max-height 34px.
+Sourcing: Wikimedia/Wikipedia Special:FilePath + Commons search API, or
+  scraped from company websites. Client has NOT formally supplied logo files —
+  pending their confirmation/official files.
+
+VERIFIED FACTS (from client documents — safe to state on site)
+--------------------------------------------------------------
+- PGCIL/POWERGRID: Grade A vendor, radiators for transformers & reactors up
+  to 765 kV class, approval valid to November 2027.
+- Delivered up to 765 kV / 500 MVA (Siemens letter, Aug-2021, PGCIL projects
+  2016-17). Site previously understated this as 420 kV — corrected.
+- RDSO (Indian Railways): approved radiator sub-vendor for 38/53/63 MVA,
+  132 kV single-phase traction power transformers.
+- NTPC: approved sub-vendor, NTPC Khargone 2x660 MW generation transformers.
+- PSTCL (Punjab): approved vendor list, 20 MVA/66 kV to 160 MVA/220 kV (Oct 2024).
+- OEM customers with performance letters: Siemens Energy, GE T&D India, ABB,
+  TBEA, CG Power (their letter says up to 420 kV/500 MVA — accurate to THAT
+  letter), Shirdi Sai Electricals.
+- Certifications: EN ISO 3834-2, ZED Gold, ISO certs (in triveni_docs).
+- Works address: B-2, UPSIDC Industrial Area, P.O. T.S.L., Naini,
+  Prayagraj — 211010.
+
+COMMON FOOTER (all 9 pages)
+---------------------------
+<footer class="site-footer"> — dark (#0F0A1E), user-supplied design:
+  brand column (logo, tagline "We Value Values", short description),
+  cert pills (PGCIL Grade A / RDSO / NTPC / PSTCL / EN ISO 3834-2 / ZED Gold /
+  765kV Class), social icons, Company column, Products column (anchors to the
+  4 product ids), Get in Touch column (sales@ / info@triveniradiators.com +
+  works address), divider, bottom bar (© 2026 ... / Privacy / Terms / Sitemap).
+  The "Clientele · Credentials · Contact" inline row was removed on request.
+  CSS starts with `footer.site-footer{display:block;padding:0;...}` to
+  override legacy element-level footer rules — keep that reset.
+
+DEPLOY STATE (as of 2026-07-22)
+-------------------------------
+Live and current. Latest deploy includes: boxless home marquee logos,
+symmetric marquee fade (full-bleed fix: margin-left:calc(50% - 50vw)),
+common footer on all 9 pages, footer links-row removal.
+
+LOCAL, NOT YET DEPLOYED (2026-07-25)
+------------------------------------
+milestones.html (2026-07-27): timeline REDESIGNED as a center-spine zig-zag
+("like the reference infographic" the user sent) — .zt component with inline
+CSS in the page head: central spine w/ purple→gold scroll fill (#ztfill,
+inline script at page bottom), circular icon nodes (fill purple when lit),
+alternating white cards (tag/title/desc) and big ghost year numerals that
+turn purple on scroll. No photos used (client has supplied none — do NOT
+substitute stock imagery); doc-backed rows (2016 Siemens order, 2022-23
+PGCIL Grade A) carry a small framed document chip linking to credentials.
+Mobile: spine left, single column. Old #tl markup removed from this page
+(script.js's #tl guard makes that safe; home keeps its own timeline).
+Timeline COPY unchanged and still partly unverified (IEEE row etc.).
+EXPANDED 2026-07-27 (user asked for more written content): each row gained
+a .zt-more paragraph. Additions are (a) document-sourced detail — Siemens
+work orders I130166-69/252×4 (2016 row), Grade A audit terms & reduced
+witness sampling from the letter (2022-23 row), CG Power/SSEL 2025 letter
+supplies (2024-25 row), RDSO 2024 re-confirmation via CG Power (2019 row) —
+or (b) explanatory industry context (what PGCIL/RDSO/765kV mean). No new
+company claims invented; original unverified one-liners left as-is.
+PICTOGRAPHY 2026-07-27 (client likes image-rich timelines): visual side of
+each row is now .zt-visual (ghost year + imagery). 6 rows carry framed real
+documents (.zt-pic buttons → in-page lightbox, honest labels incl. "the
+approval today · to 2027" where doc year ≠ milestone year): 2015 pgcil-
+approval-2027, 2016 siemens-2021, 2019 rdso-approval (re-confirmed 2024),
+2022-23 pgcil-grade-a, 2023-24 iso-3834, 2024-25 cgpower-2025. 3 rows carry
+color logo chips (.zt-chip): 2013 POWERGRID, 2017 Siemens Energy, 2018
+GE+Siemens+TBEA. 2012/2020/2021-22 remain year-only (no authentic asset).
+In-card .zt-doc chips were MOVED to the visual side. STILL NO stock photos —
+when the client sends real factory/milestone photos they slot into
+.zt-visual. Milestones lightbox now cycles 6 docs.
+
+credentials.html: "framed gallery + lightbox" document viewer added —
+18 real documents rendered as framed paper thumbnails in 3 galleries.
+Page order (final, user-requested 2026-07-26): Certifications section shows
+"The certificates, in original" gallery (5 big framed certs; the old text
+cards were REPLACED — user preferred the big-document look; IEEMA 9 /
+DIN 42559 / BS EN 50216-6 / leak-test info preserved as centered c-tag pills
+below the gallery) → dark approvals band (cells + "The approval letters"
+gallery, .dg-dark variant) → performance letters section (8 letters gallery).
+.c-cert-card CSS remains in the file but is unused. Click → fullscreen lightbox (#dlb) with zoom toggle,
+prev/next, keyboard (Esc/arrows), counter, caption. CSS classes .dg*/.dlb*.
+Doc images: assets/docs/*.jpg (full, ~5MB total, lightbox) and
+assets/docs/thumbs/*.jpg (480px, ~880KB, grid; loading=lazy).
+Conversion pipeline (scratchpad, re-runnable): portable poppler pdftoppm
+150dpi JPEG q88 → PowerShell System.Drawing redaction boxes → 480px thumbs.
+Docs facts extracted 2026-07-25: product .docx has full spec tables for the
+4 radiator types (IEEMA 9 / DIN 42559 / BS EN 50216-6, centre distance
+1200-4000mm, element width 520mm, 1-38 elements, pitch 40/45/50(+55 offset),
+pipe 80/100 NB, sheet 1.0/1.2mm) — ready for products.html rebuild.
+"New Document(502)" PDF = PSTCL vendor approval letter (29/10/2024).
+
+KNOWN PENDING / TODO
+--------------------
+1. Home page hero copy is UNVERIFIED (possibly fabricated from the original
+   template): "Est. 2012", "13 Years of Earned Trust", French MOU story,
+   "2700+ indirect exports", "9 export markets". Milestones timeline
+   (1008 BHUJ order, via Alstom, founded 2012), the home founding section
+   and Careers copy ("exports 5%→25% USA") also unverified. Needs rebuild
+   from documented facts or client confirmation.
+   The home "Business Values / Foundation Beneath It All" section (with the
+   "13 years / zero customers lost / IEEE, US exports" claims) was HTML-
+   COMMENTED OUT on user request 2026-07-26 — wrapper comment in index.html
+   marks it; uncomment to restore.
+   PARTLY FIXED 2026-07-26: the home "Verified by India's Toughest Clients"
+   sticky-cert cards were fact-checked against triveni_docs — IEEE card
+   REPLACED with verified NTPC Khargone approval; RDSO renamed correctly
+   (Research Designs & Standards Organisation, CG Power route, not
+   "Railway Design Office"/Hitachi); PGCIL copy now "up to 765 kV, valid to
+   Nov 2027". Each card now shows its real document image (.cert-doc,
+   assets/docs/thumbs/*) linking to credentials.html, plus a "View all"
+   link (.certs-more) under the stack.
+   REDESIGNED 2026-07-26 ("dossier cards", user-picked): document is now
+   the hero — large framed paper (min(248px,24vw), straight by default per
+   user, lifts on hover) on the LEFT of each sticky card; badge/name/desc
+   + .cert-meta rows (Issued by / Reference / Validity — all values taken
+   from the actual documents) + "View document →" (.cert-view) on the
+   right. Mobile: doc 200px centered above text. Sticky stacking unchanged.
+   VIEWER ADDED 2026-07-26: home now has its own document lightbox (#dlb,
+   same design as credentials') — doc images (now <button>s with magnifier
+   hover overlay .cert-zoom) and "View document →" buttons open the 4 docs
+   fullscreen (zoom/prev/next/Esc); "View all" link still goes to
+   credentials.html. Also: credentials.html HERO content center-aligned
+   (c-hero-content margin auto + text-align center) on user request.
+2. DONE 2026-07-27: products.html REBUILT from the client's
+   "Triveni Website Product Section.docx" (project root; extract script in
+   scratchpad/docx-prod/). The compact 4-row list was replaced by four full
+   alternating product sections (#header-type / #offset / #swan-neck /
+   #goose-neck — footer anchor links unchanged): docx tagline + description,
+   key-feature checklist (.pf), Applications pills (.app-pill — Swan Neck has
+   only Power+Industrial per docx; Goose Neck has NO applications row in the
+   docx so none shown), and a full per-product spec table (.spec-table:
+   standards / centre distance / element width / elements / pitch / pipe /
+   sheet — note Offset pitch adds 55mm and pipe is 80 NB only). Visual side:
+   .product-plate = inline SVG line-art on graph-paper grid, honestly
+   captioned "Stylised profile" (NOT product photos; geometry is generic
+   type-silhouette only). Each plate has an HTML comment PHOTO SLOT — swap
+   in real client product photos when supplied ([Insert Product Image]
+   placeholders exist in the docx, so photos are expected). Goose Neck
+   duplicate feature bullets in the docx were deduped. Meta description
+   FIXED (was old fabricated product names). Mobile nav logo/CTA overlap
+   fixed in products.html 768px rules (.nav-logo 1.25rem, .nav-cta nowrap).
+   Old .c-product-row CSS removed; .c-pr-kicker style now inlined.
+   The dark specs band / process / build-quality / why sections kept as-is.
+   Same day: products hero CENTER-ALIGNED on user request (.c-hero now
+   justify/align center + text-align center, sub margin auto, tags
+   justify-content center, .c-hs text-align center) — consistent with the
+   credentials/clientele/milestones heroes.
+3. DONE 2026-07-26: Privacy Policy, Terms of Use & Sitemap pages now exist
+   (privacy.html / terms.html / sitemap.html + sitemap.xml).
+   SOCIALS RESOLVED 2026-07-26: company has ONLY LinkedIn — real URL
+   https://www.linkedin.com/company/triveni-electroplast-pvt-ltd (derived
+   from a post link the user supplied) now used on all pages; WhatsApp, X
+   and YouTube icons REMOVED everywhere (footers + contact-page .socials).
+   Footer socials are now LinkedIn + email only.
+   Also removed the same day: credentials.html "Need the certificates on
+   file?" CTA section (.c-cta markup gone; its CSS remains unused).
+   Still awaiting client input: WhatsApp number if they ever want the
+   button back; confirm sales@/info@triveniradiators.com inboxes exist.
+4. Client should confirm comfort with publicly-sourced logos or supply
+   official files.
+   TESTIMONIALS SECTION ADDED 2026-07-27 (user request): home page now has
+   #testimonials ("In their words. On their letterheads.") between the
+   milestones band and the CTA. 6 cards (.tm in .tm-grid, 3-col → 2 → 1),
+   each quoting VERBATIM from a signed performance letter (ellipses mark
+   omissions — do NOT reword): Siemens Energy Jul-2026, GE T&D Nov-2021,
+   ABB Jul-2021, TBEA Aug-2021 (notes "since March 2015"), CG Power 2025,
+   Shirdi Sai Jan-2025. Attribution = company + department/factory + date,
+   deliberately NO individual names. Each card has a "Read the letter"
+   button (.tm-doc, thumb + label) that opens the letter in the home
+   lightbox — certDocs selector extended to '.cert-doc, .tm-doc' (deck is
+   now 10 docs). Logos load from assets/logos/ (NOT assets/ root — that
+   path mistake broke them once already). Quotes sourced from originals in
+   triveni_docs via pdf-parse + reading the scanned JPGs.
+   Same day: on credentials.html the performance-letters INTRO PANEL was
+   REMOVED on user request (the "In our customers' own words." header, the
+   3 c-tag stat chips and the 6-item .c-letter-list — now redundant with
+   the home testimonials). Gallery head retitled "Read the letters" →
+   "Performance letters" (user then trimmed "The"). The 8-letter .dg
+   gallery + c-facts strip remain. .c-letter-* CSS unused but in place.
+   PRODUCT STRIP ADDED 2026-07-28 (user request): home #products section
+   directly below the "Our Customers / Trusted by India's Best." marquee —
+   horizontal SCROLL strip (.ps-track, scroll-snap + hidden scrollbar) with
+   round prev/next arrows (#psPrev/#psNext, JS syncs disabled state at the
+   ends). 5 cards: the 4 radiator types (same stylised SVG profiles as
+   products.html, "Stylised profile" tag, each links to its
+   products.html#anchor) + an "Explore all products" CTA card. PHOTO
+   SLOTS: when client sends real product photos, swap each .ps-vis SVG
+   for an <img> — comment marks it in index.html. Home is otherwise the
+   protected Soft Motion design — nothing else touched.
+   REAL LOGO APPLIED 2026-07-28: assets/triveni-logo.png (blue "triVeni"
+   italic wordmark, 230x62 PNG) downloaded from the client's LIVE old site
+   https://triveniradiators.com/images/imglogo.png — replaces the text
+   "Triveni <em>Radiators</em>" in nav (h38) + footer (h42) on ALL 12
+   pages (inline-styled <img>, border-radius 5px). Old site also checked:
+   about.php facts (est. 2012, 15+ states, Naini 8300 sqm, 4000 MT/yr,
+   first fully-automatic panel line in country) are client-published and
+   quotable. GLOBAL PRESENCE: NOTHING verifiable exists — old site is
+   domestic-only, docs all show Indian supplies; but the client's proposed
+   -structure xlsx (assets/extra's/*.xlsx) plans "Clientele → India /
+   Global presence", so ASK CLIENT for export-market list before building.
+   BONUS FIND: old-site banners contain REAL radiator product photos
+   (scratchpad tr-banner2/4.jpg, 1200x450 composites, photos croppable) —
+   candidate authentic imagery for product cards if client approves.
+5. Code is NOT in git/GitHub yet — only on the local machine + Vercel deploy
+   snapshots. GitHub account available: sakshipisteyo (gh CLI authenticated).
+   If a repo is created, .gitignore MUST exclude triveni_docs and *.docx.
+
+WORKING STYLE THE USER EXPECTS
+------------------------------
+- Explain in plain terms → build → recap what changed.
+- Keep responses brief and skimmable (bullets, one-liners).
+- Show/verify visually (screenshots at localhost:8000) before claiming done.
+- Never deploy or commit until the user has tested and explicitly approved.
+==========================================================================
