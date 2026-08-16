@@ -36,6 +36,7 @@
   --gap:56px;
   --radius:4px;
   --radius-lg:8px;
+  --radius-md:6px;
   --fast:.2s;
 }
 *,*::before,*::after{box-sizing:border-box;min-width:0;}
@@ -211,22 +212,32 @@ ul{margin:0;padding:0;list-style:none;}
 /* ==========================================================
    02 — PRODUCT
    ========================================================== */
-.prod-note{font-size:12.5px;color:var(--muted);margin-top:10px;}
-.prod-list{margin-top:48px;border-top:1px solid var(--line);}
+.prod-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:40px;}
+.prod-sub{font-size:15px;font-weight:400;color:var(--body);margin-top:4px;}
+.prod-viewall{white-space:nowrap;}
+
+.prod-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
 .prod-card{
-  display:grid;grid-template-columns:minmax(0,1fr) 78px;gap:24px;align-items:center;
-  padding:32px 28px;border-bottom:1px solid var(--line);border-left:1px solid transparent;
-  transition:border-color var(--fast) var(--ez),transform var(--fast) var(--ez),background var(--fast) var(--ez);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start;
+  padding:22px 18px 20px;border-radius:var(--radius-md);border:1px solid transparent;
+  overflow:visible;position:relative;
+  transition:transform 280ms var(--ez),border-color 280ms var(--ez),box-shadow 280ms var(--ez);
 }
 .prod-card:nth-child(odd){background:var(--tint);}
-.prod-card:hover{border-left-color:var(--ind);transform:translateY(-3px);}
-.prod-num{font-size:13px;font-weight:500;color:var(--ind);margin-bottom:8px;}
-.prod-card h3{font-size:14.5px;font-weight:600;margin-bottom:6px;}
-.prod-card p{font-size:13.5px;line-height:1.75;color:var(--body);max-width:520px;}
-.prod-cta{margin-top:12px;display:inline-block;}
-.prod-vis{width:78px;height:78px;border-radius:var(--radius);background:var(--white);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;}
-.prod-vis svg{width:44px;height:56px;}
-.prod-foot{display:flex;justify-content:space-between;align-items:center;margin-top:32px;flex-wrap:wrap;gap:12px;}
+.prod-card:nth-child(even){background:var(--white);}
+.prod-card:hover{transform:translateY(-3px);border-color:var(--ind);box-shadow:0 16px 32px -18px rgba(16,24,40,.18);}
+.prod-text{display:flex;flex-direction:column;height:100%;}
+.prod-num{font-size:12px;font-weight:500;color:var(--ind);margin-bottom:8px;}
+.prod-card h3{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:6px;}
+.prod-card p{font-size:11.5px;line-height:1.7;color:var(--body);}
+.prod-cta{margin-top:auto;padding-top:14px;font-size:11.5px;font-weight:500;}
+.prod-img{margin-top:-26px;}
+.prod-img.ph{min-height:150px;padding:14px;}
+@media(max-width:1080px){.prod-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:520px){
+  .prod-grid{grid-template-columns:1fr;}
+  .prod-img{margin-top:-16px;}
+}
 
 /* ==========================================================
    03 — CREDENTIAL
@@ -395,8 +406,6 @@ footer.foot{background:var(--navy);padding-top:var(--sec);}
 }
 @media(max-width:768px){
   .hero-col{max-width:100%;}
-  .prod-card{grid-template-columns:1fr;}
-  .prod-vis{order:-1;width:64px;height:64px;}
   .contact-grid{grid-template-columns:1fr;}
   .leader-card{flex-direction:column;}
   .leader-portrait{max-width:160px;}
@@ -478,67 +487,60 @@ footer.foot{background:var(--navy);padding-top:var(--sec);}
 <!-- ===================== 02 — PRODUCT ===================== -->
 <section class="sec bg-tint" id="product">
   <div class="w">
-    <div class="g-head">
-      <div class="rv">
-        <div class="secnum">02</div>
-        <h2 class="h2">Product<br>Radiator Types</h2>
-      </div>
+    <div class="prod-header rv">
       <div>
-        <p class="lead rv">Triveni Electroplast Pvt. Ltd. manufactures premium transformer radiators engineered to IEEMA 9, DIN 42559 &amp; BS EN 50216-6 — reliable standard and fully customised cooling solutions trusted by transformer manufacturers across India and international markets.</p>
-        <p class="prod-note rv">Diagrams below are stylised technical illustrations, not product photography — real photography is pending from the client.</p>
+        <div class="secnum">02</div>
+        <h2 class="h2">Product</h2>
+        <div class="prod-sub">Radiator Types</div>
       </div>
+      <a href="products.html" class="link-ind prod-viewall">View All Products →</a>
     </div>
 
-    <div class="prod-list">
+    <div class="prod-grid">
       <div class="prod-card rv">
-        <div>
+        <div class="prod-text">
           <div class="prod-num">01</div>
-          <h3>Header Type Radiators</h3>
+          <h3>Header Type<br>Radiators</h3>
           <p>Reliable cooling for maximum transformer performance — the core range, available in flanged, non-flanged and offset options.</p>
           <a href="products.html#header-type" class="link-ind prod-cta">View Details →</a>
         </div>
-        <div class="prod-vis" role="img" aria-label="Stylised profile of a Header Type radiator — photograph pending">
-          <svg viewBox="0 0 44 56" fill="none" stroke="#4F46E5" stroke-width="1.6"><rect x="4" y="4" width="6" height="48"/><rect x="13" y="4" width="6" height="48"/><rect x="22" y="4" width="6" height="48"/><rect x="31" y="4" width="6" height="48"/></svg>
+        <div class="prod-img ph" role="img" aria-label="Header Type radiator — product photograph pending from client">
+          <span class="ph-tag">Photo pending</span>
         </div>
       </div>
-      <div class="prod-card rv">
-        <div>
+      <div class="prod-card rv" data-d="1">
+        <div class="prod-text">
           <div class="prod-num">02</div>
-          <h3>Offset Radiators</h3>
+          <h3>Offset<br>Radiators</h3>
           <p>Compact design for space-constrained installations — flexible mounting where a standard radiator won't fit.</p>
           <a href="products.html#offset" class="link-ind prod-cta">View Details →</a>
         </div>
-        <div class="prod-vis" role="img" aria-label="Stylised profile of an Offset radiator — photograph pending">
-          <svg viewBox="0 0 44 56" fill="none" stroke="#4F46E5" stroke-width="1.6"><rect x="4" y="4" width="6" height="30"/><rect x="13" y="10" width="6" height="42"/><rect x="22" y="4" width="6" height="30"/><rect x="31" y="10" width="6" height="42"/></svg>
+        <div class="prod-img ph" role="img" aria-label="Offset radiator — product photograph pending from client">
+          <span class="ph-tag">Photo pending</span>
         </div>
       </div>
-      <div class="prod-card rv">
-        <div>
+      <div class="prod-card rv" data-d="2">
+        <div class="prod-text">
           <div class="prod-num">03</div>
-          <h3>Swan Neck Radiators</h3>
+          <h3>Swan Neck<br>Radiators</h3>
           <p>Designed for complex transformer configurations — curved inlet &amp; outlet connections for unique mounting arrangements.</p>
           <a href="products.html#swan-neck" class="link-ind prod-cta">View Details →</a>
         </div>
-        <div class="prod-vis" role="img" aria-label="Stylised profile of a Swan Neck radiator — photograph pending">
-          <svg viewBox="0 0 44 56" fill="none" stroke="#4F46E5" stroke-width="1.6"><rect x="10" y="14" width="24" height="38"/><path d="M14 14c0-8 6-10 10-10s10 2 10 10"/></svg>
+        <div class="prod-img ph" role="img" aria-label="Swan Neck radiator — product photograph pending from client">
+          <span class="ph-tag">Photo pending</span>
         </div>
       </div>
-      <div class="prod-card rv">
-        <div>
+      <div class="prod-card rv" data-d="3">
+        <div class="prod-text">
           <div class="prod-num">04</div>
-          <h3>Goose Neck Radiators</h3>
+          <h3>Goose Neck<br>Radiators</h3>
           <p>Custom engineered for flexible transformer connections — special inlet &amp; outlet orientations, superior cooling efficiency.</p>
           <a href="products.html#goose-neck" class="link-ind prod-cta">View Details →</a>
         </div>
-        <div class="prod-vis" role="img" aria-label="Stylised profile of a Goose Neck radiator — photograph pending">
-          <svg viewBox="0 0 44 56" fill="none" stroke="#4F46E5" stroke-width="1.6"><rect x="8" y="4" width="24" height="38"/><path d="M12 42c0 8 6 10 10 10s10-2 10-10"/></svg>
+        <div class="prod-img ph" role="img" aria-label="Goose Neck radiator — product photograph pending from client">
+          <span class="ph-tag">Photo pending</span>
         </div>
       </div>
-    </div>
-
-    <div class="prod-foot rv">
-      <span class="small">Every unit pressure-tested, 100% leak-proof.</span>
-      <a href="products.html" class="link-ind">View All Products →</a>
     </div>
   </div>
 </section>
