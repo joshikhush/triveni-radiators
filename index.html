@@ -37,6 +37,7 @@
   --radius:4px;
   --radius-lg:8px;
   --radius-md:6px;
+  --radius-sm:3px;
   --fast:.2s;
 }
 *,*::before,*::after{box-sizing:border-box;min-width:0;}
@@ -242,25 +243,34 @@ ul{margin:0;padding:0;list-style:none;}
 /* ==========================================================
    03 — CREDENTIAL
    ========================================================== */
-.tabs{display:flex;gap:32px;border-bottom:1px solid var(--line);margin-bottom:36px;flex-wrap:wrap;}
+.tabs{display:flex;gap:26px;margin-bottom:36px;flex-wrap:wrap;}
 .tab-btn{
   background:none;border:none;padding:0 0 14px;
-  font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer;
-  border-bottom:2px solid transparent;transition:color var(--fast) var(--ez),border-color var(--fast) var(--ez);
+  font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;
+  border-bottom:1.5px solid transparent;transition:color var(--fast) var(--ez),border-color var(--fast) var(--ez);
 }
 .tab-btn.active{color:var(--ind);border-bottom-color:var(--ind);}
 .tab-panel{display:none;}
 .tab-panel.active{display:block;}
-.cred-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:20px;}
-.cred-item{
-  background:none;border:none;text-align:left;padding:0;cursor:pointer;width:100%;
+
+/* section 03 — certificate row: N thumbnails + trailing link, all on one row */
+.cred-row{display:grid;grid-template-columns:repeat(var(--cred-n),minmax(0,1fr)) auto;gap:14px;align-items:center;}
+.cred-item{background:none;border:none;text-align:left;padding:0;cursor:pointer;width:100%;}
+.cred-thumb{
+  display:block;aspect-ratio:3/4;border-radius:var(--radius-sm);border:1px solid var(--line);
+  background:var(--white);padding:6px;box-sizing:border-box;
+  transition:transform 250ms var(--ez),box-shadow 250ms var(--ez);
 }
-.cred-thumb{aspect-ratio:3/4;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:var(--tint);position:relative;transition:border-color var(--fast) var(--ez),transform var(--fast) var(--ez);}
-.cred-thumb img{width:100%;height:100%;object-fit:cover;}
-.cred-item:hover .cred-thumb{border-color:var(--ind);transform:translateY(-3px);}
-.cred-item h3{font-size:12.5px;font-weight:600;margin-top:10px;line-height:1.4;}
-.cred-item .small{margin-top:2px;}
-.cred-foot{margin-top:36px;}
+.cred-thumb img{width:100%;height:100%;object-fit:contain;display:block;}
+.cred-item:hover .cred-thumb{transform:translateY(-3px);box-shadow:0 14px 28px -16px rgba(16,24,40,.18);}
+.cred-viewall{font-size:13px;font-weight:500;color:var(--ind);line-height:1.4;}
+@media(max-width:1080px){
+  .cred-row{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .cred-viewall{grid-column:1/-1;justify-self:end;margin-top:16px;}
+}
+@media(max-width:520px){
+  .cred-row{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 
 /* ==========================================================
    04 — MILESTONES
@@ -546,7 +556,7 @@ footer.foot{background:var(--navy);padding-top:var(--sec);}
 </section>
 
 <!-- ===================== 03 — CREDENTIAL ===================== -->
-<section class="sec bg-white" id="credential">
+<section class="sec bg-tint2" id="credential">
   <div class="w">
     <div class="g-head" style="margin-bottom:0;">
       <div class="rv">
@@ -561,93 +571,76 @@ footer.foot{background:var(--navy);padding-top:var(--sec);}
         </div>
 
         <div class="tab-panel active" data-panel="cert">
-          <div class="cred-grid">
-            <button class="cred-item rv" data-doc="assets/docs/iso-9001.jpg" data-title="ISO 9001:2015" data-sub="Quality Management · Valid to April 2028">
+          <div class="cred-row rv" style="--cred-n:5;">
+            <button class="cred-item" data-doc="assets/docs/iso-9001.jpg" data-title="ISO 9001:2015" data-sub="Quality Management · Valid to April 2028" aria-label="ISO 9001:2015 — Quality Management, valid to April 2028">
               <span class="cred-thumb"><img src="assets/docs/thumbs/iso-9001.jpg" alt="ISO 9001:2015 certificate" loading="lazy"></span>
-              <h3>ISO 9001:2015</h3><div class="small">Quality Management · to Apr 2028</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/iso-14001.jpg" data-title="ISO 14001:2015" data-sub="Environmental Management · Valid to July 2028">
+            <button class="cred-item" data-doc="assets/docs/iso-14001.jpg" data-title="ISO 14001:2015" data-sub="Environmental Management · Valid to July 2028" aria-label="ISO 14001:2015 — Environmental Management, valid to July 2028">
               <span class="cred-thumb"><img src="assets/docs/thumbs/iso-14001.jpg" alt="ISO 14001:2015 certificate" loading="lazy"></span>
-              <h3>ISO 14001:2015</h3><div class="small">Environmental Mgmt · to Jul 2028</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/iso-45001.jpg" data-title="ISO 45001:2018" data-sub="Occupational Health &amp; Safety · Valid to February 2027">
+            <button class="cred-item" data-doc="assets/docs/iso-45001.jpg" data-title="ISO 45001:2018" data-sub="Occupational Health &amp; Safety · Valid to February 2027" aria-label="ISO 45001:2018 — Occupational Health &amp; Safety, valid to February 2027">
               <span class="cred-thumb"><img src="assets/docs/thumbs/iso-45001.jpg" alt="ISO 45001:2018 certificate" loading="lazy"></span>
-              <h3>ISO 45001:2018</h3><div class="small">Health &amp; Safety · to Feb 2027</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/iso-3834.jpg" data-title="EN ISO 3834-2:2021" data-sub="Welding Quality · First Welding, Slovakia · Valid to August 2028">
+            <button class="cred-item" data-doc="assets/docs/iso-3834.jpg" data-title="EN ISO 3834-2:2021" data-sub="Welding Quality · First Welding, Slovakia · Valid to August 2028" aria-label="EN ISO 3834-2:2021 — Welding Quality, valid to August 2028">
               <span class="cred-thumb"><img src="assets/docs/thumbs/iso-3834.jpg" alt="EN ISO 3834-2 certificate" loading="lazy"></span>
-              <h3>EN ISO 3834-2:2021</h3><div class="small">Welding Quality · to Aug 2028</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/zed-gold.jpg" data-title="ZED Gold" data-sub="MSME Sustainable Certification · September 2025">
+            <button class="cred-item" data-doc="assets/docs/zed-gold.jpg" data-title="ZED Gold" data-sub="MSME Sustainable Certification · September 2025" aria-label="ZED Gold — MSME Sustainable Certification, September 2025">
               <span class="cred-thumb"><img src="assets/docs/thumbs/zed-gold.jpg" alt="ZED Gold certificate" loading="lazy"></span>
-              <h3>ZED Gold</h3><div class="small">MSME Sustainable · Sep 2025</div>
             </button>
+            <a href="credentials.html" class="cred-viewall">View All<br>Certificates →</a>
           </div>
         </div>
 
         <div class="tab-panel" data-panel="appr">
-          <div class="cred-grid">
-            <button class="cred-item rv" data-doc="assets/docs/pgcil-grade-a.jpg" data-title="PGCIL Grade A" data-sub="POWERGRID · Grade A vendor, up to 765 kV · July 2022">
+          <div class="cred-row rv" style="--cred-n:5;">
+            <button class="cred-item" data-doc="assets/docs/pgcil-grade-a.jpg" data-title="PGCIL Grade A" data-sub="POWERGRID · Grade A vendor, up to 765 kV · July 2022" aria-label="PGCIL Grade A — POWERGRID, Grade A vendor up to 765 kV, July 2022">
               <span class="cred-thumb"><img src="assets/docs/thumbs/pgcil-grade-a.jpg" alt="PGCIL Grade A letter" loading="lazy"></span>
-              <h3>PGCIL Grade A</h3><div class="small">POWERGRID · up to 765 kV</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/pgcil-approval-2027.jpg" data-title="PGCIL Approval Extension" data-sub="Up to 765 kV Class · Valid to November 2027">
+            <button class="cred-item" data-doc="assets/docs/pgcil-approval-2027.jpg" data-title="PGCIL Approval Extension" data-sub="Up to 765 kV Class · Valid to November 2027" aria-label="PGCIL Approval Extension — up to 765 kV class, valid to November 2027">
               <span class="cred-thumb"><img src="assets/docs/thumbs/pgcil-approval-2027.jpg" alt="PGCIL approval extension letter" loading="lazy"></span>
-              <h3>PGCIL Approval</h3><div class="small">Extension · to Nov 2027</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/rdso-approval.jpg" data-title="RDSO Approval" data-sub="Indian Railways · 38/53/63 MVA, 132 kV traction transformers · Re-confirmed 2024">
+            <button class="cred-item" data-doc="assets/docs/rdso-approval.jpg" data-title="RDSO Approval" data-sub="Indian Railways · 38/53/63 MVA, 132 kV traction transformers · Re-confirmed 2024" aria-label="RDSO Approval — Indian Railways traction transformers, re-confirmed 2024">
               <span class="cred-thumb"><img src="assets/docs/thumbs/rdso-approval.jpg" alt="RDSO approval letter" loading="lazy"></span>
-              <h3>RDSO Approval</h3><div class="small">Indian Railways · 132 kV</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/ntpc-approval.jpg" data-title="NTPC Approval" data-sub="NTPC Khargone (2×660 MW) generation transformers · 2017">
+            <button class="cred-item" data-doc="assets/docs/ntpc-approval.jpg" data-title="NTPC Approval" data-sub="NTPC Khargone (2×660 MW) generation transformers · 2017" aria-label="NTPC Approval — Khargone 2x660 MW generation transformers, 2017">
               <span class="cred-thumb"><img src="assets/docs/thumbs/ntpc-approval.jpg" alt="NTPC approval letter" loading="lazy"></span>
-              <h3>NTPC Approval</h3><div class="small">Khargone 2×660 MW</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/pstcl-2024.jpg" data-title="PSTCL Vendor Approval" data-sub="Punjab · up to 220 kV / 160 MVA · October 2024">
+            <button class="cred-item" data-doc="assets/docs/pstcl-2024.jpg" data-title="PSTCL Vendor Approval" data-sub="Punjab · up to 220 kV / 160 MVA · October 2024" aria-label="PSTCL Vendor Approval — Punjab, up to 220 kV / 160 MVA, October 2024">
               <span class="cred-thumb"><img src="assets/docs/thumbs/pstcl-2024.jpg" alt="PSTCL vendor approval letter" loading="lazy"></span>
-              <h3>PSTCL Approval</h3><div class="small">Punjab · to 220 kV</div>
             </button>
+            <a href="credentials.html" class="cred-viewall">View All<br>Certificates →</a>
           </div>
         </div>
 
         <div class="tab-panel" data-panel="perf">
-          <div class="cred-grid">
-            <button class="cred-item rv" data-doc="assets/docs/siemens-2026.jpg" data-title="Siemens Energy" data-sub="July 2026 · PGCIL 765 kV / GSECL / UPPTCL supplies">
+          <div class="cred-row rv" style="--cred-n:8;">
+            <button class="cred-item" data-doc="assets/docs/siemens-2026.jpg" data-title="Siemens Energy" data-sub="July 2026 · PGCIL 765 kV / GSECL / UPPTCL supplies" aria-label="Siemens Energy performance letter, July 2026">
               <span class="cred-thumb"><img src="assets/docs/thumbs/siemens-2026.jpg" alt="Siemens Energy performance letter" loading="lazy"></span>
-              <h3>Siemens Energy</h3><div class="small">Jul 2026</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/siemens-2021.jpg" data-title="Siemens" data-sub="August 2021 · 765 kV / 500 MVA supplies since 2016">
+            <button class="cred-item" data-doc="assets/docs/siemens-2021.jpg" data-title="Siemens" data-sub="August 2021 · 765 kV / 500 MVA supplies since 2016" aria-label="Siemens performance letter, August 2021">
               <span class="cred-thumb"><img src="assets/docs/thumbs/siemens-2021.jpg" alt="Siemens performance letter" loading="lazy"></span>
-              <h3>Siemens</h3><div class="small">Aug 2021</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/ge-2021.jpg" data-title="GE T&amp;D India" data-sub="November 2021 · HV large power transformers">
+            <button class="cred-item" data-doc="assets/docs/ge-2021.jpg" data-title="GE T&amp;D India" data-sub="November 2021 · HV large power transformers" aria-label="GE T&amp;D India performance letter, November 2021">
               <span class="cred-thumb"><img src="assets/docs/thumbs/ge-2021.jpg" alt="GE T&amp;D performance letter" loading="lazy"></span>
-              <h3>GE T&amp;D India</h3><div class="small">Nov 2021</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/abb-2021.jpg" data-title="ABB" data-sub="July 2021 · RDSO &amp; POWERGRID transformers">
+            <button class="cred-item" data-doc="assets/docs/abb-2021.jpg" data-title="ABB" data-sub="July 2021 · RDSO &amp; POWERGRID transformers" aria-label="ABB performance letter, July 2021">
               <span class="cred-thumb"><img src="assets/docs/thumbs/abb-2021.jpg" alt="ABB performance letter 2021" loading="lazy"></span>
-              <h3>ABB</h3><div class="small">Jul 2021</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/abb-2019.jpg" data-title="ABB" data-sub="April 2019">
+            <button class="cred-item" data-doc="assets/docs/abb-2019.jpg" data-title="ABB" data-sub="April 2019" aria-label="ABB performance letter, April 2019">
               <span class="cred-thumb"><img src="assets/docs/thumbs/abb-2019.jpg" alt="ABB performance letter 2019" loading="lazy"></span>
-              <h3>ABB</h3><div class="small">Apr 2019</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/tbea-2021.jpg" data-title="TBEA Energy India" data-sub="August 2021 · supplying since March 2015">
+            <button class="cred-item" data-doc="assets/docs/tbea-2021.jpg" data-title="TBEA Energy India" data-sub="August 2021 · supplying since March 2015" aria-label="TBEA Energy India performance letter, August 2021">
               <span class="cred-thumb"><img src="assets/docs/thumbs/tbea-2021.jpg" alt="TBEA performance letter" loading="lazy"></span>
-              <h3>TBEA Energy India</h3><div class="small">Aug 2021</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/cgpower-2025.jpg" data-title="CG Power" data-sub="2025 · supplies via RDSO, Amara Raja, Powerica &amp; Serentica">
+            <button class="cred-item" data-doc="assets/docs/cgpower-2025.jpg" data-title="CG Power" data-sub="2025 · supplies via RDSO, Amara Raja, Powerica &amp; Serentica" aria-label="CG Power performance letter, 2025">
               <span class="cred-thumb"><img src="assets/docs/thumbs/cgpower-2025.jpg" alt="CG Power performance letter" loading="lazy"></span>
-              <h3>CG Power</h3><div class="small">2025</div>
             </button>
-            <button class="cred-item rv" data-doc="assets/docs/ssel-2025.jpg" data-title="Shirdi Sai Electricals" data-sub="January 2025 · up to 400 kV class">
+            <button class="cred-item" data-doc="assets/docs/ssel-2025.jpg" data-title="Shirdi Sai Electricals" data-sub="January 2025 · up to 400 kV class" aria-label="Shirdi Sai Electricals performance letter, January 2025">
               <span class="cred-thumb"><img src="assets/docs/thumbs/ssel-2025.jpg" alt="Shirdi Sai Electricals performance letter" loading="lazy"></span>
-              <h3>Shirdi Sai Electricals</h3><div class="small">Jan 2025</div>
             </button>
+            <a href="credentials.html" class="cred-viewall">View All<br>Certificates →</a>
           </div>
         </div>
-
-        <div class="cred-foot rv"><a href="credentials.html" class="link-ind">View All Certificates →</a></div>
       </div>
     </div>
   </div>
