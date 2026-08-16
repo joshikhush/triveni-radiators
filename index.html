@@ -96,10 +96,11 @@ ul{margin:0;padding:0;list-style:none;}
 
 .badge{
   display:inline-flex;align-items:center;justify-content:center;
-  width:52px;height:52px;border-radius:50%;
+  width:40px;height:40px;border-radius:50%;
   background:var(--ind-soft);color:var(--ind);flex-shrink:0;
+  margin-bottom:18px;
 }
-.badge svg{width:22px;height:22px;}
+.badge svg{width:18px;height:18px;}
 
 /* placeholders — clearly labelled, never stock/AI for products/factory/people/CSR */
 .ph{
@@ -186,6 +187,26 @@ ul{margin:0;padding:0;list-style:none;}
 .wwa-values{margin-top:14px;display:flex;flex-direction:column;gap:10px;}
 .wwa-values li{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--ink);font-weight:500;}
 .wwa-values li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ind);flex-shrink:0;}
+
+/* section 01 — dedicated classes (do not reuse .wwa-intro/.wwa-cols/.wwa-col, which section 10/CSR still uses) */
+.wwa-head{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:40px;}
+.wwa-lead{margin-top:16px;font-size:12.5px;line-height:1.8;color:var(--body);max-width:30ch;}
+.wwa-rule{width:36px;height:2px;background:var(--ind);margin-top:22px;}
+.wwa-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;align-items:stretch;}
+.wwa-card{padding-left:20px;border-left:1px solid var(--line);}
+.wwa-card h3{font-size:15px;font-weight:600;color:var(--ink);margin:0 0 10px;}
+.wwa-card p{font-size:12.5px;line-height:1.75;color:var(--body);}
+.wwa-card .wwa-values{margin-top:0;display:flex;flex-direction:column;gap:4px;}
+.wwa-card .wwa-values li{position:relative;padding-left:13px;font-size:12.5px;line-height:1.75;color:var(--body);}
+.wwa-card .wwa-values li::before{content:'';position:absolute;left:0;top:9px;width:3px;height:3px;border-radius:50%;background:var(--body);}
+@media(max-width:860px){
+  .wwa-head{grid-template-columns:1fr;gap:0;}
+  .wwa-head>.rv{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:24px;}
+  .wwa-lead{max-width:none;}
+  .wwa-grid{grid-template-columns:1fr;gap:0;}
+  .wwa-card{border-left:none;padding-left:0;border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:24px;}
+  .wwa-card:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0;}
+}
 
 /* ==========================================================
    02 — PRODUCT
@@ -424,32 +445,31 @@ footer.foot{background:var(--navy);padding-top:var(--sec);}
 </header>
 
 <!-- ===================== 01 — WHO WE ARE ===================== -->
-<section class="sec bg-white" id="who-we-are">
-  <div class="w g-head">
+<section class="sec bg-tint" id="who-we-are">
+  <div class="w wwa-head">
     <div class="rv">
       <div class="secnum">01</div>
       <h2 class="h2">Who We Are &amp;<br>Where We're Going</h2>
+      <p class="wwa-lead">Manufacturers of pressed-steel transformer radiators up to 765 kV class, in Naini, Prayagraj since 2012.</p>
+      <div class="wwa-rule"></div>
     </div>
-    <div>
-      <p class="wwa-intro rv">Triveni Radiators is the radiator division (Unit III) of Triveni Electroplast Pvt. Ltd. — manufacturers of pressed-steel transformer radiators up to 765 kV class, built at our automated facility in Naini, Prayagraj since 2012.</p>
-      <div class="wwa-cols">
-        <div class="wwa-col rv">
-          <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7l9 5 9-5-9-5z"/><path d="M3 17l9 5 9-5"/><path d="M3 12l9 5 9-5"/></svg></span>
-          <h3>Our Mission</h3>
-          <p>We manufacture and supply pressed-steel transformer radiators — Header Type, Offset, Swan Neck and Goose Neck — engineered to IEEMA 9, DIN 42559 and BS EN 50216-6 for power, distribution, industrial and renewable-energy transformers.</p>
-        </div>
-        <div class="wwa-col rv" data-d="1">
-          <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>
-          <h3>Our Vision</h3>
-          <p class="ph-txt" style="text-align:left;max-width:none;color:var(--muted);"><span class="ph-tag">Content pending</span><br>A formal vision statement has not yet been supplied by leadership — this slot is ready to receive it.</p>
-        </div>
-        <div class="wwa-col rv" data-d="2">
-          <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/><circle cx="19" cy="8" r="3"/><path d="M22 21v-1a3.5 3.5 0 0 0-3-3.46"/></svg></span>
-          <h3>Core Values</h3>
-          <ul class="wwa-values">
-            <li>Integrity</li><li>Excellence</li><li>Innovation</li><li>Teamwork</li>
-          </ul>
-        </div>
+    <div class="wwa-grid">
+      <div class="wwa-card rv">
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+        <h3>Our Mission</h3>
+        <p>We manufacture and supply pressed-steel transformer radiators — Header Type, Offset, Swan Neck and Goose Neck — engineered to IEEMA 9, DIN 42559 and BS EN 50216-6 for power, distribution, industrial and renewable-energy transformers.</p>
+      </div>
+      <div class="wwa-card rv" data-d="1">
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>
+        <h3>Our Vision</h3>
+        <p><span class="ph-tag">Content pending</span><br>A formal vision statement has not yet been supplied by leadership — this slot is ready to receive it.</p>
+      </div>
+      <div class="wwa-card rv" data-d="2">
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5.5V11c0 5.25 3.4 9.68 8 11 4.6-1.32 8-5.75 8-11V5.5L12 2z"/></svg></span>
+        <h3>Core Values</h3>
+        <ul class="wwa-values">
+          <li>Integrity</li><li>Excellence</li><li>Innovation</li><li>Teamwork</li>
+        </ul>
       </div>
     </div>
   </div>
