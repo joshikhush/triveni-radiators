@@ -335,22 +335,28 @@ ul{margin:0;padding:0;list-style:none;}
 /* ==========================================================
    06 — CAREERS (full-bleed photo band)
    ========================================================== */
-.cr-band{position:relative;overflow:hidden;padding:160px 0;background:var(--tint);}
+.cr-band{position:relative;min-height:360px;display:flex;align-items:center;overflow:hidden;background:var(--tint);}
+.cr-band>.w{width:100%;}
 .cr-media{position:absolute;inset:0;z-index:0;}
-.cr-media img{width:100%;height:100%;object-fit:cover;}
+.cr-media img{width:100%;height:100%;object-fit:cover;object-position:right center;filter:saturate(.88) contrast(1.06);}
+.cr-media::after{content:'';position:absolute;inset:0;background:var(--navy);opacity:.14;}
 .cr-veil{
   position:absolute;inset:0;z-index:1;
-  background:linear-gradient(90deg,var(--tint) 0%,var(--tint) 22%,
-    rgba(var(--tint-rgb),.92) 34%,rgba(var(--tint-rgb),.45) 55%,rgba(var(--tint-rgb),0) 78%);
+  background:linear-gradient(90deg,var(--tint) 0%,var(--tint) 20%,
+    rgba(var(--tint-rgb),.92) 32%,rgba(var(--tint-rgb),.45) 52%,rgba(var(--tint-rgb),0) 70%);
 }
-.cr-content{position:relative;z-index:2;max-width:380px;}
+.cr-content{position:relative;z-index:2;max-width:440px;}
 .cr-title{font-size:27px;font-weight:600;color:var(--ink);margin-top:2px;}
 .cr-sub{font-size:13px;color:var(--body);margin-top:9px;}
-.cr-content .btn{margin-top:22px;}
+.cr-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:24px 0;}
+.cr-values .v svg{width:20px;height:20px;color:var(--ind);}
+.cr-values .v h3{font-size:12.5px;font-weight:600;color:var(--ink);margin:8px 0 4px;}
+.cr-values .v p{font-size:11px;color:var(--body);line-height:1.6;}
 @media(max-width:860px){
-  .cr-band{padding:120px 0;}
-  .cr-veil{background:linear-gradient(180deg,rgba(var(--tint-rgb),.96),rgba(var(--tint-rgb),.82));}
+  .cr-band{min-height:300px;}
+  .cr-veil{background:linear-gradient(180deg,rgba(var(--tint-rgb),.96),rgba(var(--tint-rgb),.84));}
   .cr-content{max-width:none;}
+  .cr-values{grid-template-columns:1fr;}
 }
 
 /* ==========================================================
@@ -792,6 +798,24 @@ footer.foot{background:var(--navy);padding-top:var(--sec);}
       <div class="secnum">06</div>
       <h2 class="cr-title">Careers</h2>
       <p class="cr-sub">Build your future with Triveni Radiators.</p>
+      <!-- pending client confirmation — see chat note -->
+      <div class="cr-values">
+        <div class="v">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <h3>Engineering-led</h3>
+          <p>Radiators running in 765 kV substations</p>
+        </div>
+        <div class="v">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <h3>Learn on the line</h3>
+          <p>India's first fully automatic radiator line</p>
+        </div>
+        <div class="v">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+          <h3>Grow with us</h3>
+          <p>Teams that have been here since 2012</p>
+        </div>
+      </div>
       <a href="careers.html" class="btn btn-primary">Explore Opportunities →</a>
     </div>
   </div>
