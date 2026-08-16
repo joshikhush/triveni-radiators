@@ -79,6 +79,7 @@ ul{margin:0;padding:0;list-style:none;}
 
 .g-head{display:grid;grid-template-columns:minmax(0,250px) minmax(0,1fr);gap:var(--gap);}
 .g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--gap);align-items:center;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 
 .btn{
   display:inline-flex;align-items:center;gap:8px;
@@ -379,29 +380,46 @@ ul{margin:0;padding:0;list-style:none;}
 /* ==========================================================
    07 — CONTACT
    ========================================================== */
-.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,.8fr);gap:var(--gap);}
-.contact-block{margin-bottom:32px;}
-.contact-block h3{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:10px;}
-.contact-block .val{font-size:14.5px;color:var(--ink);line-height:1.6;overflow-wrap:anywhere;}
-.contact-block a.val{transition:color var(--fast) var(--ez);}
-.contact-block a.val:hover{color:var(--ind);}
-.map-ph{aspect-ratio:4/3;}
-form{display:flex;flex-direction:column;gap:16px;}
-.field{display:flex;flex-direction:column;gap:6px;}
-.field label{font-size:12.5px;font-weight:500;color:var(--ink);}
-.field input,.field textarea{
-  border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;
-  font-family:inherit;font-size:13.5px;color:var(--ink);background:var(--white);
-  transition:border-color var(--fast) var(--ez);
+.ct-band{padding:60px 0;}
+.contact-row{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr) minmax(0,.9fr);gap:32px;align-items:start;}
+.ct-head .secnum{margin-bottom:8px;}
+.ct-head h2{font-size:30px;font-weight:600;color:var(--ink);line-height:1.2;}
+
+.ct-item{display:flex;align-items:flex-start;gap:12px;}
+.ct-icon{width:30px;height:30px;border-radius:50%;background:var(--ind-soft);color:var(--ind);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ct-icon svg{width:14px;height:14px;}
+.ct-item h3{font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.ct-item p{font-size:11.5px;color:var(--body);line-height:1.7;}
+
+.ct-form-label{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:10px;}
+.ct-row1{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.ct-field input,.ct-field textarea{
+  width:100%;font-size:11.5px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--tint);color:var(--ink);font-family:inherit;
+  transition:border-color var(--fast) var(--ez),background var(--fast) var(--ez);
 }
-.field input:focus,.field textarea:focus{outline:none;border-color:var(--ind);}
-.field textarea{resize:vertical;min-height:100px;}
-.form-msg{font-size:13px;color:var(--ind);display:none;margin-top:4px;}
+.ct-field textarea{resize:vertical;min-height:52px;display:block;}
+.ct-field input:focus,.ct-field textarea:focus{outline:none;border-color:var(--ind);background:var(--white);}
+.ct-form-foot{display:flex;justify-content:flex-end;margin-top:12px;}
+.ct-send{font-size:11.5px;font-weight:500;padding:10px 20px;}
+.form-msg{font-size:12px;color:var(--ind);display:none;margin-top:8px;text-align:right;}
 .form-msg.show{display:block;}
-.social-row{display:flex;flex-direction:column;gap:14px;margin-top:10px;}
-.social-row a{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:500;color:var(--ink);}
-.social-row a svg{width:18px;height:18px;color:var(--ind);}
-@media(max-width:1024px){.contact-grid{grid-template-columns:1fr;}}
+
+.ct-connect-label{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:12px;}
+.ct-social{display:flex;flex-direction:column;gap:14px;}
+.ct-social a,.ct-social .pending{display:flex;align-items:center;gap:10px;}
+.ct-social .pending{opacity:.5;}
+.ct-social-icon{width:28px;height:28px;border-radius:var(--radius-md);background:var(--ind-soft);color:var(--ind);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ct-social-icon svg{width:14px;height:14px;}
+.ct-social-label{font-size:12.5px;color:var(--body);}
+@media(max-width:1080px){
+  .contact-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;}
+  .ct-head{grid-column:1/-1;}
+}
+@media(max-width:860px){
+  .contact-row{grid-template-columns:1fr;}
+  .ct-head{grid-column:auto;}
+}
 
 /* ==========================================================
    CHAIRMAN / MD NOTE (navy)
@@ -822,49 +840,54 @@ footer.foot{background:var(--navy);padding-top:var(--sec);}
 </section>
 
 <!-- ===================== 07 — CONTACT US ===================== -->
-<section class="sec bg-tint" id="contact">
+<section class="ct-band bg-white" id="contact">
   <div class="w">
-    <div class="secnum rv">07</div>
-    <h2 class="h2 rv" style="margin-bottom:44px;">Contact Us</h2>
-    <div class="contact-grid">
-      <div class="rv">
-        <div class="contact-block">
-          <h3>Triveni Location</h3>
-          <div class="ph map-ph"><span class="ph-tag">Map pending</span><p class="ph-txt">Google Maps embed for Naini, Prayagraj goes here.</p></div>
-        </div>
-        <div class="contact-block">
-          <h3>Address</h3>
-          <div class="val">B-2, UPSIDC Industrial Area,<br>P.O. T.S.L., Naini, Prayagraj — 211010<br>Uttar Pradesh, India</div>
-        </div>
+    <div class="contact-row">
+      <div class="ct-head rv">
+        <div class="secnum">07</div>
+        <h2>Contact Us</h2>
       </div>
 
-      <div class="rv" data-d="1">
-        <div class="contact-block">
-          <h3>Enquiry Form</h3>
-          <form id="enquiryForm">
-            <div class="field"><label for="f-name">Name *</label><input id="f-name" type="text" required></div>
-            <div class="field"><label for="f-company">Company</label><input id="f-company" type="text"></div>
-            <div class="field"><label for="f-email">Email *</label><input id="f-email" type="email" required></div>
-            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" type="tel"></div>
-            <div class="field"><label for="f-msg">Message *</label><textarea id="f-msg" required></textarea></div>
-            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send enquiry</button>
-            <div class="form-msg" id="formMsg">Thank you — we'll reply within one business day.</div>
-          </form>
-        </div>
+      <div class="ct-item rv" data-d="1">
+        <span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <div><h3>Triveni Location</h3><p>Naini, Prayagraj, Uttar Pradesh, India</p></div>
       </div>
 
-      <div class="rv" data-d="2">
-        <div class="contact-block">
-          <h3>Get in Touch</h3>
-          <div class="val"><a class="val" href="mailto:sales@triveniradiators.com">sales@triveniradiators.com</a></div>
-          <div class="val" style="margin-top:6px;"><a class="val" href="mailto:info@triveniradiators.com">info@triveniradiators.com</a></div>
-        </div>
-        <div class="contact-block">
-          <h3>Connect</h3>
-          <div class="social-row">
-            <a href="https://www.linkedin.com/company/triveni-electroplast-pvt-ltd" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 9.5H5.67V18h2.67V9.5zM7 5.9a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1zM18.33 18v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.07.79-2.43 1.34V9.5h-2.67V18h2.67v-4.5c0-1.18.83-1.5 1.4-1.5.55 0 1.47.32 1.47 1.5V18h2.67z"/></svg>LinkedIn</a>
-            <span class="small"><span style="color:var(--ind);font-weight:600;">Content pending —</span> WhatsApp button will be added once a business number is supplied.</span>
+      <!-- Address: reference shows "Plot No. 4"; the site's verified address everywhere else
+           (footer, credentials facts strip, contact.html) is "B-2, UPSIDC Industrial Area".
+           Kept the verified one per the spec's own "do not guess" instruction — confirm with
+           the client which is current before switching to "Plot No. 4". -->
+      <div class="ct-item rv" data-d="2">
+        <span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span>
+        <div><h3>Address</h3><p>B-2, UPSIDC Industrial Area, Naini, Prayagraj – 211010, Uttar Pradesh</p></div>
+      </div>
+
+      <div class="rv" data-d="3">
+        <div class="ct-form-label">Enquiry Form</div>
+        <form id="enquiryForm">
+          <div class="ct-row1">
+            <div class="ct-field"><label for="f-name" class="sr-only">Your Name</label><input id="f-name" type="text" placeholder="Your Name" required></div>
+            <div class="ct-field"><label for="f-email" class="sr-only">Your Email</label><input id="f-email" type="email" placeholder="Your Email" required></div>
           </div>
+          <div class="ct-field"><label for="f-msg" class="sr-only">Your Message</label><textarea id="f-msg" placeholder="Your Message" required></textarea></div>
+          <div class="ct-form-foot">
+            <button type="submit" class="btn btn-primary ct-send">Send Message →</button>
+          </div>
+          <div class="form-msg" id="formMsg">Thank you — we'll reply within one business day.</div>
+        </form>
+      </div>
+
+      <div class="rv" data-d="4">
+        <div class="ct-connect-label">Connect With Us</div>
+        <div class="ct-social">
+          <a href="https://www.linkedin.com/company/triveni-electroplast-pvt-ltd" target="_blank" rel="noopener">
+            <span class="ct-social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 9.5H5.67V18h2.67V9.5zM7 5.9a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1zM18.33 18v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.07.79-2.43 1.34V9.5h-2.67V18h2.67v-4.5c0-1.18.83-1.5 1.4-1.5.55 0 1.47.32 1.47 1.5V18h2.67z"/></svg></span>
+            <span class="ct-social-label">LinkedIn</span>
+          </a>
+          <span class="pending" title="Business WhatsApp number not yet supplied">
+            <span class="ct-social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.62 15.03L2 22l5.1-1.34A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.08-1.11l-.29-.17-3.03.8.81-2.95-.19-.3A8 8 0 1 1 12 20zm4.4-5.99c-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.46-.39-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.4 1.37.51.58.18 1.1.16 1.51.1.46-.07 1.43-.58 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28z"/></svg></span>
+            <span class="ct-social-label">WhatsApp — number pending</span>
+          </span>
         </div>
       </div>
     </div>
