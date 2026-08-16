@@ -424,13 +424,19 @@ ul{margin:0;padding:0;list-style:none;}
 /* ==========================================================
    CHAIRMAN / MD NOTE (navy)
    ========================================================== */
-.leaders{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--gap);}
-.leader-card{display:flex;flex-direction:column;gap:20px;}
-.leader-portrait{aspect-ratio:3/4;max-width:220px;}
-.leader-role{font-size:12px;font-weight:600;color:var(--ind-lt);text-transform:uppercase;letter-spacing:.08em;}
-.leader-name{font-size:16px;font-weight:600;color:var(--white);margin-top:4px;}
-.leader-sig{margin-top:10px;font-size:12px;color:var(--on-d-2);border-top:1px solid var(--line-d);padding-top:10px;}
-@media(max-width:900px){.leaders{grid-template-columns:1fr;}}
+.leaders-band{background:var(--navy);padding:52px 0;}
+.leaders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px;}
+.leader-card{display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;align-items:start;}
+.leader-portrait{aspect-ratio:4/5;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--line-d);width:100%;overflow:hidden;}
+.leader-head{display:flex;align-items:baseline;gap:8px;}
+.leader-qmark{font-size:19px;line-height:1;color:var(--ind-lt);font-family:Georgia,'Times New Roman',serif;}
+.leader-role{font-size:13.5px;font-weight:600;color:var(--white);}
+.leader-body{font-size:12px;color:var(--on-d-2);line-height:1.8;margin-top:11px;}
+.leader-sig{margin-top:14px;width:104px;height:26px;object-fit:contain;display:block;}
+@media(max-width:860px){
+  .leaders{grid-template-columns:1fr;gap:40px;}
+  .leader-card{grid-template-columns:120px minmax(0,1fr);}
+}
 
 /* ==========================================================
    FOOTER
@@ -474,14 +480,10 @@ footer.foot{background:var(--navy);padding-top:var(--sec);}
   .wwa-cols{grid-template-columns:1fr;gap:28px;}
   .wwa-col{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:24px;}
   .wwa-col:first-child{border-top:none;padding-top:0;}
-  .leader-card{flex-direction:row;align-items:flex-start;}
-  .leader-portrait{max-width:140px;flex-shrink:0;}
 }
 @media(max-width:768px){
   .hero-col{max-width:100%;}
   .contact-grid{grid-template-columns:1fr;}
-  .leader-card{flex-direction:column;}
-  .leader-portrait{max-width:160px;}
 }
 @media(max-width:375px){
   :root{--pad:20px;}
@@ -895,24 +897,24 @@ footer.foot{background:var(--navy);padding-top:var(--sec);}
 </section>
 
 <!-- ===================== CHAIRMAN'S / MD'S NOTE ===================== -->
-<section class="sec bg-navy on-dark">
+<!-- Unattributed per the reference (no name/designation shown) — open question for the
+     client: should the Chairman's and MD's names appear under a leadership statement? -->
+<section class="leaders-band on-dark">
   <div class="w leaders">
     <div class="leader-card rv">
-      <div class="leader-portrait ph ph-dark"><span class="ph-tag">Portrait pending</span></div>
+      <div class="leader-portrait ph ph-dark" style="min-height:0;" role="img" aria-label="Chairman portrait — photograph pending from client"><span class="ph-tag">Portrait pending</span></div>
       <div>
-        <div class="leader-role">Chairman's Note</div>
-        <div class="leader-name">Name &amp; designation — pending</div>
-        <p class="lead" style="margin-top:14px;">Content pending. The Chairman's note has not yet been supplied — no quote is published here until the client provides one in writing.</p>
-        <div class="leader-sig">Signature — pending</div>
+        <div class="leader-head"><span class="leader-qmark" aria-hidden="true">&#8220;</span><span class="leader-role">Chairman's Note</span></div>
+        <p class="leader-body">Content pending. The Chairman's note has not yet been supplied — no quote is published here until the client confirms the wording in writing.</p>
+        <div class="leader-sig ph ph-dark" style="min-height:0;padding:0;" title="Signature pending — must be supplied as a transparent PNG scan"></div>
       </div>
     </div>
     <div class="leader-card rv" data-d="1">
-      <div class="leader-portrait ph ph-dark"><span class="ph-tag">Portrait pending</span></div>
+      <div class="leader-portrait ph ph-dark" style="min-height:0;" role="img" aria-label="Managing Director portrait — photograph pending from client"><span class="ph-tag">Portrait pending</span></div>
       <div>
-        <div class="leader-role">MD's Note</div>
-        <div class="leader-name">Name &amp; designation — pending</div>
-        <p class="lead" style="margin-top:14px;">Content pending. The Managing Director's note has not yet been supplied — no quote is published here until the client provides one in writing.</p>
-        <div class="leader-sig">Signature — pending</div>
+        <div class="leader-head"><span class="leader-qmark" aria-hidden="true">&#8220;</span><span class="leader-role">MD's Note</span></div>
+        <p class="leader-body">Content pending. The Managing Director's note has not yet been supplied — no quote is published here until the client confirms the wording in writing.</p>
+        <div class="leader-sig ph ph-dark" style="min-height:0;padding:0;" title="Signature pending — must be supplied as a transparent PNG scan"></div>
       </div>
     </div>
   </div>
