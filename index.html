@@ -135,8 +135,21 @@ ul{margin:0;padding:0;list-style:none;}
 }
 .nav-logo img{height:34px;width:auto;display:block;border-radius:3px;}
 .nav-links{display:flex;align-items:center;gap:36px;}
-.nav-links a{font-size:13.5px;font-weight:500;color:rgba(255,255,255,.82);transition:color var(--fast) var(--ez);}
-.nav-links a:hover{color:var(--white);}
+.nav-links a{
+  position:relative;font-size:13.5px;font-weight:500;color:rgba(255,255,255,.85);
+  padding:6px 0;transition:color .25s var(--ez);
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;right:100%;bottom:0;height:1.5px;
+  background:currentColor;transition:right .32s var(--ez);
+}
+.nav-links a:hover,.nav-links a:focus-visible{color:#fff;}
+.nav-links a:hover::after,.nav-links a:focus-visible::after{right:0;}
+.nav-links a.on{color:#fff;}
+.nav-links a.on::after{right:0;background:var(--ind-lt);}
+@media(prefers-reduced-motion:reduce){
+  .nav-links a,.nav-links a::after{transition:none;}
+}
 .nav-cta{font-size:13.5px;font-weight:500;color:var(--white);background:var(--ind);padding:11px 22px;border-radius:999px;transition:background var(--fast) var(--ez),transform var(--fast) var(--ez);}
 .nav-cta:hover{background:var(--ind-2);transform:translateY(-2px);}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px;}
@@ -542,11 +555,11 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
 <nav id="nav">
   <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html" class="on">Home</a></li>
     <li><a href="#product">Product</a></li>
     <li><a href="#credential">Credential</a></li>
     <li><a href="#milestones">Milestones</a></li>
-    <li><a href="#customers">Clientele</a></li>
+    <li><a href="#customers">Clients</a></li>
     <li><a href="#careers">Careers</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Contact Us</a>
@@ -1002,7 +1015,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
     </div>
     <div class="foot-col">
       <div class="foot-col-title">Quick Links</div>
-      <a href="index.html">Home</a><a href="#product">Product</a><a href="#credential">Credential</a><a href="#milestones">Milestones</a><a href="#customers">Clientele</a><a href="#careers">Careers</a>
+      <a href="index.html">Home</a><a href="#product">Product</a><a href="#credential">Credential</a><a href="#milestones">Milestones</a><a href="#customers">Clients</a><a href="#careers">Careers</a>
     </div>
     <div class="foot-col">
       <div class="foot-col-title">Support</div>
@@ -1042,6 +1055,36 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
 var nav = document.getElementById('nav');
 function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 170); }
 addEventListener('scroll', onScrollNav, {passive:true}); onScrollNav();
+
+/* nav scrollspy — the active underline follows whichever section is currently in view,
+   rather than staying fixed on Home */
+var spySections = [
+  { id: 'top', href: 'index.html' },
+  { id: 'product', href: '#product' },
+  { id: 'credential', href: '#credential' },
+  { id: 'milestones', href: '#milestones' },
+  { id: 'customers', href: '#customers' },
+  { id: 'careers', href: '#careers' }
+].map(function(s){
+  return { el: document.getElementById(s.id), link: document.querySelector('#navLinks a[href="' + s.href + '"]') };
+}).filter(function(s){ return s.el && s.link; });
+
+function setActiveNav(link){
+  spySections.forEach(function(s){ s.link.classList.remove('on'); });
+  if (link) link.classList.add('on');
+}
+
+if (spySections.length) {
+  var spyIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        var match = spySections.filter(function(s){ return s.el === entry.target; })[0];
+        if (match) setActiveNav(match.link);
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+  spySections.forEach(function(s){ spyIO.observe(s.el); });
+}
 
 /* mobile nav toggle */
 var navToggle = document.getElementById('navToggle'), navLinks = document.getElementById('navLinks');
