@@ -237,21 +237,13 @@ ul{margin:0;padding:0;list-style:none;}
 .hero-title .l2{color:rgba(255,255,255,.55);}
 .hero-sub{margin-top:22px;font-size:clamp(18px,1.6vw,24px);font-weight:400;line-height:1.5;letter-spacing:-.01em;color:var(--on-d-2);}
 .hero-ctas{display:flex;align-items:center;gap:18px;margin-top:36px;flex-wrap:wrap;}
-.hero-index{
-  position:absolute;left:var(--pad);bottom:40px;z-index:4;
-  display:flex;flex-direction:row;align-items:center;gap:14px;
-  font-size:12px;font-weight:500;color:rgba(255,255,255,.55);letter-spacing:.05em;
-}
-.hero-index-line{width:64px;height:1px;background:rgba(255,255,255,.25);}
 @media(max-width:1100px){.hero-col{max-width:62%;}}
 @media(max-width:860px){
   .hero{min-height:auto;padding:150px 0 64px;}
   .hero-col{max-width:100%;}
   .hero-media img{object-position:78% center;}
   .hero-veil{background:linear-gradient(180deg,rgba(12,24,48,.55) 0%,rgba(12,24,48,.85) 55%,rgba(12,24,48,.97) 100%);}
-  .hero-index{position:static;margin-top:40px;}
 }
-@media(max-width:768px){.hero-index{display:none;}}
 
 /* -- TARGET COMPOSITION (uncomment/adapt once a real cutout asset exists) --
 .hero-media{display:none;}
@@ -699,7 +691,6 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
         <a href="#product" class="btn btn-primary btn-p">Explore Radiators</a>
         <a href="#contact" class="hero-secondary">Let's Connect <span class="ar">→</span></a>
       </div>
-      <div class="hero-index"><span>01</span><span class="hero-index-line"></span><span>05</span></div>
     </div>
   </div>
 </header>
