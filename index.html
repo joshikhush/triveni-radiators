@@ -21,6 +21,7 @@
   --white:#FFFFFF;
   --tint:#F8F9FC;
   --tint-rgb:248,249,252;
+  --ind-rgb:79,70,229;
   --white-rgb:255,255,255;
   --tint-2:#F2F4FA;
   --lav:#EDF0F9;
@@ -86,18 +87,60 @@ ul{margin:0;padding:0;list-style:none;}
   display:inline-flex;align-items:center;gap:8px;
   font-size:13.5px;font-weight:500;
   padding:13px 26px;border-radius:999px;
-  transition:background var(--fast) var(--ez),color var(--fast) var(--ez),
-    transform var(--fast) var(--ez),border-color var(--fast) var(--ez);
   border:1px solid transparent;cursor:pointer;
 }
 .btn-primary{background:var(--ind);color:var(--white);}
-.btn-primary:hover{background:var(--ind-2);transform:translateY(-2px);}
-.btn-ghost{border-color:var(--line);color:var(--ink);background:transparent;}
-.btn-ghost:hover{border-color:var(--ind);color:var(--ind);}
-.btn-ghost-dark{border-color:var(--line-d);color:var(--white);background:transparent;}
-.btn-ghost-dark:hover{border-color:var(--ind-lt);color:var(--ind-lt);}
-.link-ind{font-size:13.5px;font-weight:500;color:var(--ind);display:inline-flex;align-items:center;gap:6px;transition:gap var(--fast) var(--ez),color var(--fast) var(--ez);}
-.link-ind:hover{gap:10px;color:var(--ind-2);}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:transparent;transition:border-color .25s var(--ez),color .25s var(--ez);}
+.btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--ind);color:var(--ind);}
+
+/* shared arrow-slide: every "→" is wrapped in <span class="ar"> so it can move independently of its label */
+.ar{display:inline-block;transition:transform .25s var(--ez);}
+.btn:hover .ar,.btn:focus-visible .ar,
+.link-ind:hover .ar,.link-ind:focus-visible .ar,
+.cred-viewall:hover .ar,.cred-viewall:focus-visible .ar,
+.csr-link:hover .ar,.csr-link:focus-visible .ar,
+.hero-secondary:hover .ar,.hero-secondary:focus-visible .ar{
+  transform:translateX(3px);
+}
+
+/* primary button — Contact Us, Explore Radiators, Explore Opportunities, Send Message */
+.btn-p{
+  background:var(--ind);color:#fff;
+  box-shadow:0 1px 2px rgba(16,24,40,.06);
+  transition:background .25s var(--ez),color .25s var(--ez),box-shadow .25s var(--ez),transform .25s var(--ez);
+}
+.btn-p:hover,.btn-p:focus-visible{
+  background:var(--ind-lt);
+  color:var(--ink);
+  box-shadow:0 8px 20px -6px rgba(var(--ind-rgb),.35);
+  transform:translateY(-1px);
+}
+.btn-p:active{transform:translateY(0);box-shadow:0 2px 6px rgba(var(--ind-rgb),.3);}
+
+/* ghost/outline button — dark backgrounds only, no lift/shadow */
+.btn-ghost-dark{
+  border:1px solid rgba(255,255,255,.3);color:#fff;background:transparent;
+  transition:border-color .25s var(--ez),background .25s var(--ez);
+}
+.btn-ghost-dark:hover,.btn-ghost-dark:focus-visible{border-color:#fff;background:rgba(255,255,255,.08);}
+
+/* text button — hero "Let's Connect" */
+.hero-secondary{font-size:13.5px;font-weight:500;color:#fff;display:inline-flex;align-items:center;gap:8px;transition:color .25s var(--ez);}
+.hero-secondary:hover,.hero-secondary:focus-visible{color:var(--ind-lt);}
+
+/* inline links — View All Products, View Details, View Full Timeline */
+.link-ind{font-size:13.5px;font-weight:500;color:var(--ind);display:inline-flex;align-items:center;gap:6px;transition:color .25s var(--ez);}
+.link-ind:hover,.link-ind:focus-visible{color:var(--ind-2);}
+
+@media(prefers-reduced-motion:reduce){
+  .btn-p,.btn-p:hover,.btn-p:focus-visible,.btn-p:active{transform:none;box-shadow:0 1px 2px rgba(16,24,40,.06);}
+  .ar{transition:none;}
+  .btn:hover .ar,.btn:focus-visible .ar,
+  .link-ind:hover .ar,.link-ind:focus-visible .ar,
+  .cred-viewall:hover .ar,.cred-viewall:focus-visible .ar,
+  .csr-link:hover .ar,.csr-link:focus-visible .ar,
+  .hero-secondary:hover .ar,.hero-secondary:focus-visible .ar{transform:none;}
+}
 
 .badge{
   display:inline-flex;align-items:center;justify-content:center;
@@ -150,8 +193,7 @@ ul{margin:0;padding:0;list-style:none;}
 @media(prefers-reduced-motion:reduce){
   .nav-links a,.nav-links a::after{transition:none;}
 }
-.nav-cta{font-size:13.5px;font-weight:500;color:var(--white);background:var(--ind);padding:11px 22px;border-radius:999px;transition:background var(--fast) var(--ez),transform var(--fast) var(--ez);}
-.nav-cta:hover{background:var(--ind-2);transform:translateY(-2px);}
+.nav-cta{font-size:13.5px;font-weight:500;color:var(--white);background:var(--ind);padding:11px 22px;border-radius:999px;}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px;}
 .nav-toggle span{display:block;width:22px;height:2px;background:var(--white);}
 
@@ -211,9 +253,29 @@ ul{margin:0;padding:0;list-style:none;}
 .wwa-lead{margin-top:16px;font-size:12.5px;line-height:1.8;color:var(--body);max-width:30ch;}
 .wwa-rule{width:36px;height:2px;background:var(--ind);margin-top:22px;}
 .wwa-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;align-items:stretch;}
-.wwa-card{padding-left:20px;border-left:1px solid var(--line);}
+.wwa-card{
+  padding:24px 26px;border-radius:10px;
+  border-left:1px solid var(--line);
+  background:transparent;position:relative;
+  transition:background .3s var(--ez),box-shadow .3s var(--ez),transform .3s var(--ez);
+}
+.wwa-card:hover{
+  background:var(--white);
+  border-left-color:transparent;
+  transform:translateY(-3px);
+  box-shadow:
+    0 12px 28px -10px rgba(var(--ind-rgb),.28),
+    0 4px 10px -4px rgba(var(--ind-rgb),.14),
+    0 1px 2px rgba(16,24,40,.04);
+}
+.wwa-card .badge{transition:background .3s var(--ez),transform .3s var(--ez);}
+.wwa-card:hover .badge{background:#E4E2FA;transform:scale(1.06);}
 .wwa-card h3{font-size:15px;font-weight:600;color:var(--ink);margin:0 0 10px;}
 .wwa-card p{font-size:12.5px;line-height:1.75;color:var(--body);}
+@media(prefers-reduced-motion:reduce){
+  .wwa-card,.wwa-card .badge{transition:none;}
+  .wwa-card:hover{transform:none;}
+}
 .wwa-card .wwa-values{margin-top:0;display:flex;flex-direction:column;gap:4px;}
 .wwa-card .wwa-values li{position:relative;padding-left:13px;font-size:12.5px;line-height:1.75;color:var(--body);}
 .wwa-card .wwa-values li::before{content:'';position:absolute;left:0;top:9px;width:3px;height:3px;border-radius:50%;background:var(--body);}
@@ -287,7 +349,8 @@ ul{margin:0;padding:0;list-style:none;}
 .cred-thumb img{width:100%;height:100%;object-fit:contain;display:block;}
 .cred-item:hover .cred-thumb{transform:translateY(-3px);box-shadow:0 14px 28px -16px rgba(16,24,40,.18);}
 .cred-af{display:flex;justify-content:flex-end;margin-top:20px;}
-.cred-viewall{font-size:13px;font-weight:500;color:var(--ind);line-height:1.4;}
+.cred-viewall{font-size:13px;font-weight:500;color:var(--ind);line-height:1.4;display:inline-flex;align-items:center;gap:4px;transition:color .25s var(--ez);}
+.cred-viewall:hover,.cred-viewall:focus-visible{color:var(--ind-2);}
 @media(max-width:520px){
   .cred-row{grid-template-columns:repeat(auto-fill,96px);min-height:calc(96px * 4 / 3);}
   .cred-item{width:96px;}
@@ -430,7 +493,8 @@ ul{margin:0;padding:0;list-style:none;}
 .csr-content{position:relative;z-index:2;max-width:340px;}
 .csr-title{font-size:25px;font-weight:600;color:var(--ink);margin-top:2px;}
 .csr-sub{font-size:11.5px;color:var(--body);line-height:1.8;margin-top:9px;max-width:34ch;}
-.csr-link{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:var(--ind);margin-top:14px;}
+.csr-link{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:var(--ind);margin-top:14px;transition:color .25s var(--ez);}
+.csr-link:hover,.csr-link:focus-visible{color:var(--ind-2);}
 @media(max-width:860px){
   .csr-band{min-height:260px;}
   .csr-veil{background:linear-gradient(180deg,rgba(var(--white-rgb),.96),rgba(var(--white-rgb),.86));}
@@ -516,7 +580,9 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
 .foot-touch-item svg{width:13px;height:13px;color:var(--on-d-2);flex-shrink:0;margin-top:2px;}
 .foot-touch-item span{font-size:11.5px;color:var(--on-d-2);line-height:1.6;}
 .foot-toprow{display:flex;justify-content:flex-end;padding-bottom:16px;}
-.to-top{width:32px;height:32px;border-radius:50%;background:var(--tint);color:var(--ink);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.to-top{width:32px;height:32px;border-radius:50%;background:var(--tint);color:var(--ink);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .25s var(--ez),color .25s var(--ez),transform .25s var(--ez);}
+.to-top:hover,.to-top:focus-visible{background:var(--ind);color:#fff;transform:translateY(-2px);}
+@media(prefers-reduced-motion:reduce){.to-top:hover,.to-top:focus-visible{transform:none;}}
 .foot-bottom{border-top:1px solid var(--line-d);padding:16px 0;text-align:center;}
 .foot-copy{font-size:11px;color:var(--on-d-2);}
 @media(max-width:900px){.foot-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
@@ -562,7 +628,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
     <li><a href="#customers">Clients</a></li>
     <li><a href="#careers">Careers</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Contact Us</a>
+  <a href="#contact" class="nav-cta btn-p">Contact Us</a>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
@@ -578,8 +644,8 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
       <h1 class="hero-title">Engineered for the Transformers That <span>Power Progress.</span></h1>
       <p class="hero-sub">Pressed-steel radiators for power transformers, engineered to IEEMA 9, DIN 42559 &amp; BS EN 50216-6 — trusted by Siemens Energy, GE T&amp;D, ABB, TBEA, CG Power and Shirdi Sai Electricals.</p>
       <div class="hero-ctas">
-        <a href="#product" class="btn btn-primary">Explore Radiators</a>
-        <a href="#contact" class="hero-secondary">Let's Connect →</a>
+        <a href="#product" class="btn btn-primary btn-p">Explore Radiators</a>
+        <a href="#contact" class="hero-secondary">Let's Connect <span class="ar">→</span></a>
       </div>
     </div>
   </div>
@@ -626,7 +692,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
         <h2 class="h2">Product</h2>
         <div class="prod-sub">Radiator Types</div>
       </div>
-      <a href="products.html" class="link-ind prod-viewall">View All Products →</a>
+      <a href="products.html" class="link-ind prod-viewall">View All Products <span class="ar">→</span></a>
     </div>
 
     <div class="prod-grid">
@@ -635,7 +701,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
           <div class="prod-num">01</div>
           <h3>Header Type<br>Radiators</h3>
           <p>Reliable cooling for maximum transformer performance — the core range, available in flanged, non-flanged and offset options.</p>
-          <a href="products.html#header-type" class="link-ind prod-cta">View Details →</a>
+          <a href="products.html#header-type" class="link-ind prod-cta">View Details <span class="ar">→</span></a>
         </div>
         <div class="prod-img ph" role="img" aria-label="Header Type radiator — product photograph pending from client">
           <span class="ph-tag">Photo pending</span>
@@ -646,7 +712,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
           <div class="prod-num">02</div>
           <h3>Offset<br>Radiators</h3>
           <p>Compact design for space-constrained installations — flexible mounting where a standard radiator won't fit.</p>
-          <a href="products.html#offset" class="link-ind prod-cta">View Details →</a>
+          <a href="products.html#offset" class="link-ind prod-cta">View Details <span class="ar">→</span></a>
         </div>
         <div class="prod-img ph" role="img" aria-label="Offset radiator — product photograph pending from client">
           <span class="ph-tag">Photo pending</span>
@@ -657,7 +723,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
           <div class="prod-num">03</div>
           <h3>Swan Neck<br>Radiators</h3>
           <p>Designed for complex transformer configurations — curved inlet &amp; outlet connections for unique mounting arrangements.</p>
-          <a href="products.html#swan-neck" class="link-ind prod-cta">View Details →</a>
+          <a href="products.html#swan-neck" class="link-ind prod-cta">View Details <span class="ar">→</span></a>
         </div>
         <div class="prod-img ph" role="img" aria-label="Swan Neck radiator — product photograph pending from client">
           <span class="ph-tag">Photo pending</span>
@@ -668,7 +734,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
           <div class="prod-num">04</div>
           <h3>Goose Neck<br>Radiators</h3>
           <p>Custom engineered for flexible transformer connections — special inlet &amp; outlet orientations, superior cooling efficiency.</p>
-          <a href="products.html#goose-neck" class="link-ind prod-cta">View Details →</a>
+          <a href="products.html#goose-neck" class="link-ind prod-cta">View Details <span class="ar">→</span></a>
         </div>
         <div class="prod-img ph" role="img" aria-label="Goose Neck radiator — product photograph pending from client">
           <span class="ph-tag">Photo pending</span>
@@ -711,7 +777,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
               <span class="cred-thumb"><img src="assets/docs/thumbs/zed-gold.jpg" alt="ZED Gold certificate" loading="lazy"></span>
             </button>
           </div>
-          <div class="cred-af"><a href="credentials.html" class="cred-viewall">View All Certificates →</a></div>
+          <div class="cred-af"><a href="credentials.html" class="cred-viewall">View All Certificates <span class="ar">→</span></a></div>
         </div>
 
         <div class="tab-panel" data-panel="appr">
@@ -732,7 +798,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
               <span class="cred-thumb"><img src="assets/docs/thumbs/pstcl-2024.jpg" alt="PSTCL vendor approval letter" loading="lazy"></span>
             </button>
           </div>
-          <div class="cred-af"><a href="credentials.html" class="cred-viewall">View All Certificates →</a></div>
+          <div class="cred-af"><a href="credentials.html" class="cred-viewall">View All Certificates <span class="ar">→</span></a></div>
         </div>
 
         <div class="tab-panel" data-panel="perf">
@@ -761,7 +827,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
               <span class="cred-thumb"><img src="assets/docs/thumbs/ssel-2025.jpg" alt="Shirdi Sai Electricals performance letter" loading="lazy"></span>
             </button>
           </div>
-          <div class="cred-af"><a href="credentials.html" class="cred-viewall">View All Certificates →</a></div>
+          <div class="cred-af"><a href="credentials.html" class="cred-viewall">View All Certificates <span class="ar">→</span></a></div>
         </div>
       </div>
     </div>
@@ -808,7 +874,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
           </div>
         </div>
 
-        <div class="ms-more rv"><a href="milestones.html" class="link-ind">View Full Timeline →</a></div>
+        <div class="ms-more rv"><a href="milestones.html" class="link-ind">View Full Timeline <span class="ar">→</span></a></div>
       </div>
     </div>
   </div>
@@ -893,7 +959,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
           <p>Teams that have been here since 2012</p>
         </div>
       </div>
-      <a href="careers.html" class="btn btn-primary">Explore Opportunities →</a>
+      <a href="careers.html" class="btn btn-primary btn-p">Explore Opportunities <span class="ar">→</span></a>
     </div>
   </div>
 </section>
@@ -930,7 +996,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
           </div>
           <div class="ct-field"><label for="f-msg" class="sr-only">Your Message</label><textarea id="f-msg" placeholder="Your Message" required></textarea></div>
           <div class="ct-form-foot">
-            <button type="submit" class="btn btn-primary ct-send">Send Message →</button>
+            <button type="submit" class="btn btn-primary btn-p ct-send">Send Message <span class="ar">→</span></button>
           </div>
           <div class="form-msg" id="formMsg">Thank you — we'll reply within one business day.</div>
         </form>
@@ -991,7 +1057,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
       <div class="secnum">10</div>
       <h2 class="csr-title">CSR</h2>
       <p class="csr-sub">We are committed to creating a positive impact on society and the environment through responsible business practices and community initiatives.</p>
-      <a href="csr.html" class="csr-link">Learn More →</a>
+      <a href="csr.html" class="csr-link">Learn More <span class="ar">→</span></a>
     </div>
   </div>
 </section>
