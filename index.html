@@ -256,23 +256,29 @@ ul{margin:0;padding:0;list-style:none;}
 .tab-panel{display:none;}
 .tab-panel.active{display:block;}
 
-/* section 03 — certificate row: N thumbnails + trailing link, all on one row */
-.cred-row{display:grid;grid-template-columns:repeat(var(--cred-n),minmax(0,1fr)) auto;gap:14px;align-items:center;}
-.cred-item{background:none;border:none;text-align:left;padding:0;cursor:pointer;width:100%;}
+/* section 03 — certificate thumbnails: fixed-width tracks so thumbnail size is
+   independent of item count (was fractional repeat(N,1fr), which shrank thumbnails
+   on the 8-item Performance tab vs the 5-item Certification/Approval tabs) */
+.cred-row{
+  display:grid;grid-template-columns:repeat(auto-fill,116px);gap:14px;
+  justify-content:start;align-items:start;
+  min-height:calc(116px * 4 / 3);
+  transition:min-height 250ms var(--ez);
+}
+.cred-item{background:none;border:none;text-align:left;padding:0;cursor:pointer;width:116px;}
 .cred-thumb{
-  display:block;aspect-ratio:3/4;border-radius:var(--radius-sm);border:1px solid var(--line);
+  display:block;width:116px;aspect-ratio:3/4;border-radius:var(--radius-sm);border:1px solid var(--line);
   background:var(--white);padding:6px;box-sizing:border-box;
   transition:transform 250ms var(--ez),box-shadow 250ms var(--ez);
 }
 .cred-thumb img{width:100%;height:100%;object-fit:contain;display:block;}
 .cred-item:hover .cred-thumb{transform:translateY(-3px);box-shadow:0 14px 28px -16px rgba(16,24,40,.18);}
+.cred-af{display:flex;justify-content:flex-end;margin-top:20px;}
 .cred-viewall{font-size:13px;font-weight:500;color:var(--ind);line-height:1.4;}
-@media(max-width:1080px){
-  .cred-row{grid-template-columns:repeat(3,minmax(0,1fr));}
-  .cred-viewall{grid-column:1/-1;justify-self:end;margin-top:16px;}
-}
 @media(max-width:520px){
-  .cred-row{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .cred-row{grid-template-columns:repeat(auto-fill,96px);min-height:calc(96px * 4 / 3);}
+  .cred-item{width:96px;}
+  .cred-thumb{width:96px;}
 }
 
 /* ==========================================================
@@ -675,7 +681,7 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
         </div>
 
         <div class="tab-panel active" data-panel="cert">
-          <div class="cred-row rv" style="--cred-n:5;">
+          <div class="cred-row rv">
             <button class="cred-item" data-doc="assets/docs/iso-9001.jpg" data-title="ISO 9001:2015" data-sub="Quality Management · Valid to April 2028" aria-label="ISO 9001:2015 — Quality Management, valid to April 2028">
               <span class="cred-thumb"><img src="assets/docs/thumbs/iso-9001.jpg" alt="ISO 9001:2015 certificate" loading="lazy"></span>
             </button>
@@ -691,12 +697,12 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
             <button class="cred-item" data-doc="assets/docs/zed-gold.jpg" data-title="ZED Gold" data-sub="MSME Sustainable Certification · September 2025" aria-label="ZED Gold — MSME Sustainable Certification, September 2025">
               <span class="cred-thumb"><img src="assets/docs/thumbs/zed-gold.jpg" alt="ZED Gold certificate" loading="lazy"></span>
             </button>
-            <a href="credentials.html" class="cred-viewall">View All<br>Certificates →</a>
           </div>
+          <div class="cred-af"><a href="credentials.html" class="cred-viewall">View All Certificates →</a></div>
         </div>
 
         <div class="tab-panel" data-panel="appr">
-          <div class="cred-row rv" style="--cred-n:5;">
+          <div class="cred-row rv">
             <button class="cred-item" data-doc="assets/docs/pgcil-grade-a.jpg" data-title="PGCIL Grade A" data-sub="POWERGRID · Grade A vendor, up to 765 kV · July 2022" aria-label="PGCIL Grade A — POWERGRID, Grade A vendor up to 765 kV, July 2022">
               <span class="cred-thumb"><img src="assets/docs/thumbs/pgcil-grade-a.jpg" alt="PGCIL Grade A letter" loading="lazy"></span>
             </button>
@@ -712,26 +718,25 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
             <button class="cred-item" data-doc="assets/docs/pstcl-2024.jpg" data-title="PSTCL Vendor Approval" data-sub="Punjab · up to 220 kV / 160 MVA · October 2024" aria-label="PSTCL Vendor Approval — Punjab, up to 220 kV / 160 MVA, October 2024">
               <span class="cred-thumb"><img src="assets/docs/thumbs/pstcl-2024.jpg" alt="PSTCL vendor approval letter" loading="lazy"></span>
             </button>
-            <a href="credentials.html" class="cred-viewall">View All<br>Certificates →</a>
           </div>
+          <div class="cred-af"><a href="credentials.html" class="cred-viewall">View All Certificates →</a></div>
         </div>
 
         <div class="tab-panel" data-panel="perf">
-          <div class="cred-row rv" style="--cred-n:8;">
+          <!-- Capped to 6 (one per OEM) to match Certification/Approval's preview count, per
+               the "cap every tab at six, let View All carry the rest" recommendation — confirm
+               with the client. Dropped the duplicate older letters (Siemens Aug-2021, superseded
+               by the Jul-2026 one; ABB Apr-2019, superseded by the Jul-2021 one) rather than
+               truncating arbitrarily — both still appear in full on credentials.html. -->
+          <div class="cred-row rv">
             <button class="cred-item" data-doc="assets/docs/siemens-2026.jpg" data-title="Siemens Energy" data-sub="July 2026 · PGCIL 765 kV / GSECL / UPPTCL supplies" aria-label="Siemens Energy performance letter, July 2026">
               <span class="cred-thumb"><img src="assets/docs/thumbs/siemens-2026.jpg" alt="Siemens Energy performance letter" loading="lazy"></span>
-            </button>
-            <button class="cred-item" data-doc="assets/docs/siemens-2021.jpg" data-title="Siemens" data-sub="August 2021 · 765 kV / 500 MVA supplies since 2016" aria-label="Siemens performance letter, August 2021">
-              <span class="cred-thumb"><img src="assets/docs/thumbs/siemens-2021.jpg" alt="Siemens performance letter" loading="lazy"></span>
             </button>
             <button class="cred-item" data-doc="assets/docs/ge-2021.jpg" data-title="GE T&amp;D India" data-sub="November 2021 · HV large power transformers" aria-label="GE T&amp;D India performance letter, November 2021">
               <span class="cred-thumb"><img src="assets/docs/thumbs/ge-2021.jpg" alt="GE T&amp;D performance letter" loading="lazy"></span>
             </button>
             <button class="cred-item" data-doc="assets/docs/abb-2021.jpg" data-title="ABB" data-sub="July 2021 · RDSO &amp; POWERGRID transformers" aria-label="ABB performance letter, July 2021">
               <span class="cred-thumb"><img src="assets/docs/thumbs/abb-2021.jpg" alt="ABB performance letter 2021" loading="lazy"></span>
-            </button>
-            <button class="cred-item" data-doc="assets/docs/abb-2019.jpg" data-title="ABB" data-sub="April 2019" aria-label="ABB performance letter, April 2019">
-              <span class="cred-thumb"><img src="assets/docs/thumbs/abb-2019.jpg" alt="ABB performance letter 2019" loading="lazy"></span>
             </button>
             <button class="cred-item" data-doc="assets/docs/tbea-2021.jpg" data-title="TBEA Energy India" data-sub="August 2021 · supplying since March 2015" aria-label="TBEA Energy India performance letter, August 2021">
               <span class="cred-thumb"><img src="assets/docs/thumbs/tbea-2021.jpg" alt="TBEA performance letter" loading="lazy"></span>
@@ -742,8 +747,8 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
             <button class="cred-item" data-doc="assets/docs/ssel-2025.jpg" data-title="Shirdi Sai Electricals" data-sub="January 2025 · up to 400 kV class" aria-label="Shirdi Sai Electricals performance letter, January 2025">
               <span class="cred-thumb"><img src="assets/docs/thumbs/ssel-2025.jpg" alt="Shirdi Sai Electricals performance letter" loading="lazy"></span>
             </button>
-            <a href="credentials.html" class="cred-viewall">View All<br>Certificates →</a>
           </div>
+          <div class="cred-af"><a href="credentials.html" class="cred-viewall">View All Certificates →</a></div>
         </div>
       </div>
     </div>
