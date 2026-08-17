@@ -205,30 +205,69 @@ ul{margin:0;padding:0;list-style:none;}
    HERO
    ========================================================== */
 .hero{
-  position:relative;min-height:100vh;overflow:hidden;
-  display:flex;align-items:center;
+  position:relative;min-height:100svh;overflow:hidden;
+  display:flex;align-items:center;isolation:isolate;
   background:var(--navy);
 }
-.hero-media{position:absolute;inset:0;z-index:0;}
-.hero-media img{width:100%;height:100%;object-fit:cover;object-position:60% 45%;}
+/* layer 1 — sky gradient. Renders instantly, costs nothing, and is the fallback if the
+   photo below fails to load. */
+.hero-sky{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,#0C1830 0%,#16274A 42%,#22375F 68%,#2C4272 100%);}
+
+/* INTERIM FALLBACK — see spec's own sanctioned compromise: a clean transformer cutout
+   (background removed, edges hand-cleaned around bushings/fins) isn't something this
+   environment's tooling can produce reliably (no rembg / ML segmentation available, and
+   ImageMagick alone can't matte a photo against sky+ground). Using the full approved hero
+   photo as this layer instead, with a stronger veil, exactly as instructed. When a real
+   cutout is supplied, replace this block with the layered version documented below. */
+.hero-media{position:absolute;inset:0;z-index:1;}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:65% 45%;}
 .hero-veil{
-  position:absolute;inset:0;z-index:1;
-  background:linear-gradient(90deg,rgba(12,24,48,.97) 0%,rgba(12,24,48,.93) 34%,rgba(12,24,48,.72) 52%,rgba(12,24,48,.35) 74%,rgba(12,24,48,.55) 100%);
+  position:absolute;inset:0;z-index:3;
+  background:linear-gradient(90deg,rgba(12,24,48,.98) 0%,rgba(12,24,48,.95) 30%,rgba(12,24,48,.82) 50%,rgba(12,24,48,.48) 70%,rgba(12,24,48,.2) 100%);
 }
-.hero-inner{position:relative;z-index:2;width:100%;padding:0 var(--pad);}
-.hero-col{max-width:800px;padding-top:80px;}
+/* layer 2 — decorative dot arc. Sits above the fallback photo (so it stays visible as
+   texture) rather than below it as in the true cutout composition, where it would sit
+   behind the transparent unit instead. */
+.hero-arc{position:absolute;right:-8%;bottom:-10%;width:70%;aspect-ratio:1;z-index:2;opacity:.3;pointer-events:none;color:var(--ind-lt);}
+
+.hero-txt{position:relative;z-index:4;width:100%;padding:0 var(--pad);}
+.hero-col{max-width:52%;padding-top:40px;}
 .hero-eyebrow{font-size:12px;font-weight:500;color:var(--ind-lt);letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;}
-.hero-title{font-size:clamp(44px,7vw,104px);font-weight:400;line-height:1.0;letter-spacing:-.03em;color:var(--white);}
-.hero-title span{color:var(--ind-lt);}
-.hero-sub{margin-top:22px;font-size:clamp(18px,1.6vw,24px);font-weight:400;line-height:1.5;letter-spacing:-.01em;color:var(--on-d-2);max-width:620px;}
+.hero-title{font-size:clamp(36px,4.4vw,68px);font-weight:400;line-height:1.08;letter-spacing:-.02em;color:var(--white);}
+.hero-title .l2{color:rgba(255,255,255,.55);}
+.hero-sub{margin-top:22px;font-size:clamp(18px,1.6vw,24px);font-weight:400;line-height:1.5;letter-spacing:-.01em;color:var(--on-d-2);}
 .hero-ctas{display:flex;align-items:center;gap:18px;margin-top:36px;flex-wrap:wrap;}
 .hero-index{
-  position:absolute;right:var(--pad);top:50%;transform:translateY(-50%);z-index:2;
-  display:flex;flex-direction:column;align-items:center;gap:14px;
+  position:absolute;left:var(--pad);bottom:40px;z-index:4;
+  display:flex;flex-direction:row;align-items:center;gap:14px;
   font-size:12px;font-weight:500;color:rgba(255,255,255,.55);letter-spacing:.05em;
 }
-.hero-index-line{width:1px;height:64px;background:rgba(255,255,255,.25);}
+.hero-index-line{width:64px;height:1px;background:rgba(255,255,255,.25);}
+@media(max-width:1100px){.hero-col{max-width:62%;}}
+@media(max-width:860px){
+  .hero{min-height:auto;padding:150px 0 64px;}
+  .hero-col{max-width:100%;}
+  .hero-media img{object-position:78% center;}
+  .hero-veil{background:linear-gradient(180deg,rgba(12,24,48,.55) 0%,rgba(12,24,48,.85) 55%,rgba(12,24,48,.97) 100%);}
+  .hero-index{position:static;margin-top:40px;}
+}
 @media(max-width:768px){.hero-index{display:none;}}
+
+/* -- TARGET COMPOSITION (uncomment/adapt once a real cutout asset exists) --
+.hero-media{display:none;}
+.hero-unit{
+  position:absolute;right:0;bottom:0;z-index:2;
+  width:min(58%,900px);height:auto;
+  object-fit:contain;object-position:bottom right;
+  pointer-events:none;
+}
+@media(max-width:1100px){.hero-unit{width:52%;}}
+@media(max-width:860px){
+  .hero{min-height:auto;}
+  .hero-unit{right:50%;bottom:0;transform:translateX(50%);width:90%;}
+}
+@media(max-width:520px){.hero-unit{width:110%;}}
+-- */
 
 /* ==========================================================
    REVEAL
@@ -620,7 +659,6 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
   :root{--pad:20px;--sec:72px;}
 }
 @media(max-width:768px){
-  .hero-col{max-width:100%;}
   .contact-grid{grid-template-columns:1fr;}
 }
 </style>
@@ -643,23 +681,27 @@ footer.foot{background:var(--navy);padding:48px 0 20px;}
 </nav>
 
 <!-- ===================== HERO ===================== -->
-<!-- Client's Excel brief calls for "Drone Shot + Video" here; no drone footage has been supplied yet,
-     so this uses the cinematic transformer stock photo approved for hero/customer-band use only. -->
+<!-- Client's Excel brief calls for "Drone Shot + Video" here; no drone footage has been supplied
+     yet. Layered composition per spec (sky/arc/unit/content); the "unit" layer is an interim
+     fallback using the approved cinematic stock photo (see the CSS comment above .hero for why
+     a real cutout couldn't be produced here) rather than a true transparent transformer cutout. -->
 <header class="hero" id="top">
+  <div class="hero-sky"></div>
   <div class="hero-media"><img src="assets/hero%20img.png" alt="High-voltage power transformer at dusk" fetchpriority="high"></div>
+  <svg class="hero-arc" viewBox="0 0 400 400" fill="currentColor" aria-hidden="true"><circle cx="320" cy="400" r="3" opacity="1"/><circle cx="323" cy="379" r="3" opacity="1"/><circle cx="331" cy="360" r="3" opacity="1"/><circle cx="343" cy="343" r="3" opacity="1"/><circle cx="360" cy="331" r="3" opacity="1"/><circle cx="379" cy="323" r="3" opacity="1"/><circle cx="400" cy="320" r="3" opacity="1"/><circle cx="260" cy="400" r="2.5" opacity="0.85"/><circle cx="265" cy="364" r="2.5" opacity="0.85"/><circle cx="279" cy="330" r="2.5" opacity="0.85"/><circle cx="301" cy="301" r="2.5" opacity="0.85"/><circle cx="330" cy="279" r="2.5" opacity="0.85"/><circle cx="364" cy="265" r="2.5" opacity="0.85"/><circle cx="400" cy="260" r="2.5" opacity="0.85"/><circle cx="200" cy="400" r="2" opacity="0.65"/><circle cx="207" cy="348" r="2" opacity="0.65"/><circle cx="227" cy="300" r="2" opacity="0.65"/><circle cx="259" cy="259" r="2" opacity="0.65"/><circle cx="300" cy="227" r="2" opacity="0.65"/><circle cx="348" cy="207" r="2" opacity="0.65"/><circle cx="400" cy="200" r="2" opacity="0.65"/><circle cx="140" cy="400" r="1.5" opacity="0.45"/><circle cx="149" cy="333" r="1.5" opacity="0.45"/><circle cx="175" cy="270" r="1.5" opacity="0.45"/><circle cx="216" cy="216" r="1.5" opacity="0.45"/><circle cx="270" cy="175" r="1.5" opacity="0.45"/><circle cx="333" cy="149" r="1.5" opacity="0.45"/><circle cx="400" cy="140" r="1.5" opacity="0.45"/><circle cx="80" cy="400" r="1" opacity="0.28"/><circle cx="91" cy="317" r="1" opacity="0.28"/><circle cx="123" cy="240" r="1" opacity="0.28"/><circle cx="174" cy="174" r="1" opacity="0.28"/><circle cx="240" cy="123" r="1" opacity="0.28"/><circle cx="317" cy="91" r="1" opacity="0.28"/><circle cx="400" cy="80" r="1" opacity="0.28"/></svg>
   <div class="hero-veil"></div>
-  <div class="hero-inner">
+  <div class="hero-txt">
     <div class="hero-col">
       <div class="hero-eyebrow">Est. 2012 · Naini, Prayagraj</div>
-      <h1 class="hero-title">Engineered for the Transformers That <span>Power Progress.</span></h1>
+      <h1 class="hero-title">Engineered for the Transformers That <span class="l2">Power Progress.</span></h1>
       <p class="hero-sub">Pressed-steel radiators for power transformers, engineered to IEEMA 9, DIN 42559 &amp; BS EN 50216-6 — trusted by Siemens Energy, GE T&amp;D, ABB, TBEA, CG Power and Shirdi Sai Electricals.</p>
       <div class="hero-ctas">
         <a href="#product" class="btn btn-primary btn-p">Explore Radiators</a>
         <a href="#contact" class="hero-secondary">Let's Connect <span class="ar">→</span></a>
       </div>
+      <div class="hero-index"><span>01</span><span class="hero-index-line"></span><span>05</span></div>
     </div>
   </div>
-  <div class="hero-index"><span>01</span><span class="hero-index-line"></span><span>05</span></div>
 </header>
 
 <!-- ===================== 01 — WHO WE ARE ===================== -->
