@@ -21,6 +21,7 @@
   --white:#FFFFFF;
   --tint:#F8F9FC;
   --tint-rgb:248,249,252;
+  --white-rgb:255,255,255;
   --tint-2:#F2F4FA;
   --lav:#EDF0F9;
   --ink:#101828;
@@ -361,20 +362,26 @@ ul{margin:0;padding:0;list-style:none;}
 }
 
 /* ==========================================================
-   10 — CSR (text + image)
+   10 — CSR (full-bleed photo band — same construction as Careers,
+   but no navy tint: the image is green/organic and shouldn't be muddied)
    ========================================================== */
-.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--gap);align-items:center;}
-.split-img{position:relative;border-radius:var(--radius-lg);overflow:hidden;min-height:340px;}
-.split-img img{width:100%;height:100%;object-fit:cover;}
-.chip-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;}
-.chip{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:12.5px;color:var(--body);}
-.chip strong{color:var(--ink);font-weight:600;}
-.values-row{display:flex;flex-wrap:wrap;gap:28px;margin-top:28px;}
-.values-row .v-item{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;color:var(--ink);}
-.values-row .v-item svg{width:16px;height:16px;color:var(--ind);}
-@media(max-width:900px){
-  .split{grid-template-columns:1fr;}
-  .split-img{order:-1;min-height:220px;}
+.csr-band{position:relative;min-height:300px;display:flex;align-items:center;overflow:hidden;background:var(--white);}
+.csr-band>.w{width:100%;}
+.csr-media{position:absolute;inset:0;z-index:0;}
+.csr-media img{width:100%;height:100%;object-fit:cover;object-position:right center;}
+.csr-veil{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,var(--white) 0%,var(--white) 18%,
+    rgba(var(--white-rgb),.94) 30%,rgba(var(--white-rgb),.4) 50%,rgba(var(--white-rgb),0) 68%);
+}
+.csr-content{position:relative;z-index:2;max-width:340px;}
+.csr-title{font-size:25px;font-weight:600;color:var(--ink);margin-top:2px;}
+.csr-sub{font-size:11.5px;color:var(--body);line-height:1.8;margin-top:9px;max-width:34ch;}
+.csr-link{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:var(--ind);margin-top:14px;}
+@media(max-width:860px){
+  .csr-band{min-height:260px;}
+  .csr-veil{background:linear-gradient(180deg,rgba(var(--white-rgb),.96),rgba(var(--white-rgb),.86));}
+  .csr-content{max-width:none;}
 }
 
 /* ==========================================================
@@ -441,29 +448,27 @@ ul{margin:0;padding:0;list-style:none;}
 /* ==========================================================
    FOOTER
    ========================================================== */
-footer.foot{background:var(--navy);padding-top:var(--sec);}
-.foot-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:var(--gap);padding-bottom:56px;}
-.foot-logo img{height:34px;width:auto;border-radius:3px;margin-bottom:14px;}
-.foot-tag{font-size:13px;font-style:italic;color:var(--on-d-2);margin-bottom:14px;}
-.foot-desc{font-size:12.5px;line-height:1.75;color:var(--on-d-2);max-width:280px;margin-bottom:20px;}
-.foot-certs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
-.foot-cert{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ind-lt);border:1px solid var(--line-d);padding:4px 10px;border-radius:999px;}
+footer.foot{background:var(--navy);padding:48px 0 20px;}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,.8fr) minmax(0,.9fr) minmax(0,1.5fr);gap:40px;padding-bottom:40px;}
+.foot-logo img{height:32px;width:auto;border-radius:3px;margin-bottom:14px;}
+.foot-desc{font-size:11.5px;line-height:1.8;color:var(--on-d-2);max-width:30ch;margin-bottom:20px;}
 .foot-socials{display:flex;gap:10px;}
-.foot-social{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-d);display:flex;align-items:center;justify-content:center;color:var(--on-d-2);transition:border-color var(--fast) var(--ez),color var(--fast) var(--ez);}
-.foot-social:hover{border-color:var(--ind);color:var(--ind-lt);}
-.foot-social svg{width:15px;height:15px;}
-.foot-col-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
-.foot-col a{display:block;font-size:13px;color:var(--on-d-2);margin-bottom:12px;transition:color var(--fast) var(--ez);overflow-wrap:anywhere;}
+.foot-social{width:26px;height:26px;border-radius:50%;border:1px solid var(--line-d);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--on-d-2);transition:border-color var(--fast) var(--ez),color var(--fast) var(--ez);}
+.foot-social:hover{border-color:var(--white);color:var(--white);}
+.foot-social svg{width:13px;height:13px;}
+.foot-col-title{font-size:12.5px;font-weight:600;color:var(--white);margin-bottom:14px;}
+.foot-col a{display:block;font-size:11.5px;color:var(--on-d-2);padding:4px 0;transition:color var(--fast) var(--ez);overflow-wrap:anywhere;}
 .foot-col a:hover{color:var(--white);}
-.foot-bottom{border-top:1px solid var(--line-d);padding:22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.foot-copy{font-size:12px;color:var(--on-d-2);}
-.foot-legal{display:flex;gap:20px;}
-.foot-legal a{font-size:12px;color:var(--on-d-2);}
-.foot-legal a:hover{color:var(--white);}
-.to-top{width:38px;height:38px;border-radius:50%;border:1px solid var(--line-d);display:flex;align-items:center;justify-content:center;color:var(--on-d-2);background:none;cursor:pointer;transition:border-color var(--fast) var(--ez),color var(--fast) var(--ez);}
-.to-top:hover{border-color:var(--ind);color:var(--ind-lt);}
+.foot-touch-item{display:flex;align-items:flex-start;gap:10px;padding:4px 0;}
+.foot-touch-item svg{width:13px;height:13px;color:var(--on-d-2);flex-shrink:0;margin-top:2px;}
+.foot-touch-item span{font-size:11.5px;color:var(--on-d-2);line-height:1.6;}
+.foot-toprow{display:flex;justify-content:flex-end;padding-bottom:16px;}
+.to-top{width:32px;height:32px;border-radius:50%;background:var(--tint);color:var(--ink);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.foot-bottom{border-top:1px solid var(--line-d);padding:16px 0;text-align:center;}
+.foot-copy{font-size:11px;color:var(--on-d-2);}
 @media(max-width:900px){.foot-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:600px){.foot-grid{grid-template-columns:1fr;}}
+@media(max-width:860px){.foot-toprow{display:none;}}
 
 /* ==========================================================
    RESPONSIVE — general
@@ -921,64 +926,60 @@ footer.foot{background:var(--navy);padding-top:var(--sec);}
 </section>
 
 <!-- ===================== 10 — CSR ===================== -->
-<section class="sec bg-white">
+<!-- Content status: this copy is generic and unverified — describes no specific Triveni
+     activity (see chat note: confirm real initiatives with the client, or consider dropping
+     the section, rather than shipping a generic claim). Image is stock but illustrates a
+     theme rather than claiming a specific activity — confirm it's acceptable, a real photo
+     from an actual initiative would be stronger. -->
+<section class="csr-band">
+  <div class="csr-media"><img src="assets/csr%20bg.png" alt="Hands planting a young sapling in soil" loading="lazy"></div>
+  <div class="csr-veil"></div>
   <div class="w">
-    <div class="split">
-      <div>
-        <div class="secnum rv">10</div>
-        <h2 class="h2 rv">CSR</h2>
-        <p class="lead rv" style="margin-top:16px;max-width:460px;">"We Value Values" isn't only how we run the business — it's how we engage with our community, our people and the environment.</p>
-        <div class="wwa-cols" style="margin-top:32px;">
-          <div class="wwa-col rv"><h3>Community</h3><p class="small"><span style="color:var(--ind);font-weight:600;">Details pending —</span> real initiatives and partners to be supplied by the client.</p></div>
-          <div class="wwa-col rv" data-d="1"><h3>People</h3><p class="small"><span style="color:var(--ind);font-weight:600;">Details pending —</span> programmes and impact numbers to be supplied by the client.</p></div>
-          <div class="wwa-col rv" data-d="2"><h3>Environment</h3><p class="small"><span style="color:var(--ind);font-weight:600;">Details pending —</span> programmes and impact numbers to be supplied by the client.</p></div>
-        </div>
-      </div>
-      <div class="split-img rv">
-        <div class="ph" style="min-height:340px;height:100%;">
-          <span class="ph-tag">Photo pending</span>
-          <p class="ph-txt">A CSR photograph from the client will go here.</p>
-        </div>
-      </div>
+    <div class="csr-content rv">
+      <div class="secnum">10</div>
+      <h2 class="csr-title">CSR</h2>
+      <p class="csr-sub">We are committed to creating a positive impact on society and the environment through responsible business practices and community initiatives.</p>
+      <a href="csr.html" class="csr-link">Learn More →</a>
     </div>
   </div>
 </section>
 
 <!-- ===================== FOOTER ===================== -->
+<!-- Socials: spec's reference order is Facebook/Google/LinkedIn/Instagram, but only LinkedIn
+     is a verified real account for this company (confirmed repeatedly elsewhere in the
+     project) -- removed the other three per the spec's own "remove any that don't exist"
+     instruction rather than linking unconfirmed accounts.
+     Legal entity name: kept "Triveni Electroplast Pvt Ltd" (matches the real certificates in
+     the repo) instead of the reference's "Triveni Radiators Pvt. Ltd." -- flagging per the
+     spec's own "confirm with the client" instruction, this is a legal notice. -->
 <footer class="foot on-dark">
   <div class="w foot-grid">
     <div>
       <a href="index.html" class="foot-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
-      <div class="foot-tag">"We Value Values"</div>
-      <p class="foot-desc">Manufacturers of pressed-steel transformer radiators up to 765 kV class — trusted by Siemens Energy, GE, ABB, TBEA, CG Power and Shirdi Sai Electricals. Made in Naini, Prayagraj.</p>
-      <div class="foot-certs">
-        <span class="foot-cert">PGCIL Grade A</span><span class="foot-cert">RDSO</span><span class="foot-cert">NTPC</span>
-        <span class="foot-cert">PSTCL</span><span class="foot-cert">EN ISO 3834-2</span><span class="foot-cert">ZED Gold</span><span class="foot-cert">765kV Class</span>
-      </div>
+      <p class="foot-desc">Precision built radiators for power transformers — trusted by India's leading OEMs and utilities.</p>
       <div class="foot-socials">
         <a href="https://www.linkedin.com/company/triveni-electroplast-pvt-ltd" class="foot-social" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 9.5H5.67V18h2.67V9.5zM7 5.9a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1zM18.33 18v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.07.79-2.43 1.34V9.5h-2.67V18h2.67v-4.5c0-1.18.83-1.5 1.4-1.5.55 0 1.47.32 1.47 1.5V18h2.67z"/></svg></a>
-        <a href="mailto:info@triveniradiators.com" class="foot-social" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></a>
       </div>
     </div>
     <div class="foot-col">
-      <div class="foot-col-title">Company</div>
-      <a href="index.html">Home</a><a href="milestones.html">Our Journey</a><a href="leadership.html">Leadership</a><a href="csr.html">CSR</a><a href="careers.html">Careers</a>
+      <div class="foot-col-title">Quick Links</div>
+      <a href="index.html">Home</a><a href="#product">Product</a><a href="#credential">Credential</a><a href="#milestones">Milestones</a><a href="#customers">Clientele</a><a href="#careers">Careers</a>
     </div>
     <div class="foot-col">
-      <div class="foot-col-title">Products</div>
-      <a href="products.html">All Products</a><a href="products.html#header-type">Header Type</a><a href="products.html#offset">Offset</a><a href="products.html#swan-neck">Swan Neck</a><a href="products.html#goose-neck">Goose Neck</a>
+      <div class="foot-col-title">Support</div>
+      <a href="#contact">Contact Us</a><a href="#contact">Enquiry</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a>
     </div>
     <div class="foot-col">
       <div class="foot-col-title">Get in Touch</div>
-      <a href="mailto:sales@triveniradiators.com">sales@triveniradiators.com</a>
-      <a href="mailto:info@triveniradiators.com">info@triveniradiators.com</a>
-      <a href="#contact">B-2, UPSIDC Industrial Area, Naini, Prayagraj — 211010</a>
+      <div class="foot-touch-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg><span>B-2, UPSIDC Industrial Area, Naini, Prayagraj – 211010, Uttar Pradesh, India</span></div>
+      <div class="foot-touch-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span><a href="mailto:info@triveniradiators.com" style="color:inherit;">info@triveniradiators.com</a></span></div>
     </div>
+  </div>
+  <div class="w foot-toprow">
+    <button class="to-top" id="toTop" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
   </div>
   <div class="w foot-bottom">
     <div class="foot-copy">© 2026 Triveni Electroplast Pvt Ltd — Triveni Radiators. All rights reserved.</div>
-    <div class="foot-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a><a href="sitemap.html">Sitemap</a></div>
-    <button class="to-top" id="toTop" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
   </div>
 </footer>
 
