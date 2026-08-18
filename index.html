@@ -405,18 +405,19 @@ ul{margin:0;padding:0;list-style:none;}
 .wwa-reveal .word{color:var(--muted);}
 
 .pin-wrap{position:relative;height:280vh;background:var(--tint-2);}
-.pin-sticky{position:sticky;top:0;height:100svh;max-width:920px;margin:0 auto;padding:0 var(--pad);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.pin-sticky{position:sticky;top:0;height:100svh;max-width:1400px;margin:0 auto;padding:0 var(--pad);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
 
-/* top offset cleared past the fixed nav (81.5px solid-state height) rather than the
-   reference's bare 56px, which sat mostly hidden behind it. A shared track line + sliding
-   indicator (not per-item borders) -- rail and the progress row below are outside the
-   cards and stay constant; JS only ever touches the cards and these two indicators. */
-.rail{position:absolute;top:104px;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:56px;padding-bottom:16px;border-bottom:1px solid var(--line);}
-.rail .rail-item{font-size:26px;font-weight:500;letter-spacing:.04em;color:var(--muted);transition:color .3s var(--ez);text-transform:uppercase;white-space:nowrap;}
+/* rail sits in normal flow above the card now (like a section heading), not absolutely
+   positioned over it -- previous absolute positioning + a larger label size caused it to
+   climb onto the card's own content. A shared track line + sliding indicator (not
+   per-item borders) -- rail and the progress row below are outside the cards and stay
+   constant; JS only ever touches the cards and these two indicators. */
+.rail{position:relative;display:flex;gap:48px;margin-bottom:40px;padding-bottom:16px;border-bottom:1px solid var(--line);}
+.rail .rail-item{font-size:22px;font-weight:500;letter-spacing:.04em;color:var(--muted);transition:color .3s var(--ez);text-transform:uppercase;white-space:nowrap;}
 .rail .rail-item.active{color:var(--ink);}
 .rail-indicator{position:absolute;left:0;bottom:-1px;width:0;height:2px;background:var(--ind);transition:left .3s var(--ez),width .3s var(--ez);}
 
-.stack{position:relative;z-index:1;width:100%;height:min(720px,calc(100svh - 220px));}
+.stack{position:relative;z-index:1;width:min(1320px,100%);height:min(760px,calc(100svh - 220px));}
 /* each card is its own glass rectangle -- square corners, neutral translucent white
    gradient (no indigo glow/tint, per instruction), backdrop-filter blur/saturate, thin
    border, neutral shadow. No CSS transition anywhere on .card: scroll position alone
@@ -425,7 +426,7 @@ ul{margin:0;padding:0;list-style:none;}
 .stack .card{
   position:absolute;inset:0;border-radius:0;
   display:flex;flex-direction:column;justify-content:center;
-  padding:56px 64px;
+  padding:72px;
   background:linear-gradient(160deg,rgba(255,255,255,.7) 0%,rgba(255,255,255,.42) 100%);
   backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
   border:1px solid rgba(255,255,255,.55);
@@ -433,10 +434,10 @@ ul{margin:0;padding:0;list-style:none;}
   will-change:transform,opacity,filter;
 }
 .stack .num-big{font-size:15px;font-weight:500;color:var(--ind);margin-bottom:10px;letter-spacing:.05em;}
-/* brought up to the site's own h2 scale (size/weight/line-height/letter-spacing all match
-   the global h2 rule exactly) rather than the card's previous smaller bespoke size */
-.stack h3{font-size:clamp(34px,4.8vw,68px);font-weight:400;line-height:1.06;letter-spacing:-.032em;max-width:680px;text-wrap:balance;color:var(--ink);}
-.stack p{margin-top:32px;max-width:520px;color:var(--body);font-size:16.5px;line-height:1.75;border-left:2px solid var(--ind-soft);padding-left:20px;}
+/* card content sized down so the heading no longer spills past the card's edge -- the
+   rail above now carries the "section heading" scale instead */
+.stack h3{font-size:clamp(28px,3.2vw,42px);font-weight:400;line-height:1.06;letter-spacing:-.032em;color:var(--ink);}
+.stack p{margin-top:32px;max-width:520px;color:var(--body);font-size:17px;line-height:1.75;border-left:2px solid var(--ind-soft);padding-left:20px;}
 .stack .vals{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:32px;max-width:520px;}
 .stack .vals span{font-size:14.5px;color:var(--body);display:flex;align-items:center;gap:8px;}
 .stack .vals span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ind);}
