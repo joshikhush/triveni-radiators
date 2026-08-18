@@ -274,9 +274,16 @@ ul{margin:0;padding:0;list-style:none;}
 .hero-title{font-size:clamp(40px,5vw,78px);font-weight:400;line-height:1.08;letter-spacing:-.02em;color:var(--white);}
 .hero-title .l2{color:rgba(255,255,255,.55);}
 .hero-sub{margin-top:34px;max-width:34ch;font-size:clamp(18px,1.6vw,24px);font-weight:400;line-height:1.5;letter-spacing:-.01em;color:var(--on-d-2);}
-.hero-ctas{display:flex;align-items:center;gap:24px;margin-top:56px;flex-wrap:wrap;}
+.hero-ctas{display:flex;align-items:center;gap:24px;margin-top:48px;margin-bottom:112px;flex-wrap:wrap;}
 /* scoped to hero only -- does not touch the sitewide .btn padding used elsewhere */
 .hero-ctas .btn{padding:17px 32px;}
+/* solid indigo read as visually muted against the hero's dark photo background, so the
+   primary CTA here uses the white-button pattern already used elsewhere on the site (e.g.
+   .tl-navbtn in Milestones) -- white by default, flips to indigo on hover. */
+.hero-ctas .btn-p{background:var(--white);color:var(--ink);}
+.hero-ctas .btn-p .ar-badge{background:var(--ind);color:#fff;}
+.hero-ctas .btn-p:hover,.hero-ctas .btn-p:focus-visible{background:var(--ind);color:#fff;}
+.hero-ctas .btn-p:hover .ar-badge,.hero-ctas .btn-p:focus-visible .ar-badge{background:#fff;color:var(--ind);}
 
 /* lower band — occupies the part of the section revealed on first scroll, so screen two
    isn't just empty sky/photo. Sits over the image with its own gradient (::before) for
@@ -320,7 +327,6 @@ ul{margin:0;padding:0;list-style:none;}
   .hero-veil{display:none;}
   .hero-glow{display:none;}
   .hero-col{max-width:100%;}
-  /* band sits on solid navy below the image now, not over it — no fade needed */
   /* band sits on solid navy below the image now, not over it -- the sky gradient's light
      lower stop still stretches across the whole (now auto-height) .hero, so give the band
      its own opaque navy background rather than relying on what's behind it. */
@@ -332,6 +338,13 @@ ul{margin:0;padding:0;list-style:none;}
   .hero-fact:nth-child(3){padding-left:0;border-left:none;}
   .hero-fact-val{font-size:32px;}
   .hero-clients-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 16px;}
+}
+@media(max-width:480px){
+  /* at this width "Explore Radiators" + "Let's Connect" no longer fit on one line (224px +
+     24px gap + 129px > available column width), so flex-wrap was dropping the second button
+     onto its own line with no real alignment to the first -- stack them deliberately instead
+     with a clean, consistent gap, rather than leaving the wrap to fall wherever it lands. */
+  .hero-ctas{flex-direction:column;align-items:flex-start;gap:16px;}
 }
 
 /* -- TARGET COMPOSITION (uncomment/adapt once a real cutout asset exists) --
