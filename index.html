@@ -274,16 +274,9 @@ ul{margin:0;padding:0;list-style:none;}
 .hero-title{font-size:clamp(40px,5vw,78px);font-weight:400;line-height:1.08;letter-spacing:-.02em;color:var(--white);}
 .hero-title .l2{color:rgba(255,255,255,.55);}
 .hero-sub{margin-top:34px;max-width:34ch;font-size:clamp(18px,1.6vw,24px);font-weight:400;line-height:1.5;letter-spacing:-.01em;color:var(--on-d-2);}
-.hero-ctas{display:flex;align-items:center;gap:18px;margin-top:48px;flex-wrap:wrap;}
-
-/* pinned to the bottom of the FIRST viewport, not the (158svh) section, so it's visible on
-   load — a sibling of .hero-stage, not part of its content flow. Scroll cue only — the
-   earlier "01—05" slide-position indicator was removed on explicit instruction and is not
-   being reinstated here. */
-.hero-foot{position:absolute;left:0;right:0;top:calc(100svh - 76px);z-index:5;padding:0 var(--pad);}
-.hero-scrollcue{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:500;color:rgba(255,255,255,.55);letter-spacing:.05em;text-transform:uppercase;}
-.hero-scrollcue svg{width:14px;height:14px;animation:heroScrollBounce 1.8s ease-in-out infinite;}
-@keyframes heroScrollBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+.hero-ctas{display:flex;align-items:center;gap:24px;margin-top:56px;flex-wrap:wrap;}
+/* scoped to hero only -- does not touch the sitewide .btn padding used elsewhere */
+.hero-ctas .btn{padding:17px 32px;}
 
 /* lower band — occupies the part of the section revealed on first scroll, so screen two
    isn't just empty sky/photo. Sits over the image with its own gradient (::before) for
@@ -295,10 +288,16 @@ ul{margin:0;padding:0;list-style:none;}
   z-index:-1;pointer-events:none;
 }
 .hero-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));}
-.hero-fact{padding:0 24px;border-left:1px solid var(--line-d);}
+.hero-fact{padding:0 40px;border-left:1px solid var(--line-d);}
 .hero-fact:first-child{padding-left:0;border-left:none;}
 .hero-fact-val{font-size:44px;font-weight:400;color:var(--white);letter-spacing:-.03em;}
-.hero-fact-label{font-size:13px;color:var(--on-d-2);margin-top:10px;}
+/* suffix/unit (e.g. "kV") reads like the old site -- lighter indigo, not plain white. The
+   "+" suffix only appears once its count-up finishes (.show, added by JS) -- showing it
+   mid-count looks like a stray plus sign next to a changing number. */
+.hero-fact-suffix{color:var(--ind-lt);}
+.hero-fact-suffix-end{opacity:0;transition:opacity .25s var(--ez);}
+.hero-fact-suffix-end.show{opacity:1;}
+.hero-fact-label{font-size:13px;color:var(--on-d-2);margin-top:16px;}
 .hero-clients{margin-top:32px;padding-top:32px;border-top:1px solid var(--line-d);}
 .hero-clients-label{font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-d-2);margin-bottom:14px;}
 .hero-clients-row{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
@@ -315,11 +314,6 @@ ul{margin:0;padding:0;list-style:none;}
      stacked below that on solid navy, hero ends naturally. */
   .hero{min-height:auto;padding:0;}
   .hero-stage{height:auto;padding:110px 0 0;}
-  /* the scroll cue is a "there's more hero below" hint specific to the tall desktop
-     treatment -- the two-scroll effect is switched off below this width, so hide it
-     rather than let it relocate to the light bottom of the sky gradient (where its
-     semi-transparent white text loses contrast). */
-  .hero-foot{display:none;}
   .hero-media{position:relative;inset:auto;width:112%;margin:48px 0 0 -6%;z-index:1;}
   .hero-media img{width:100%;height:auto;object-fit:contain;object-position:center;}
   .hero-arc{display:none;}
@@ -339,7 +333,6 @@ ul{margin:0;padding:0;list-style:none;}
   .hero-fact-val{font-size:32px;}
   .hero-clients-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 16px;}
 }
-@media(prefers-reduced-motion:reduce){.hero-scrollcue svg{animation:none;}}
 
 /* -- TARGET COMPOSITION (uncomment/adapt once a real cutout asset exists) --
 .hero-media{display:none;}
@@ -840,16 +833,16 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
       </div>
     </div>
   </div>
-  <div class="hero-foot">
-    <div class="hero-scrollcue"><span>Scroll</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
-  </div>
   <div class="hero-band">
     <div class="w">
+      <!-- 2,700+ indirect exports and 9 export markets are on the unverified-claims list --
+           confirm with the client before publishing. 2012 and 765kV are already verified
+           elsewhere on the page (Milestones, Credential). -->
       <div class="hero-facts">
-        <div class="hero-fact"><div class="hero-fact-val">765 kV</div><div class="hero-fact-label">Highest class approved</div></div>
-        <div class="hero-fact"><div class="hero-fact-val">Grade A</div><div class="hero-fact-label">POWERGRID process audit</div></div>
-        <div class="hero-fact"><div class="hero-fact-val">4 types</div><div class="hero-fact-label">Header, offset, swan, goose</div></div>
-        <div class="hero-fact"><div class="hero-fact-val">13 years</div><div class="hero-fact-label">Unbroken supply since 2012</div></div>
+        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="2012" data-comma="1">0</span></div><div class="hero-fact-label">Year Founded</div></div>
+        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="2700" data-comma="1">0</span><span class="hero-fact-suffix hero-fact-suffix-end">+</span></div><div class="hero-fact-label">Indirect Exports</div></div>
+        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="765">0</span><span class="hero-fact-suffix">kV</span></div><div class="hero-fact-label">Highest Rating</div></div>
+        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="9">0</span></div><div class="hero-fact-label">Export Markets</div></div>
       </div>
       <div class="hero-clients">
         <div class="hero-clients-label">Trusted by</div>
@@ -1353,6 +1346,63 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
 var nav = document.getElementById('nav');
 function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 170); }
 addEventListener('scroll', onScrollNav, {passive:true}); onScrollNav();
+
+/* hero lower-band stat count-up — triggers once via IntersectionObserver, then unobserves
+   so re-scrolling past the band never re-runs it. Self-contained (own reduced-motion check)
+   since it may run before the shared `reduced` var further down is declared. */
+(function(){
+  var heroBand = document.querySelector('.hero-band');
+  if (!heroBand) return;
+  var heroNums = heroBand.querySelectorAll('.hero-fact-num');
+  var heroReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function heroFormatNum(n, comma){
+    n = Math.round(n);
+    return comma ? n.toLocaleString('en-US') : String(n);
+  }
+  function heroShowFinal(el){
+    var target = parseInt(el.dataset.target, 10);
+    el.textContent = heroFormatNum(target, el.dataset.comma === '1');
+    var suffixEnd = el.parentElement.querySelector('.hero-fact-suffix-end');
+    if (suffixEnd) suffixEnd.classList.add('show');
+  }
+
+  if (heroReduced) {
+    heroNums.forEach(heroShowFinal);
+    return;
+  }
+
+  function heroAnimateNum(el, delay){
+    var target = parseInt(el.dataset.target, 10);
+    var comma = el.dataset.comma === '1';
+    var duration = 1700;
+    setTimeout(function(){
+      var start = null;
+      function tick(ts){
+        if (start === null) start = ts;
+        var t = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - t, 3); /* ease-out cubic */
+        if (t < 1) {
+          el.textContent = heroFormatNum(target * eased, comma);
+          requestAnimationFrame(tick);
+        } else {
+          heroShowFinal(el);
+        }
+      }
+      requestAnimationFrame(tick);
+    }, delay);
+  }
+
+  var heroStatsIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        heroNums.forEach(function(el, i){ heroAnimateNum(el, i * 130); });
+        heroStatsIO.unobserve(entry.target);
+      }
+    });
+  }, { threshold:.4 });
+  heroStatsIO.observe(heroBand);
+})();
 
 /* nav scrollspy — the active underline follows whichever section is currently in view,
    rather than staying fixed on Home */
