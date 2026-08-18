@@ -194,17 +194,25 @@ ul{margin:0;padding:0;list-style:none;}
 /* ==========================================================
    NAV
    ========================================================== */
+/* deep navy, matching the hero's own background so nav reads as one continuous surface
+   with it rather than a separate coloured bar -- sits in normal document flow above the
+   hero (not overlaid on top of it); pins to position:fixed only once scrolled past its own
+   height, and hides/reveals on scroll direction. See the nav-scroll script for the
+   pin/hide logic. The thin border-bottom is the only thing marking where nav ends and hero
+   begins, since the colours now match. */
 #nav{
-  position:fixed;top:0;left:0;right:0;z-index:300;
+  position:relative;z-index:300;
   display:flex;align-items:center;justify-content:space-between;
-  padding:26px var(--pad);
-  background:transparent;
-  transition:background var(--fast) var(--ez),padding var(--fast) var(--ez),box-shadow var(--fast) var(--ez);
+  padding:18px var(--pad);
+  background:var(--navy);
+  border-bottom:1px solid rgba(255,255,255,.1);
+  transition:transform .35s var(--ez),box-shadow .25s var(--ez);
+  will-change:transform;
 }
-#nav.solid{
-  background:var(--navy);padding:16px var(--pad);
-  box-shadow:0 1px 0 var(--line-d);
-}
+#nav.nav-pinned{position:fixed;top:0;left:0;right:0;}
+#nav.nav-hidden{transform:translateY(-100%);}
+#nav.nav-shadow{box-shadow:0 4px 16px -4px rgba(12,24,48,.35);}
+@media(prefers-reduced-motion:reduce){#nav{transition:none;}}
 .nav-logo img{height:34px;width:auto;display:block;border-radius:3px;}
 .nav-links{display:flex;align-items:center;gap:36px;}
 .nav-links a{
@@ -222,7 +230,12 @@ ul{margin:0;padding:0;list-style:none;}
 @media(prefers-reduced-motion:reduce){
   .nav-links a,.nav-links a::after{transition:none;}
 }
+/* nav bar is navy now, not indigo -- a white button would read too bright/loud against it,
+   so this goes back to a solid indigo fill (opposite of the white treatment used when the
+   bar itself was indigo). Hover overrides .btn-p's shared light-indigo treatment with a
+   darker --ind-2 instead, since --ind-lt would wash out against navy. */
 .nav-cta{font-size:15px;font-weight:500;color:var(--white);background:var(--ind);padding:12px 24px;border-radius:999px;}
+.nav-cta.btn-p:hover,.nav-cta.btn-p:focus-visible{background:var(--ind-2);color:var(--white);}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px;}
 .nav-toggle span{display:block;width:22px;height:2px;background:var(--white);}
 
@@ -268,7 +281,9 @@ ul{margin:0;padding:0;list-style:none;}
    composition reads as a normal full-height hero. z-index 4, not 3, because the fallback
    also needs .hero-veil (z-index 3) for text legibility over a full-bleed photo — a true
    cutout composition, with nothing behind the text column, wouldn't need a veil at all. */
-.hero-stage{position:relative;z-index:4;height:100svh;display:flex;align-items:center;padding:102px 0 0;}
+/* top padding used to reserve space under the fixed nav that overlaid the hero; the nav is
+   now in normal flow above the hero instead, so no compensation is needed here. */
+.hero-stage{position:relative;z-index:4;height:100svh;display:flex;align-items:center;}
 .hero-col{max-width:54%;}
 .hero-eyebrow{font-size:12px;font-weight:500;color:var(--ind-lt);letter-spacing:.14em;text-transform:uppercase;margin-bottom:26px;}
 .hero-title{font-size:clamp(40px,5vw,78px);font-weight:400;line-height:1.08;letter-spacing:-.02em;color:var(--white);}
@@ -320,7 +335,7 @@ ul{margin:0;padding:0;list-style:none;}
      height: text block, then the image as a normal in-flow block below it, then the band
      stacked below that on solid navy, hero ends naturally. */
   .hero{min-height:auto;padding:0;}
-  .hero-stage{height:auto;padding:110px 0 0;}
+  .hero-stage{height:auto;}
   .hero-media{position:relative;inset:auto;width:112%;margin:48px 0 0 -6%;z-index:1;}
   .hero-media img{width:100%;height:auto;object-fit:contain;object-position:center;}
   .hero-arc{display:none;}
@@ -1355,10 +1370,42 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
 </div>
 
 <script>
-/* nav solid-on-scroll */
+/* nav — hides on scroll down (past 120px), reappears and pins to position:fixed on scroll
+   up, and returns to its normal in-flow position once back near the top (within its own
+   height) so no gap shows above the hero. Direction changes smaller than 6px are ignored
+   so alternating small scroll deltas don't flicker it. Single scroll listener, rAF-
+   throttled, passive; recomputes read fresh values each frame so no separate resize
+   listener is needed. */
 var nav = document.getElementById('nav');
-function onScrollNav(){ nav.classList.toggle('solid', window.scrollY > 170); }
-addEventListener('scroll', onScrollNav, {passive:true}); onScrollNav();
+var navMenuEl = document.getElementById('navLinks');
+var navLastY = window.scrollY;
+var navTicking = false;
+var NAV_DIR_THRESHOLD = 6;
+var NAV_HIDE_AFTER = 120;
+
+function updateNav(){
+  var y = Math.max(0, window.scrollY);
+  var delta = y - navLastY;
+  if (Math.abs(delta) <= NAV_DIR_THRESHOLD) return;
+  var goingDown = delta > 0;
+  navLastY = y;
+
+  if (y <= nav.offsetHeight) {
+    nav.classList.remove('nav-pinned', 'nav-hidden', 'nav-shadow');
+    return;
+  }
+  nav.classList.add('nav-pinned', 'nav-shadow');
+
+  var menuOpen = navMenuEl.classList.contains('open');
+  if (goingDown && y > NAV_HIDE_AFTER && !menuOpen) {
+    nav.classList.add('nav-hidden');
+  } else if (!goingDown || menuOpen) {
+    nav.classList.remove('nav-hidden');
+  }
+}
+addEventListener('scroll', function(){
+  if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
+}, {passive:true});
 
 /* hero lower-band stat count-up — triggers once via IntersectionObserver, then unobserves
    so re-scrolling past the band never re-runs it. Self-contained (own reduced-motion check)
