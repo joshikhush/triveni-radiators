@@ -433,9 +433,11 @@ ul{margin:0;padding:0;list-style:none;}
   will-change:transform,opacity,filter;
 }
 .stack .num-big{font-size:15px;font-weight:500;color:var(--ind);margin-bottom:10px;letter-spacing:.05em;}
-.stack h3{font-size:clamp(32px,4.4vw,60px);font-weight:400;line-height:1.1;letter-spacing:-.02em;margin-bottom:20px;color:var(--ink);}
-.stack p{max-width:520px;color:var(--body);font-size:16.5px;line-height:1.75;border-left:2px solid var(--ind-soft);padding-left:20px;}
-.stack .vals{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:6px;max-width:520px;}
+/* brought up to the site's own h2 scale (size/weight/line-height/letter-spacing all match
+   the global h2 rule exactly) rather than the card's previous smaller bespoke size */
+.stack h3{font-size:clamp(34px,4.8vw,68px);font-weight:400;line-height:1.06;letter-spacing:-.032em;max-width:680px;text-wrap:balance;color:var(--ink);}
+.stack p{margin-top:32px;max-width:520px;color:var(--body);font-size:16.5px;line-height:1.75;border-left:2px solid var(--ind-soft);padding-left:20px;}
+.stack .vals{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:32px;max-width:520px;}
 .stack .vals span{font-size:14.5px;color:var(--body);display:flex;align-items:center;gap:8px;}
 .stack .vals span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ind);}
 
