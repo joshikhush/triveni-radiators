@@ -384,14 +384,38 @@ ul{margin:0;padding:0;list-style:none;}
 .wwa-reveal .word{color:var(--muted);}
 
 .pin-wrap{position:relative;height:280vh;background:var(--tint);}
-.pin-sticky{position:sticky;top:0;height:100svh;max-width:920px;margin:0 auto;padding:0 var(--pad);display:flex;align-items:center;overflow:hidden;}
+.pin-sticky{position:sticky;top:0;height:100svh;max-width:920px;margin:0 auto;padding:0 var(--pad);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+
+/* two heavily-blurred indigo glows behind the stack -- required for the glass cards'
+   backdrop-filter to actually have something to blur. Static (not scroll-driven). */
+.wwa-glow-a{position:absolute;top:-14%;left:-12%;width:52%;aspect-ratio:1;border-radius:50%;z-index:0;pointer-events:none;background:radial-gradient(circle,rgba(var(--ind-rgb),.35),transparent 70%);filter:blur(80px);}
+.wwa-glow-b{position:absolute;bottom:-18%;right:-10%;width:58%;aspect-ratio:1;border-radius:50%;z-index:0;pointer-events:none;background:radial-gradient(circle,rgba(var(--ind-rgb),.28),transparent 70%);filter:blur(90px);}
+
 /* top offset cleared past the fixed nav (81.5px solid-state height) rather than the
-   reference's bare 56px, which sat mostly hidden behind it */
-.rail{position:absolute;top:104px;left:50%;transform:translateX(-50%);display:flex;gap:30px;}
-.rail .rail-item{font-size:12.5px;font-weight:500;letter-spacing:.08em;color:var(--muted);padding-bottom:9px;border-bottom:2px solid transparent;transition:color .3s var(--ez),border-color .3s var(--ez);text-transform:uppercase;}
-.rail .rail-item.active{color:var(--ink);border-bottom-color:var(--ind);}
-.stack{position:relative;width:100%;height:56vh;}
-.stack .card{position:absolute;inset:0;opacity:0;filter:blur(10px);transform:translateY(14px);display:flex;flex-direction:column;justify-content:center;}
+   reference's bare 56px, which sat mostly hidden behind it. A shared track line + sliding
+   indicator (not per-item borders) -- rail and the progress row below are outside the
+   cards and stay constant; JS only ever touches the cards and these two indicators. */
+.rail{position:absolute;top:104px;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:30px;padding-bottom:9px;border-bottom:1px solid var(--line);}
+.rail .rail-item{font-size:12.5px;font-weight:500;letter-spacing:.08em;color:var(--muted);transition:color .3s var(--ez);text-transform:uppercase;}
+.rail .rail-item.active{color:var(--ink);}
+.rail-indicator{position:absolute;left:0;bottom:-1px;width:0;height:2px;background:var(--ind);transition:left .3s var(--ez),width .3s var(--ez);}
+
+.stack{position:relative;z-index:1;width:100%;height:min(720px,calc(100svh - 220px));}
+/* each card is its own glass rectangle -- square corners, translucent gradient of the
+   site's own tint over indigo, backdrop-filter blur/saturate, thin border, indigo-tinted
+   shadow. No CSS transition anywhere on .card: scroll position alone drives opacity/
+   blur/transform every frame, so a card genuinely stops half-blurred/half-faded mid-scroll
+   rather than snapping to a state. */
+.stack .card{
+  position:absolute;inset:0;border-radius:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:56px 64px;
+  background:linear-gradient(160deg,rgba(255,255,255,.62) 0%,rgba(var(--ind-rgb),.10) 100%);
+  backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:0 30px 60px -24px rgba(var(--ind-rgb),.28),0 12px 28px -12px rgba(var(--ind-rgb),.16);
+  will-change:transform,opacity,filter;
+}
 .stack .num-big{font-size:15px;font-weight:500;color:var(--ind);margin-bottom:10px;letter-spacing:.05em;}
 .stack h3{font-size:clamp(30px,5vw,54px);font-weight:400;line-height:1.1;letter-spacing:-.02em;margin-bottom:20px;color:var(--ink);}
 .stack p{max-width:520px;color:var(--body);font-size:16.5px;line-height:1.75;border-left:2px solid var(--ind-soft);padding-left:20px;}
@@ -399,24 +423,42 @@ ul{margin:0;padding:0;list-style:none;}
 .stack .vals span{font-size:14.5px;color:var(--body);display:flex;align-items:center;gap:8px;}
 .stack .vals span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ind);}
 
+.wwa-progress{position:absolute;left:50%;bottom:48px;transform:translateX(-50%);z-index:2;display:flex;gap:10px;}
+.wwa-progress-bar{width:44px;height:3px;background:var(--line);overflow:hidden;}
+.wwa-progress-fill{display:block;height:100%;width:0%;background:var(--ind);}
+
 @media(prefers-reduced-motion:reduce){
   .pin-wrap{height:auto;}
   .pin-sticky{position:static;height:auto;padding:80px var(--pad);}
   .stack{position:static;height:auto;}
   .stack .card{position:static;opacity:1;filter:none;transform:none;margin-bottom:64px;}
   .rail{display:none;}
+  .wwa-progress{display:none;}
 }
 @media(max-width:860px){
-  /* a 280vh sticky section on a phone is a long, confusing scroll with no payoff -- kill
-     the pin entirely; word reveal stays on since it's cheap and works fine here. */
+  /* intro/reveal spacing only -- the pinned stack's own mobile behaviour lives in the
+     900px block below, matched to its own breakpoint. */
   .wwa-intro-hero{padding:80px var(--pad) 20px;}
   .wwa-reveal{padding:40px var(--pad) 80px;}
+}
+@media(max-width:900px){
+  /* a 280vh sticky section with backdrop-filter glass is a long, janky scroll on a phone
+     with no payoff -- kill the pin entirely and drop the blur (expensive to composite on
+     mobile GPUs, and the whole point of the glass effect is scroll-linked motion that
+     isn't happening here anyway). Word reveal stays on -- it's cheap and works fine. */
   .pin-wrap{height:auto;}
-  .pin-sticky{position:static;height:auto;padding:0 var(--pad);}
+  .pin-sticky{position:static;height:auto;padding:60px var(--pad);overflow:visible;}
+  .wwa-glow-a,.wwa-glow-b{display:none;}
   .stack{position:static;height:auto;}
-  .stack .card{position:static;opacity:1;filter:none;transform:none;margin-bottom:48px;}
+  .stack .card{
+    position:static;opacity:1;filter:none;transform:none;pointer-events:auto;
+    backdrop-filter:none;-webkit-backdrop-filter:none;
+    background:var(--tint-2);border:1px solid var(--line);box-shadow:none;
+    margin-bottom:24px;
+  }
   .stack .card:last-child{margin-bottom:0;}
   .rail{display:none;}
+  .wwa-progress{display:none;}
 }
 
 /* ==========================================================
@@ -850,8 +892,11 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
 
   <div class="pin-wrap" id="wwaPinWrap">
     <div class="pin-sticky">
-      <div class="rail" id="wwaRail"></div>
+      <div class="wwa-glow-a"></div>
+      <div class="wwa-glow-b"></div>
+      <div class="rail" id="wwaRail"><div class="rail-indicator" id="wwaRailIndicator"></div></div>
       <div class="stack" id="wwaStack"></div>
+      <div class="wwa-progress" id="wwaProgress"></div>
     </div>
   </div>
 </section>
@@ -1391,7 +1436,9 @@ if (reduced) {
   ];
 
   var wwaRail = document.getElementById('wwaRail');
+  var wwaRailIndicator = document.getElementById('wwaRailIndicator');
   var wwaStack = document.getElementById('wwaStack');
+  var wwaProgress = document.getElementById('wwaProgress');
   var wwaPinWrap = document.getElementById('wwaPinWrap');
   WWA_DATA.forEach(function(d, i){
     wwaRail.insertAdjacentHTML('beforeend', '<div class="rail-item" data-i="' + i + '">' + d.label + '</div>');
@@ -1399,9 +1446,11 @@ if (reduced) {
       ? '<div class="vals">' + d.vals.map(function(v){ return '<span>' + v + '</span>'; }).join('') + '</div>'
       : '<p>' + d.p + '</p>';
     wwaStack.insertAdjacentHTML('beforeend', '<div class="card" data-i="' + i + '"><div class="num-big">' + d.n + '</div><h3>' + d.h + '</h3>' + body + '</div>');
+    wwaProgress.insertAdjacentHTML('beforeend', '<div class="wwa-progress-bar" data-i="' + i + '"><span class="wwa-progress-fill"></span></div>');
   });
   var wwaCards = wwaStack.querySelectorAll('.card');
   var wwaRailItems = wwaRail.querySelectorAll('.rail-item');
+  var wwaProgressFills = wwaProgress.querySelectorAll('.wwa-progress-fill');
   var WWA_N = WWA_DATA.length;
 
   if (reduced) {
@@ -1436,29 +1485,70 @@ if (reduced) {
     });
   }
 
+  function wwaSmoothstep(t){ t = wwaClamp(t, 0, 1); return t * t * (3 - 2 * t); }
+
+  /* each card's distance from the centre of its own local slot in the continuous scroll-
+     progress timeline, converted to a single 0-1 "proximity" value via smoothstep over a
+     generous overlap span -- this is what makes two cards genuinely overlap mid-transition
+     instead of a hard cut, and lets a card stop half-blurred/half-faded if the user stops
+     scrolling mid-way, since nothing here is quantised or eased with a CSS transition. */
+  var WWA_OVERLAP = 0.85;   // card-units either side of centre where opacity ramps
+  var WWA_BLUR_MAX = 16;    // px, strong per the brief
+  var WWA_TY_MAX = 30;      // px vertical travel
+  var WWA_SCALE_MIN = 0.96;
+
   function updateWwaPin(){
     var rect = wwaPinWrap.getBoundingClientRect();
     var total = rect.height - window.innerHeight;
     var scrolled = wwaClamp(-rect.top, 0, total);
     var progress = total > 0 ? scrolled / total : 0;
     var scaled = progress * WWA_N;
+
+    var bestIndex = 0, bestV = -1;
     wwaCards.forEach(function(card, i){
-      var local = scaled - i, opacity, blur, ty, t;
-      if (local <= 0) { opacity = 0; blur = 10; ty = 14; }
-      else if (local < 0.18) { t = local / 0.18; opacity = t; blur = 10 * (1 - t); ty = 14 * (1 - t); }
-      else if (local < 0.72) { opacity = 1; blur = 0; ty = 0; }
-      else if (local < 1) { t = (local - 0.72) / 0.28; opacity = 1 - t; blur = 10 * t; ty = -10 * t; }
-      else { opacity = 0; blur = 10; ty = -10; }
-      card.style.opacity = opacity;
-      card.style.filter = 'blur(' + blur + 'px)';
-      card.style.transform = 'translateY(' + ty + 'px)';
+      var dist = scaled - (i + 0.5);
+      var v = wwaSmoothstep(1 - wwaClamp(Math.abs(dist) / WWA_OVERLAP, 0, 1));
+      var dir = dist <= 0 ? 1 : -1;
+      var ty = (1 - v) * WWA_TY_MAX * dir;
+      var blur = (1 - v) * WWA_BLUR_MAX;
+      var scale = WWA_SCALE_MIN + v * (1 - WWA_SCALE_MIN);
+      card.style.opacity = v;
+      card.style.filter = 'blur(' + blur.toFixed(2) + 'px)';
+      card.style.transform = 'translateY(' + ty.toFixed(2) + 'px) scale(' + scale.toFixed(3) + ')';
+      card.style.pointerEvents = v > 0.5 ? 'auto' : 'none';
+      if (v > bestV) { bestV = v; bestIndex = i; }
     });
-    var activeIndex = wwaClamp(Math.floor(scaled), 0, WWA_N - 1);
-    wwaRailItems.forEach(function(r, i){ r.classList.toggle('active', i === activeIndex); });
+
+    wwaRailItems.forEach(function(r, i){ r.classList.toggle('active', i === bestIndex); });
+    var activeRailItem = wwaRailItems[bestIndex];
+    if (activeRailItem) {
+      wwaRailIndicator.style.left = activeRailItem.offsetLeft + 'px';
+      wwaRailIndicator.style.width = activeRailItem.offsetWidth + 'px';
+    }
+
+    wwaProgressFills.forEach(function(fill, i){
+      fill.style.width = (wwaClamp(scaled - i, 0, 1) * 100) + '%';
+    });
   }
 
+  /* below 900px the pin is off entirely (CSS reverts cards to position:static) -- reset
+     any inline styles JS may have set before a resize crossed the breakpoint, so the CSS
+     mobile styles apply cleanly rather than being overridden by leftover inline values. */
+  function resetWwaCardStyles(){
+    wwaCards.forEach(function(card){
+      card.style.opacity = '';
+      card.style.filter = '';
+      card.style.transform = '';
+      card.style.pointerEvents = '';
+    });
+  }
+
+  var wwaPinMQ = matchMedia('(max-width: 900px)');
   var wwaTicking = false;
-  function runAllWwa(){ updateWwaReveal(); updateWwaPin(); }
+  function runAllWwa(){
+    updateWwaReveal();
+    if (wwaPinMQ.matches) { resetWwaCardStyles(); } else { updateWwaPin(); }
+  }
   document.addEventListener('scroll', function(){
     if (!wwaTicking) { requestAnimationFrame(function(){ runAllWwa(); wwaTicking = false; }); wwaTicking = true; }
   }, { passive:true });
