@@ -371,48 +371,52 @@ ul{margin:0;padding:0;list-style:none;}
 .wwa-col:first-child{padding-left:0;border-left:none;}
 .wwa-col h3{font-size:16px;font-weight:500;letter-spacing:-.015em;margin:18px 0 10px;}
 .wwa-col p{font-size:14px;line-height:1.7;color:var(--body);}
-.wwa-values{margin-top:14px;display:flex;flex-direction:column;gap:10px;}
-.wwa-values li{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--ink);font-weight:500;}
-.wwa-values li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ind);flex-shrink:0;}
+/* section 01 rebuild — structure/animation ported from assets/triveni-final.html,
+   recoloured to this site's own tokens (Schibsted Grotesk, --ind, weight-400 headings —
+   the reference's Inter/#5b4cf0/bold weights are not used anywhere below). */
+.wwa-intro-hero{padding:130px var(--pad) 20px;text-align:center;display:flex;flex-direction:column;align-items:center;}
+.wwa-intro-hero .eyebrow{color:var(--ind);font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;margin-bottom:22px;}
+.wwa-intro-hero h2{font-size:clamp(34px,4.8vw,68px);font-weight:400;line-height:1.12;letter-spacing:-.02em;max-width:820px;color:var(--ink);}
 
-/* section 01 — dedicated classes (do not reuse .wwa-intro/.wwa-cols/.wwa-col, which section 10/CSR still uses) */
-.wwa-head{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:var(--gap-lg);}
-.wwa-lead{margin-top:16px;font-size:clamp(18px,1.6vw,24px);font-weight:400;line-height:1.5;letter-spacing:-.01em;color:var(--body);max-width:22ch;}
-.wwa-rule{width:36px;height:2px;background:var(--ind);margin-top:22px;}
-.wwa-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap-md);align-items:stretch;}
-.wwa-card{
-  padding:24px 26px;border-radius:10px;
-  border-left:1px solid var(--line);
-  background:transparent;position:relative;
-  transition:background .3s var(--ez),box-shadow .3s var(--ez),transform .3s var(--ez);
-}
-.wwa-card:hover{
-  background:var(--white);
-  border-left-color:transparent;
-  transform:translateY(-3px);
-  box-shadow:
-    0 12px 28px -10px rgba(var(--ind-rgb),.28),
-    0 4px 10px -4px rgba(var(--ind-rgb),.14),
-    0 1px 2px rgba(16,24,40,.04);
-}
-.wwa-card .badge{transition:background .3s var(--ez),transform .3s var(--ez);}
-.wwa-card:hover .badge{background:#E4E2FA;transform:scale(1.06);}
-.wwa-card h3{font-size:20px;font-weight:500;line-height:1.3;letter-spacing:-.015em;color:var(--ink);margin:0 0 10px;}
-.wwa-card p{font-size:14px;line-height:1.7;color:var(--body);}
+.wwa-reveal{padding:50px var(--pad) 140px;display:flex;justify-content:center;}
+.wwa-reveal-inner{max-width:700px;}
+.wwa-reveal p{font-size:clamp(19px,2.3vw,23px);line-height:1.85;text-align:center;font-weight:400;margin-bottom:30px;color:var(--ink);}
+.wwa-reveal .word{color:var(--muted);}
+
+.pin-wrap{position:relative;height:280vh;background:var(--tint);}
+.pin-sticky{position:sticky;top:0;height:100svh;max-width:920px;margin:0 auto;padding:0 var(--pad);display:flex;align-items:center;overflow:hidden;}
+/* top offset cleared past the fixed nav (81.5px solid-state height) rather than the
+   reference's bare 56px, which sat mostly hidden behind it */
+.rail{position:absolute;top:104px;left:50%;transform:translateX(-50%);display:flex;gap:30px;}
+.rail .rail-item{font-size:12.5px;font-weight:500;letter-spacing:.08em;color:var(--muted);padding-bottom:9px;border-bottom:2px solid transparent;transition:color .3s var(--ez),border-color .3s var(--ez);text-transform:uppercase;}
+.rail .rail-item.active{color:var(--ink);border-bottom-color:var(--ind);}
+.stack{position:relative;width:100%;height:56vh;}
+.stack .card{position:absolute;inset:0;opacity:0;filter:blur(10px);transform:translateY(14px);display:flex;flex-direction:column;justify-content:center;}
+.stack .num-big{font-size:15px;font-weight:500;color:var(--ind);margin-bottom:10px;letter-spacing:.05em;}
+.stack h3{font-size:clamp(30px,5vw,54px);font-weight:400;line-height:1.1;letter-spacing:-.02em;margin-bottom:20px;color:var(--ink);}
+.stack p{max-width:520px;color:var(--body);font-size:16.5px;line-height:1.75;border-left:2px solid var(--ind-soft);padding-left:20px;}
+.stack .vals{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:6px;max-width:520px;}
+.stack .vals span{font-size:14.5px;color:var(--body);display:flex;align-items:center;gap:8px;}
+.stack .vals span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ind);}
+
 @media(prefers-reduced-motion:reduce){
-  .wwa-card,.wwa-card .badge{transition:none;}
-  .wwa-card:hover{transform:none;}
+  .pin-wrap{height:auto;}
+  .pin-sticky{position:static;height:auto;padding:80px var(--pad);}
+  .stack{position:static;height:auto;}
+  .stack .card{position:static;opacity:1;filter:none;transform:none;margin-bottom:64px;}
+  .rail{display:none;}
 }
-.wwa-card .wwa-values{margin-top:0;display:flex;flex-direction:column;gap:4px;}
-.wwa-card .wwa-values li{position:relative;padding-left:13px;font-size:12.5px;line-height:1.75;color:var(--body);}
-.wwa-card .wwa-values li::before{content:'';position:absolute;left:0;top:9px;width:3px;height:3px;border-radius:50%;background:var(--body);}
 @media(max-width:860px){
-  .wwa-head{grid-template-columns:1fr;gap:0;}
-  .wwa-head>.rv{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:24px;}
-  .wwa-lead{max-width:none;}
-  .wwa-grid{grid-template-columns:1fr;gap:0;}
-  .wwa-card{border-left:none;padding-left:0;border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:24px;}
-  .wwa-card:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0;}
+  /* a 280vh sticky section on a phone is a long, confusing scroll with no payoff -- kill
+     the pin entirely; word reveal stays on since it's cheap and works fine here. */
+  .wwa-intro-hero{padding:80px var(--pad) 20px;}
+  .wwa-reveal{padding:40px var(--pad) 80px;}
+  .pin-wrap{height:auto;}
+  .pin-sticky{position:static;height:auto;padding:0 var(--pad);}
+  .stack{position:static;height:auto;}
+  .stack .card{position:static;opacity:1;filter:none;transform:none;margin-bottom:48px;}
+  .stack .card:last-child{margin-bottom:0;}
+  .rail{display:none;}
 }
 
 /* ==========================================================
@@ -821,32 +825,33 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
 </section>
 
 <!-- ===================== 01 — WHO WE ARE ===================== -->
-<section class="sec bg-tint" id="who-we-are">
-  <div class="w wwa-head">
-    <div class="rv">
-      <div class="secnum">01</div>
-      <h2 class="h2">Who We Are &amp;<span class="l2">Where We're Going</span></h2>
-      <p class="wwa-lead">Manufacturers of pressed-steel transformer radiators up to 765 kV class, in Naini, Prayagraj since 2012.</p>
-      <div class="wwa-rule"></div>
+<!-- Rebuilt from assets/triveni-final.html (structure/animation only) — recoloured to this
+     site's own tokens; the reference's Inter font, #5b4cf0 indigo and bold heading weights
+     are not used anywhere here.
+     Flags: "thirteen years of unbroken supply" (2nd reveal paragraph) is on the unverified-
+     claims list per this task's own brief — confirm with the client before publishing. The
+     Vision statement and the five-item Core Values list are new copy supplied directly in
+     this task's brief, replacing the earlier "content pending" Vision placeholder — noting
+     the change since it wasn't previously client-confirmed content, even though it's
+     explicitly provided here rather than invented. -->
+<section class="bg-tint" id="who-we-are">
+  <div class="wwa-intro-hero">
+    <div class="eyebrow">01 — Who We Are</div>
+    <h2>Where we're going &amp; how we got here.</h2>
+  </div>
+
+  <div class="wwa-reveal">
+    <div class="wwa-reveal-inner">
+      <p id="wwaRv1"></p>
+      <p id="wwaRv2"></p>
+      <p id="wwaRv3"></p>
     </div>
-    <div class="wwa-grid">
-      <div class="wwa-card rv">
-        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
-        <h3>Our Mission</h3>
-        <p>We manufacture and supply pressed-steel transformer radiators — Header Type, Offset, Swan Neck and Goose Neck — engineered to IEEMA 9, DIN 42559 and BS EN 50216-6 for power, distribution, industrial and renewable-energy transformers.</p>
-      </div>
-      <div class="wwa-card rv" data-d="1">
-        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>
-        <h3>Our Vision</h3>
-        <p><span class="ph-tag">Content pending</span><br>A formal vision statement has not yet been supplied by leadership — this slot is ready to receive it.</p>
-      </div>
-      <div class="wwa-card rv" data-d="2">
-        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5.5V11c0 5.25 3.4 9.68 8 11 4.6-1.32 8-5.75 8-11V5.5L12 2z"/></svg></span>
-        <h3>Core Values</h3>
-        <ul class="wwa-values">
-          <li>Integrity</li><li>Excellence</li><li>Innovation</li><li>Teamwork</li>
-        </ul>
-      </div>
+  </div>
+
+  <div class="pin-wrap" id="wwaPinWrap">
+    <div class="pin-sticky">
+      <div class="rail" id="wwaRail"></div>
+      <div class="stack" id="wwaStack"></div>
     </div>
   </div>
 </section>
@@ -1356,6 +1361,110 @@ if (reduced) {
   }, {threshold:.14});
   rvEls.forEach(function(el){ io.observe(el); });
 }
+
+/* section 01 — word-by-word scroll reveal + pinned card stack. Ported from
+   assets/triveni-final.html (structure/animation only, per the brief); reuses the page's
+   own `reduced` flag rather than re-querying matchMedia. Single scroll listener, rAF-
+   throttled, passive — no second listener, per the brief's performance note. */
+(function(){
+  var P1 = "From a French multinational MOU in 2012 to one of India's largest radiator suppliers, our journey has been built one transformer at a time.";
+  var P2 = "Siemens, GE, Hitachi, Toshiba and PGCIL trust us to build the radiators inside transformers that cannot afford to fail — thirteen years of unbroken supply, engineered to the highest class approved in the country.";
+  var P3 = "From engineering and manufacturing to delivery and long-term support, we stay close to every project, treating each dispatch as one more transformer that has to run without excuses.";
+
+  var WWA_DATA = [
+    { n:'01', label:'Our Mission', h:'To deliver high-quality, reliable radiator solutions.', p:'That enhance transformer performance and customer satisfaction, on every order we ship.' },
+    { n:'02', label:'Our Vision', h:'To be the most trusted radiator brand.', p:'Globally recognized for innovation and engineering excellence, built one project at a time.' },
+    { n:'03', label:'Core Values', h:'Five principles behind every unit.', vals:['Integrity','Quality','Innovation','Customer Commitment','Sustainability'] }
+  ];
+
+  function wwaClamp(v,a,b){ return Math.min(b, Math.max(a, v)); }
+
+  function setupWwaReveal(id, text){
+    var el = document.getElementById(id);
+    el.innerHTML = text.split(' ').map(function(w){ return '<span class="word" data-revealed="0">' + w + '</span>'; }).join(' ');
+    return el.querySelectorAll('.word');
+  }
+  var wwaWordSets = [
+    setupWwaReveal('wwaRv1', P1),
+    setupWwaReveal('wwaRv2', P2),
+    setupWwaReveal('wwaRv3', P3)
+  ];
+
+  var wwaRail = document.getElementById('wwaRail');
+  var wwaStack = document.getElementById('wwaStack');
+  var wwaPinWrap = document.getElementById('wwaPinWrap');
+  WWA_DATA.forEach(function(d, i){
+    wwaRail.insertAdjacentHTML('beforeend', '<div class="rail-item" data-i="' + i + '">' + d.label + '</div>');
+    var body = d.vals
+      ? '<div class="vals">' + d.vals.map(function(v){ return '<span>' + v + '</span>'; }).join('') + '</div>'
+      : '<p>' + d.p + '</p>';
+    wwaStack.insertAdjacentHTML('beforeend', '<div class="card" data-i="' + i + '"><div class="num-big">' + d.n + '</div><h3>' + d.h + '</h3>' + body + '</div>');
+  });
+  var wwaCards = wwaStack.querySelectorAll('.card');
+  var wwaRailItems = wwaRail.querySelectorAll('.rail-item');
+  var WWA_N = WWA_DATA.length;
+
+  if (reduced) {
+    /* reduced-motion CSS renders everything static/visible; just skip the loops and set
+       words to their final colour immediately, per the brief. */
+    wwaWordSets.forEach(function(words){
+      words.forEach(function(w){ w.dataset.revealed = '1'; w.style.color = 'var(--ink)'; });
+    });
+    return;
+  }
+
+  function updateWwaReveal(){
+    var vh = window.innerHeight;
+    var triggerY = vh * 0.62;
+    var fadeBand = vh * 0.22;
+    wwaWordSets.forEach(function(words){
+      words.forEach(function(w){
+        if (w.dataset.revealed === '1') return;
+        var r = w.getBoundingClientRect();
+        if (r.top < triggerY) {
+          w.dataset.revealed = '1';
+          w.style.color = 'var(--ink)';
+        } else {
+          var t = wwaClamp(1 - (r.top - triggerY) / fadeBand, 0, 1);
+          var g1 = [152,162,179], g2 = [16,24,40]; /* --muted -> --ink */
+          var rr = Math.round(g1[0] + (g2[0]-g1[0]) * t);
+          var gg = Math.round(g1[1] + (g2[1]-g1[1]) * t);
+          var bb = Math.round(g1[2] + (g2[2]-g1[2]) * t);
+          w.style.color = 'rgb(' + rr + ',' + gg + ',' + bb + ')';
+        }
+      });
+    });
+  }
+
+  function updateWwaPin(){
+    var rect = wwaPinWrap.getBoundingClientRect();
+    var total = rect.height - window.innerHeight;
+    var scrolled = wwaClamp(-rect.top, 0, total);
+    var progress = total > 0 ? scrolled / total : 0;
+    var scaled = progress * WWA_N;
+    wwaCards.forEach(function(card, i){
+      var local = scaled - i, opacity, blur, ty, t;
+      if (local <= 0) { opacity = 0; blur = 10; ty = 14; }
+      else if (local < 0.18) { t = local / 0.18; opacity = t; blur = 10 * (1 - t); ty = 14 * (1 - t); }
+      else if (local < 0.72) { opacity = 1; blur = 0; ty = 0; }
+      else if (local < 1) { t = (local - 0.72) / 0.28; opacity = 1 - t; blur = 10 * t; ty = -10 * t; }
+      else { opacity = 0; blur = 10; ty = -10; }
+      card.style.opacity = opacity;
+      card.style.filter = 'blur(' + blur + 'px)';
+      card.style.transform = 'translateY(' + ty + 'px)';
+    });
+    var activeIndex = wwaClamp(Math.floor(scaled), 0, WWA_N - 1);
+    wwaRailItems.forEach(function(r, i){ r.classList.toggle('active', i === activeIndex); });
+  }
+
+  var wwaTicking = false;
+  function runAllWwa(){ updateWwaReveal(); updateWwaPin(); }
+  document.addEventListener('scroll', function(){
+    if (!wwaTicking) { requestAnimationFrame(function(){ runAllWwa(); wwaTicking = false; }); wwaTicking = true; }
+  }, { passive:true });
+  window.addEventListener('resize', runAllWwa);
+  runAllWwa();
+})();
 
 /* milestones timeline — paginated 4-at-a-time, each page's line-draw/dot-fill/fade-up
    animation plays once the first time that page is shown (on scroll-into-view for page 1,
