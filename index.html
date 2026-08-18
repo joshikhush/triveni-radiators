@@ -407,11 +407,6 @@ ul{margin:0;padding:0;list-style:none;}
 .pin-wrap{position:relative;height:280vh;background:var(--tint-2);}
 .pin-sticky{position:sticky;top:0;height:100svh;max-width:920px;margin:0 auto;padding:0 var(--pad);display:flex;align-items:center;justify-content:center;overflow:hidden;}
 
-/* two heavily-blurred indigo glows behind the stack -- required for the glass cards'
-   backdrop-filter to actually have something to blur. Static (not scroll-driven). */
-.wwa-glow-a{position:absolute;top:-14%;left:-12%;width:52%;aspect-ratio:1;border-radius:50%;z-index:0;pointer-events:none;background:radial-gradient(circle,rgba(var(--ind-rgb),.35),transparent 70%);filter:blur(80px);}
-.wwa-glow-b{position:absolute;bottom:-18%;right:-10%;width:58%;aspect-ratio:1;border-radius:50%;z-index:0;pointer-events:none;background:radial-gradient(circle,rgba(var(--ind-rgb),.28),transparent 70%);filter:blur(90px);}
-
 /* top offset cleared past the fixed nav (81.5px solid-state height) rather than the
    reference's bare 56px, which sat mostly hidden behind it. A shared track line + sliding
    indicator (not per-item borders) -- rail and the progress row below are outside the
@@ -422,19 +417,19 @@ ul{margin:0;padding:0;list-style:none;}
 .rail-indicator{position:absolute;left:0;bottom:-1px;width:0;height:2px;background:var(--ind);transition:left .3s var(--ez),width .3s var(--ez);}
 
 .stack{position:relative;z-index:1;width:100%;height:min(720px,calc(100svh - 220px));}
-/* each card is its own glass rectangle -- square corners, translucent gradient of the
-   site's own tint over indigo, backdrop-filter blur/saturate, thin border, indigo-tinted
-   shadow. No CSS transition anywhere on .card: scroll position alone drives opacity/
-   blur/transform every frame, so a card genuinely stops half-blurred/half-faded mid-scroll
-   rather than snapping to a state. */
+/* each card is its own glass rectangle -- square corners, neutral translucent white
+   gradient (no indigo glow/tint, per instruction), backdrop-filter blur/saturate, thin
+   border, neutral shadow. No CSS transition anywhere on .card: scroll position alone
+   drives opacity/blur/transform every frame, so a card genuinely stops half-blurred/
+   half-faded mid-scroll rather than snapping to a state. */
 .stack .card{
   position:absolute;inset:0;border-radius:0;
   display:flex;flex-direction:column;justify-content:center;
   padding:56px 64px;
-  background:linear-gradient(160deg,rgba(255,255,255,.62) 0%,rgba(var(--ind-rgb),.10) 100%);
+  background:linear-gradient(160deg,rgba(255,255,255,.7) 0%,rgba(255,255,255,.42) 100%);
   backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
   border:1px solid rgba(255,255,255,.55);
-  box-shadow:0 30px 60px -24px rgba(var(--ind-rgb),.28),0 12px 28px -12px rgba(var(--ind-rgb),.16);
+  box-shadow:0 30px 60px -24px rgba(16,24,40,.22),0 12px 28px -12px rgba(16,24,40,.12);
   will-change:transform,opacity,filter;
 }
 .stack .num-big{font-size:15px;font-weight:500;color:var(--ind);margin-bottom:10px;letter-spacing:.05em;}
@@ -469,7 +464,6 @@ ul{margin:0;padding:0;list-style:none;}
      isn't happening here anyway). Word reveal stays on -- it's cheap and works fine. */
   .pin-wrap{height:auto;}
   .pin-sticky{position:static;height:auto;padding:60px var(--pad);overflow:visible;}
-  .wwa-glow-a,.wwa-glow-b{display:none;}
   .stack{position:static;height:auto;}
   .stack .card{
     position:static;opacity:1;filter:none;transform:none;pointer-events:auto;
@@ -913,8 +907,6 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
 
   <div class="pin-wrap" id="wwaPinWrap">
     <div class="pin-sticky">
-      <div class="wwa-glow-a"></div>
-      <div class="wwa-glow-b"></div>
       <div class="rail" id="wwaRail"><div class="rail-indicator" id="wwaRailIndicator"></div></div>
       <div class="stack" id="wwaStack"></div>
       <div class="wwa-progress" id="wwaProgress"></div>
