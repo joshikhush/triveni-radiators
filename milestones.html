@@ -192,32 +192,22 @@ ul{margin:0;padding:0;list-style:none;}
   transition:opacity .6s var(--ez),transform .6s var(--ez);transition-delay:.22s;}
 .ms-ov.in .ms-ov-lede{opacity:1;transform:none;}
 
-.ms-ov-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
-.ms-ov-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-lg);
-  padding:32px 28px;opacity:0;transform:translateY(18px);
-  transition:opacity .6s var(--ez),transform .6s var(--ez),box-shadow .32s var(--ez),border-color .32s var(--ez);}
-.ms-ov.in .ms-ov-card{opacity:1;transform:none;}
-.ms-ov.in .ms-ov-card:nth-child(1){transition-delay:.34s;}
-.ms-ov.in .ms-ov-card:nth-child(2){transition-delay:.42s;}
-.ms-ov.in .ms-ov-card:nth-child(3){transition-delay:.5s;}
-.ms-ov.in .ms-ov-card:nth-child(4){transition-delay:.58s;}
-.ms-ov.in .ms-ov-card:hover{transform:translateY(-4px);box-shadow:0 22px 48px -26px rgba(16,24,40,.22);border-color:var(--ind-soft);}
-.ms-ov-card-n{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--muted);margin-bottom:20px;}
-.ms-ov-card-val{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(24px,2.4vw,32px);color:var(--ind);
-  line-height:1;letter-spacing:-.01em;}
-.ms-ov-card-label{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:10px;}
+.ms-ov-media{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--line);
+  aspect-ratio:4/5;opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--ez),transform .7s var(--ez);transition-delay:.34s;}
+.ms-ov-media img{width:100%;height:100%;object-fit:cover;object-position:center 55%;display:block;}
+.ms-ov.in .ms-ov-media{opacity:1;transform:none;}
 
 @media(prefers-reduced-motion:reduce){
-  .ms-ov-eyebrow,.ms-ov-h2,.ms-ov-lede,.ms-ov-card{opacity:1!important;transform:none!important;transition:none!important;}
+  .ms-ov-eyebrow,.ms-ov-h2,.ms-ov-lede,.ms-ov-media{opacity:1!important;transform:none!important;transition:none!important;}
 }
 @media(max-width:1023px){
   .ms-ov-grid{grid-template-columns:1fr;gap:40px;}
   .ms-ov-geo{width:60vw;}
+  .ms-ov-media{aspect-ratio:16/9;}
 }
 @media(max-width:640px){
   .ms-ov{padding:80px 0 40px;}
-  .ms-ov-cards{gap:14px;}
-  .ms-ov-card{padding:24px 18px;}
 }
 
 /* ==========================================================
@@ -241,7 +231,23 @@ ul{margin:0;padding:0;list-style:none;}
 .ms-journey.in .ms-mj-h2,
 .ms-journey.in .ms-mj-lede{opacity:1;transform:none;}
 
-.ms-journey-grid{margin-top:56px;}
+.ms-gtl-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px;}
+.ms-gtl-tab{font-size:12.5px;font-weight:600;letter-spacing:.02em;color:var(--body);
+  background:var(--white);border:1px solid var(--line);border-radius:999px;padding:9px 18px;
+  cursor:pointer;transition:border-color .2s var(--ez),color .2s var(--ez),background .2s var(--ez);}
+.ms-gtl-tab:hover{border-color:var(--ind-soft);color:var(--ink);}
+.ms-gtl-tab.active{background:var(--ind);border-color:var(--ind);color:#fff;}
+
+.ms-journey-grid{margin-top:32px;}
+
+.ms-gtl-era{position:relative;display:grid;grid-template-columns:1fr 84px 1fr;column-gap:32px;
+  padding:8px 0 40px;
+  opacity:0;transform:translateY(10px);transition:opacity .6s var(--ez),transform .6s var(--ez);}
+.ms-gtl-era.in{opacity:1;transform:none;}
+.ms-gtl-era-title{grid-column:1;justify-self:end;text-align:right;max-width:320px;
+  font-family:'Newsreader',serif;font-weight:400;font-size:clamp(21px,2.1vw,28px);
+  color:var(--ink);line-height:1.2;}
+.ms-gtl-row.is-hidden,.ms-gtl-era.is-hidden{display:none;}
 
 .ms-gtl{position:relative;}
 .ms-gtl::before{content:'';position:absolute;top:4px;bottom:4px;left:50%;width:1px;
@@ -294,17 +300,20 @@ ul{margin:0;padding:0;list-style:none;}
 .ms-gtl-stat-l{font-size:11px;color:var(--muted);line-height:1.4;margin-top:6px;}
 
 @media(prefers-reduced-motion:reduce){
-  .ms-gtl-marker,.ms-gtl-card{opacity:1!important;transform:none!important;transition:none!important;}
+  .ms-gtl-marker,.ms-gtl-card,.ms-gtl-era{opacity:1!important;transform:none!important;transition:none!important;}
   .ms-gtl-progress{transition:none!important;}
 }
 @media(max-width:1023px){
   .ms-gtl-row{grid-template-columns:1fr 70px 1fr;column-gap:20px;padding-bottom:56px;}
   .ms-gtl-card{max-width:380px;padding:26px 24px;}
   .ms-gtl-card.major{padding:30px 28px;}
+  .ms-gtl-era{grid-template-columns:1fr 70px 1fr;column-gap:20px;}
 }
 @media(max-width:720px){
   .ms-gtl::before,.ms-gtl-progress{left:21px;transform:none;}
   .ms-gtl-row{grid-template-columns:42px 1fr;column-gap:16px;padding-bottom:44px;}
+  .ms-gtl-era{grid-template-columns:42px 1fr;column-gap:16px;}
+  .ms-gtl-era-title{grid-column:2;justify-self:start;text-align:left;max-width:none;}
   .ms-gtl-marker{grid-column:1;flex-direction:column;padding-top:4px;}
   .ms-gtl-year{display:none;}
   .ms-gtl-card-year{display:block;font-family:'Newsreader',serif;font-weight:400;font-size:22px;
@@ -567,13 +576,10 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
     <div class="ms-ov-grid">
       <div class="ms-ov-text">
         <h2 class="h2 ms-ov-h2">From manufacturing roots<br>to <span class="ac">industrial scale.</span></h2>
-        <p class="lede ms-ov-lede">Triveni Group's story begins in 1991, with a 4,200 sq. mtr. facility in Allahabad manufacturing electrical and electronics components. What followed was two decades of steady expansion — sustained recognition from OEM partners like Bharti Teletech, a second unit in Noida, and in 2012 a third unit dedicated entirely to power-transformer radiators. Today the Group spans three manufacturing units and a national customer base, built one delivery at a time.</p>
+        <p class="lede ms-ov-lede">Triveni Group's story begins in 1991, with a single unit in Allahabad serving the telecom industry. What followed was two decades of steady expansion — a two-decade partnership with LG Electronics beginning in 2004, a second unit in Noida the same year, and in 2012 a third unit dedicated entirely to power-transformer radiators. Today the Group spans three manufacturing units and a national customer base, built one delivery at a time.</p>
       </div>
-      <div class="ms-ov-cards">
-        <div class="ms-ov-card"><div class="ms-ov-card-n">01</div><div class="ms-ov-card-val">1991</div><div class="ms-ov-card-label">Allahabad · Unit-I · 4,200 sq. mtr.</div></div>
-        <div class="ms-ov-card"><div class="ms-ov-card-n">02</div><div class="ms-ov-card-val">2004</div><div class="ms-ov-card-label">Noida · Unit-II · 800 sq. mtr.</div></div>
-        <div class="ms-ov-card"><div class="ms-ov-card-n">03</div><div class="ms-ov-card-val">2012</div><div class="ms-ov-card-label">Naini · Unit-III · 8,300 sq. mtr.</div></div>
-        <div class="ms-ov-card"><div class="ms-ov-card-n">04</div><div class="ms-ov-card-val">13,300+</div><div class="ms-ov-card-label">Combined sq. mtr. footprint</div></div>
+      <div class="ms-ov-media">
+        <img src="assets/milestone%20hero.jpeg" alt="Transformer radiators manufactured at Triveni's Unit III" loading="lazy">
       </div>
     </div>
   </div>
@@ -594,6 +600,8 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
       <h2 class="h2 ms-mj-h2">From milestones<br><span class="ac">to momentum.</span></h2>
       <p class="lede ms-mj-lede">Every approval, project and expansion has strengthened what came next — turning technical capability into long-term trust.</p>
     </div>
+
+    <div class="ms-gtl-tabs" id="gtlEraTabs"></div>
 
     <div class="ms-journey-grid">
       <div class="ms-gtl" id="gtlWrap">
@@ -748,33 +756,73 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
   ovIO.observe(ov);
 })();
 
-/* ── milestone data — the single source of truth. Triveni GROUP corporate
-   history, consolidated from the two supplied Group timeline documents.
-   Every year, figure and award name is exactly as supplied — nothing invented. ── */
+/* ── milestone data — the single source of truth is assets/triveni-group-timeline.docx.
+   Every year, figure, customer name and description below was transcribed directly
+   from that document (extracted and read in full) — nothing inferred, merged from
+   memory, or carried over from the earlier (now-superseded) timeline draft. ── */
+var ERAS = [
+  { id:'foundation',  label:'Foundation',        range:'1991–2003', title:'Where It All Began' },
+  { id:'whitegoods',  label:'White Goods Entry',  range:'2004–2011', title:'Diversifying Into Home Appliances' },
+  { id:'power',       label:'Power Sector',       range:'2012–2016', title:'A New Division, A New Industry' },
+  { id:'scaling',     label:'Scaling',            range:'2017–2020', title:'Becoming a Strategic and Trusted Supplier' },
+  { id:'recognition', label:'Recognition',        range:'2021–2023', title:'Grade A, IEEE, and an Expanding Product Mix' },
+  { id:'global',      label:'Global Era',         range:'2023–2026', title:'From India’s Leading Supplier to a Global Manufacturer' }
+];
+
 var GROUP_MILESTONES = [
-  { year:'1991', cat:'Origin', icon:'flag', title:'The Foundation',
-    desc:'Triveni Electroplast Pvt. Ltd. established in Allahabad with a 4,200 sq. mtr. facility, beginning manufacturing operations in electrical and electronics components.' },
-  { year:'1999–2000', cat:'Recognition', icon:'award', title:'Bharti Teletech Appreciation',
-    desc:'Received the Appreciation Award from Bharti Teletech, strengthening an early high-quality vendor partnership.' },
-  { year:'2000–2001', cat:'Recognition', icon:'award', title:'Golden Association of the Decade',
-    desc:'Honoured with the Golden Association of the Decade Award by Bharti Teletech, recognising sustained performance.' },
-  { year:'2002–2003', cat:'Recognition', icon:'award', title:'Value Partner of the Year',
-    desc:'Received the Value Partner of the Year Award from Bharti Teletech for customer-centric delivery.' },
-  { year:'2004', cat:'Expansion', icon:'layers', title:'Noida Expansion — Unit-II',
-    desc:"Unit-II was established in Noida with an 800 sq. mtr. facility, expanding manufacturing operations and strengthening the Group's consumer-electronics OEM focus.",
-    note:'Wiring harnesses and specialised power cords.' },
-  { year:'2005–2006', cat:'Recognition', icon:'award', title:'Diamond Association Award',
-    desc:'Received the Diamond Association Award from Bharti Teletech, celebrating 15 years of robust partnership.' },
-  { year:'2008–2009', cat:'Recognition', icon:'award', title:'Excellence &amp; Industry Recognition',
-    desc:'A year of combined recognition — the LG Electronics India Ltd. Excellence Award for Best Performance in Quality, Cost and Delivery, the Bharti Teletech Best Value Partner of the Year award, and Best Vendor recognition from Bharti Group.' },
-  { year:'2012', cat:'Expansion', icon:'layers', title:'Triveni Radiators — Unit-III', major:true,
-    desc:'Triveni Radiators commenced operations in Naini, Allahabad, expanding the Group into heavy power-infrastructure components.',
-    stats:[{ v:'8,300', l:'Sq. mtr. facility' },{ v:'1st in India', l:'Fully automatic panel line' },{ v:'4,000 MT', l:'Annual radiator capacity' }] },
-  { year:'2016', cat:'Growth', icon:'trend', title:'National Market Consolidation',
-    desc:"Within four years of operations, Triveni Radiators consolidated its position as an exceptional-quality supplier to India's transformer industry, supplying steel radiators to manufacturers across more than 15 states." },
-  { year:'2026', cat:'Leadership', icon:'trend', title:'Modern Industry Leadership', major:true,
-    desc:"The current stage of the Group's evolution, combining decades of manufacturing experience with modern automated production capabilities and industrial expertise.",
-    stats:[{ v:'13,300+', l:'Sq. mtr. combined footprint' },{ v:'320+', l:'Professionals' },{ v:'15+', l:'States' },{ v:'4,000 MT', l:'Radiator capacity' }] }
+  { era:'foundation', year:'1991', cat:'Origin', icon:'flag', title:'The Modest Beginning',
+    desc:'Triveni Electroplast Pvt. Ltd. is established in Allahabad, Uttar Pradesh, with a singular motive: to serve the telecom industry. This becomes Unit I — the registered office and the company’s founding manufacturing facility.' },
+
+  { era:'whitegoods', year:'2004', cat:'Expansion', icon:'layers', title:'Unit II Established, Noida',
+    desc:'Observing rising market demand and growing client satisfaction, Triveni establishes Unit II at Noida, Uttar Pradesh, with a focus on serving OEMs for consumer electronics — specifically home appliances.' },
+  { era:'whitegoods', year:'2004', cat:'Partnership', icon:'award', title:'First LG Partnership',
+    desc:'Registered as a vendor with LG Electronics India Ltd. (LGEIL), Washing Machine OBU. Begins supply with a 10% share of business for buzzers in semi-automatic washing machines — the start of what would become a two-decade partnership.' },
+  { era:'whitegoods', year:'2004', cat:'Product', icon:'layers', title:'Product Expansion',
+    desc:'Develops the Lid Switch for semi-automatic washing machines, expanding the product range for LGEIL.' },
+  { era:'whitegoods', year:'2005', cat:'Product', icon:'layers', title:'Harness Assembly Developed',
+    desc:'Develops Harness Assembly for Refrigerator and Washing Machine OBU lines.' },
+  { era:'whitegoods', year:'2007', cat:'Product', icon:'layers', title:'Microwave Oven Harness',
+    desc:'Develops Harness Assembly for Microwave Oven OBU — extending Triveni’s presence across LG’s major appliance categories.' },
+  { era:'whitegoods', year:'2008', cat:'Recognition', icon:'award', title:'First Major Award',
+    desc:'Receives the Excellence Award from LGEIL for Best Performance in Quality, Cost &amp; Delivery (QCD) in the Electrical category — Triveni’s first formal recognition from a global OEM.' },
+
+  { era:'power', year:'2012', cat:'Expansion', icon:'layers', title:'Unit III Established — Transformer Radiators', major:true,
+    desc:'Eyeing the growth of India’s power sector, Triveni establishes Unit III at Prayagraj (Allahabad) to manufacture radiators for power and distribution transformer manufacturers — entering into an MOU with a French multinational to initiate supplies. From day one, Triveni introduces India’s first fully automatic panel production line for pressed steel radiators, eliminating human intervention in the core forming process.' },
+  { era:'power', year:'2013', cat:'Approval', icon:'award', title:'First PGCIL Approval',
+    desc:'Secures PGCIL approval for supply of radiators for 400 kV class Transformers &amp; Reactors, initiated by M/s Alstom T&amp;D — validating the new division’s quality within a year of operations.' },
+  { era:'power', year:'2015', cat:'Approval', icon:'award', title:'765 kV Approval',
+    desc:'PGCIL extends approval to the 765 kV class — the highest voltage level on India’s transmission network — initiated by M/s Siemens T&amp;D.' },
+  { era:'power', year:'2016', cat:'Expansion', icon:'layers', title:'Unit II Extension',
+    desc:'Triveni establishes an additional premises as an extension of Unit II in Noida to enhance wire harness production capacity.' },
+  { era:'power', year:'2016', cat:'Record Order', icon:'trend', title:'Largest Radiator Order', major:true,
+    desc:'Unit III successfully completes its largest rating order to date, supplying 1,008 radiators for 765 kV, 500 MVA class transformers to PGCIL, delivered to Bhuj for M/s Siemens Ltd.' },
+
+  { era:'scaling', year:'2017', cat:'Recognition', icon:'award', title:'Strategic Supplier Status',
+    desc:'Triveni is made a Strategic Supplier for LG Electronics (Q1) and wins the Best of Best Supplier Award for 2017 from LGEIL — 1st Prize. In the same year, Unit III completes its first major international project, delivering radiators to Bangladesh for M/s Siemens Ltd.' },
+  { era:'scaling', year:'2018', cat:'Growth', icon:'trend', title:'Largest Radiator Supplier in India',
+    desc:'Unit III becomes one of the largest suppliers to India’s major transformer manufacturers: GE T&amp;D, Toshiba Transmission &amp; Distribution Systems, Hitachi Energy India, Siemens Ltd, and TBEA India. Triveni receives the Best Supplier Award from M/s TBEA Energy (India) Pvt Ltd.' },
+  { era:'scaling', year:'2019', cat:'Growth', icon:'trend', title:'Railways, ISO, and New Production Lines', major:true,
+    desc:'A landmark year across the group: Unit III becomes one of the largest sources of radiators for RDSO transformers, serving Hitachi Energy India and other trackside transformer manufacturers. Simultaneously, Triveni sets up a new production line for Wire Harness Assembly for NIDEC India Pvt. Ltd.’s SPMS business, and obtains ISO 14001:2015 and ISO 45001:2018 certifications for environmental and occupational health &amp; safety management.' },
+  { era:'scaling', year:'2020', cat:'Recognition', icon:'award', title:'Resilience Through COVID-19',
+    desc:'Despite the global pandemic, Unit III maintains uninterrupted, consistent radiator supply to every customer. The group also earns the CII GreenCo Certification (Silver Rating) from the Confederation of Indian Industry, recognising its environmental sustainability practices.' },
+
+  { era:'recognition', year:'2021', cat:'Recognition', icon:'award', title:'Sole Strategic Supplier for LG',
+    desc:'Triveni becomes the only Strategic Supplier in the Electrical category for LGEIL, among a total of 10 strategic suppliers group-wide — the culmination of nearly two decades of partnership. In parallel, Unit III initiates supplies to Hitachi Energy India’s Power Segment and begins exploring export opportunities.' },
+  { era:'recognition', year:'2022', cat:'Recognition', icon:'award', title:'Best Quality Performance Award',
+    desc:'Triveni receives the Best Quality Performance Award for 2022 — 1st Prize — from LG Electronics.' },
+  { era:'recognition', year:'2022–23', cat:'Certification', icon:'award', title:'PGCIL Grade A &amp; IEEE Certification', major:true,
+    desc:'One of the most significant years in the company’s history. Power Grid Corporation of India awards Triveni its prestigious Grade A certificate and renews approval through 2027. Unit III completes IEEE certification for USA markets, initiates HDG (Hot Dip Galvanised) service trials for global customers, and adds offset radiators to its product range, beginning supplies to M/s Toshiba Transmission and Distribution Systems India.' },
+  { era:'recognition', year:'2023', cat:'Expansion', icon:'layers', title:'New Production Line for NIDEC NTMC',
+    desc:'Triveni sets up a new production line for Wire Harness Assembly to serve NIDEC India Pvt. Ltd.’s NTMC business, further expanding Unit II’s manufacturing footprint.' },
+
+  { era:'global', year:'2023–24', cat:'Growth', icon:'trend', title:'Productivity and Market Recognition',
+    desc:'Unit III addresses plant bottlenecks to increase productivity and introduces automation in welding processes to improve quality. The Indian transformer industry identifies Triveni as a major supplier for their export markets for painted radiators. Unit III becomes one of the largest suppliers of radiators for both RDSO and PGCIL transformers, and successfully delivers 1,500+ offset radiators.' },
+  { era:'global', year:'2024', cat:'Recognition', icon:'award', title:'Best Delivery Performance Award',
+    desc:'Triveni receives the Best Delivery Performance Award from LG Electronics in November 2024 — reaffirming its two-decade reliability record with the group’s founding OEM partner.' },
+  { era:'global', year:'2024–25', cat:'Exports', icon:'trend', title:'The Export Journey Begins', major:true,
+    desc:'Unit III expands its customer base both in India and internationally. Secures a firm order for 190 radiators from Toshiba Transmission &amp; Distribution Systems for GE USA’s solar transformers, with further commitments for 2025–26. Begins direct exports to United States, reaching 5% of total sales as export revenue. A new production line is installed in December 2025, and a new semi-automatic conveyorized paint shop enters installation.' },
+  { era:'global', year:'2025–26', cat:'Leadership', icon:'trend', title:'What’s Next', major:true,
+    desc:'The new paint shop has already been installed. ISO 3834 welding-quality training is completed in August 2025.' }
 ];
 
 var GTL_ICONS = {
@@ -845,25 +893,42 @@ var PROOF_LIBRARY = [
   { title:'ZED Gold Certificate (MSME)', type:'Certification', year:'2025', issuer:'Ministry of MSME, Govt. of India',
     status:'available', validUntil:'September 2028 (3 years from issue)',
     src:'assets/docs/zed-gold.jpg', thumb:'assets/docs/thumbs/zed-gold.jpg' },
-  { title:'Bharti Teletech Appreciation Award', type:'Award', year:'1999–2000', issuer:'Bharti Teletech',
+  { title:'LGEIL Excellence Award (QCD)', type:'Award', year:'2008', issuer:'LG Electronics India Ltd.',
     status:'unavailable' },
-  { title:'Golden Association of the Decade Award', type:'Award', year:'2000–2001', issuer:'Bharti Teletech',
+  { title:'Best of Best Supplier Award', type:'Award', year:'2017', issuer:'LG Electronics India Ltd.',
     status:'unavailable' },
-  { title:'Value Partner of the Year Award', type:'Award', year:'2002–2003', issuer:'Bharti Teletech',
+  { title:'TBEA Best Supplier Award', type:'Award', year:'2018', issuer:'TBEA Energy (India) Pvt. Ltd.',
     status:'unavailable' },
-  { title:'Diamond Association Award', type:'Award', year:'2005–2006', issuer:'Bharti Teletech',
+  { title:'CII GreenCo Certification (Silver)', type:'Certification', year:'2020', issuer:'Confederation of Indian Industry',
     status:'unavailable' },
-  { title:'Excellence &amp; Industry Recognition', type:'Award', year:'2008–2009', issuer:'LG Electronics · Bharti Teletech · Bharti Group',
+  { title:'Best Quality Performance Award', type:'Award', year:'2022', issuer:'LG Electronics India Ltd.',
+    status:'unavailable' },
+  { title:'Best Delivery Performance Award', type:'Award', year:'2024', issuer:'LG Electronics India Ltd.',
     status:'unavailable' }
 ];
 
 (function(){
   var gtlWrap = document.getElementById('gtlWrap');
   var progressEl = document.getElementById('gtlProgress');
+  var eraTabsHost = document.getElementById('gtlEraTabs');
+  var eraById = {};
+  ERAS.forEach(function(e){ eraById[e.id] = e; });
 
+  var lastEra = null;
   GROUP_MILESTONES.forEach(function(m, i){
+    if (m.era !== lastEra) {
+      var era = eraById[m.era];
+      var divider = document.createElement('div');
+      divider.className = 'ms-gtl-era';
+      divider.setAttribute('data-era', m.era);
+      divider.innerHTML = '<h3 class="ms-gtl-era-title">' + era.title + '</h3>';
+      gtlWrap.appendChild(divider);
+      lastEra = m.era;
+    }
+
     var row = document.createElement('div');
     row.className = 'ms-gtl-row ' + (i % 2 === 0 ? 'l' : 'r');
+    row.setAttribute('data-era', m.era);
 
     var statsHtml = '';
     if (m.stats) {
@@ -888,6 +953,35 @@ var PROOF_LIBRARY = [
     gtlWrap.appendChild(row);
   });
 
+  /* ── era filter tabs — toggle visibility without reloading the page;
+     the vertical spine/progress fill re-measures itself automatically
+     since hidden rows are removed from normal flow ── */
+  var allTab = document.createElement('button');
+  allTab.type = 'button';
+  allTab.className = 'ms-gtl-tab active';
+  allTab.textContent = 'All';
+  eraTabsHost.appendChild(allTab);
+  ERAS.forEach(function(era){
+    var tab = document.createElement('button');
+    tab.type = 'button';
+    tab.className = 'ms-gtl-tab';
+    tab.textContent = era.label;
+    tab.setAttribute('data-era', era.id);
+    eraTabsHost.appendChild(tab);
+  });
+  eraTabsHost.addEventListener('click', function(e){
+    var btn = e.target.closest('.ms-gtl-tab');
+    if (!btn) return;
+    eraTabsHost.querySelectorAll('.ms-gtl-tab').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var eraId = btn.getAttribute('data-era');
+    gtlWrap.querySelectorAll('.ms-gtl-row,.ms-gtl-era').forEach(function(el){
+      var show = !eraId || el.getAttribute('data-era') === eraId;
+      el.classList.toggle('is-hidden', !show);
+    });
+    updateProgress();
+  });
+
   /* ── each row activates once as it scrolls into view — a documentary
      "we've reached this point" progression, not a roaming single-item selector ── */
   var rows = gtlWrap.querySelectorAll('.ms-gtl-row');
@@ -900,6 +994,14 @@ var PROOF_LIBRARY = [
     });
   }, { threshold: .22, rootMargin: '0px 0px -8% 0px' });
   rows.forEach(function(r){ rowIO.observe(r); });
+
+  var eraDividers = gtlWrap.querySelectorAll('.ms-gtl-era');
+  var eraIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('in'); eraIO.unobserve(e.target); }
+    });
+  }, { threshold: .3 });
+  eraDividers.forEach(function(d){ eraIO.observe(d); });
 
   /* ── spine fill subtly progresses with scroll (transform-only, cheap) ── */
   var glTicking = false;
