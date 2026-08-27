@@ -7,7 +7,7 @@
 <meta name="description" content="Triveni Radiators (Triveni Electroplast Pvt. Ltd., Naini, Prayagraj) manufactures pressed-steel transformer radiators up to 765 kV class — trusted by Siemens Energy, GE, ABB, TBEA, CG Power and Shirdi Sai Electricals.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================
    DESIGN TOKENS — indigo is the only accent. No other hues.
@@ -556,71 +556,141 @@ ul{margin:0;padding:0;list-style:none;}
    ========================================================== */
 .ms-sec{position:relative;overflow:hidden;background:var(--tint-2);}
 .ms-bg{position:absolute;inset:0;z-index:0;}
-.ms-bg img{width:100%;height:100%;object-fit:cover;object-position:82% center;filter:saturate(.6) blur(1px);}
-.ms-veil{position:absolute;inset:0;z-index:1;background:var(--tint-2);opacity:.88;}
+.ms-bg img{width:100%;height:100%;object-fit:cover;object-position:82% center;
+  filter:grayscale(.25) saturate(.45) contrast(.94) brightness(1.1) blur(2px);}
+.ms-veil{position:absolute;inset:0;z-index:1;background:var(--tint-2);opacity:.94;}
 .ms-sec>.w{position:relative;z-index:2;}
+.ms-sec .g-head>.rv{transition-delay:0s;}
+.ms-sec .tabs.rv{transition-delay:.12s;}
+.ms-sec .ms-more.rv{transition-delay:.45s;}
+
+/* tabs — Milestones-only refinements; Credential's shared .tabs/.tab-btn are untouched */
+.ms-sec .tabs{position:relative;}
+.ms-sec .tab-btn{font-size:14px;font-weight:600;letter-spacing:.01em;color:var(--muted);
+  transition:color .35s var(--ez);}
+.ms-sec .tab-btn.active{color:var(--ind);border-bottom-color:transparent;}
+.ms-sec .tab-btn:focus-visible{outline:2px solid var(--ind);outline-offset:4px;border-radius:2px;}
+.ms-tab-ind{position:absolute;left:0;bottom:0;height:1.5px;width:0;background:var(--ind);
+  transform:translateX(0);transition:transform .38s var(--ez),width .38s var(--ez);}
+.tl-panel{transition:opacity .42s var(--ez),transform .42s var(--ez);}
+.tl-panel.ms-tab-out{opacity:0;transform:translateX(-15px);}
+.tl-panel.ms-tab-in{opacity:0;transform:translateX(15px);}
+@media(prefers-reduced-motion:reduce){
+  .ms-sec .tab-btn,.ms-tab-ind,.tl-panel{transition:none;}
+}
 
 .tl-wrap{overflow-x:visible;position:relative;}
-.tl-page{display:none;}
+.tl-page{display:none;opacity:1;transform:none;transition:opacity .42s var(--ez),transform .42s var(--ez);}
 .tl-page.active{display:block;}
+.tl-page.tl-out-l{opacity:0;transform:translateX(-20px);}
+.tl-page.tl-out-r{opacity:0;transform:translateX(20px);}
+.tl-page.tl-in-l{opacity:0;transform:translateX(-20px);}
+.tl-page.tl-in-r{opacity:0;transform:translateX(20px);}
 .tl{display:grid;grid-template-columns:repeat(var(--tl-n),minmax(0,1fr));gap:16px;margin-top:10px;position:relative;}
 @media(max-width:1080px) and (min-width:861px){
   .tl-wrap{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;}
   .tl-wrap::-webkit-scrollbar{display:none;}
 }
+/* rail sits at the node's vertical centre: year box (44px) + top connector (14px) + half the dot (7px) */
+.tl::after{
+  content:'';position:absolute;top:65px;left:calc(100% / (var(--tl-n) * 2));
+  width:calc(100% - (100% / var(--tl-n)));height:1px;background:var(--line);z-index:0;
+}
 .tl::before{
-  content:'';position:absolute;top:7.5px;left:calc(100% / (var(--tl-n) * 2));height:1px;
-  background:#C3CBDD;width:0;
+  content:'';position:absolute;top:65px;left:calc(100% / (var(--tl-n) * 2));height:1px;
+  background:var(--ind-lt);width:0;z-index:0;
   transition:width 1.1s var(--ez);
 }
 .tl-page.vis .tl::before{width:calc(100% - (100% / var(--tl-n)));}
-.tl-node{
-  position:relative;
+
+/* year → connector → node → rail → connector → milestone text: one quiet editorial spine */
+.tl-node{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.tl-year{font-family:'Newsreader',serif;font-weight:500;font-size:clamp(28px,2.6vw,34px);
+  color:var(--navy);line-height:1;height:44px;display:flex;align-items:flex-end;justify-content:center;
   opacity:0;transform:translateY(10px);
-  transition:opacity .45s var(--ez),transform .45s var(--ez);
-}
-.tl-page.vis .tl-node{opacity:1;transform:none;}
-.tl-page.vis .tl-node:nth-child(1){transition-delay:.15s;}
-.tl-page.vis .tl-node:nth-child(2){transition-delay:.28s;}
-.tl-page.vis .tl-node:nth-child(3){transition-delay:.41s;}
-.tl-page.vis .tl-node:nth-child(4){transition-delay:.54s;}
-.tl-dot{
-  display:block;width:15px;height:15px;box-sizing:border-box;border-radius:50%;
-  background:var(--white);border:2.5px solid var(--ind);margin:0 auto 26px;
-  position:relative;z-index:1;
-  box-shadow:inset 0 0 0 0 var(--ind);
-  transition:box-shadow .35s var(--ez),transform .2s var(--ez);
-}
-.tl-page.vis .tl-dot{box-shadow:inset 0 0 0 3px var(--ind);}
-.tl-node:hover .tl-dot{transform:scale(1.15);}
-.tl-year{font-size:20px;font-weight:500;color:var(--ind);margin-bottom:6px;transition:color .2s var(--ez);}
+  transition:opacity .6s var(--ez),transform .6s var(--ez),color .4s var(--ez);}
+.tl-page.vis .tl-year{opacity:1;transform:none;color:var(--ind);}
 .tl-node:hover .tl-year{color:var(--ind-2);}
-.tl-desc{font-size:15px;line-height:1.75;color:var(--body);}
+
+.tl-conn{display:block;width:1px;height:14px;background:var(--line);flex-shrink:0;transition:background .4s var(--ez);}
+.tl-page.vis .tl-conn{background:var(--ind);}
+
+.tl-dot{
+  display:block;width:14px;height:14px;box-sizing:border-box;border-radius:50%;
+  background:var(--white);border:1px solid var(--line);position:relative;z-index:2;flex-shrink:0;
+  transform:scale(.85);opacity:.7;
+  transition:transform .5s var(--ez) .06s,opacity .5s var(--ez) .06s,border-color .4s var(--ez);
+}
+.tl-dot::before{
+  content:'';position:absolute;top:50%;left:50%;width:5px;height:5px;border-radius:50%;
+  background:var(--muted);transform:translate(-50%,-50%);transition:background .4s var(--ez);
+}
+.tl-page.vis .tl-dot{transform:scale(1);opacity:1;border-color:var(--ind);}
+.tl-page.vis .tl-dot::before{background:var(--ind);}
+.tl-node:hover .tl-dot{border-color:var(--ind);}
+.tl-node:hover .tl-dot::before{background:var(--ind);}
+
+.tl-body{margin-top:14px;max-width:230px;opacity:0;transform:translateY(10px);
+  transition:opacity .6s var(--ez) .12s,transform .6s var(--ez) .12s;}
+.tl-page.vis .tl-body{opacity:1;transform:none;}
+
+.tl-page.vis .tl-node:nth-child(1) .tl-year,.tl-page.vis .tl-node:nth-child(1) .tl-conn-a{transition-delay:.1s;}
+.tl-page.vis .tl-node:nth-child(1) .tl-dot{transition-delay:.16s;}
+.tl-page.vis .tl-node:nth-child(1) .tl-body,.tl-page.vis .tl-node:nth-child(1) .tl-conn-b{transition-delay:.2s;}
+.tl-page.vis .tl-node:nth-child(2) .tl-year,.tl-page.vis .tl-node:nth-child(2) .tl-conn-a{transition-delay:.2s;}
+.tl-page.vis .tl-node:nth-child(2) .tl-dot{transition-delay:.26s;}
+.tl-page.vis .tl-node:nth-child(2) .tl-body,.tl-page.vis .tl-node:nth-child(2) .tl-conn-b{transition-delay:.3s;}
+.tl-page.vis .tl-node:nth-child(3) .tl-year,.tl-page.vis .tl-node:nth-child(3) .tl-conn-a{transition-delay:.3s;}
+.tl-page.vis .tl-node:nth-child(3) .tl-dot{transition-delay:.36s;}
+.tl-page.vis .tl-node:nth-child(3) .tl-body,.tl-page.vis .tl-node:nth-child(3) .tl-conn-b{transition-delay:.4s;}
+.tl-page.vis .tl-node:nth-child(4) .tl-year,.tl-page.vis .tl-node:nth-child(4) .tl-conn-a{transition-delay:.4s;}
+.tl-page.vis .tl-node:nth-child(4) .tl-dot{transition-delay:.46s;}
+.tl-page.vis .tl-node:nth-child(4) .tl-body,.tl-page.vis .tl-node:nth-child(4) .tl-conn-b{transition-delay:.5s;}
+
+.tl-cat{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ind);margin-bottom:6px;}
+.tl-title{font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--ink);line-height:1.3;margin-bottom:6px;}
+.tl-desc{font-size:13.5px;line-height:1.65;color:var(--body);transition:color .4s var(--ez);}
+.tl-page.vis .tl-desc{color:#525C6E;}
+.tl-img{margin-top:12px;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--line);
+  max-width:180px;aspect-ratio:4/3;margin-left:auto;margin-right:auto;}
+.tl-img img{width:100%;height:100%;object-fit:cover;display:block;}
 .tl-nav{display:flex;align-items:center;gap:16px;margin-top:32px;}
 .tl-navbtn{
   width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--white);
   color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;
-  transition:border-color .25s var(--ez),background .25s var(--ez),color .25s var(--ez);
+  transition:border-color .25s var(--ez),background .25s var(--ez),color .25s var(--ez),transform .2s var(--ez);
 }
 .tl-navbtn svg{width:16px;height:16px;}
-.tl-navbtn:hover:not(:disabled),.tl-navbtn:focus-visible:not(:disabled){border-color:var(--ind);background:var(--ind);color:#fff;}
+.tl-navbtn:hover:not(:disabled),.tl-navbtn:focus-visible:not(:disabled){border-color:var(--ind);background:var(--ind);color:#fff;transform:translateY(-2px);}
 .tl-navbtn:disabled{opacity:.35;cursor:default;}
 .tl-pagenum{font-size:13px;color:var(--muted);}
-@media(prefers-reduced-motion:reduce){.tl-navbtn{transition:none;}}
+@media(prefers-reduced-motion:reduce){.tl-navbtn{transition:none;}.tl-navbtn:hover:not(:disabled){transform:none;}}
 @media(max-width:860px){
   .tl-wrap{overflow-x:visible;}
   .tl{display:flex;flex-direction:column;min-width:0;gap:28px;margin-top:0;}
-  .tl::before{top:0;left:7.5px;height:0;width:1px;transition:height 1.1s var(--ez);}
+  .tl::after{top:0;left:7px;width:1px;height:calc(100% - 12px);}
+  .tl::before{top:0;left:7px;height:0;width:1px;transition:height 1.1s var(--ez);}
   .tl-page.vis .tl::before{height:calc(100% - 12px);width:1px;}
-  .tl-node{display:grid;grid-template-columns:auto 1fr;column-gap:16px;row-gap:2px;}
-  .tl-dot{grid-row:1/3;margin:2px 0 0;flex-shrink:0;}
-  .tl-year,.tl-desc{grid-column:2;}
+  .tl-node{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;
+    column-gap:16px;row-gap:2px;align-items:start;text-align:left;}
+  .tl-conn{display:none;}
+  .tl-dot{grid-column:1;grid-row:1/3;margin:6px 0 0;}
+  .tl-year{grid-column:2;grid-row:1;height:auto;display:block;
+    font-size:clamp(24px,6vw,28px);margin-bottom:4px;}
+  .tl-body{grid-column:2;grid-row:2;margin-top:0;max-width:none;}
+  .tl-img{margin-left:0;margin-right:0;}
 }
 @media(prefers-reduced-motion:reduce){
-  .tl::before,.tl-node,.tl-dot,.tl-year{transition:none;}
+  .tl::before,.tl-year,.tl-conn,.tl-dot,.tl-dot::before,.tl-body,.tl-desc,.tl-page{transition:none;}
 }
 .ms-more{margin-top:32px;display:flex;justify-content:flex-end;}
-.ms-more .link-ind{font-size:13px;}
+.ms-more .link-ind{font-size:13px;transition:color .25s var(--ez);}
+.ms-more .link-ind .ar-badge{transition:transform .28s var(--ez),box-shadow .28s var(--ez),background .25s var(--ez),color .25s var(--ez);}
+.ms-more .link-ind:hover .ar-badge,.ms-more .link-ind:focus-visible .ar-badge{transform:translateX(5px);box-shadow:0 10px 26px -8px rgba(79,70,229,.5);}
+@media(prefers-reduced-motion:reduce){
+  .ms-more .link-ind .ar-badge{transition:none;}
+  .ms-more .link-ind:hover .ar-badge,.ms-more .link-ind:focus-visible .ar-badge{transform:none;}
+}
 
 /* ==========================================================
    CUSTOMERS (navy band)
@@ -1086,40 +1156,17 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
         <h2>Thirteen Years<span class="l2">of Earned Trust</span></h2>
       </div>
       <div>
-        <div class="tabs rv">
-          <button class="tab-btn active" data-tab="msr">Triveni Radiators</button>
-          <button class="tab-btn" data-tab="msg">Triveni Group</button>
+        <div class="tabs rv" role="tablist" aria-label="Milestones timeline">
+          <button class="tab-btn active" id="msTabRadiators" role="tab" aria-selected="true" aria-controls="msTlPanel" data-tab="radiators">Triveni Radiators</button>
+          <button class="tab-btn" id="msTabGroup" role="tab" aria-selected="false" aria-controls="msTlPanel" data-tab="group">Triveni Group</button>
         </div>
 
-        <div class="tab-panel active" data-panel="msr">
-          <div class="tl-wrap">
-            <div class="tl-page" style="--tl-n:4;">
-              <div class="tl">
-                <div class="tl-node"><span class="tl-dot"></span><div class="tl-year">2012</div><div class="tl-desc">Founded — India's first fully automatic radiator production line, Naini, Prayagraj.</div></div>
-                <div class="tl-node"><span class="tl-dot"></span><div class="tl-year">2013</div><div class="tl-desc">PGCIL 400 kV approval for transformers &amp; reactors, via Alstom T&amp;D.</div></div>
-                <div class="tl-node"><span class="tl-dot"></span><div class="tl-year">2015</div><div class="tl-desc">PGCIL 765 kV approval — India's highest transmission voltage class.</div></div>
-                <div class="tl-node"><span class="tl-dot"></span><div class="tl-year">2016</div><div class="tl-desc">Landmark Siemens order — 1,008 radiators for a 765 kV / 500 MVA PGCIL project at Bhuj.</div></div>
-              </div>
-            </div>
-            <div class="tl-page" style="--tl-n:3;">
-              <div class="tl">
-                <div class="tl-node"><span class="tl-dot"></span><div class="tl-year">2019</div><div class="tl-desc">RDSO specialist — one of the largest radiator sources for traction transformers, via Hitachi Energy.</div></div>
-                <div class="tl-node"><span class="tl-dot"></span><div class="tl-year">2022–23</div><div class="tl-desc">PGCIL Grade A — top vendor grading after a POWERGRID process audit.</div></div>
-                <div class="tl-node"><span class="tl-dot"></span><div class="tl-year">2024–25</div><div class="tl-desc">Export journey begins — radiators to Toshiba for GE's solar project; direct exports to AYR Energy USA.</div></div>
-              </div>
-            </div>
-          </div>
+        <div class="tl-panel" id="msTlPanel" role="tabpanel" aria-labelledby="msTabRadiators">
+          <div class="tl-wrap" id="tlWrap"></div>
           <div class="tl-nav">
             <button type="button" class="tl-navbtn" id="tlPrev" aria-label="Previous milestones" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-            <span class="tl-pagenum" id="tlPagenum">1 / 2</span>
+            <span class="tl-pagenum" id="tlPagenum">1 / 1</span>
             <button type="button" class="tl-navbtn" id="tlNext" aria-label="Next milestones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
-          </div>
-        </div>
-
-        <div class="tab-panel" data-panel="msg">
-          <div class="ph rv" style="min-height:180px;">
-            <span class="ph-tag">Content pending</span>
-            <p class="ph-txt">The Triveni Group overview — group companies, history and combined capabilities — has not yet been supplied. This tab is ready to receive it.</p>
           </div>
         </div>
 
@@ -1678,48 +1725,142 @@ if (reduced) {
   runAllWwa();
 })();
 
-/* milestones timeline — paginated 4-at-a-time, each page's line-draw/dot-fill/fade-up
-   animation plays once the first time that page is shown (on scroll-into-view for page 1,
-   on first "next" click for later pages) */
+/* home milestones preview — two fully separate datasets (Radiators / Group) rendered
+   into one shared timeline component. Switching tabs re-renders #tlWrap's pages from
+   the chosen dataset; it never mixes the two histories into one rail. Each item may
+   carry an optional `image`/`imageAlt` for future Group historical photographs — the
+   card template only renders the image block when one is present. */
+var HOME_TL = {
+  radiators: {
+    pageSize: 3,
+    items: [
+      { year:'2012', cat:'Foundation', title:'Unit III Established',
+        desc:'India&rsquo;s first fully automatic radiator production line, Naini, Prayagraj.' },
+      { year:'2013', cat:'PGCIL Approval', title:'First PGCIL Approval',
+        desc:'400 kV class transformers &amp; reactors, via Alstom T&amp;D.' },
+      { year:'2015', cat:'765 kV Approval', title:'765 kV Approval',
+        desc:'India&rsquo;s highest transmission voltage class, via Siemens T&amp;D.' },
+      { year:'2016', cat:'Landmark Order', title:'1,008-Radiator Siemens Order',
+        desc:'765 kV / 500 MVA PGCIL project, delivered to Bhuj.' },
+      { year:'2024–25', cat:'Global Reach', title:'Direct US Export Journey',
+        desc:'Firm Toshiba/GE USA order; direct exports begin to the United States.' }
+    ]
+  },
+  group: {
+    pageSize: 3,
+    items: [
+      { year:'1991', cat:'Origin', title:'The Modest Beginning',
+        desc:'Triveni Electroplast Pvt. Ltd. founded in Allahabad, serving the telecom industry.' },
+      { year:'2004', cat:'Partnership', title:'Unit II &amp; First LG Partnership',
+        desc:'Unit II established in Noida; registered as an LG Electronics vendor.' },
+      { year:'2008', cat:'Recognition', title:'First Major Award',
+        desc:'LGEIL Excellence Award for Quality, Cost &amp; Delivery.' },
+      { year:'2019', cat:'Growth', title:'Railways, ISO &amp; New Lines',
+        desc:'RDSO radiator supply begins; ISO 14001 &amp; 45001 certified group-wide.' },
+      { year:'2021', cat:'Recognition', title:'Sole Strategic Supplier for LG',
+        desc:'Triveni becomes LG&rsquo;s only Strategic Supplier in the Electrical category.' }
+    ]
+  }
+};
+
+/* milestones timeline — each dataset is paginated per its own pageSize; a page's
+   line-draw/dot-fill/fade-up animation plays once the first time that page is shown
+   (on scroll-into-view for page 1, on first "next" click / tab switch for later pages) */
 var milEl = document.getElementById('milestones');
-var tlPages = [].slice.call(milEl.querySelectorAll('.tl-page'));
+var tlWrapEl = document.getElementById('tlWrap');
+var tlPanelEl = document.getElementById('msTlPanel');
 var tlPrevBtn = document.getElementById('tlPrev');
 var tlNextBtn = document.getElementById('tlNext');
 var tlPagenumEl = document.getElementById('tlPagenum');
+var tlPages = [];
 var tlIndex = 0;
 
+function tlNodeHTML(m){
+  var imgHtml = m.image
+    ? ('<div class="tl-img"><img src="' + m.image + '" alt="' + (m.imageAlt || m.title) + '" loading="lazy"></div>')
+    : '';
+  return '<div class="tl-node"><div class="tl-year">' + m.year + '</div>' +
+    '<span class="tl-conn tl-conn-a"></span><span class="tl-dot"></span><span class="tl-conn tl-conn-b"></span>' +
+    '<div class="tl-body"><div class="tl-cat">' + m.cat + '</div><div class="tl-title">' + m.title + '</div>' +
+    '<div class="tl-desc">' + m.desc + '</div>' + imgHtml + '</div></div>';
+}
+function chunk(arr, size){
+  var out = [];
+  for (var i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+  return out;
+}
 function revealTlPage(page){
-  if (page.classList.contains('vis')) return;
+  if (!page || page.classList.contains('vis')) return;
   if (reduced) { page.classList.add('vis'); return; }
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ page.classList.add('vis'); }); });
 }
-function showTlPage(i){
-  tlIndex = Math.max(0, Math.min(i, tlPages.length - 1));
-  tlPages.forEach(function(p, idx){ p.classList.toggle('active', idx === tlIndex); });
+/* rebuilds #tlWrap from HOME_TL[key] and resets pagination; pass {reveal:true} when
+   the section is already known to be on-screen (e.g. a tab switch) so the first page
+   animates in immediately instead of waiting for the scroll IntersectionObserver */
+function renderHomeTl(key, opts){
+  var data = HOME_TL[key];
+  if (!data) return;
+  var pages = chunk(data.items, data.pageSize);
+  tlWrapEl.innerHTML = pages.map(function(pageItems){
+    return '<div class="tl-page" style="--tl-n:' + pageItems.length + ';"><div class="tl">' +
+      pageItems.map(tlNodeHTML).join('') + '</div></div>';
+  }).join('');
+  tlPages = [].slice.call(tlWrapEl.querySelectorAll('.tl-page'));
+  tlIndex = 0;
+  if (!tlPages.length) return;
+  tlPages[0].classList.add('active');
+  if (tlPrevBtn) tlPrevBtn.disabled = true;
+  if (tlNextBtn) tlNextBtn.disabled = tlPages.length <= 1;
+  if (tlPagenumEl) tlPagenumEl.textContent = '1 / ' + tlPages.length;
+  if (opts && opts.reveal) revealTlPage(tlPages[0]);
+}
+function showTlPage(i, dir){
+  var newIndex = Math.max(0, Math.min(i, tlPages.length - 1));
+  var oldPage = tlPages[tlIndex];
+  var newPage = tlPages[newIndex];
+  if (oldPage === newPage) { newPage.classList.add('active'); revealTlPage(newPage); return; }
+  var direction = dir || (newIndex > tlIndex ? 1 : -1);
+  tlIndex = newIndex;
   if (tlPrevBtn) tlPrevBtn.disabled = tlIndex === 0;
   if (tlNextBtn) tlNextBtn.disabled = tlIndex === tlPages.length - 1;
   if (tlPagenumEl) tlPagenumEl.textContent = (tlIndex + 1) + ' / ' + tlPages.length;
-  revealTlPage(tlPages[tlIndex]);
-}
-if (tlPages.length) {
-  showTlPage(0);
-  if (tlPrevBtn) tlPrevBtn.addEventListener('click', function(){ showTlPage(tlIndex - 1); });
-  if (tlNextBtn) tlNextBtn.addEventListener('click', function(){ showTlPage(tlIndex + 1); });
 
   if (reduced) {
-    tlPages.forEach(revealTlPage);
-  } else {
-    var milIO = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting) { revealTlPage(tlPages[tlIndex]); milIO.unobserve(e.target); }
-      });
-    }, {threshold:.2});
-    milIO.observe(milEl);
+    oldPage.classList.remove('active');
+    newPage.classList.add('active');
+    revealTlPage(newPage);
+    return;
   }
+  oldPage.classList.add(direction > 0 ? 'tl-out-l' : 'tl-out-r');
+  setTimeout(function(){
+    oldPage.classList.remove('active', 'tl-out-l', 'tl-out-r');
+    newPage.classList.add(direction > 0 ? 'tl-in-r' : 'tl-in-l');
+    newPage.classList.add('active');
+    revealTlPage(newPage);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      newPage.classList.remove('tl-in-r', 'tl-in-l');
+    }); });
+  }, 420);
 }
 
-/* tabs (credential + milestones) */
+renderHomeTl('radiators');
+if (tlPrevBtn) tlPrevBtn.addEventListener('click', function(){ showTlPage(tlIndex - 1, -1); });
+if (tlNextBtn) tlNextBtn.addEventListener('click', function(){ showTlPage(tlIndex + 1, 1); });
+if (reduced) {
+  tlPages.forEach(revealTlPage);
+} else if (milEl) {
+  var milIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { revealTlPage(tlPages[tlIndex]); milIO.unobserve(e.target); }
+    });
+  }, {threshold:.2});
+  milIO.observe(milEl);
+}
+
+/* tabs (credential) — Milestones' tabs are handled separately below, with their
+   own sliding indicator and fade/slide timeline-content swap */
 document.querySelectorAll('.tabs').forEach(function(tabs){
+  if (tabs.closest('#milestones')) return;
   var section = tabs.closest('.g-head') || tabs.closest('section');
   tabs.querySelectorAll('.tab-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
@@ -1735,6 +1876,55 @@ document.querySelectorAll('.tabs').forEach(function(tabs){
     });
   });
 });
+
+/* milestones tabs — sliding indicator + fade/slide swap of the SHARED timeline
+   component's content (never two separate rails; #tlWrap is torn down and rebuilt
+   from the newly selected dataset) */
+(function(){
+  var msTabs = document.querySelector('#milestones .tabs');
+  if (!msTabs || !tlPanelEl) return;
+  var ind = document.createElement('span');
+  ind.className = 'ms-tab-ind';
+  ind.setAttribute('aria-hidden', 'true');
+  msTabs.appendChild(ind);
+  var msBtns = [].slice.call(msTabs.querySelectorAll('.tab-btn'));
+
+  function moveInd(btn){
+    var tRect = msTabs.getBoundingClientRect();
+    var bRect = btn.getBoundingClientRect();
+    ind.style.width = bRect.width + 'px';
+    ind.style.transform = 'translateX(' + (bRect.left - tRect.left) + 'px)';
+  }
+  function activeBtn(){ return msTabs.querySelector('.tab-btn.active') || msBtns[0]; }
+  if (msBtns.length) moveInd(activeBtn());
+  window.addEventListener('resize', function(){ moveInd(activeBtn()); });
+
+  msBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (btn.classList.contains('active')) return;
+      var key = btn.dataset.tab;
+      if (!HOME_TL[key]) return;
+      msBtns.forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
+      tlPanelEl.setAttribute('aria-labelledby', btn.id);
+      moveInd(btn);
+
+      if (reduced) {
+        renderHomeTl(key, {reveal:true});
+        return;
+      }
+      tlPanelEl.classList.add('ms-tab-out');
+      setTimeout(function(){
+        tlPanelEl.classList.remove('ms-tab-out');
+        renderHomeTl(key, {reveal:true});
+        tlPanelEl.classList.add('ms-tab-in');
+        requestAnimationFrame(function(){ requestAnimationFrame(function(){
+          tlPanelEl.classList.remove('ms-tab-in');
+        }); });
+      }, 400);
+    });
+  });
+})();
 
 /* credential lightbox */
 var lbx = document.getElementById('lbx'), lbxImg = document.getElementById('lbxImg'),

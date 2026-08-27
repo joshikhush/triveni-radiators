@@ -236,7 +236,7 @@ ul{margin:0;padding:0;list-style:none;}
 .ms-journey.in .ms-mj-h2,
 .ms-journey.in .ms-mj-lede{opacity:1;transform:none;}
 
-.ms-tl-switch{position:relative;display:inline-flex;gap:2px;padding:5px;margin-top:40px;
+.ms-tl-switch{position:relative;display:flex;width:fit-content;margin:40px auto 0;gap:2px;padding:5px;
   background:var(--off-white);border:1px solid var(--line);border-radius:999px;}
 .ms-tl-switch-btn{position:relative;z-index:2;background:none;border:none;cursor:pointer;
   padding:12px 22px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--body);
@@ -247,7 +247,7 @@ ul{margin:0;padding:0;list-style:none;}
   transition:transform .4s var(--ez),width .4s var(--ez);}
 @media(prefers-reduced-motion:reduce){.ms-tl-switch-indicator{transition:none!important;}}
 
-.ms-gtl-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;
+.ms-gtl-tabs{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;margin-top:24px;
   transition:opacity .4s var(--ez),transform .4s var(--ez);}
 .ms-gtl-tab{font-size:12.5px;font-weight:600;letter-spacing:.02em;color:var(--body);
   background:var(--white);border:1px solid var(--line);border-radius:999px;padding:9px 18px;
