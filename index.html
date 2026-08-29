@@ -1110,11 +1110,9 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
         </div>
 
         <div class="tab-panel" data-panel="perf">
-          <!-- Capped to 6 (one per OEM) to match Certification/Approval's preview count, per
-               the "cap every tab at six, let View All carry the rest" recommendation — confirm
-               with the client. Dropped the duplicate older letters (Siemens Aug-2021, superseded
-               by the Jul-2026 one; ABB Apr-2019, superseded by the Jul-2021 one) rather than
-               truncating arbitrarily — both still appear in full on credentials.html. -->
+          <!-- Capped to 5 to match Certification/Approval's preview row (the fixed-width
+               .cred-row grid wraps to a second line past 5 items at this container width).
+               The full set, including Shirdi Sai Electricals, stays on credentials.html. -->
           <div class="cred-row rv">
             <button class="cred-item" data-doc="assets/docs/siemens-2026.jpg" data-title="Siemens Energy" data-sub="July 2026 · PGCIL 765 kV / GSECL / UPPTCL supplies" aria-label="Siemens Energy performance letter, July 2026">
               <span class="cred-thumb"><img src="assets/docs/thumbs/siemens-2026.jpg" alt="Siemens Energy performance letter" loading="lazy"></span>
@@ -1130,9 +1128,6 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
             </button>
             <button class="cred-item" data-doc="assets/docs/cgpower-2025.jpg" data-title="CG Power" data-sub="2025 · supplies via RDSO, Amara Raja, Powerica &amp; Serentica" aria-label="CG Power performance letter, 2025">
               <span class="cred-thumb"><img src="assets/docs/thumbs/cgpower-2025.jpg" alt="CG Power performance letter" loading="lazy"></span>
-            </button>
-            <button class="cred-item" data-doc="assets/docs/ssel-2025.jpg" data-title="Shirdi Sai Electricals" data-sub="January 2025 · up to 400 kV class" aria-label="Shirdi Sai Electricals performance letter, January 2025">
-              <span class="cred-thumb"><img src="assets/docs/thumbs/ssel-2025.jpg" alt="Shirdi Sai Electricals performance letter" loading="lazy"></span>
             </button>
           </div>
           <div class="cred-af"><a href="credentials.html" class="cred-viewall">View All Certificates <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a></div>
