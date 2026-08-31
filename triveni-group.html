@@ -196,11 +196,6 @@ ul{margin:0;padding:0;list-style:none;}
 .tg-journey{background:#F7F6F2;}
 .tg-journey-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;}
 .tg-journey-head .secnum{margin-bottom:0;}
-.tg-scroll-hint{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
-  letter-spacing:.09em;text-transform:uppercase;color:var(--ind);}
-.tg-scroll-hint svg{width:15px;height:13px;animation:tgHintX 1.7s ease-in-out infinite;}
-@keyframes tgHintX{0%,100%{transform:translateX(0);}50%{transform:translateX(5px);}}
-@media(prefers-reduced-motion:reduce){.tg-scroll-hint svg{animation:none;}}
 
 /* ==========================================================
    OUR JOURNEY — long horizontal editorial / exhibition timeline
@@ -225,9 +220,12 @@ ul{margin:0;padding:0;list-style:none;}
    ========================================================== */
 .tg-tl{position:relative;margin-top:38px;
   --col:312px;                  /* one milestone column — 24px guide gutter + ~288px panel */
-  --stride:172px;               /* per-milestone horizontal advance; consecutive milestones sit one stride apart */
+  --stride:292px;               /* MASTER interval: EVERY consecutive milestone node is exactly this far apart,
+                                   derived from the original 1991→2004 node distance. Never varies, never
+                                   responds to content width, never changes across a section marker. */
   --img-h:190px;
-  --half:540px;                 /* one row's vertical zone (above spine = below) */
+  --half:586px;                 /* spine Y — i.e. the UPPER zone height (tallest upper panel + air) */
+  --zlow:722px;                 /* LOWER zone height (tallest lower panel + air) */
   --sec-w:138px; --edge:60px;}
 #journey.tg-journey{padding-top:26px;padding-bottom:36px;}
 @media(max-width:900px){#journey.tg-journey{padding-top:18px;}}
@@ -240,27 +238,33 @@ ul{margin:0;padding:0;list-style:none;}
 @media(prefers-reduced-motion:reduce){.tg-tl-viewport{scroll-behavior:auto;}}
 
 .tg-tl-track{position:relative;display:flex;align-items:flex-start;width:max-content;
-  padding:0 var(--edge);height:calc(var(--half) * 2);}
+  padding:0 var(--edge) 0 calc(var(--edge) + 150px);height:calc(var(--half) + var(--zlow));}
 
 /* the ONE straight continuous spine — strong dark charcoal, dead centre */
 .tg-tl-track::before{content:'';position:absolute;left:0;right:0;top:var(--half);height:2px;
   background:#252525;transform:scaleX(0);transform-origin:left center;transition:transform 1.2s var(--ez);}
 .tg-tl.in .tg-tl-track::before{transform:scaleX(1);}
 
-/* ---- editorial milestone panel — thin vertical guide line on the left,
-   content stacked to its right; guide line runs to the spine ---- */
-.tg-ms{position:relative;flex:0 0 var(--col);
-  margin-right:calc(var(--stride) - var(--col));   /* negative → tight, evenly-packed exhibition rhythm */
-  height:var(--half);padding-left:24px;border-left:1px solid rgba(37,37,37,.5);
+/* ---- editorial milestone panel — anchored AT the spine and sized to its own
+   full, untruncated content. .tg-ms is only the fixed-width rhythm slot;
+   .tg-ms-body is the visible panel, pinned to the spine and free to grow away
+   from it. A thin vertical guide line hugs the content and meets the spine at
+   a small node. ---- */
+.tg-ms{position:relative;flex:0 0 var(--stride);height:calc(var(--half) + var(--zlow));}
+
+/* full-height vertical guide line, confined to the milestone's own zone */
+.tg-ms::before{content:'';position:absolute;left:0;width:1px;background:rgba(37,37,37,.5);}
+.tg-ms.upper::before{top:0;height:var(--half);}            /* track top → spine */
+.tg-ms.lower::before{top:var(--half);height:var(--zlow);}  /* spine → track bottom */
+
+.tg-ms-body{position:absolute;left:0;width:var(--col);padding-left:24px;
   display:flex;flex-direction:column;align-items:flex-start;text-align:left;}
-.tg-ms:last-of-type{margin-right:0;}
-.tg-ms.upper{align-self:flex-start;padding-top:2px;}     /* upper row — all share one baseline */
-.tg-ms.lower{align-self:flex-end;padding-top:34px;}      /* lower row — all share one baseline; bare guide = connector */
+.tg-ms.upper .tg-ms-body{top:0;}                           /* upper years align along the top */
+.tg-ms.lower .tg-ms-body{top:calc(var(--half) + 14px);}    /* lower years sit just under the spine */
+
 /* small restrained node exactly where the guide line meets the spine */
-.tg-ms::after{content:'';position:absolute;left:0;width:9px;height:9px;border-radius:50%;
+.tg-ms::after{content:'';position:absolute;left:0;top:var(--half);width:9px;height:9px;border-radius:50%;
   background:#252525;transform:translate(-50%,-50%);opacity:0;transition:opacity .4s var(--ez);}
-.tg-ms.upper::after{top:100%;}
-.tg-ms.lower::after{top:0;}
 .tg-ms.in::after{opacity:1;}
 
 .tg-ms-text,.tg-ms-img{opacity:0;transform:translateY(14px);
@@ -271,20 +275,19 @@ ul{margin:0;padding:0;list-style:none;}
 .tg-ms-text{width:100%;}
 .tg-ms-year{font-family:'Newsreader',serif;font-weight:400;font-size:43px;line-height:1;color:var(--ink);}
 .tg-ms-cat{margin-top:12px;font-size:10.5px;font-weight:700;letter-spacing:.12em;line-height:1.45;
-  text-transform:uppercase;color:#B85C5C;min-height:2.9em;}   /* reserve 2 lines so every panel keeps one baseline */
+  text-transform:uppercase;color:#B85C5C;}
 .tg-ms-title{font-family:'Newsreader',serif;font-weight:500;font-size:20px;line-height:1.32;color:var(--ink);
-  margin-top:8px;min-height:2.64em;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.tg-ms-desc{margin-top:11px;font-size:14.5px;line-height:1.62;color:var(--body);min-height:6.48em;
-  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
-.tg-ms-more{margin-top:13px;display:inline-flex;align-items:center;gap:6px;background:none;border:none;
-  padding:0;cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.09em;
-  text-transform:uppercase;color:var(--ind);transition:gap .2s var(--ez);}
-.tg-ms-more:hover{gap:10px;}
-.tg-ms-more svg{width:13px;height:13px;}
+  margin-top:8px;}
+/* full milestone copy — every paragraph, lead line and bullet, no truncation */
+.tg-ms-desc{margin-top:11px;}
+.tg-ms-desc p{font-size:14px;line-height:1.6;color:var(--body);}
+.tg-ms-desc p + p,.tg-ms-desc ul{margin-top:9px;}
+.tg-ms-desc ul{display:flex;flex-direction:column;gap:6px;padding:0;list-style:none;}
+.tg-ms-desc li{position:relative;padding-left:15px;font-size:14px;line-height:1.55;color:var(--body);}
+.tg-ms-desc li::before{content:'';position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:#B85C5C;}
 
 /* LARGE sharp editorial photograph — no card, no shadow, near-square edges */
-.tg-ms-img{width:100%;height:var(--img-h);margin-top:18px;border-radius:2px;
+.tg-ms-img{width:100%;height:var(--img-h);margin-top:16px;border-radius:2px;
   overflow:hidden;background:#e9e9f0;}
 .tg-ms-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s var(--ez);}
 .tg-ms:hover .tg-ms-img img{transform:scale(1.03);}
@@ -292,11 +295,11 @@ ul{margin:0;padding:0;list-style:none;}
 /* ---- section chapter marker — dark navy oval that HANGS BELOW the spine
    (node on the spine · short stem · oval), placed before the era's first
    milestone; never counts in the alternation ---- */
-.tg-era{position:relative;flex:0 0 var(--sec-w);
-  margin-left:-30px;margin-right:12px;   /* compact chapter slot — a deliberate pause between eras, not a hole */
-  height:var(--half);align-self:flex-end;
+/* section markers are OUT of the flex flow (absolute) so they add ZERO width and
+   never disturb the master milestone interval. JS positions each one horizontally
+   inside the gap just before its era's first milestone. */
+.tg-era{position:absolute;top:var(--half);left:0;width:var(--sec-w);height:var(--zlow);
   display:flex;flex-direction:column;align-items:center;justify-content:flex-start;}
-.tg-era-first{margin-left:0;}
 .tg-era-stem{flex:none;height:52px;width:1.5px;background:#252525;
   opacity:0;transition:opacity .5s var(--ez) .2s;}
 .tg-tl.in .tg-era-stem{opacity:1;}
@@ -331,16 +334,16 @@ ul{margin:0;padding:0;list-style:none;}
 
 /* ---- responsive: same continuous two-row grid, tighter column + stride ---- */
 @media(max-width:1024px){
-  .tg-tl{--col:304px;--stride:168px;--img-h:182px;--half:528px;--sec-w:134px;--edge:44px;}
+  .tg-tl{--col:304px;--stride:284px;--img-h:182px;--half:578px;--zlow:714px;--sec-w:134px;--edge:44px;}
   .tg-ms-year{font-size:40px;}
 }
 @media(max-width:768px){
-  .tg-tl{--col:288px;--stride:160px;--img-h:174px;--half:518px;--sec-w:130px;--edge:24px;}
+  .tg-tl{--col:288px;--stride:268px;--img-h:174px;--half:568px;--zlow:704px;--sec-w:130px;--edge:24px;}
   .tg-ms-year{font-size:38px;}
   .tg-ms-title{font-size:19px;}
 }
 @media(max-width:480px){
-  .tg-tl{--col:262px;--stride:150px;--img-h:158px;--half:498px;--sec-w:122px;--edge:16px;}
+  .tg-tl{--col:262px;--stride:248px;--img-h:158px;--half:660px;--zlow:840px;--sec-w:122px;--edge:16px;}
   .tg-ms-year{font-size:34px;}
   .tg-journey-head{gap:10px;}
 }
@@ -492,9 +495,6 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
   <div class="w">
     <div class="tg-journey-head rv">
       <div class="secnum">02 — Our Journey</div>
-      <div class="tg-scroll-hint">Scroll or drag to explore the timeline
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </div>
     </div>
   </div>
 
@@ -708,7 +708,7 @@ TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
       var parts = era.n.split(' — ');
       var num = parts[0], name = (parts[1] || era.n);
       var e = document.createElement('div');
-      e.className = 'tg-era' + (lastEra === -1 ? ' tg-era-first' : '');
+      e.className = 'tg-era';
       /* node (on the spine) · short stem · oval — the marker hangs below the spine */
       e.innerHTML =
         '<span class="tg-era-node" aria-hidden="true"></span>' +
@@ -722,37 +722,53 @@ TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
       lastEra = m.ei;
     }
 
-    var flat = m.body.join(' ') + (m.lead ? ' ' + m.lead : '') + (m.bullets ? ' ' + m.bullets.join(' ') : '');
-    /* the panel shows a ~4-line preview; the full copy stays available via READ MORE */
-    var hasMore = m.body.length > 1 || !!m.bullets || flat.length > 200;
     /* small coral category label = this milestone's chapter/era */
     var cat = (TL_ERAS[m.ei].n.split(' — ')[1] || TL_ERAS[m.ei].n);
     /* strict two-row alternation, chronological — section markers don't count */
     var side = (msIndex % 2 === 0) ? 'upper' : 'lower';
 
-    var card = document.createElement('div');
-    card.className = 'tg-ms ' + side + (msIndex === 0 ? ' first' : '');
-    /* editorial panel, top → bottom:
-       year · category · title · description · READ MORE · image */
-    card.innerHTML =
-      '<div class="tg-ms-text">' +
-        '<div class="tg-ms-year">' + esc(m.year) + '</div>' +
-        '<div class="tg-ms-cat">' + esc(cat) + '</div>' +
-        '<h3 class="tg-ms-title">' + esc(m.title) + '</h3>' +
-        '<p class="tg-ms-desc">' + esc(m.body[0]) + '</p>' +
-        (hasMore ? '<button class="tg-ms-more" type="button">Read more ' + CHEV + '</button>' : '') +
-      '</div>' +
-      '<div class="tg-ms-img"><img src="' + m.img + '" alt="' + esc(m.year + ' — ' + m.title) + '" loading="lazy"></div>';
+    /* full copy, rendered inline on the timeline — every paragraph, lead line and bullet */
+    var descHtml = m.body.map(function(p){ return '<p>' + esc(p) + '</p>'; }).join('');
+    if (m.lead)    descHtml += '<p class="tg-ms-lead">' + esc(m.lead) + '</p>';
+    if (m.bullets) descHtml += '<ul>' + m.bullets.map(function(b){ return '<li>' + esc(b) + '</li>'; }).join('') + '</ul>';
 
-    if (hasMore){
-      card.querySelector('.tg-ms-more').addEventListener('click', function(){ openModal(m, this); });
-    }
+    var card = document.createElement('div');
+    card.className = 'tg-ms ' + side;
+    /* editorial panel, top → bottom: year · category · title · full description · image */
+    card.innerHTML =
+      '<div class="tg-ms-body">' +
+        '<div class="tg-ms-text">' +
+          '<div class="tg-ms-year">' + esc(m.year) + '</div>' +
+          '<div class="tg-ms-cat">' + esc(cat) + '</div>' +
+          '<h3 class="tg-ms-title">' + esc(m.title) + '</h3>' +
+          '<div class="tg-ms-desc">' + descHtml + '</div>' +
+        '</div>' +
+        '<div class="tg-ms-img"><img src="' + m.img + '" alt="' + esc(m.year + ' — ' + m.title) + '" loading="lazy"></div>' +
+      '</div>';
+
     frag.appendChild(card);
     cards.push(card);
     msIndex++;
   });
 
   track.appendChild(frag);
+
+  /* ---- section markers: horizontally park each one inside the gap just before its
+     era's first milestone. They're position:absolute, so this never shifts a single
+     milestone node — the master interval between every consecutive milestone stays fixed. ---- */
+  var eraEls = [].slice.call(track.querySelectorAll('.tg-era'));
+  function positionEras(){
+    eraEls.forEach(function(eEl){
+      var ms = eEl.nextElementSibling;
+      while (ms && !/(^|\s)tg-ms(\s|$)/.test(ms.className)) ms = ms.nextElementSibling;
+      if (!ms) return;
+      var target = ms.offsetLeft - 146;              /* half a master interval before the milestone node */
+      eEl.style.left = Math.max(4, target - eEl.offsetWidth / 2) + 'px';
+    });
+  }
+  positionEras();
+  addEventListener('resize', positionEras);
+  addEventListener('load', positionEras);
 
   /* ---- reveal: spine draws + everything fades in once the section scrolls into view ---- */
   var railIO = new IntersectionObserver(function(entries){
