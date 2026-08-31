@@ -214,10 +214,10 @@ ul{margin:0;padding:0;list-style:none;}
    scrolls sideways; the page never does.
    ========================================================== */
 .tg-tl{position:relative;margin-top:40px;
-  --card:364px; --img-w:338px; --img-h:210px;
-  --half:544px;                 /* content zone ABOVE the spine */
+  --card:376px; --img-w:322px; --img-h:215px;
+  --half:526px;                 /* editorial panel zone ABOVE the spine */
   --below:44px;                 /* small breathing room below the spine */
-  --conn:26px; --node:16px; --sec-w:184px; --gap:72px; --edge:76px;}
+  --sec-w:186px; --gap:80px; --edge:76px;}
 #journey.tg-journey{padding-top:28px;padding-bottom:40px;}
 @media(max-width:900px){#journey.tg-journey{padding-top:20px;}}
 
@@ -231,73 +231,66 @@ ul{margin:0;padding:0;list-style:none;}
 .tg-tl-track{position:relative;display:flex;align-items:flex-start;width:max-content;
   padding:0 var(--edge);height:calc(var(--half) + var(--below));}
 
-/* the ONE continuous spine — thin, violet, spans the whole track */
+/* the ONE continuous spine — strong dark charcoal line, passes below the
+   editorial panels; visually heavier than each panel's guide line */
 .tg-tl-track::before{content:'';position:absolute;left:0;right:0;top:var(--half);height:2px;
-  background:linear-gradient(90deg,#6C63E8,rgba(108,99,232,.35));
-  transform:scaleX(0);transform-origin:left center;transition:transform 1.2s var(--ez);}
+  background:#252525;transform:scaleX(0);transform-origin:left center;transition:transform 1.2s var(--ez);}
 .tg-tl.in .tg-tl-track::before{transform:scaleX(1);}
 
-/* ---- milestone column — EVERY milestone sits ABOVE the spine,
-   content sunk onto it (no zigzag; all aligned to one baseline) ---- */
+/* ---- editorial milestone panel — a thin vertical GUIDE LINE on the left,
+   content stacked to its right (year → category → title → description →
+   READ MORE → large photograph). The guide line runs down to the spine. ---- */
 .tg-ms{position:relative;flex:0 0 var(--card);margin-right:var(--gap);
-  height:var(--half);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;}
+  height:var(--half);padding:2px 0 0 24px;border-left:1px solid #252525;
+  display:flex;flex-direction:column;align-items:flex-start;text-align:left;}
 .tg-ms:last-of-type{margin-right:0;}
+/* the guide line's terminus where it meets the spine */
+.tg-ms::after{content:'';position:absolute;left:0;top:100%;width:7px;height:7px;border-radius:50%;
+  background:#252525;transform:translate(-50%,-50%);opacity:0;transition:opacity .4s var(--ez);}
+.tg-ms.in::after{opacity:1;}
 
-.tg-ms-text,.tg-ms-img,.tg-ms-conn{opacity:0;transform:translateY(14px);
+.tg-ms-text,.tg-ms-img{opacity:0;transform:translateY(14px);
   transition:opacity .6s var(--ez),transform .6s var(--ez);}
-.tg-ms.in .tg-ms-text,.tg-ms.in .tg-ms-img,.tg-ms.in .tg-ms-conn{opacity:1;transform:none;}
+.tg-ms.in .tg-ms-text,.tg-ms.in .tg-ms-img{opacity:1;transform:none;}
 
-/* one centre axis for the whole column */
-.tg-ms-text{width:100%;max-width:302px;}
-.tg-ms-year{font-family:'Newsreader',serif;font-weight:400;font-size:40px;line-height:1;color:var(--ind);}
-.tg-ms-rule{width:32px;height:2px;background:var(--ind);margin:13px auto 15px;}
+.tg-ms-text{width:100%;max-width:306px;}
+.tg-ms-year{font-family:'Newsreader',serif;font-weight:400;font-size:43px;line-height:1;color:var(--ink);}
+.tg-ms-cat{margin-top:12px;font-size:10.5px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:#B85C5C;}
 .tg-ms-title{font-family:'Newsreader',serif;font-weight:500;font-size:20px;line-height:1.32;color:var(--ink);
+  margin-top:8px;min-height:2.64em;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.tg-ms-desc{margin-top:12px;font-size:14.5px;line-height:1.6;color:var(--body);
+.tg-ms-desc{margin-top:11px;font-size:14.5px;line-height:1.62;color:var(--body);min-height:6.48em;
   display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
-.tg-ms-more{margin-top:14px;display:inline-flex;align-items:center;gap:6px;background:none;border:none;
-  padding:0;cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:.09em;
+.tg-ms-more{margin-top:13px;display:inline-flex;align-items:center;gap:6px;background:none;border:none;
+  padding:0;cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.09em;
   text-transform:uppercase;color:var(--ind);transition:gap .2s var(--ez);}
 .tg-ms-more:hover{gap:10px;}
 .tg-ms-more svg{width:13px;height:13px;}
 
-/* LARGE rectangular editorial photograph — no card, no rounding, no shadow */
-.tg-ms-img{width:var(--img-w);max-width:100%;height:var(--img-h);margin-top:22px;border-radius:2px;
-  overflow:hidden;background:#e9e9f0;border:1px solid rgba(17,24,43,.10);}
+/* LARGE sharp editorial photograph — no card, no shadow, near-square edges */
+.tg-ms-img{width:var(--img-w);max-width:100%;height:var(--img-h);margin-top:18px;border-radius:2px;
+  overflow:hidden;background:#e9e9f0;}
 .tg-ms-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s var(--ez);}
 .tg-ms:hover .tg-ms-img img{transform:scale(1.03);}
 
-/* connector — short violet line between the image edge and the node */
-.tg-ms-conn{flex:none;width:2px;height:var(--conn);margin-top:16px;background:#6C63E8;}
-
-/* milestone node — small hollow ring, sits exactly on the spine */
-.tg-ms-node{position:absolute;left:50%;top:100%;width:var(--node);height:var(--node);border-radius:50%;
-  background:var(--off-white);border:2px solid #6C63E8;z-index:3;
-  transform:translate(-50%,-50%) scale(.35);opacity:0;
-  transition:opacity .4s var(--ez),transform .4s var(--ez);}
-.tg-ms.in .tg-ms-node{opacity:1;transform:translate(-50%,-50%) scale(1);}
-.tg-ms.first .tg-ms-node{width:18px;height:18px;border:none;background:var(--ind);
-  box-shadow:0 0 0 3px var(--off-white),0 0 0 8px rgba(79,70,229,.18);}
-.tg-ms.first .tg-ms-node::after{content:'';position:absolute;inset:-15px;border-radius:50%;
-  background:radial-gradient(circle,rgba(79,70,229,.26),transparent 70%);z-index:-1;}
-
-/* ---- section chapter marker — circular navy badge · stem · node on spine ---- */
+/* ---- section chapter marker — dark navy oval · stem · node on the spine ---- */
 .tg-era{position:relative;flex:0 0 var(--sec-w);margin-right:var(--gap);
   height:var(--half);
   display:flex;flex-direction:column;align-items:center;justify-content:flex-end;}
 .tg-era-inner{width:178px;padding:0 20px;aspect-ratio:178 / 146;border-radius:50%;
-  background:#0B1228;text-align:center;
+  background:#101827;text-align:center;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
   opacity:0;transform:translateY(14px);transition:opacity .6s var(--ez),transform .6s var(--ez);}
 .tg-tl.in .tg-era-inner{opacity:1;transform:none;}
-.tg-era-n{font-family:'Newsreader',serif;font-weight:400;font-size:30px;line-height:1;color:var(--ind-lt);}
+.tg-era-n{font-family:'Newsreader',serif;font-weight:400;font-size:30px;line-height:1;color:#fff;}
 .tg-era-name{font-size:10px;font-weight:700;letter-spacing:.13em;line-height:1.5;color:#fff;}
-.tg-era-range{font-size:9.5px;font-weight:600;letter-spacing:.06em;color:var(--on-d-2);}
-.tg-era-stem{flex:none;height:84px;width:1.5px;background:#6C63E8;
+.tg-era-range{font-size:9.5px;font-weight:600;letter-spacing:.06em;color:rgba(255,255,255,.58);}
+.tg-era-stem{flex:none;height:84px;width:1.5px;background:#252525;
   opacity:0;transition:opacity .5s var(--ez) .2s;}
 .tg-tl.in .tg-era-stem{opacity:1;}
 .tg-era-node{position:absolute;left:50%;top:var(--half);width:16px;height:16px;border-radius:50%;
-  background:#0B1228;border:2px solid var(--off-white);z-index:4;box-shadow:0 0 0 3px rgba(108,99,232,.28);
+  background:#101827;border:2px solid var(--off-white);z-index:4;box-shadow:0 0 0 3px rgba(37,37,37,.16);
   transform:translate(-50%,-50%) scale(.4);opacity:0;transition:opacity .4s var(--ez),transform .4s var(--ez);}
 .tg-tl.in .tg-era-node{opacity:1;transform:translate(-50%,-50%) scale(1);}
 
@@ -309,25 +302,28 @@ ul{margin:0;padding:0;list-style:none;}
 .tg-tl.scrolled-end .tg-tl-fade{opacity:0;}
 
 @media(prefers-reduced-motion:reduce){
-  .tg-tl-track::before,.tg-ms-text,.tg-ms-img,.tg-ms-conn,.tg-ms-node,
+  .tg-tl-track::before,.tg-ms::after,.tg-ms-text,.tg-ms-img,
   .tg-era-inner,.tg-era-stem,.tg-era-node{transition:none!important;}
   .tg-tl-track::before{transform:scaleX(1);}
-  .tg-ms-text,.tg-ms-img,.tg-ms-conn,.tg-era-inner,.tg-era-stem{opacity:1;transform:none;}
-  .tg-ms-node,.tg-era-node{opacity:1;transform:translate(-50%,-50%);}
+  .tg-ms::after,.tg-ms-text,.tg-ms-img,.tg-era-inner,.tg-era-stem{opacity:1;transform:none;}
+  .tg-ms::after{transform:translate(-50%,-50%);}
+  .tg-era-node{opacity:1;transform:translate(-50%,-50%);}
 }
 
-/* ---- responsive: smaller fixed columns, same structure ---- */
+/* ---- responsive: smaller fixed panels, same editorial structure ---- */
 @media(max-width:1024px){
-  .tg-tl{--card:352px;--img-w:322px;--img-h:202px;--half:520px;--sec-w:188px;--gap:68px;--edge:52px;}
+  .tg-tl{--card:360px;--img-w:308px;--img-h:206px;--half:518px;--sec-w:180px;--gap:64px;--edge:52px;}
+  .tg-ms-year{font-size:40px;}
 }
 @media(max-width:768px){
-  .tg-tl{--card:320px;--img-w:296px;--img-h:186px;--half:512px;--sec-w:176px;--gap:52px;--edge:28px;}
-  .tg-ms-year{font-size:36px;}
+  .tg-tl{--card:326px;--img-w:290px;--img-h:194px;--half:512px;--sec-w:172px;--gap:48px;--edge:28px;}
+  .tg-ms-year{font-size:38px;}
   .tg-ms-title{font-size:19px;}
 }
 @media(max-width:480px){
-  .tg-tl{--card:288px;--img-w:264px;--img-h:166px;--half:500px;--sec-w:160px;--gap:40px;--edge:22px;}
-  .tg-ms-year{font-size:34px;}
+  .tg-tl{--card:290px;--img-w:262px;--img-h:174px;--half:504px;--sec-w:158px;--gap:34px;--edge:22px;}
+  .tg-ms-year{font-size:35px;}
+  .tg-ms-text{max-width:none;}
   .tg-journey-head{gap:10px;}
 }
 
@@ -708,24 +704,24 @@ TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
     }
 
     var flat = m.body.join(' ') + (m.lead ? ' ' + m.lead : '') + (m.bullets ? ' ' + m.bullets.join(' ') : '');
-    /* the card shows a ~4-line preview; the full copy stays available via READ MORE */
+    /* the panel shows a ~4-line preview; the full copy stays available via READ MORE */
     var hasMore = m.body.length > 1 || !!m.bullets || flat.length > 200;
+    /* small coral category label = this milestone's chapter/era */
+    var cat = (TL_ERAS[m.ei].n.split(' — ')[1] || TL_ERAS[m.ei].n);
 
     var card = document.createElement('div');
     card.className = 'tg-ms' + (msIndex === 0 ? ' first' : '');
-    /* EVERY milestone, top → bottom (all above the spine, aligned):
-       year · rule · title · description · READ MORE · image · connector · node */
+    /* editorial panel, top → bottom (all above the spine):
+       year · category · title · description · READ MORE · image */
     card.innerHTML =
       '<div class="tg-ms-text">' +
         '<div class="tg-ms-year">' + esc(m.year) + '</div>' +
-        '<div class="tg-ms-rule" aria-hidden="true"></div>' +
+        '<div class="tg-ms-cat">' + esc(cat) + '</div>' +
         '<h3 class="tg-ms-title">' + esc(m.title) + '</h3>' +
         '<p class="tg-ms-desc">' + esc(m.body[0]) + '</p>' +
         (hasMore ? '<button class="tg-ms-more" type="button">Read more ' + CHEV + '</button>' : '') +
       '</div>' +
-      '<div class="tg-ms-img"><img src="' + m.img + '" alt="' + esc(m.year + ' — ' + m.title) + '" loading="lazy"></div>' +
-      '<span class="tg-ms-conn" aria-hidden="true"></span>' +
-      '<span class="tg-ms-node" aria-hidden="true"></span>';
+      '<div class="tg-ms-img"><img src="' + m.img + '" alt="' + esc(m.year + ' — ' + m.title) + '" loading="lazy"></div>';
 
     if (hasMore){
       card.querySelector('.tg-ms-more').addEventListener('click', function(){ openModal(m, this); });
