@@ -196,27 +196,29 @@ ul{margin:0;padding:0;list-style:none;}
 .tg-journey{background:var(--off-white);}
 .tg-journey-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;}
 .tg-journey-head .secnum{margin-bottom:0;}
+.tg-scroll-hint{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--ind);}
+.tg-scroll-hint svg{width:15px;height:13px;animation:tgHintX 1.7s ease-in-out infinite;}
+@keyframes tgHintX{0%,100%{transform:translateX(0);}50%{transform:translateX(5px);}}
+@media(prefers-reduced-motion:reduce){.tg-scroll-hint svg{animation:none;}}
 
 /* ==========================================================
-   OUR JOURNEY — horizontal editorial timeline
-   ONE continuous spine near the bottom of the band. EVERY milestone
-   uses the SAME vertical structure, all above the spine (no
-   alternating):
-     YEAR · violet rule · TITLE · DESCRIPTION · READ MORE ·
-     [ large rectangular IMAGE ] · connector · NODE (on spine)
-   Section eras are announced by a distinct circular chapter marker
-   (badge · stem · filled node) placed BEFORE the era's first
-   milestone. Only the viewport scrolls horizontally; the page never
-   scrolls sideways. Year / content / image / connector / node all
-   share the column's centre axis via flex centring + symmetric
-   padding — no per-element offsets.
+   OUR JOURNEY — long horizontal editorial / exhibition timeline
+   ONE continuous violet spine at a fixed Y. Milestones alternate:
+   UPPER events sit entirely ABOVE the spine, LOWER events entirely
+   BELOW it, each in its own fixed-width vertical column centred on a
+   single axis: YEAR · accent · TITLE · DESCRIPTION · READ MORE ·
+   IMAGE · connector · NODE (on the spine). Section chapters are
+   announced by a circular navy marker (badge · stem · node on the
+   spine) placed BEFORE the era's first milestone. Only the viewport
+   scrolls sideways; the page never does.
    ========================================================== */
-.tg-tl{position:relative;margin-top:44px;
-  --card:418px; --img-w:322px; --img-h:200px;
-  --spine-y:624px; --below:34px;
-  --conn:22px; --node:13px; --sec-w:216px; --gap:6px; --edge:64px;}
-#journey.tg-journey{padding-top:30px;padding-bottom:44px;}
-@media(max-width:900px){#journey.tg-journey{padding-top:22px;}}
+.tg-tl{position:relative;margin-top:40px;
+  --card:364px; --img-w:338px; --img-h:210px;
+  --half:544px;                 /* content zone each side of the spine */
+  --conn:26px; --node:16px; --sec-w:184px; --gap:72px; --edge:76px;}
+#journey.tg-journey{padding-top:28px;padding-bottom:40px;}
+@media(max-width:900px){#journey.tg-journey{padding-top:20px;}}
 
 /* the ONLY horizontally-scrolling element on the page */
 .tg-tl-viewport{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
@@ -226,76 +228,86 @@ ul{margin:0;padding:0;list-style:none;}
 @media(prefers-reduced-motion:reduce){.tg-tl-viewport{scroll-behavior:auto;}}
 
 .tg-tl-track{position:relative;display:flex;align-items:flex-start;width:max-content;
-  padding:0 var(--edge);height:calc(var(--spine-y) + var(--below));}
+  padding:0 var(--edge);height:calc(var(--half) * 2);}
 
 /* the ONE continuous spine — thin, violet, spans the whole track */
-.tg-tl-track::before{content:'';position:absolute;left:0;right:0;top:var(--spine-y);height:2px;
-  background:linear-gradient(90deg,var(--ind-lt),rgba(79,70,229,.25));
+.tg-tl-track::before{content:'';position:absolute;left:0;right:0;top:var(--half);height:2px;
+  background:linear-gradient(90deg,#6C63E8,rgba(108,99,232,.35));
   transform:scaleX(0);transform-origin:left center;transition:transform 1.2s var(--ez);}
 .tg-tl.in .tg-tl-track::before{transform:scaleX(1);}
 
-/* ---- milestone — content bottom-anchored so it sits ON the spine
-   (dense at the timeline, headroom above shorter events) ---- */
+/* ---- milestone column ----
+   height = one half-zone; UPPER columns occupy the top half with the
+   content sunk onto the spine, LOWER columns occupy the bottom half
+   with the content rising off the spine. */
 .tg-ms{position:relative;flex:0 0 var(--card);margin-right:var(--gap);
-  height:var(--spine-y);padding:24px 24px 0;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;}
+  height:var(--half);display:flex;flex-direction:column;align-items:center;text-align:center;}
 .tg-ms:last-of-type{margin-right:0;}
+.tg-ms.upper{justify-content:flex-end;}      /* content sinks to the spine (bottom) */
+.tg-ms.lower{align-self:flex-end;justify-content:flex-start;} /* bottom half, content rises to the spine (top) */
 
-.tg-ms-text,.tg-ms-img,.tg-ms-conn{opacity:0;transform:translateY(12px);
+.tg-ms-text,.tg-ms-img,.tg-ms-conn{opacity:0;transform:translateY(14px);
   transition:opacity .6s var(--ez),transform .6s var(--ez);}
+.tg-ms.lower .tg-ms-text,.tg-ms.lower .tg-ms-img,.tg-ms.lower .tg-ms-conn{transform:translateY(-14px);}
 .tg-ms.in .tg-ms-text,.tg-ms.in .tg-ms-img,.tg-ms.in .tg-ms-conn{opacity:1;transform:none;}
 
-/* text block — full copy, nothing truncated */
-.tg-ms-text{width:100%;}
-.tg-ms-year{font-family:'Newsreader',serif;font-weight:400;font-size:37px;line-height:1;color:var(--ind);}
-.tg-ms-rule{width:28px;height:2px;background:var(--ind);margin:13px auto 15px;}
-.tg-ms-title{font-family:'Newsreader',serif;font-weight:500;font-size:20px;line-height:1.32;color:var(--ink);}
-.tg-ms-desc{margin-top:12px;font-size:14px;line-height:1.6;color:var(--body);text-align:left;}
-.tg-ms-desc p + p,.tg-ms-lead{margin-top:9px;}
-.tg-ms-bullets{margin-top:9px;display:flex;flex-direction:column;gap:6px;}
-.tg-ms-bullets li{position:relative;padding-left:16px;line-height:1.55;}
-.tg-ms-bullets li::before{content:'';position:absolute;left:2px;top:8px;width:4px;height:4px;border-radius:50%;background:var(--ind);}
+/* one centre axis for the whole column */
+.tg-ms-text{width:100%;max-width:302px;}
+.tg-ms-year{font-family:'Newsreader',serif;font-weight:400;font-size:40px;line-height:1;color:var(--ind);}
+.tg-ms-rule{width:32px;height:2px;background:var(--ind);margin:13px auto 15px;}
+.tg-ms-title{font-family:'Newsreader',serif;font-weight:500;font-size:20px;line-height:1.32;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.tg-ms-desc{margin-top:12px;font-size:14.5px;line-height:1.6;color:var(--body);
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+.tg-ms-more{margin-top:14px;display:inline-flex;align-items:center;gap:6px;background:none;border:none;
+  padding:0;cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ind);transition:gap .2s var(--ez);}
+.tg-ms-more:hover{gap:10px;}
+.tg-ms-more svg{width:13px;height:13px;}
 
-/* LARGE rectangular editorial image — directly below the text */
-.tg-ms-img{width:var(--img-w);max-width:100%;height:var(--img-h);margin-top:22px;
-  border:1px solid var(--line);border-radius:2px;overflow:hidden;background:#e9e9f0;
-  box-shadow:0 10px 26px -20px rgba(16,24,40,.3);}
+/* LARGE rectangular editorial photograph — no card, no rounding, no shadow */
+.tg-ms-img{width:var(--img-w);max-width:100%;height:var(--img-h);border-radius:2px;overflow:hidden;
+  background:#e9e9f0;border:1px solid rgba(17,24,43,.10);}
+.tg-ms.upper .tg-ms-img{margin-top:22px;}
+.tg-ms.lower .tg-ms-img{margin-top:22px;}
 .tg-ms-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s var(--ez);}
 .tg-ms:hover .tg-ms-img img{transform:scale(1.03);}
 
-/* connector: short violet line from the image edge to the node on the spine */
-.tg-ms-conn{flex:none;width:2px;height:var(--conn);margin-top:16px;background:rgba(79,70,229,.42);}
+/* connector — short violet line between the image edge and the node */
+.tg-ms-conn{flex:none;width:2px;height:var(--conn);background:#6C63E8;}
+.tg-ms.upper .tg-ms-conn{margin-top:16px;}
+.tg-ms.lower .tg-ms-conn{margin-bottom:16px;}
 
-/* milestone node — small hollow ring on the spine, on the column centre axis */
-.tg-ms-node{position:absolute;left:50%;top:var(--spine-y);width:var(--node);height:var(--node);
-  border-radius:50%;background:var(--off-white);border:2px solid var(--ind-lt);z-index:3;
+/* milestone node — small hollow ring, sits exactly on the spine */
+.tg-ms-node{position:absolute;left:50%;width:var(--node);height:var(--node);border-radius:50%;
+  background:var(--off-white);border:2px solid #6C63E8;z-index:3;
   transform:translate(-50%,-50%) scale(.35);opacity:0;
   transition:opacity .4s var(--ez),transform .4s var(--ez);}
+.tg-ms.upper .tg-ms-node{top:100%;}
+.tg-ms.lower .tg-ms-node{top:0;}
 .tg-ms.in .tg-ms-node{opacity:1;transform:translate(-50%,-50%) scale(1);}
-.tg-ms.first .tg-ms-node{width:16px;height:16px;border:none;background:var(--ind);
-  box-shadow:0 0 0 3px var(--off-white),0 0 0 7px rgba(79,70,229,.18);}
-.tg-ms.first .tg-ms-node::after{content:'';position:absolute;inset:-14px;border-radius:50%;
+.tg-ms.first .tg-ms-node{width:18px;height:18px;border:none;background:var(--ind);
+  box-shadow:0 0 0 3px var(--off-white),0 0 0 8px rgba(79,70,229,.18);}
+.tg-ms.first .tg-ms-node::after{content:'';position:absolute;inset:-15px;border-radius:50%;
   background:radial-gradient(circle,rgba(79,70,229,.26),transparent 70%);z-index:-1;}
 
-/* ---- section / era chapter marker — distinct circular badge + stem + node ---- */
+/* ---- section chapter marker — circular navy badge · stem · node on spine ---- */
 .tg-era{position:relative;flex:0 0 var(--sec-w);margin-right:var(--gap);
-  height:var(--spine-y);padding-top:18px;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;}
-.tg-era-inner{width:182px;padding:26px 22px 24px;border-radius:104px / 88px;
-  background:var(--navy);text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  box-shadow:0 30px 58px -30px rgba(5,11,34,.55);
+  height:var(--half);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;}
+.tg-era-inner{width:178px;padding:0 20px;aspect-ratio:178 / 146;border-radius:50%;
+  background:#0B1228;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
   opacity:0;transform:translateY(14px);transition:opacity .6s var(--ez),transform .6s var(--ez);}
 .tg-tl.in .tg-era-inner{opacity:1;transform:none;}
 .tg-era-n{font-family:'Newsreader',serif;font-weight:400;font-size:30px;line-height:1;color:var(--ind-lt);}
-.tg-era-name{font-size:10px;font-weight:700;letter-spacing:.12em;line-height:1.5;color:#fff;}
-.tg-era-range{font-size:10px;font-weight:600;letter-spacing:.05em;color:var(--on-d-2);}
-.tg-era-stem{flex:1 1 auto;min-height:24px;width:1.5px;background:rgba(79,70,229,.5);
+.tg-era-name{font-size:10px;font-weight:700;letter-spacing:.13em;line-height:1.5;color:#fff;}
+.tg-era-range{font-size:9.5px;font-weight:600;letter-spacing:.06em;color:var(--on-d-2);}
+.tg-era-stem{flex:none;height:84px;width:1.5px;background:#6C63E8;
   opacity:0;transition:opacity .5s var(--ez) .2s;}
 .tg-tl.in .tg-era-stem{opacity:1;}
-.tg-era-node{position:absolute;left:50%;top:var(--spine-y);width:15px;height:15px;border-radius:50%;
-  background:var(--navy);border:2px solid var(--off-white);z-index:4;
-  box-shadow:0 0 0 3px rgba(79,70,229,.22);
+.tg-era-node{position:absolute;left:50%;top:var(--half);width:16px;height:16px;border-radius:50%;
+  background:#0B1228;border:2px solid var(--off-white);z-index:4;box-shadow:0 0 0 3px rgba(108,99,232,.28);
   transform:translate(-50%,-50%) scale(.4);opacity:0;transition:opacity .4s var(--ez),transform .4s var(--ez);}
 .tg-tl.in .tg-era-node{opacity:1;transform:translate(-50%,-50%) scale(1);}
 
@@ -316,17 +328,16 @@ ul{margin:0;padding:0;list-style:none;}
 
 /* ---- responsive: smaller fixed columns, same structure ---- */
 @media(max-width:1024px){
-  .tg-tl{--card:400px;--img-w:308px;--img-h:192px;--spine-y:650px;--sec-w:204px;--edge:44px;}
+  .tg-tl{--card:352px;--img-w:322px;--img-h:202px;--half:520px;--sec-w:188px;--gap:68px;--edge:52px;}
 }
 @media(max-width:768px){
-  .tg-tl{--card:360px;--img-w:288px;--img-h:180px;--spine-y:712px;--sec-w:192px;--edge:24px;}
-  .tg-ms-year{font-size:34px;}
+  .tg-tl{--card:320px;--img-w:296px;--img-h:186px;--half:512px;--sec-w:176px;--gap:52px;--edge:28px;}
+  .tg-ms-year{font-size:36px;}
   .tg-ms-title{font-size:19px;}
-  .tg-ms{padding:22px 18px 0;}
 }
 @media(max-width:480px){
-  .tg-tl{--card:308px;--img-w:256px;--img-h:160px;--spine-y:820px;--sec-w:172px;--edge:20px;}
-  .tg-ms-year{font-size:32px;}
+  .tg-tl{--card:288px;--img-w:264px;--img-h:166px;--half:500px;--sec-w:160px;--gap:40px;--edge:22px;}
+  .tg-ms-year{font-size:34px;}
   .tg-journey-head{gap:10px;}
 }
 
@@ -477,6 +488,9 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
   <div class="w">
     <div class="tg-journey-head rv">
       <div class="secnum">02 — Our Journey</div>
+      <div class="tg-scroll-hint">Scroll or drag to explore the timeline
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
     </div>
   </div>
 
@@ -703,30 +717,36 @@ TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
       lastEra = m.ei;
     }
 
-    var imgHTML = m.img
-      ? '<div class="tg-ms-img"><img src="' + m.img + '" alt="' + esc(m.year + ' — ' + m.title) + '" loading="lazy"></div>'
-      : '';
-    /* full milestone copy — every paragraph, lead line and bullet, in full */
-    var descHTML = m.body.map(function(p){ return '<p>' + esc(p) + '</p>'; }).join('');
-    if (m.lead)    descHTML += '<p class="tg-ms-lead">' + esc(m.lead) + '</p>';
-    if (m.bullets) descHTML += '<ul class="tg-ms-bullets">' +
-      m.bullets.map(function(b){ return '<li>' + esc(b) + '</li>'; }).join('') + '</ul>';
+    var side = (msIndex % 2 === 0) ? 'upper' : 'lower';
+    var flat = m.body.join(' ') + (m.lead ? ' ' + m.lead : '') + (m.bullets ? ' ' + m.bullets.join(' ') : '');
+    /* the card shows a ~4-line preview; the full copy stays available via READ MORE */
+    var hasMore = m.body.length > 1 || !!m.bullets || flat.length > 200;
 
-    var card = document.createElement('div');
-    card.className = 'tg-ms' + (msIndex === 0 ? ' first' : '') + (m.img ? ' has-img' : '');
-    /* EVERY milestone, top → bottom:
-       year · rule · title · full description · [image] · connector · node */
-    card.innerHTML =
+    var imgHTML = '<div class="tg-ms-img"><img src="' + m.img + '" alt="' +
+      esc(m.year + ' — ' + m.title) + '" loading="lazy"></div>';
+    var textHTML =
       '<div class="tg-ms-text">' +
         '<div class="tg-ms-year">' + esc(m.year) + '</div>' +
         '<div class="tg-ms-rule" aria-hidden="true"></div>' +
         '<h3 class="tg-ms-title">' + esc(m.title) + '</h3>' +
-        '<div class="tg-ms-desc">' + descHTML + '</div>' +
-      '</div>' +
-      imgHTML +
-      '<span class="tg-ms-conn" aria-hidden="true"></span>' +
-      '<span class="tg-ms-node" aria-hidden="true"></span>';
+        '<p class="tg-ms-desc">' + esc(m.body[0]) + '</p>' +
+        (hasMore ? '<button class="tg-ms-more" type="button">Read more ' + CHEV + '</button>' : '') +
+      '</div>';
+    var connHTML = '<span class="tg-ms-conn" aria-hidden="true"></span>';
+    var nodeHTML = '<span class="tg-ms-node" aria-hidden="true"></span>';
 
+    var card = document.createElement('div');
+    card.className = 'tg-ms ' + side + (msIndex === 0 ? ' first' : '');
+    /* UPPER, top→bottom: year · rule · title · desc · READ MORE · image · connector · node
+       LOWER, top→bottom: node · connector · year · rule · title · desc · READ MORE · image
+       (the node is absolutely pinned to the spine either way) */
+    card.innerHTML = (side === 'upper')
+      ? textHTML + imgHTML + connHTML + nodeHTML
+      : connHTML + textHTML + imgHTML + nodeHTML;
+
+    if (hasMore){
+      card.querySelector('.tg-ms-more').addEventListener('click', function(){ openModal(m, this); });
+    }
     frag.appendChild(card);
     cards.push(card);
     msIndex++;
