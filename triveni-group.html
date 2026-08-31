@@ -283,8 +283,6 @@ ul{margin:0;padding:0;list-style:none;}
 
 .tg-ms-text{width:100%;}
 .tg-ms-year{font-family:'Newsreader',serif;font-weight:400;font-size:43px;line-height:1;color:var(--ink);}
-.tg-ms-cat{margin-top:12px;font-size:10.5px;font-weight:700;letter-spacing:.12em;line-height:1.45;
-  text-transform:uppercase;color:#B85C5C;}
 .tg-ms-title{font-family:'Newsreader',serif;font-weight:500;font-size:20px;line-height:1.32;color:var(--ink);
   margin-top:8px;}
 /* full milestone copy — every paragraph, lead line and bullet, no truncation */
@@ -294,6 +292,8 @@ ul{margin:0;padding:0;list-style:none;}
 .tg-ms-desc ul{display:flex;flex-direction:column;gap:6px;padding:0;list-style:none;}
 .tg-ms-desc li{position:relative;padding-left:15px;font-size:14px;line-height:1.55;color:var(--body);}
 .tg-ms-desc li::before{content:'';position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:#B85C5C;}
+/* restrained editorial accent — a few meaningful fragments per milestone in the chapter red */
+.tg-ms-desc p .tg-hl,.tg-ms-desc li .tg-hl{color:#B85C5C;}
 
 /* LARGE sharp editorial photograph — no card, no shadow, near-square edges */
 .tg-ms-img{width:100%;height:var(--img-h);margin-top:16px;border-radius:2px;
@@ -705,6 +705,35 @@ var TL_MILESTONES = [
 var TL_PLACEHOLDER_IMG = 'assets/milestone%20hero.jpeg';
 TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
 
+/* Editorial red accents — exact fragments of the copy above (no wording changes),
+   ~2–3 short phrases per milestone, tinted in the chapter red inside the body. */
+var TL_HL = [
+  ['Triveni Electroplast Pvt. Ltd.', 'Allahabad, Uttar Pradesh', 'telecom industry'],
+  ['Unit II at Noida, Uttar Pradesh', 'consumer electronics', 'home appliances'],
+  ['LG Electronics India Ltd. (LGEIL)', '10% share of business', 'two-decade partnership'],
+  ['Lid Switch', 'product range for LGEIL'],
+  ['Harness Assembly', 'Refrigerator and Washing Machine OBU'],
+  ['Microwave Oven OBU', 'major appliance categories'],
+  ['Excellence Award from LGEIL', 'Quality, Cost & Delivery (QCD)', 'global OEM'],
+  ['Unit III at Prayagraj (Allahabad)', 'power and distribution transformer manufacturers', 'fully automatic panel production line'],
+  ['PGCIL approval', '400 kV class Transformers & Reactors', 'M/s Alstom T&D'],
+  ['765 kV class', 'highest voltage level', 'M/s Siemens T&D'],
+  ['extension of Unit II in Noida', '1,008 radiators for 765 kV, 500 MVA class transformers', 'M/s Siemens Ltd'],
+  ['Strategic Supplier for LG Electronics (Q1)', 'Best of Best Supplier Award for 2017', 'first major international project'],
+  ['one of the largest suppliers', 'GE T&D, Toshiba Transmission & Distribution Systems', 'Best Supplier Award'],
+  ['landmark year across the group', 'RDSO (Research Design & Standards Organisation)', 'ISO 14001:2015 and ISO 45001:2018 certifications'],
+  ['global pandemic', 'uninterrupted, consistent radiator supply', 'CII GreenCo Certification (Silver Rating)'],
+  ['only Strategic Supplier in the Electrical category', 'nearly two decades of partnership', 'export opportunities'],
+  ['Best Quality Performance Award', 'LG Electronics'],
+  ['Power Grid Corporation of India', 'prestigious Grade A certificate', 'IEEE certification for USA markets'],
+  ['new production line for Wire Harness Assembly', 'NTMC business'],
+  ['automation in welding processes', 'export markets for painted radiators', '1,500+ offset radiators'],
+  ['Best Delivery Performance Award from LG Electronics', 'two-decade reliability record'],
+  ['190 radiators from Toshiba Transmission & Distribution Systems', 'direct exports to the United States', '5% of total sales as export revenue'],
+  ['new paint shop', 'expanding radiator capacity', 'the same founding motive that began in 1991']
+];
+TL_MILESTONES.forEach(function(m, i){ m.hl = TL_HL[i] || []; });
+
 (function(){
   var tl = document.getElementById('tgTl');
   if (!tl) return;
@@ -713,6 +742,14 @@ TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
   var reduce   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  /* wrap selected (already-escaped) phrases in an accent span — no wording change */
+  function hiLite(s, phrases){
+    if (phrases) phrases.forEach(function(p){
+      var e = esc(p);
+      if (e) s = s.split(e).join('<span class="tg-hl">' + e + '</span>');
+    });
+    return s;
+  }
 
   /* ---- build track: interleave era markers + milestone cards ---- */
   var frag = document.createDocumentFragment();
@@ -741,24 +778,22 @@ TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
       lastEra = m.ei;
     }
 
-    /* small coral category label = this milestone's chapter/era */
-    var cat = (TL_ERAS[m.ei].n.split(' — ')[1] || TL_ERAS[m.ei].n);
     /* strict two-row alternation, chronological — section markers don't count */
     var side = (msIndex % 2 === 0) ? 'upper' : 'lower';
 
-    /* full copy, rendered inline on the timeline — every paragraph, lead line and bullet */
-    var descHtml = m.body.map(function(p){ return '<p>' + esc(p) + '</p>'; }).join('');
-    if (m.lead)    descHtml += '<p class="tg-ms-lead">' + esc(m.lead) + '</p>';
-    if (m.bullets) descHtml += '<ul>' + m.bullets.map(function(b){ return '<li>' + esc(b) + '</li>'; }).join('') + '</ul>';
+    /* full copy, rendered inline on the timeline — every paragraph, lead line and bullet,
+       with a few meaningful fragments tinted in the chapter red */
+    var descHtml = m.body.map(function(p){ return '<p>' + hiLite(esc(p), m.hl) + '</p>'; }).join('');
+    if (m.lead)    descHtml += '<p class="tg-ms-lead">' + hiLite(esc(m.lead), m.hl) + '</p>';
+    if (m.bullets) descHtml += '<ul>' + m.bullets.map(function(b){ return '<li>' + hiLite(esc(b), m.hl) + '</li>'; }).join('') + '</ul>';
 
     var card = document.createElement('div');
     card.className = 'tg-ms ' + side;
-    /* editorial panel, top → bottom: year · category · title · full description · image */
+    /* editorial panel, top → bottom: year · title · full description · image */
     card.innerHTML =
       '<div class="tg-ms-body">' +
         '<div class="tg-ms-text">' +
           '<div class="tg-ms-year">' + esc(m.year) + '</div>' +
-          '<div class="tg-ms-cat">' + esc(cat) + '</div>' +
           '<h3 class="tg-ms-title">' + esc(m.title) + '</h3>' +
           '<div class="tg-ms-desc">' + descHtml + '</div>' +
         '</div>' +
