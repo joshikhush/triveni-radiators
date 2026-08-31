@@ -194,23 +194,11 @@ ul{margin:0;padding:0;list-style:none;}
    never does. Long milestones show a preview + READ MORE → modal.
    ========================================================== */
 .tg-journey{background:#F7F6F2;}
-/* ---- timeline introduction: left-aligned eyebrow + heading + lede, with the
-   scroll instruction balanced to the right, all above the timeline ---- */
-.tg-journey-head{display:flex;align-items:flex-start;justify-content:space-between;
-  gap:18px 48px;flex-wrap:wrap;}
+/* ---- timeline introduction: left-aligned eyebrow + heading + lede, above the timeline ---- */
 .tg-journey-intro{max-width:640px;}
 .tg-journey-head .secnum{margin-bottom:16px;}
 .tg-journey-title{margin:0;}
 .tg-journey-lede{margin-top:14px;max-width:466px;}
-.tg-scroll-hint{flex-shrink:0;margin-left:auto;margin-top:5px;
-  display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
-  font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ind);}
-.tg-scroll-hint svg{width:16px;height:13px;flex-shrink:0;}
-@media(max-width:640px){
-  .tg-scroll-hint{margin-left:0;margin-top:18px;display:block;white-space:normal;
-    font-size:11px;letter-spacing:.08em;line-height:1.5;}
-  .tg-scroll-hint svg{display:inline-block;vertical-align:-2px;margin-left:5px;}
-}
 @media(max-width:560px){
   .tg-journey-title{font-size:30px;line-height:1.12;}
   .tg-journey-lede{max-width:none;}
@@ -517,9 +505,6 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
         <div class="secnum">02 — Our Journey</div>
         <h2 class="h2 tg-journey-title">Our Journey of <span class="ac">Innovation</span></h2>
         <p class="lede tg-journey-lede">From a small beginning to a global engineering leader — explore the milestones that shaped Triveni Group.</p>
-      </div>
-      <div class="tg-scroll-hint" aria-hidden="true">Scroll or drag to explore the timeline
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </div>
     </div>
   </div>
