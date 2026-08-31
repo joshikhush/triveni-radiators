@@ -193,7 +193,7 @@ ul{margin:0;padding:0;list-style:none;}
    than the viewport and only the track scrolls sideways — the page
    never does. Long milestones show a preview + READ MORE → modal.
    ========================================================== */
-.tg-journey{background:var(--off-white);}
+.tg-journey{background:#F7F6F2;}
 .tg-journey-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;}
 .tg-journey-head .secnum{margin-bottom:0;}
 .tg-scroll-hint{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
@@ -204,22 +204,24 @@ ul{margin:0;padding:0;list-style:none;}
 
 /* ==========================================================
    OUR JOURNEY — long horizontal editorial / exhibition timeline
-   ONE continuous violet spine at a fixed Y. Milestones alternate:
-   UPPER events sit entirely ABOVE the spine, LOWER events entirely
-   BELOW it, each in its own fixed-width vertical column centred on a
-   single axis: YEAR · accent · TITLE · DESCRIPTION · READ MORE ·
-   IMAGE · connector · NODE (on the spine). Section chapters are
-   announced by a circular navy marker (badge · stem · node on the
-   spine) placed BEFORE the era's first milestone. Only the viewport
-   scrolls sideways; the page never does.
+   ONE perfectly straight, continuous horizontal spine at a fixed Y.
+   Milestones sit in TWO FIXED ROWS and strictly ALTERNATE along the
+   spine in chronological order:
+       M1 above · M2 below · M3 above · M4 below · …
+   Each milestone is a left-aligned editorial panel (thin vertical
+   guide line · year · coral category · title · description · READ MORE
+   · large photograph) whose guide line meets the spine at that
+   milestone's exact x, ending in a small node. Section chapters get a
+   dark-navy oval marker that hangs BELOW the spine, placed before the
+   era's first milestone — it is not a milestone and never breaks the
+   alternation. Only the viewport scrolls sideways; the page never does.
    ========================================================== */
-.tg-tl{position:relative;margin-top:40px;
-  --card:376px; --img-w:322px; --img-h:215px;
-  --half:526px;                 /* editorial panel zone ABOVE the spine */
-  --below:44px;                 /* small breathing room below the spine */
-  --sec-w:186px; --gap:80px; --edge:76px;}
-#journey.tg-journey{padding-top:28px;padding-bottom:40px;}
-@media(max-width:900px){#journey.tg-journey{padding-top:20px;}}
+.tg-tl{position:relative;margin-top:38px;
+  --card:352px; --img-w:320px; --img-h:210px;
+  --half:540px;                 /* one row's zone (above = below) */
+  --sec-w:190px; --gap:104px; --edge:76px;}
+#journey.tg-journey{padding-top:26px;padding-bottom:36px;}
+@media(max-width:900px){#journey.tg-journey{padding-top:18px;}}
 
 /* the ONLY horizontally-scrolling element on the page */
 .tg-tl-viewport{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
@@ -229,28 +231,31 @@ ul{margin:0;padding:0;list-style:none;}
 @media(prefers-reduced-motion:reduce){.tg-tl-viewport{scroll-behavior:auto;}}
 
 .tg-tl-track{position:relative;display:flex;align-items:flex-start;width:max-content;
-  padding:0 var(--edge);height:calc(var(--half) + var(--below));}
+  padding:0 var(--edge);height:calc(var(--half) * 2);}
 
-/* the ONE continuous spine — strong dark charcoal line, passes below the
-   editorial panels; visually heavier than each panel's guide line */
+/* the ONE straight continuous spine — strong dark charcoal, dead centre */
 .tg-tl-track::before{content:'';position:absolute;left:0;right:0;top:var(--half);height:2px;
   background:#252525;transform:scaleX(0);transform-origin:left center;transition:transform 1.2s var(--ez);}
 .tg-tl.in .tg-tl-track::before{transform:scaleX(1);}
 
-/* ---- editorial milestone panel — a thin vertical GUIDE LINE on the left,
-   content stacked to its right (year → category → title → description →
-   READ MORE → large photograph). The guide line runs down to the spine. ---- */
+/* ---- editorial milestone panel — thin vertical guide line on the left,
+   content stacked to its right; guide line runs to the spine ---- */
 .tg-ms{position:relative;flex:0 0 var(--card);margin-right:var(--gap);
-  height:var(--half);padding:2px 0 0 24px;border-left:1px solid #252525;
+  height:var(--half);padding-left:24px;border-left:1px solid rgba(37,37,37,.5);
   display:flex;flex-direction:column;align-items:flex-start;text-align:left;}
 .tg-ms:last-of-type{margin-right:0;}
-/* the guide line's terminus where it meets the spine */
-.tg-ms::after{content:'';position:absolute;left:0;top:100%;width:7px;height:7px;border-radius:50%;
+.tg-ms.upper{align-self:flex-start;padding-top:2px;}     /* upper row */
+.tg-ms.lower{align-self:flex-end;padding-top:40px;}      /* lower row: gap for node + stem */
+/* small restrained node exactly where the guide line meets the spine */
+.tg-ms::after{content:'';position:absolute;left:0;width:9px;height:9px;border-radius:50%;
   background:#252525;transform:translate(-50%,-50%);opacity:0;transition:opacity .4s var(--ez);}
+.tg-ms.upper::after{top:100%;}
+.tg-ms.lower::after{top:0;}
 .tg-ms.in::after{opacity:1;}
 
 .tg-ms-text,.tg-ms-img{opacity:0;transform:translateY(14px);
   transition:opacity .6s var(--ez),transform .6s var(--ez);}
+.tg-ms.lower .tg-ms-text,.tg-ms.lower .tg-ms-img{transform:translateY(-14px);}
 .tg-ms.in .tg-ms-text,.tg-ms.in .tg-ms-img{opacity:1;transform:none;}
 
 .tg-ms-text{width:100%;max-width:306px;}
@@ -274,29 +279,31 @@ ul{margin:0;padding:0;list-style:none;}
 .tg-ms-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s var(--ez);}
 .tg-ms:hover .tg-ms-img img{transform:scale(1.03);}
 
-/* ---- section chapter marker — dark navy oval · stem · node on the spine ---- */
+/* ---- section chapter marker — dark navy oval that HANGS BELOW the spine
+   (node on the spine · short stem · oval), placed before the era's first
+   milestone; never counts in the alternation ---- */
 .tg-era{position:relative;flex:0 0 var(--sec-w);margin-right:var(--gap);
-  height:var(--half);
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;}
-.tg-era-inner{width:178px;padding:0 20px;aspect-ratio:178 / 146;border-radius:50%;
+  height:var(--half);align-self:flex-end;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;}
+.tg-era-stem{flex:none;height:70px;width:1.5px;background:#252525;
+  opacity:0;transition:opacity .5s var(--ez) .2s;}
+.tg-tl.in .tg-era-stem{opacity:1;}
+.tg-era-inner{width:182px;padding:0 20px;aspect-ratio:182 / 148;border-radius:50%;
   background:#101827;text-align:center;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-  opacity:0;transform:translateY(14px);transition:opacity .6s var(--ez),transform .6s var(--ez);}
+  opacity:0;transform:translateY(-14px);transition:opacity .6s var(--ez),transform .6s var(--ez);}
 .tg-tl.in .tg-era-inner{opacity:1;transform:none;}
 .tg-era-n{font-family:'Newsreader',serif;font-weight:400;font-size:30px;line-height:1;color:#fff;}
 .tg-era-name{font-size:10px;font-weight:700;letter-spacing:.13em;line-height:1.5;color:#fff;}
 .tg-era-range{font-size:9.5px;font-weight:600;letter-spacing:.06em;color:rgba(255,255,255,.58);}
-.tg-era-stem{flex:none;height:84px;width:1.5px;background:#252525;
-  opacity:0;transition:opacity .5s var(--ez) .2s;}
-.tg-tl.in .tg-era-stem{opacity:1;}
-.tg-era-node{position:absolute;left:50%;top:var(--half);width:16px;height:16px;border-radius:50%;
-  background:#101827;border:2px solid var(--off-white);z-index:4;box-shadow:0 0 0 3px rgba(37,37,37,.16);
+.tg-era-node{position:absolute;left:50%;top:0;width:15px;height:15px;border-radius:50%;
+  background:#101827;border:2px solid #F7F6F2;z-index:4;box-shadow:0 0 0 3px rgba(37,37,37,.16);
   transform:translate(-50%,-50%) scale(.4);opacity:0;transition:opacity .4s var(--ez),transform .4s var(--ez);}
 .tg-tl.in .tg-era-node{opacity:1;transform:translate(-50%,-50%) scale(1);}
 
 /* ---- right-edge fade cue ---- */
 .tg-tl-fade{position:absolute;top:0;right:0;bottom:0;width:84px;pointer-events:none;z-index:5;
-  background:linear-gradient(90deg,transparent,var(--off-white));
+  background:linear-gradient(90deg,transparent,#F7F6F2);
   opacity:0;transition:opacity .3s var(--ez);}
 .tg-tl.has-overflow .tg-tl-fade{opacity:1;}
 .tg-tl.scrolled-end .tg-tl-fade{opacity:0;}
@@ -310,18 +317,18 @@ ul{margin:0;padding:0;list-style:none;}
   .tg-era-node{opacity:1;transform:translate(-50%,-50%);}
 }
 
-/* ---- responsive: smaller fixed panels, same editorial structure ---- */
+/* ---- responsive: smaller fixed panels, same two-row alternating structure ---- */
 @media(max-width:1024px){
-  .tg-tl{--card:360px;--img-w:308px;--img-h:206px;--half:518px;--sec-w:180px;--gap:64px;--edge:52px;}
+  .tg-tl{--card:344px;--img-w:306px;--img-h:198px;--half:528px;--sec-w:184px;--gap:84px;--edge:52px;}
   .tg-ms-year{font-size:40px;}
 }
 @media(max-width:768px){
-  .tg-tl{--card:326px;--img-w:290px;--img-h:194px;--half:512px;--sec-w:172px;--gap:48px;--edge:28px;}
+  .tg-tl{--card:322px;--img-w:288px;--img-h:188px;--half:520px;--sec-w:174px;--gap:60px;--edge:28px;}
   .tg-ms-year{font-size:38px;}
   .tg-ms-title{font-size:19px;}
 }
 @media(max-width:480px){
-  .tg-tl{--card:290px;--img-w:262px;--img-h:174px;--half:504px;--sec-w:158px;--gap:34px;--edge:22px;}
+  .tg-tl{--card:288px;--img-w:260px;--img-h:168px;--half:508px;--sec-w:158px;--gap:44px;--edge:22px;}
   .tg-ms-year{font-size:35px;}
   .tg-ms-text{max-width:none;}
   .tg-journey-head{gap:10px;}
@@ -691,14 +698,15 @@ TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
       var num = parts[0], name = (parts[1] || era.n);
       var e = document.createElement('div');
       e.className = 'tg-era';
+      /* node (on the spine) · short stem · oval — the marker hangs below the spine */
       e.innerHTML =
+        '<span class="tg-era-node" aria-hidden="true"></span>' +
+        '<span class="tg-era-stem" aria-hidden="true"></span>' +
         '<div class="tg-era-inner">' +
           '<span class="tg-era-n">' + esc(num) + '</span>' +
           '<span class="tg-era-name">' + esc(name).toUpperCase() + '</span>' +
           '<span class="tg-era-range">' + esc(era.range) + '</span>' +
-        '</div>' +
-        '<span class="tg-era-stem" aria-hidden="true"></span>' +
-        '<span class="tg-era-node" aria-hidden="true"></span>';
+        '</div>';
       frag.appendChild(e);
       lastEra = m.ei;
     }
@@ -708,10 +716,12 @@ TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
     var hasMore = m.body.length > 1 || !!m.bullets || flat.length > 200;
     /* small coral category label = this milestone's chapter/era */
     var cat = (TL_ERAS[m.ei].n.split(' — ')[1] || TL_ERAS[m.ei].n);
+    /* strict two-row alternation, chronological — section markers don't count */
+    var side = (msIndex % 2 === 0) ? 'upper' : 'lower';
 
     var card = document.createElement('div');
-    card.className = 'tg-ms' + (msIndex === 0 ? ' first' : '');
-    /* editorial panel, top → bottom (all above the spine):
+    card.className = 'tg-ms ' + side + (msIndex === 0 ? ' first' : '');
+    /* editorial panel, top → bottom:
        year · category · title · description · READ MORE · image */
     card.innerHTML =
       '<div class="tg-ms-text">' +
