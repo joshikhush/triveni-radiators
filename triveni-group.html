@@ -172,7 +172,7 @@ ul{margin:0;padding:0;list-style:none;}
 /* Story and Journey share the same off-white background, so the default
    .sec top+bottom padding (120 + 120) reads as one giant empty band.
    Tighten just this transition to a deliberate ~80px. */
-#story{padding-bottom:44px;background:#F7F6F2;}   /* match the Our Journey section ground */
+#story{padding-bottom:44px;background:#F5F4FB;}
 @media(max-width:900px){
   .tg-intro-grid{grid-template-columns:1fr;gap:36px;}
   #story{padding-bottom:36px;}
@@ -193,7 +193,7 @@ ul{margin:0;padding:0;list-style:none;}
    than the viewport and only the track scrolls sideways — the page
    never does. Long milestones show a preview + READ MORE → modal.
    ========================================================== */
-.tg-journey{background:#F7F6F2;}
+.tg-journey{background:#FAF9F5;}
 /* ---- timeline introduction: left-aligned eyebrow + heading + lede, above the timeline ---- */
 .tg-journey-intro{max-width:640px;}
 .tg-journey-head .secnum{margin-bottom:16px;}
@@ -231,10 +231,11 @@ ul{margin:0;padding:0;list-style:none;}
                                    derived from the original 1991→2004 node distance. Never varies, never
                                    responds to content width, never changes across a section marker. */
   --img-h:190px;
-  --half:586px;                 /* spine Y — i.e. the UPPER zone height (tallest upper panel + air) */
-  --zlow:722px;                 /* LOWER zone height (tallest lower panel + air) */
+  --half:586px;                 /* spine Y / UPPER zone height — tallest upper panel + a little air (the
+                                   divider circle now hangs from a long stem, so no extra buffer here) */
+  --zlow:710px;                 /* LOWER zone height — tallest lower panel + a little air */
   --sec-w:138px; --edge:60px;}
-#journey.tg-journey{padding-top:26px;padding-bottom:36px;}
+#journey.tg-journey{padding-top:26px;padding-bottom:24px;}
 @media(max-width:900px){#journey.tg-journey{padding-top:18px;}}
 
 /* the ONLY horizontally-scrolling element on the page */
@@ -259,15 +260,16 @@ ul{margin:0;padding:0;list-style:none;}
    a small node. ---- */
 .tg-ms{position:relative;flex:0 0 var(--stride);height:calc(var(--half) + var(--zlow));}
 
-/* full-height vertical guide line, confined to the milestone's own zone */
+/* SHORT connector stub — joins each panel to the spine over a small fixed gap */
 .tg-ms::before{content:'';position:absolute;left:0;width:1px;background:rgba(37,37,37,.5);}
-.tg-ms.upper::before{top:0;height:var(--half);}            /* track top → spine */
-.tg-ms.lower::before{top:var(--half);height:var(--zlow);}  /* spine → track bottom */
+.tg-ms.upper::before{top:calc(var(--half) - 16px);height:16px;}   /* image edge → spine */
+.tg-ms.lower::before{top:var(--half);height:14px;}               /* spine → content edge */
 
 .tg-ms-body{position:absolute;left:0;width:var(--col);padding-left:24px;
+  border-left:1px solid rgba(37,37,37,.5);                 /* guide line now hugs the content, not the whole zone */
   display:flex;flex-direction:column;align-items:flex-start;text-align:left;}
-.tg-ms.upper .tg-ms-body{top:0;}                           /* upper years align along the top */
-.tg-ms.lower .tg-ms-body{top:calc(var(--half) + 14px);}    /* lower years sit just under the spine */
+.tg-ms.upper .tg-ms-body{bottom:calc(var(--zlow) + 16px);} /* image sits just above the timeline */
+.tg-ms.lower .tg-ms-body{top:calc(var(--half) + 14px);}    /* content starts just below the timeline */
 
 /* small restrained node exactly where the guide line meets the spine */
 .tg-ms::after{content:'';position:absolute;left:0;top:var(--half);width:9px;height:9px;border-radius:50%;
@@ -305,27 +307,33 @@ ul{margin:0;padding:0;list-style:none;}
 /* section markers are OUT of the flex flow (absolute) so they add ZERO width and
    never disturb the master milestone interval. JS positions each one horizontally
    inside the gap just before its era's first milestone. */
-.tg-era{position:absolute;top:var(--half);left:0;width:var(--sec-w);height:var(--zlow);
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;}
-.tg-era-stem{flex:none;height:52px;width:1.5px;background:#252525;
-  opacity:0;transition:opacity .5s var(--ez) .2s;}
-.tg-tl.in .tg-era-stem{opacity:1;}
-.tg-era-inner{width:132px;padding:0 15px;aspect-ratio:132 / 122;border-radius:50%;
-  background:#101827;text-align:center;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
-  opacity:0;transform:translateY(-14px);transition:opacity .6s var(--ez),transform .6s var(--ez);}
+/* section chapter divider — a dark-navy circle ABOVE the spine, joined to it by a
+   short vertical connector that ends in a node sitting exactly on the timeline.
+   Absolute + JS-placed at the section boundary, so it never affects milestone
+   spacing, widths or the horizontal scroll length. */
+.tg-era{position:absolute;left:0;bottom:var(--zlow);   /* bottom edge rests on the spine */
+  width:var(--sec-w);z-index:6;
+  display:flex;flex-direction:column;align-items:center;}
+.tg-era-inner{width:116px;height:116px;border-radius:50%;background:#101827;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  box-shadow:0 0 0 5px #FAF9F5;                         /* clean cut against whatever sits behind */
+  opacity:0;transform:translateY(10px);transition:opacity .6s var(--ez),transform .6s var(--ez);}
 .tg-tl.in .tg-era-inner{opacity:1;transform:none;}
-.tg-era-n{font-family:'Newsreader',serif;font-weight:400;font-size:24px;line-height:1;color:#fff;}
-.tg-era-name{font-size:9px;font-weight:700;letter-spacing:.1em;line-height:1.45;color:#fff;}
-.tg-era-range{font-size:8.5px;font-weight:600;letter-spacing:.05em;color:rgba(255,255,255,.58);}
-.tg-era-node{position:absolute;left:50%;top:0;width:15px;height:15px;border-radius:50%;
-  background:#101827;border:2px solid #F7F6F2;z-index:4;box-shadow:0 0 0 3px rgba(37,37,37,.16);
-  transform:translate(-50%,-50%) scale(.4);opacity:0;transition:opacity .4s var(--ez),transform .4s var(--ez);}
-.tg-tl.in .tg-era-node{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.tg-era-stem{width:1.5px;height:calc(var(--half) * 0.56);background:#252525;
+  opacity:0;transition:opacity .5s var(--ez) .2s;}   /* long connector — circle rides high, up beside the milestone content */
+.tg-tl.in .tg-era-stem{opacity:1;}
+.tg-era-n{font-family:'Newsreader',serif;font-weight:400;font-size:21px;line-height:1;color:#fff;}
+.tg-era-name{font-size:8px;font-weight:700;letter-spacing:.08em;line-height:1.35;color:#fff;padding:0 9px;}
+.tg-era-range{font-size:8px;font-weight:600;letter-spacing:.04em;color:rgba(255,255,255,.6);}
+.tg-era-node{position:absolute;left:50%;bottom:0;width:13px;height:13px;border-radius:50%;
+  background:#101827;border:2px solid #FAF9F5;z-index:4;
+  transform:translate(-50%,50%) scale(.4);opacity:0;
+  transition:opacity .4s var(--ez),transform .4s var(--ez);}
+.tg-tl.in .tg-era-node{opacity:1;transform:translate(-50%,50%) scale(1);}
 
 /* ---- right-edge fade cue ---- */
 .tg-tl-fade{position:absolute;top:0;right:0;bottom:0;width:84px;pointer-events:none;z-index:5;
-  background:linear-gradient(90deg,transparent,#F7F6F2);
+  background:linear-gradient(90deg,transparent,#FAF9F5);
   opacity:0;transition:opacity .3s var(--ez);}
 .tg-tl.has-overflow .tg-tl-fade{opacity:1;}
 .tg-tl.scrolled-end .tg-tl-fade{opacity:0;}
@@ -341,7 +349,7 @@ ul{margin:0;padding:0;list-style:none;}
 
 /* ---- responsive: same continuous two-row grid, tighter column + stride ---- */
 @media(max-width:1024px){
-  .tg-tl{--col:304px;--stride:284px;--img-h:182px;--half:578px;--zlow:714px;--sec-w:134px;--edge:44px;}
+  .tg-tl{--col:304px;--stride:284px;--img-h:182px;--half:578px;--zlow:702px;--sec-w:134px;--edge:44px;}
   .tg-ms-year{font-size:40px;}
 }
 @media(max-width:768px){
@@ -530,7 +538,7 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
 </div>
 
 <!-- ===================== 04 — CTA ===================== -->
-<section class="sec tg-journey" style="padding-top:0;">
+<section class="sec tg-journey" style="padding-top:0;padding-bottom:64px;">
   <div class="w">
     <div class="tg-cta-strip rv">
       <div class="tg-cta-icon" aria-hidden="true">
@@ -722,13 +730,13 @@ TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
       e.className = 'tg-era';
       /* node (on the spine) · short stem · oval — the marker hangs below the spine */
       e.innerHTML =
-        '<span class="tg-era-node" aria-hidden="true"></span>' +
-        '<span class="tg-era-stem" aria-hidden="true"></span>' +
         '<div class="tg-era-inner">' +
           '<span class="tg-era-n">' + esc(num) + '</span>' +
           '<span class="tg-era-name">' + esc(name).toUpperCase() + '</span>' +
           '<span class="tg-era-range">' + esc(era.range) + '</span>' +
-        '</div>';
+        '</div>' +
+        '<span class="tg-era-stem" aria-hidden="true"></span>' +
+        '<span class="tg-era-node" aria-hidden="true"></span>';
       frag.appendChild(e);
       lastEra = m.ei;
     }
@@ -764,16 +772,30 @@ TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
 
   track.appendChild(frag);
 
-  /* ---- section markers: horizontally park each one inside the gap just before its
-     era's first milestone. They're position:absolute, so this never shifts a single
-     milestone node — the master interval between every consecutive milestone stays fixed. ---- */
+  /* ---- section markers: each gets its OWN dedicated anchor in the horizontal
+     rhythm, clear of every milestone column and node. They're position:absolute,
+     so this never shifts a milestone — the master interval stays fixed.
+     Chapter 01 leads the timeline; every later chapter sits in the empty slot
+     midway between its section's 1st and 2nd milestone (the only overlap-free
+     position — panels are wider than the interval, so nothing is clear *before*
+     a section's first milestone). ---- */
   var eraEls = [].slice.call(track.querySelectorAll('.tg-era'));
+  function nextMs(el){
+    var m = el.nextElementSibling;
+    while (m && !/(^|\s)tg-ms(\s|$)/.test(m.className)) m = m.nextElementSibling;
+    return m;
+  }
   function positionEras(){
-    eraEls.forEach(function(eEl){
-      var ms = eEl.nextElementSibling;
-      while (ms && !/(^|\s)tg-ms(\s|$)/.test(ms.className)) ms = ms.nextElementSibling;
-      if (!ms) return;
-      var target = ms.offsetLeft - 146;              /* half a master interval before the milestone node */
+    eraEls.forEach(function(eEl, i){
+      var a = nextMs(eEl);                 /* section's 1st milestone */
+      if (!a) return;
+      var target;
+      if (i === 0){
+        target = a.offsetLeft - 150;       /* opening marker, ahead of the first milestone */
+      } else {
+        var b = nextMs(a);                 /* section's 2nd milestone */
+        target = b ? (a.offsetLeft + b.offsetLeft) / 2 : a.offsetLeft + 150;
+      }
       eEl.style.left = Math.max(4, target - eEl.offsetWidth / 2) + 'px';
     });
   }
