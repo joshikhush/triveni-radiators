@@ -58,9 +58,9 @@ a { color: inherit; text-decoration: none; }
 /* ── HERO ────────────────────────────────────────────────── */
 .c-hero {
   position: relative; min-height: 88vh;
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
   text-align: center;
-  padding: 7rem 4rem 5rem;
+  padding: 1.75rem 4rem 5rem;
   background: var(--dark); overflow: hidden;
 }
 .c-hero::before {
@@ -451,7 +451,7 @@ footer { padding: 2.4rem 4rem; background: #241640;
 }
 @media(max-width:1024px) {
   #navbar, #navbar.scrolled { padding: 1.4rem 2rem; }
-  .c-hero { padding: 7rem 2rem 4rem; }
+  .c-hero { padding: 1.5rem 2rem 4rem; }
   .c-products-section, .c-specs-band, .c-process-section,
   .c-finishing-section, .c-why-section, .c-cta { padding: 5rem 2rem; }
   .c-products-header { grid-template-columns: 1fr; gap: 2rem; }
@@ -480,7 +480,7 @@ footer { padding: 2.4rem 4rem; background: #241640;
   #navbar, #navbar.scrolled { padding: 1rem 1.3rem; }
   .nav-logo { font-size: 1.25rem; }
   .nav-cta { padding: .55rem 1.1rem; font-size: .78rem; white-space: nowrap; }
-  .c-hero { padding: 6rem 1.4rem 3.5rem; min-height: auto; padding-top: 5rem; }
+  .c-hero { padding: 1.25rem 1.4rem 3.5rem; min-height: auto; }
   .c-hero-stats { flex-direction: column; gap: 1.5rem; }
   .c-hs { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08);
     padding: 0 0 1.5rem; margin: 0; }
