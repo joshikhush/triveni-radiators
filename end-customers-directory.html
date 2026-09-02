@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>End Customer Directory — Triveni Radiators</title>
+<meta name="description" content="The complete list of end-customer organisations whose transformers run on Triveni Radiators — state transmission utilities, central infrastructure, and private power & renewables.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#101B4D; --navy-2:#111A45; --navy-deep:#0C1233;
+  --ivory:#F7F4EC; --ivory-2:#FCFBF8; --stone:#F2EEE4;
+  --ink:#1E1828; --navy-ink:#14204A; --muted:#5C6982; --muted-2:#8C93A6;
+  --violet:#6A45C0; --violet-deep:#4A2E82; --violet-strong:#4C1D95;
+  --lav-hi:#8B8CF0; --hero-sub:#9AA6C0; --gold:#B8935A;
+  --line:#E7E2D9; --line-cool:#E5E2F0;
+}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Poppins',sans-serif; background:var(--ivory); color:var(--ink); line-height:1.6; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+a { color:inherit; text-decoration:none; }
+img { display:block; max-width:100%; }
+
+/* NAV — dark, matches Clients page */
+#nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:20px 4rem; background:#050B22; transition:padding .3s, box-shadow .3s; }
+#nav.nav-shadow { box-shadow:0 1px 0 rgba(255,255,255,.06); padding:14px 4rem; }
+.nav-logo img { height:36px; width:auto; display:block; border-radius:5px; }
+.nav-links { display:flex; gap:2.4rem; list-style:none; align-items:center; }
+.nav-links a { font-size:.86rem; font-weight:400; color:rgba(255,255,255,.62); position:relative; transition:color .2s; }
+.nav-links a:hover, .nav-links a.on { color:#fff; }
+.nav-links a.on::after { content:''; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:var(--lav-hi); }
+.nav-right { display:flex; align-items:center; gap:1rem; }
+.nav-cta { font-size:.82rem; font-weight:500; color:#fff; background:var(--violet-deep); padding:.68rem 1.5rem; border-radius:999px; transition:background .2s, transform .2s; }
+.nav-cta:hover { background:var(--violet); transform:translateY(-1px); }
+.nav-toggle { display:none; background:none; border:none; cursor:pointer; flex-direction:column; gap:5px; padding:6px; }
+.nav-toggle span { display:block; width:24px; height:2px; background:#fff; transition:.3s; }
+
+/* HEADER */
+.dh { background:linear-gradient(160deg,var(--navy) 0%,var(--navy-2) 55%,var(--navy-deep) 100%); color:#fff; padding:8rem 4rem 3.4rem; position:relative; overflow:hidden; }
+.dh-inner { position:relative; z-index:2; max-width:1180px; margin:0 auto; }
+.dh-back { display:inline-flex; align-items:center; gap:.5rem; font-size:.76rem; font-weight:500; letter-spacing:.04em; color:rgba(255,255,255,.6); margin-bottom:1.5rem; transition:color .2s; }
+.dh-back:hover { color:#fff; }
+.dh-eyebrow { font-size:.68rem; font-weight:600; letter-spacing:.28em; text-transform:uppercase; color:var(--lav-hi); margin-bottom:1.1rem; }
+.dh-title { font-family:'Newsreader',serif; font-weight:400; font-size:clamp(2.1rem,4.4vw,3.4rem); line-height:1.08; letter-spacing:-.02em; }
+.dh-title em { font-style:italic; color:var(--lav-hi); }
+.dh-sub { font-size:.95rem; line-height:1.75; color:var(--hero-sub); max-width:42rem; margin-top:1.2rem; }
+
+/* BODY */
+.wrap { max-width:1180px; margin:0 auto; padding:2.8rem 4rem 6rem; }
+.toolbar { display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap; margin-bottom:1.3rem; }
+.search { flex:1; min-width:240px; position:relative; }
+.search svg { position:absolute; left:1rem; top:50%; transform:translateY(-50%); width:15px; height:15px; color:var(--muted-2); }
+.search input {
+  width:100%; font-family:inherit; font-size:.9rem; color:var(--ink);
+  padding:.82rem 1rem .82rem 2.6rem;
+  border:1px solid var(--line-cool); border-radius:10px; background:#fff;
+  outline:none; transition:border-color .2s, box-shadow .2s;
+}
+.search input::placeholder { color:var(--muted-2); }
+.search input:focus { border-color:var(--violet); box-shadow:0 0 0 3px rgba(106,69,192,.1); }
+.count { font-size:.76rem; color:var(--muted-2); font-weight:500; white-space:nowrap; letter-spacing:.02em; }
+
+.filters { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2.4rem; }
+.filter {
+  font-family:inherit; font-size:.7rem; font-weight:500; letter-spacing:.04em;
+  color:var(--violet-strong); background:#fff;
+  border:1px solid var(--line-cool); border-radius:999px;
+  padding:.5rem 1rem; cursor:pointer; transition:all .18s;
+}
+.filter:hover { border-color:var(--violet); }
+.filter.active { background:var(--violet-strong); border-color:var(--violet-strong); color:#fff; }
+
+/* CATEGORY GROUPS */
+.grp { margin-bottom:3.2rem; }
+.grp:last-of-type { margin-bottom:0; }
+.grp-head { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap; padding-bottom:.9rem; border-bottom:1px solid var(--line-cool); margin-bottom:1.6rem; }
+.grp-title { font-family:'Newsreader',serif; font-weight:400; font-size:1.4rem; color:var(--navy-ink); }
+.grp-n { font-size:.66rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
+.grp-desc { font-size:.82rem; line-height:1.7; color:var(--muted); max-width:52rem; margin:-.7rem 0 1.6rem; }
+
+.tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:.8rem; }
+.tile {
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+  text-align:center; gap:.7rem; padding:1.4rem .8rem 1.2rem; min-height:9.5rem;
+  border:1px solid var(--line-cool); border-radius:10px; background:var(--ivory-2);
+  transition:border-color .18s, background .18s;
+}
+.tile:hover { border-color:rgba(106,69,192,.3); background:#fff; }
+.tile-logo { height:44px; display:flex; align-items:center; justify-content:center; }
+.tile-logo img { max-height:44px; max-width:88%; width:auto; object-fit:contain; mix-blend-mode:multiply; }
+.tile-logo--wordmark { font-family:'Newsreader',serif; font-size:1.1rem; font-weight:500; color:var(--navy-ink); }
+.tile-name { font-size:.74rem; font-weight:500; line-height:1.3; color:var(--navy-ink); }
+.tile-full { font-size:.64rem; line-height:1.4; color:var(--muted-2); }
+.empty { padding:3.2rem 1.7rem; text-align:center; color:var(--muted-2); font-size:.9rem; }
+.note { margin-top:2rem; font-size:.76rem; line-height:1.65; color:var(--muted-2); max-width:46rem; }
+
+@media (max-width:1080px){
+  #nav, #nav.nav-shadow { padding:16px 2rem; }
+  .dh { padding:7rem 2rem 3rem; }
+  .wrap { padding:2.4rem 2rem 4.5rem; }
+  .tiles { grid-template-columns:repeat(3,1fr); }
+}
+@media (max-width:760px){
+  .nav-toggle { display:flex; }
+  .nav-links { display:none; }
+  .nav-links.open { display:flex; flex-direction:column; align-items:flex-start; position:absolute; top:100%; left:0; right:0; background:#050B22; padding:1.3rem 2rem; gap:1.1rem; }
+  #nav, #nav.nav-shadow { padding:14px 1.3rem; }
+  .dh { padding:6.4rem 1.4rem 2.6rem; }
+  .wrap { padding:2rem 1.3rem 4rem; }
+  .tiles { grid-template-columns:repeat(2,1fr); }
+}
+
+/* FOOTER */
+footer.site-footer { display:block; padding:0; background:#0F0A1E; position:relative; overflow:hidden; }
+.site-footer::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(106,69,192,.6),rgba(184,147,90,.4),transparent); }
+.footer-main { position:relative; z-index:2; max-width:1280px; margin:0 auto; padding:4.2rem 4rem 3rem; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:4.5rem; }
+.footer-logo img { height:40px; width:auto; display:block; border-radius:5px; }
+.footer-tagline { font-family:'Newsreader',serif; font-size:1rem; color:rgba(255,255,255,.35); margin:1rem 0 1.4rem; }
+.footer-desc { font-size:.8rem; line-height:1.75; color:rgba(255,255,255,.38); max-width:300px; }
+.footer-col-title { font-size:.62rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:1.4rem; padding-bottom:.7rem; border-bottom:1px solid rgba(255,255,255,.07); }
+.footer-col-links { display:flex; flex-direction:column; gap:.7rem; }
+.footer-col-link { font-size:.82rem; color:rgba(255,255,255,.45); transition:color .2s,padding-left .2s; }
+.footer-col-link:hover { color:rgba(255,255,255,.85); padding-left:.4rem; }
+.footer-contact-item { display:flex; gap:.7rem; align-items:flex-start; font-size:.8rem; color:rgba(255,255,255,.4); margin-bottom:.85rem; line-height:1.5; }
+.footer-contact-item svg { width:13px; height:13px; flex-shrink:0; margin-top:.22rem; color:#B8935A; opacity:.7; }
+.footer-bottom { position:relative; z-index:2; max-width:1280px; margin:0 auto; padding:1.8rem 4rem; border-top:1px solid rgba(255,255,255,.06); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+.footer-copy { font-size:.74rem; color:rgba(255,255,255,.22); }
+.footer-bottom-links { display:flex; gap:1.8rem; }
+.footer-bottom-link { font-size:.72rem; color:rgba(255,255,255,.25); transition:color .2s; }
+.footer-bottom-link:hover { color:rgba(255,255,255,.55); }
+@media(max-width:1024px){ .footer-main { grid-template-columns:1fr 1fr; gap:3rem; padding:3.6rem 2.5rem 2.6rem; } .footer-brand { grid-column:1 / -1; } .footer-bottom { padding-left:2.5rem; padding-right:2.5rem; } }
+@media(max-width:640px){ .footer-main { grid-template-columns:1fr; gap:2.4rem; padding:2.8rem 1.5rem 2.2rem; } .footer-bottom { flex-direction:column; align-items:flex-start; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html">Product</a></li>
+    <li><a href="credentials.html">Credential</a></li>
+    <li><a href="milestones.html">Milestones</a></li>
+    <li><a href="triveni-group.html">Triveni Group</a></li>
+    <li><a href="clientele.html" class="on">Clients</a></li>
+    <li><a href="careers.html">Careers</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header class="dh">
+  <div class="dh-inner">
+    <a href="clientele.html#end-customers" class="dh-back">&larr; Back to Clients</a>
+    <div class="dh-eyebrow">End Customers · Complete List</div>
+    <h1 class="dh-title">End customer <em>directory.</em></h1>
+    <p class="dh-sub">
+      Every end-customer organisation whose transformers run on Triveni radiators —
+      grouped as recorded in Triveni's end-customer list. Search by organisation name
+      or filter by category.
+    </p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="toolbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" id="q" placeholder="Search by organisation name…" autocomplete="off" aria-label="Search end customers">
+    </div>
+    <div class="count" id="count"></div>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter active" data-f="all">All</button>
+    <button class="filter" data-f="state">State Transmission &amp; Distribution</button>
+    <button class="filter" data-f="central">Central Core Infrastructure</button>
+    <button class="filter" data-f="private">Private Power Utilities &amp; Renewables</button>
+  </div>
+
+  <div id="groups"></div>
+
+  <p class="note">
+    Source: Triveni's end-customer list (“All End Customers list &amp; Logos”). Category
+    grouping, organisation names, full forms and logos are reproduced as supplied.
+  </p>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
+      <div class="footer-tagline">"We Value Values"</div>
+      <p class="footer-desc">Manufacturers of pressed-steel transformer radiators up to 765 kV class — trusted by Siemens Energy, GE, ABB, TBEA, CG Power and Shirdi Sai Electricals. Made in Naini, Prayagraj.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col-links">
+        <a href="index.html" class="footer-col-link">Home</a>
+        <a href="clientele.html" class="footer-col-link">Clients</a>
+        <a href="credentials.html" class="footer-col-link">Credentials</a>
+        <a href="milestones.html" class="footer-col-link">Our Journey</a>
+        <a href="careers.html" class="footer-col-link">Careers</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Products</div>
+      <div class="footer-col-links">
+        <a href="products.html" class="footer-col-link">All Products</a>
+        <a href="products.html#header-type" class="footer-col-link">Header Type Radiators</a>
+        <a href="products.html#offset" class="footer-col-link">Offset Radiators</a>
+        <a href="products.html#swan-neck" class="footer-col-link">Swan Neck Radiators</a>
+        <a href="products.html#goose-neck" class="footer-col-link">Goose Neck Radiators</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Get in Touch</div>
+      <a href="mailto:sales@triveniradiators.com" class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        sales@triveniradiators.com
+      </a>
+      <div class="footer-contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        B-2, UPSIDC Industrial Area,<br>P.O. T.S.L., Naini, Prayagraj — 211010
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 Triveni Electroplast Pvt Ltd — Triveni Radiators. All rights reserved.</div>
+    <div class="footer-bottom-links">
+      <a href="privacy.html" class="footer-bottom-link">Privacy Policy</a>
+      <a href="terms.html" class="footer-bottom-link">Terms of Use</a>
+      <a href="sitemap.html" class="footer-bottom-link">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* nav */
+var toggle = document.querySelector('.nav-toggle');
+var navLinks = document.querySelector('.nav-links');
+if (toggle && navLinks) {
+  toggle.addEventListener('click', function () { navLinks.classList.toggle('open'); });
+  navLinks.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { navLinks.classList.remove('open'); }); });
+}
+var nav = document.getElementById('nav');
+addEventListener('scroll', function () { nav.classList.toggle('nav-shadow', scrollY > 30); }, { passive: true });
+
+/* ---- END CUSTOMERS ----
+   Verbatim from "All End Customers list & Logos.docx" (3 categories, 37 orgs).
+   Logos extracted from that file → assets/logos/end-customers/  */
+var LP = 'assets/logos/end-customers/';
+var CATS = [
+  { key:'state',   title:'State Transmission & Distribution Companies',
+    desc:'High-voltage intra-state transmission lines and large power transformers (typically 20 MVA to 500 MVA, 132 kV / 220 kV / 400 kV).' },
+  { key:'central', title:'Central Core Infrastructure', desc:'' },
+  { key:'private', title:'Private Power Utilities & Renewables', desc:'' }
+];
+var EC = [
+  ['state', 'MSETCL / MAHATRANSCO', 'Maharashtra State Electricity Transmission Company Limited', 'msetcl-mahatransco.png'],
+  ['state', 'UPPTCL', 'Uttar Pradesh Power Transmission Corporation Limited', 'upptcl.png'],
+  ['state', 'PSTCL', 'Punjab State Transmission Corporation Limited', 'pstcl.png'],
+  ['state', 'TANTRANSCO', 'Tamil Nadu Transmission Corporation Limited', 'tantransco.png'],
+  ['state', 'KPTCL', 'Karnataka Power Transmission Corporation Limited', 'kptcl.jpeg'],
+  ['state', 'TSTRANSCO', 'Telangana State Transmission Corporation Limited', 'tstransco.jpeg'],
+  ['state', 'GETCO', 'Gujarat Energy Transmission Corporation Limited', 'getco.png'],
+  ['state', 'RRVPNL', 'Rajasthan Rajya Vidyut Prasaran Nigam Limited', 'rrvpnl.jpeg'],
+  ['state', 'CSPTCL', 'Chhattisgarh State Power Transmission Company Limited', 'csptcl.gif'],
+  ['central', 'PGCIL', 'Power Grid Corporation of India Limited', 'pgcil.png'],
+  ['central', 'NTPC Limited', 'National Thermal Power Corporation', 'ntpc.png'],
+  ['central', 'Indian Railways / RDSO', '', 'indian-railways-rdso.jpeg'],
+  ['private', 'Reliance Industries Limited', '', 'reliance.png'],
+  ['private', 'Tata Power Company Limited', '', 'tata-power.png'],
+  ['private', 'Adani Energy Solutions Limited', '', 'adani-energy-solutions.png'],
+  ['private', 'Adani Power Limited', '', 'adani-power.png'],
+  ['private', 'Adani Green Energy Limited', '', 'adani-green-energy.png'],
+  ['private', 'Torrent Power Limited', '', 'torrent-power.png'],
+  ['private', 'JSW Energy Limited', '', 'jsw-energy.jpeg'],
+  ['private', 'RENEW Energy', '', 'renew-energy.png'],
+  ['private', 'Acme Solar Holdings', '', 'acme-solar.png'],
+  ['private', 'Hero Future Energies', '', 'hero-future-energies.jpeg'],
+  ['private', 'Tata Projects Limited', '', 'tata-projects.png'],
+  ['private', 'Tata Steel', '', 'tata-steel.png'],
+  ['private', 'Kalpataru Projects International Limited (KPIL)', '', 'kalpataru-kpil.png'],
+  ['private', 'MEIL', '', 'meil.png'],
+  ['private', 'GSECL', '', 'gsecl.png'],
+  ['private', 'AP GENCO', '', 'ap-genco.png'],
+  ['private', 'Sterlite', '', 'sterlite.jpeg'],
+  ['private', 'Indigrid', '', 'indigrid.png'],
+  ['private', 'APARAVA', '', 'aparava.png'],
+  ['private', 'GR infra', '', 'gr-infra.jpeg'],
+  ['private', 'RS INFRA', '', 'rs-infra.png'],
+  ['private', 'AEGCL', '', 'aegcl.jpeg'],
+  ['private', 'Godrej', '', 'godrej.jpeg'],
+  ['private', 'POWERICA', '', 'powerica.jpeg'],
+  ['private', 'L&T', '', null]
+];
+
+var groupsEl = document.getElementById('groups');
+var countEl = document.getElementById('count');
+var qEl = document.getElementById('q');
+var filtersEl = document.getElementById('filters');
+var activeCat = 'all';
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+function tileHTML(r) {
+  var mark = r[3]
+    ? '<img src="' + LP + r[3] + '" alt="' + esc(r[1]) + ' logo">'
+    : '<span class="tile-logo--wordmark">' + esc(r[1]) + '</span>';
+  var full = r[2] ? '<span class="tile-full">' + esc(r[2]) + '</span>' : '';
+  var name = r[3] ? '<span class="tile-name">' + esc(r[1]) + '</span>' : '';
+  return '<div class="tile"><span class="tile-logo">' + mark + '</span>' + name + full + '</div>';
+}
+
+function render() {
+  var q = qEl.value.trim().toLowerCase();
+  var rows = EC.filter(function (r) {
+    var okC = activeCat === 'all' || r[0] === activeCat;
+    var okQ = !q || (r[1] + ' ' + r[2]).toLowerCase().indexOf(q) !== -1;
+    return okC && okQ;
+  });
+  countEl.textContent = rows.length + (rows.length === 1 ? ' organisation' : ' organisations');
+
+  if (!rows.length) { groupsEl.innerHTML = '<div class="empty">No organisations match your search.</div>'; return; }
+
+  groupsEl.innerHTML = CATS.map(function (c) {
+    var gr = rows.filter(function (r) { return r[0] === c.key; });
+    if (!gr.length) return '';
+    return '<section class="grp">' +
+      '<div class="grp-head"><span class="grp-title">' + esc(c.title) + '</span>' +
+      '<span class="grp-n">' + gr.length + (gr.length === 1 ? ' organisation' : ' organisations') + '</span></div>' +
+      (c.desc ? '<p class="grp-desc">' + esc(c.desc) + '</p>' : '') +
+      '<div class="tiles">' + gr.map(tileHTML).join('') + '</div>' +
+      '</section>';
+  }).join('');
+}
+
+filtersEl.addEventListener('click', function (e) {
+  var b = e.target.closest('.filter');
+  if (!b) return;
+  filtersEl.querySelectorAll('.filter').forEach(function (x) { x.classList.remove('active'); });
+  b.classList.add('active');
+  activeCat = b.getAttribute('data-f');
+  render();
+});
+qEl.addEventListener('input', render);
+render();
+</script>
+</body>
+</html>

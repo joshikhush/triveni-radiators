@@ -1250,7 +1250,7 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
         </div>
 
         <div class="mc-foot">
-          <a href="clientele-directory.html" class="mc-viewall">View all major customers <span>&rarr;</span></a>
+          <a href="major-customers-directory.html" class="mc-viewall">View all major customers <span>&rarr;</span></a>
         </div>
       </div>
 
@@ -1497,7 +1497,7 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
         <p class="ecd-empty" id="ecdEmpty" hidden>No customers match your search.</p>
 
         <div class="ecd-foot" id="ecdFoot">
-          <button type="button" class="ecd-more" id="ecdMore">View Complete Customer Directory <span class="arw">&rarr;</span></button>
+          <a href="end-customers-directory.html" class="ecd-more" id="ecdMore">View Complete Customer Directory <span class="arw">&rarr;</span></a>
         </div>
       </div>
 
@@ -1887,13 +1887,14 @@ document.getElementById('zoomOut').addEventListener('click', () => setZoom(mapZo
 
   var tilesEl = document.getElementById('ecdTiles');
   var emptyEl = document.getElementById('ecdEmpty');
-  var footEl = document.getElementById('ecdFoot');
-  var moreBtn = document.getElementById('ecdMore');
   var searchEl = document.getElementById('ecdSearch');
   var filtersEl = document.getElementById('ecdFilters');
   if (!tilesEl) return;
 
-  var expanded = false, cat = 'all';
+  /* This is a PREVIEW — the full list lives on end-customers-directory.html
+     (reached via the "View Complete Customer Directory" link, always visible).
+     The curated FEATURED subset shows until a filter or search is applied. */
+  var cat = 'all';
 
   tilesEl.innerHTML = EC.map(function (c) {
     var mark, name;
@@ -1911,7 +1912,7 @@ document.getElementById('zoomOut').addEventListener('click', () => setZoom(mapZo
 
   function render() {
     var q = searchEl.value.trim().toLowerCase();
-    var browsing = expanded || cat !== 'all' || q !== '';
+    var browsing = cat !== 'all' || q !== '';
     var shown = 0;
     tiles.forEach(function (t, i) {
       var okCat = cat === 'all' || t.getAttribute('data-cat') === cat;
@@ -1922,7 +1923,6 @@ document.getElementById('zoomOut').addEventListener('click', () => setZoom(mapZo
       if (vis) shown++;
     });
     emptyEl.hidden = shown !== 0;
-    footEl.hidden = browsing;
   }
 
   filtersEl.addEventListener('click', function (e) {
@@ -1934,7 +1934,6 @@ document.getElementById('zoomOut').addEventListener('click', () => setZoom(mapZo
     render();
   });
   searchEl.addEventListener('input', render);
-  moreBtn.addEventListener('click', function () { expanded = true; render(); });
 
   render();
 })();
