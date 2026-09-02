@@ -216,7 +216,7 @@ img { display:block; max-width:100%; }
 .sec--reach  { background:var(--lav-mist); }
 .sec--major  { background:var(--ivory); }
 .sec--proof  { background:var(--lav-pale); }
-.sec--end    { background:var(--stone); }
+.sec--end    { background:linear-gradient(165deg,#F8F5EE 0%,#F5F2EC 55%,#F3F1F4 100%); }
 .sec--cta    { background:var(--lav-cta); }
 .sec-head { max-width:46rem; }
 
@@ -575,47 +575,95 @@ img { display:block; max-width:100%; }
 }
 
 /* ===================================================
-   03 — END CUSTOMERS  (warm stone, sector cards)
+   03 — END CUSTOMERS  —  proof-of-reach directory
+   Poppins · warm ivory · curated identity wall
    =================================================== */
-.ec-grid { margin-top:3rem; display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
-.ec-card {
-  background:#FCFBF8; border:1px solid var(--line-beige);
-  border-radius:6px; padding:2rem 1.8rem;
-  display:flex; flex-direction:column;
-  transition:transform .25s, box-shadow .25s;
-}
-.ec-card:hover { transform:translateY(-3px); box-shadow:0 18px 40px -24px rgba(76,29,149,.28); }
-.ec-ico {
-  width:38px; height:38px; border-radius:8px;
-  display:flex; align-items:center; justify-content:center;
-  background:rgba(106,69,192,.09); color:var(--violet);
-  margin-bottom:1.3rem;
-}
-.ec-ico svg { width:19px; height:19px; }
-.ec-cat { font-size:.64rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); }
-.ec-name { font-family:'Newsreader',serif; font-weight:500; font-size:1.16rem; color:var(--navy-ink); margin-top:.4rem; }
-.ec-desc { font-size:.83rem; line-height:1.6; color:var(--muted); margin-top:.7rem; flex:1; }
-.ec-logos { display:flex; align-items:center; gap:.9rem; margin-top:1.2rem; flex-wrap:wrap; }
-.ec-logos img { max-height:20px; max-width:80px; width:auto; mix-blend-mode:multiply; }
+.sec--end :is(
+  .ecd-label .num, .ecd-label .lbl, .ecd-h2, .ecd-lead,
+  .ecd-stat-num, .ecd-stat-lbl, .ecd-phead > span, .ecd-pcount,
+  .ecd-chip, .ecd-search input, .ecd-tile-name, .ecd-tile-mono,
+  .ecd-more, .ecd-empty
+) { font-family:'Poppins',sans-serif; }
 
-/* directory strip */
-.dirstrip {
-  margin-top:3rem; padding:2.4rem 2.2rem;
-  border:1px solid var(--line-beige); border-radius:8px;
-  background:linear-gradient(180deg,#FCFBF8,#F7F3EC);
-  display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap;
+.ecd-wrap { display:grid; grid-template-columns:minmax(0,0.42fr) minmax(0,1fr); gap:3.6rem; align-items:start; }
+
+/* ---- left · editorial intro ---- */
+.ecd-label { display:inline-flex; align-items:center; gap:.7rem; margin-bottom:1.1rem; }
+.ecd-label .num {
+  font-size:.62rem; font-weight:500; letter-spacing:.04em; color:#7055C8;
+  border:1px solid rgba(112,85,200,.35); border-radius:3px; padding:.22rem .46rem; line-height:1;
 }
-.dirstrip-txt h3 { font-family:'Newsreader',serif; font-weight:500; font-size:1.3rem; color:var(--navy-ink); }
-.dirstrip-txt p { font-size:.85rem; color:var(--muted); margin-top:.4rem; max-width:34rem; }
-.dirstrip-btn {
-  display:inline-flex; align-items:center; gap:.6rem;
-  font-size:.85rem; font-weight:600; color:#fff;
-  background:var(--violet-deep); padding:.9rem 1.7rem; border-radius:999px;
-  white-space:nowrap; transition:background .2s, transform .2s;
+.ecd-label .lbl { font-size:.66rem; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:#7055C8; }
+.ecd-h2 { font-weight:300; font-size:clamp(1.85rem,2.7vw,2.5rem); line-height:1.16; letter-spacing:-.012em; color:#14204A; margin:0; }
+.ecd-h2 em { font-style:italic; font-weight:400; color:#9B91E8; }
+.ecd-lead { font-size:.9rem; line-height:1.75; color:#5C6982; max-width:18rem; margin-top:1.15rem; }
+
+.ecd-stats { margin-top:2.1rem; max-width:18rem; border-top:1px solid rgba(32,27,50,.1); }
+.ecd-stat { display:flex; align-items:baseline; gap:1rem; padding:.92rem 0; border-bottom:1px solid rgba(32,27,50,.1); }
+.ecd-stat-num { flex:0 0 3.6rem; font-weight:300; font-size:1.5rem; line-height:1; color:#14204A; letter-spacing:-.01em; }
+.ecd-stat-num em { font-style:normal; color:#7055C8; font-size:.62em; }
+.ecd-stat-ico { flex:0 0 3.6rem; display:flex; align-items:center; }
+.ecd-stat-ico svg { width:17px; height:17px; color:#7055C8; }
+.ecd-stat-lbl { font-size:.64rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:#65708A; }
+
+/* ---- right · directory panel ---- */
+.ecd-panel {
+  border:1px solid rgba(32,27,50,.1); border-radius:14px; background:#FCFBF8;
+  padding:1.9rem 1.9rem 1.7rem;
 }
-.dirstrip-btn:hover { background:var(--violet); transform:translateY(-2px); }
-.dirstrip-btn span { transition:transform .2s; }
-.dirstrip-btn:hover span { transform:translateX(3px); }
+.ecd-phead { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+.ecd-phead > span:first-child { font-size:.7rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#14204A; }
+.ecd-pcount { font-size:.62rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#B8935A; }
+
+.ecd-filters { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.4rem; }
+.ecd-chip {
+  font-size:.6rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:#5B3FB0;
+  background:transparent; border:1px solid rgba(112,85,200,.28); border-radius:999px;
+  padding:.5rem .95rem; cursor:pointer; transition:background .18s, color .18s, border-color .18s;
+}
+.ecd-chip:hover { border-color:rgba(112,85,200,.5); background:rgba(112,85,200,.05); }
+.ecd-chip.is-active { background:#4C1D95; border-color:#4C1D95; color:#fff; }
+
+.ecd-search { position:relative; margin-top:.9rem; }
+.ecd-search svg { position:absolute; left:1rem; top:50%; transform:translateY(-50%); width:15px; height:15px; color:#9aa0b2; }
+.ecd-search input {
+  width:100%; font-size:.82rem; color:#14204A; background:#fff;
+  padding:.8rem 1rem .8rem 2.6rem;
+  border:1px solid rgba(32,27,50,.12); border-radius:10px;
+  outline:none; transition:border-color .2s, box-shadow .2s;
+}
+.ecd-search input::placeholder { color:#9aa0b2; }
+.ecd-search input:focus { border-color:#7055C8; box-shadow:0 0 0 3px rgba(112,85,200,.1); }
+
+.ecd-tiles { margin-top:1.4rem; display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:8rem; gap:.8rem; }
+.ecd-tile {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.6rem; text-align:center; height:100%; padding:.9rem .7rem; overflow:hidden;
+  border:1px solid rgba(32,27,50,.09); border-radius:10px; background:#fff;
+  transition:border-color .18s, background .18s;
+}
+.ecd-tile:hover { border-color:rgba(112,85,200,.3); background:#FDFCFF; }
+.ecd-tile[hidden] { display:none; }
+.ecd-tile-mono {
+  width:40px; height:40px; border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(112,85,200,.09); color:#5B3FB0; font-weight:600; font-size:.82rem;
+}
+.ecd-tile-name { font-size:.68rem; font-weight:500; line-height:1.32; color:#14204A; }
+
+.ecd-empty { margin-top:1.6rem; font-size:.82rem; color:#9aa0b2; text-align:center; }
+
+.ecd-foot { margin-top:1.6rem; display:flex; justify-content:center; }
+.ecd-foot[hidden] { display:none; }
+.ecd-more {
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.74rem; font-weight:500; letter-spacing:.02em; color:#5B3FB0;
+  border:1px solid rgba(112,85,200,.32); border-radius:999px; padding:.65rem 1.4rem;
+  cursor:pointer; background:transparent; transition:background .2s, border-color .2s;
+}
+.ecd-more:hover { background:rgba(112,85,200,.06); border-color:rgba(112,85,200,.5); }
+.ecd-more .arw { transition:transform .2s; }
+.ecd-more:hover .arw { transform:translateX(3px); }
 
 /* ===================================================
    CTA  (soft lavender, compact)
@@ -681,7 +729,8 @@ img { display:block; max-width:100%; }
   .pd-stat { padding:0 1.25rem; }
   .pd-fieldnotes { display:none; }
   .pd-illo { width:24rem; }
-  .ec-grid { grid-template-columns:repeat(2,1fr); }
+  .ecd-wrap { gap:2.8rem; }
+  .ecd-tiles { grid-template-columns:repeat(3,1fr); }
 }
 @media (max-width:960px){
   .mc-grid { grid-template-columns:1fr; gap:2.2rem; }
@@ -697,6 +746,9 @@ img { display:block; max-width:100%; }
   .pd-stat:nth-child(odd) { border-left:none; padding-left:0; }
   .pd-stat:nth-child(even) { padding-right:0; }
   .pd-stat:nth-child(n+3) { border-top:1px solid rgba(20,32,74,.09); padding-top:2.8rem; }
+  .ecd-wrap { grid-template-columns:1fr; gap:2.4rem; }
+  .ecd-lead, .ecd-stats { max-width:none; }
+  .ecd-stats { display:grid; grid-template-columns:1fr 1fr; column-gap:2rem; }
 }
 @media (max-width:760px){
   #nav { padding:16px 20px; }
@@ -719,8 +771,9 @@ img { display:block; max-width:100%; }
   .pd-h2 { font-size:2.15rem; }
   .pd-stat { padding:0 1.3rem; }
   .pd-stat:nth-child(n+3) { padding-top:2.6rem; }
-  .ec-grid { grid-template-columns:1fr; }
-  .dirstrip { flex-direction:column; align-items:flex-start; }
+  .ecd-panel { padding:1.4rem 1.15rem 1.5rem; }
+  .ecd-tiles { grid-template-columns:repeat(2,1fr); }
+  .ecd-stats { grid-template-columns:1fr; }
 }
 @media (max-width:440px){
   .pd-stats { grid-template-columns:1fr; }
@@ -1391,76 +1444,54 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
 <!-- ===== 03 — END CUSTOMERS ===== -->
 <section class="sec sec--end" id="end-customers">
   <div class="sec-inner">
-    <div class="sec-head reveal">
-      <div class="kicker" data-num="04">End Customers</div>
-      <h2 class="h2">Where our radiators<br><em>end up.</em></h2>
-      <p class="lead">
-        Beyond the OEMs we invoice, our radiators support transformers across national
-        transmission, railways, power generation, state transmission, renewable energy
-        and distribution infrastructure.
-      </p>
-    </div>
+    <div class="ecd-wrap">
 
-    <div class="ec-grid">
-      <div class="ec-card reveal">
-        <div class="ec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10l8-6 8 6v10"/><path d="M4 20h16"/><path d="M10 20v-6h4v6"/></svg></div>
-        <div class="ec-cat">National Grid</div>
-        <div class="ec-name">POWERGRID (PGCIL)</div>
-        <div class="ec-desc">PGCIL Grade A vendor — radiators for transformers &amp; reactors up to 765 kV class on India's national transmission grid.</div>
-        <div class="ec-logos"><img src="assets/logos/powergrid.svg" alt="POWERGRID" loading="lazy"></div>
-      </div>
-
-      <div class="ec-card reveal reveal-d1">
-        <div class="ec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="14" rx="2"/><path d="M4 11h16"/><circle cx="8.5" cy="14" r="1"/><circle cx="15.5" cy="14" r="1"/><path d="M8 21l1.5-4M16 21l-1.5-4"/></svg></div>
-        <div class="ec-cat">Railways</div>
-        <div class="ec-name">Indian Railways (RDSO)</div>
-        <div class="ec-desc">RDSO-approved radiators for 132 kV single-phase traction power transformers on the electrified rail network.</div>
-        <div class="ec-logos"><img src="assets/logos/rdso.png" alt="RDSO" loading="lazy"></div>
-      </div>
-
-      <div class="ec-card reveal reveal-d2">
-        <div class="ec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div>
-        <div class="ec-cat">Generation</div>
-        <div class="ec-name">NTPC</div>
-        <div class="ec-desc">Approved sub-vendor for pressed-steel radiators — NTPC Khargone (2&times;660 MW) generation transformers.</div>
-        <div class="ec-logos"><img src="assets/logos/ntpc.svg" alt="NTPC" loading="lazy"></div>
-      </div>
-
-      <div class="ec-card reveal">
-        <div class="ec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M6 21V8l6-4 6 4v13"/><path d="M10 21v-5h4v5"/><path d="M9 11h.01M15 11h.01"/></svg></div>
-        <div class="ec-cat">State Transmission</div>
-        <div class="ec-name">PSTCL &mdash; Punjab</div>
-        <div class="ec-desc">Approved vendor for radiators on transformers up to 220 kV / 160 MVA across the Punjab grid, plus supplies routed to state transmission utilities via our OEMs.</div>
-        <div class="ec-logos"><img src="assets/logos/pstcl-lockup.svg" alt="PSTCL" style="max-height:34px" loading="lazy"></div>
-      </div>
-
-      <div class="ec-card reveal reveal-d1">
-        <div class="ec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg></div>
-        <div class="ec-cat">Renewables / IPPs</div>
-        <div class="ec-name">Serentica &middot; Amara Raja &middot; Powerica</div>
-        <div class="ec-desc">Radiators for 220&ndash;420 kV power transformers on independent power &amp; renewable-energy projects, supplied through CG Power.</div>
-        <div class="ec-logos">
-          <img src="assets/logos/serentica.png" alt="Serentica" loading="lazy">
-          <img src="assets/logos/amararaja.svg" alt="Amara Raja" loading="lazy">
-          <img src="assets/logos/powerica.jpg" alt="Powerica" loading="lazy">
+      <!-- LEFT · editorial introduction -->
+      <div class="ecd-intro reveal">
+        <div class="ecd-label"><span class="num">03</span><span class="lbl">End Customers</span></div>
+        <h2 class="ecd-h2">Where our radiators<br><em>end up.</em></h2>
+        <p class="ecd-lead">
+          From national transmission networks to railways, generation and renewable
+          projects, our radiators support critical infrastructure across India.
+        </p>
+        <div class="ecd-stats">
+          <div class="ecd-stat"><span class="ecd-stat-num">48<em>+</em></span><span class="ecd-stat-lbl">End customers</span></div>
+          <div class="ecd-stat"><span class="ecd-stat-num">3</span><span class="ecd-stat-lbl">Broad categories</span></div>
+          <div class="ecd-stat"><span class="ecd-stat-num">20<em>+</em></span><span class="ecd-stat-lbl">States impacted</span></div>
+          <div class="ecd-stat">
+            <span class="ecd-stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.686-6-10a6 6 0 0 1 12 0c0 4.314-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span>
+            <span class="ecd-stat-lbl">Nationwide presence</span>
+          </div>
         </div>
       </div>
 
-      <div class="ec-card reveal reveal-d2">
-        <div class="ec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-6 9 6"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/><path d="M3 9h18"/></svg></div>
-        <div class="ec-cat">Distribution &amp; Utilities</div>
-        <div class="ec-name">State Utilities &amp; DISCOMs</div>
-        <div class="ec-desc">Distribution and power transformer radiators reaching state utilities and DISCOMs nationwide through our transformer OEMs.</div>
-      </div>
-    </div>
+      <!-- RIGHT · end-customer directory -->
+      <div class="ecd-panel reveal reveal-d1">
+        <div class="ecd-phead">
+          <span>End Customer Directory</span>
+          <span class="ecd-pcount">48+ Organisations</span>
+        </div>
 
-    <!-- complete customer list -->
-    <div class="dirstrip reveal reveal-d1">
-      <div class="dirstrip-txt">
-        <h3>Explore our complete customer list</h3>
-        <p>The full, searchable end-customer directory — filter by sector, search by name, and browse every documented relationship.</p>
+        <div class="ecd-filters" id="ecdFilters">
+          <button type="button" class="ecd-chip is-active" data-cat="all">All</button>
+          <button type="button" class="ecd-chip" data-cat="state">State Transmission &amp; Distribution</button>
+          <button type="button" class="ecd-chip" data-cat="central">Central Core Infrastructure</button>
+          <button type="button" class="ecd-chip" data-cat="private">Private Power &amp; Renewables</button>
+        </div>
+
+        <div class="ecd-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" id="ecdSearch" placeholder="Search customer name…" autocomplete="off" aria-label="Search end customers">
+        </div>
+
+        <div class="ecd-tiles" id="ecdTiles"></div>
+        <p class="ecd-empty" id="ecdEmpty" hidden>No customers match your search.</p>
+
+        <div class="ecd-foot" id="ecdFoot">
+          <button type="button" class="ecd-more" id="ecdMore">View Complete Customer Directory <span class="arw">&rarr;</span></button>
+        </div>
       </div>
-      <a href="clientele-directory.html" class="dirstrip-btn">View Full Customer List <span>&rarr;</span></a>
+
     </div>
   </div>
 </section>
@@ -1784,6 +1815,95 @@ IC.cta.addEventListener('click', enterIndia);
 /* ---- zoom controls ---- */
 document.getElementById('zoomIn').addEventListener('click', () => setZoom(mapZoom + 0.3));
 document.getElementById('zoomOut').addEventListener('click', () => setZoom(mapZoom - 0.3));
+
+/* ===================================================
+   03 — END CUSTOMERS  ·  directory (client-supplied list)
+   =================================================== */
+(function () {
+  var EC = [
+    /* state transmission & distribution */
+    ['MSETCL / MAHATRANSCO', 'state'], ['UPPTCL', 'state'], ['PSTCL', 'state'],
+    ['TANTRANSCO', 'state'], ['KPTCL', 'state'], ['TSTRANSCO', 'state'],
+    ['GETCO', 'state'], ['RRVPNL', 'state'], ['CSPTCL', 'state'],
+    /* central core infrastructure */
+    ['PGCIL', 'central'], ['NTPC Limited', 'central'], ['Indian Railways / RDSO', 'central'],
+    /* private power utilities & renewables */
+    ['Reliance Industries Limited', 'private'], ['Tata Power Company Limited', 'private'],
+    ['Adani Energy Solutions Limited', 'private'], ['Adani Power Limited', 'private'],
+    ['Adani Green Energy Limited', 'private'], ['Torrent Power Limited', 'private'],
+    ['JSW Energy Limited', 'private'], ['RENEW Energy', 'private'],
+    ['Acme Solar Holdings', 'private'], ['Hero Future Energies', 'private'],
+    ['Tata Projects Limited', 'private'], ['Tata Steel', 'private'],
+    ['Kalpataru Projects International Limited (KPIL)', 'private'], ['MEIL', 'private'],
+    ['GSECL', 'private'], ['AP GENCO', 'private'], ['Sterlite', 'private'],
+    ['Indigrid', 'private'], ['APARAVA', 'private'], ['GR infra', 'private'],
+    ['RS INFRA', 'private'], ['AEGCL', 'private'], ['Godrej', 'private'],
+    ['POWERICA', 'private'], ['L&T', 'private']
+  ];
+  /* curated first view — a representative subset, not the full list */
+  var FEATURED = [
+    'PGCIL', 'NTPC Limited', 'Indian Railways / RDSO', 'MSETCL / MAHATRANSCO',
+    'UPPTCL', 'PSTCL', 'Reliance Industries Limited', 'Tata Power Company Limited',
+    'Adani Energy Solutions Limited', 'JSW Energy Limited', 'Torrent Power Limited', 'L&T'
+  ];
+
+  function monogram(name) {
+    var s = name.split('/')[0].replace(/\(.*?\)/g, '').trim();
+    var words = s.split(/\s+/).filter(Boolean);
+    var first = words[0].replace(/[^A-Za-z&]/g, '');
+    if (/^[A-Z&]{2,}$/.test(first)) return (first.replace(/&/g, '') || first).slice(0, 2);
+    if (words.length === 1) return first.slice(0, 2).toUpperCase();
+    var second = (words[1].replace(/[^A-Za-z]/g, '')[0] || '');
+    return (first[0] + second).toUpperCase();
+  }
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+  var tilesEl = document.getElementById('ecdTiles');
+  var emptyEl = document.getElementById('ecdEmpty');
+  var footEl = document.getElementById('ecdFoot');
+  var moreBtn = document.getElementById('ecdMore');
+  var searchEl = document.getElementById('ecdSearch');
+  var filtersEl = document.getElementById('ecdFilters');
+  if (!tilesEl) return;
+
+  var expanded = false, cat = 'all';
+
+  tilesEl.innerHTML = EC.map(function (c) {
+    return '<div class="ecd-tile" data-cat="' + c[1] + '" data-name="' + esc(c[0].toLowerCase()) + '">' +
+      '<span class="ecd-tile-mono">' + esc(monogram(c[0])) + '</span>' +
+      '<span class="ecd-tile-name">' + esc(c[0]) + '</span></div>';
+  }).join('');
+  var tiles = Array.prototype.slice.call(tilesEl.children);
+
+  function render() {
+    var q = searchEl.value.trim().toLowerCase();
+    var browsing = expanded || cat !== 'all' || q !== '';
+    var shown = 0;
+    tiles.forEach(function (t, i) {
+      var okCat = cat === 'all' || t.getAttribute('data-cat') === cat;
+      var okQ = !q || t.getAttribute('data-name').indexOf(q) !== -1;
+      var okFeat = browsing || FEATURED.indexOf(EC[i][0]) !== -1;
+      var vis = okCat && okQ && okFeat;
+      t.hidden = !vis;
+      if (vis) shown++;
+    });
+    emptyEl.hidden = shown !== 0;
+    footEl.hidden = browsing;
+  }
+
+  filtersEl.addEventListener('click', function (e) {
+    var b = e.target.closest('.ecd-chip');
+    if (!b) return;
+    filtersEl.querySelectorAll('.ecd-chip').forEach(function (x) { x.classList.remove('is-active'); });
+    b.classList.add('is-active');
+    cat = b.getAttribute('data-cat');
+    render();
+  });
+  searchEl.addEventListener('input', render);
+  moreBtn.addEventListener('click', function () { expanded = true; render(); });
+
+  render();
+})();
 </script>
 </body>
 </html>
