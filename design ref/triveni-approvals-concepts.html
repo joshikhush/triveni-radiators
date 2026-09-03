@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triveni Radiators — Approved → Proven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  :root{
+    --navy-950:#020a1f;
+    --navy-900:#04102d;
+    --navy-800:#0a1938;
+    --navy-700:#132649;
+    --line:rgba(243,241,234,0.10);
+    --line-strong:rgba(243,241,234,0.22);
+    --ink:#f1efe7;
+    --ink-dim:#9aa1c4;
+    --ink-faint:#5c6690;
+    --violet:#7165ff;
+    --violet-bright:#a79bff;
+    --violet-glow:rgba(113,101,255,0.35);
+    --serif:'Newsreader', serif;
+    --sans:'IBM Plex Sans', sans-serif;
+    --mono:'IBM Plex Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--navy-950);}
+  body{ color:var(--ink); font-family:var(--sans); overflow-x:hidden; }
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+
+  .eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--violet-bright);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:''; width:22px; height:1px; background:var(--violet); display:inline-block; }
+
+  #top-note{
+    position:fixed; top:0; left:0; right:0; z-index:999;
+    padding:12px 24px;
+    background:rgba(2,10,31,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono); font-size:10.5px; letter-spacing:0.1em;
+    color:var(--ink-faint); text-transform:uppercase;
+    display:flex; justify-content:space-between;
+  }
+  #top-note b{ color:var(--violet-bright); }
+
+  section.hero-frame{
+    padding:120px 8vw 60px;
+  }
+  .hero-frame .tag{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.2em; color:var(--violet-bright);
+    text-transform:uppercase; margin-bottom:18px;
+  }
+  .hero-frame h1{
+    font-family:var(--serif); font-weight:400; font-size:clamp(28px,3.4vw,44px);
+    color:var(--ink); max-width:820px; line-height:1.15; margin-bottom:18px;
+  }
+  .hero-frame p{
+    font-family:var(--sans); font-weight:300; color:var(--ink-dim); max-width:62ch;
+    font-size:15.5px; line-height:1.75;
+  }
+
+  /* ============ combined narrative track ============ */
+  #jp-track{ height:820vh; position:relative; background:var(--navy-900); }
+  #jp-pin{
+    position:sticky; top:0; height:100vh; overflow:hidden;
+  }
+  .schematic-noise{
+    position:absolute; inset:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px; opacity:0.3;
+    mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent 75%);
+  }
+  .chapter-label{
+    position:absolute; top:38px; left:8vw; z-index:6;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--ink-faint);
+  }
+  .chapter-label b{ color:var(--violet-bright); }
+  .chapter-dots{
+    position:absolute; bottom:34px; left:50%; transform:translateX(-50%);
+    display:flex; gap:9px; z-index:6;
+  }
+  .chapter-dots .d{ width:5px; height:5px; border-radius:50%; background:var(--ink-faint); transition:all .3s ease; }
+  .chapter-dots .d.active{ background:var(--violet-bright); transform:scale(1.7); }
+
+  svg .geo-line{ fill:none; stroke:currentColor; stroke-width:1.1; vector-effect:non-scaling-stroke; }
+  svg .geo-node{ fill:currentColor; }
+  svg .geo-fine{ stroke-width:0.6; opacity:0.5; }
+
+  /* centered / immersive stage (intro, powergrid, rdso) */
+  #jp-centered{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .jp-geo{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--violet); opacity:0;
+  }
+  .jp-geo svg{ width:min(66vw,880px); height:auto; }
+  .jp-c-stage{
+    position:relative; z-index:2; text-align:center; padding:0 6vw;
+    opacity:1;
+  }
+  .jp-c-eyebrow{ margin-bottom:26px; justify-content:center; }
+  .jp-c-org{
+    font-family:var(--serif); font-size:clamp(38px,6.4vw,88px); font-weight:400;
+    letter-spacing:-0.015em; color:var(--ink); line-height:1.04;
+  }
+  .jp-c-spec{
+    font-family:var(--mono); font-size:clamp(12px,1.2vw,15px); letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--violet-bright); margin-top:22px;
+    display:flex; gap:26px; justify-content:center; flex-wrap:wrap;
+  }
+  .jp-c-spec span{ position:relative; padding-left:16px; }
+  .jp-c-spec span::before{
+    content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);
+    width:6px; height:6px; border-radius:50%; background:var(--violet);
+  }
+  .jp-c-desc{
+    margin-top:24px; max-width:44ch; margin-left:auto; margin-right:auto;
+    font-family:var(--sans); font-weight:300; font-size:15px; line-height:1.7; color:var(--ink-dim);
+  }
+
+  /* bridging morph element */
+  #jp-morph{
+    position:absolute; z-index:5;
+    border:1px solid var(--violet);
+    background:linear-gradient(160deg, rgba(19,38,73,0.6), rgba(10,25,56,0.7));
+    box-shadow:0 30px 80px -20px rgba(0,0,0,0.5);
+    opacity:0;
+    pointer-events:none;
+  }
+  #jp-morph::before{
+    content:'';
+    position:absolute; inset:10px;
+    border:1px solid var(--line);
+  }
+
+  /* split / proof stage */
+  #jp-split{
+    position:absolute; inset:0;
+    display:grid; grid-template-columns:0.9fr 1.1fr;
+    align-items:center;
+    opacity:0; pointer-events:none;
+  }
+  .jp-split-left{ padding:0 5vw; }
+  .jp-split-left .headline{
+    font-family:var(--serif); font-size:clamp(26px,3.2vw,42px); font-weight:400;
+    color:var(--ink); margin-top:16px; line-height:1.12;
+  }
+  .jp-split-left .sub{
+    margin-top:18px; max-width:38ch; font-family:var(--sans); font-weight:300;
+    font-size:14.5px; line-height:1.7; color:var(--ink-dim);
+  }
+  .jp-index{ margin-top:40px; display:flex; flex-direction:column; gap:13px; }
+  .jp-index-item{
+    display:flex; align-items:center; gap:14px;
+    font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink-faint); transition:color .4s ease;
+  }
+  .jp-index-item .n{ width:22px; }
+  .jp-index-item .track{ flex:1; height:1px; background:var(--line); position:relative; }
+  .jp-index-item .track::after{
+    content:''; position:absolute; left:0; top:0; height:1px; width:0%;
+    background:var(--violet); transition:width .4s ease;
+  }
+  .jp-index-item.active{ color:var(--violet-bright); }
+  .jp-index-item.active .track::after{ width:100%; }
+  .jp-index-item.complete{ color:var(--ink-dim); }
+  .jp-index-item.complete .track::after{ width:100%; background:var(--ink-faint); }
+
+  .jp-closing{
+    margin-top:34px; font-family:var(--serif); font-size:19px; color:var(--ink);
+    opacity:0; max-width:34ch; line-height:1.4;
+  }
+
+  .jp-split-right{ position:relative; height:100%; }
+  .jp-doc{
+    position:absolute; top:50%; left:50%;
+    width:min(30vw,380px); aspect-ratio:3/4;
+    transform:translate(-50%,-50%);
+    background:linear-gradient(160deg, var(--navy-800), var(--navy-700));
+    border:1px solid var(--line-strong);
+    border-radius:2px;
+    padding:26px 22px;
+    box-shadow:0 30px 80px -20px rgba(0,0,0,0.6);
+    opacity:0;
+  }
+  .jp-doc .doc-corner{
+    position:absolute; top:14px; right:14px; width:34px; height:34px;
+    border:1px solid var(--violet); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:8px; color:var(--violet-bright); letter-spacing:0.05em;
+    opacity:0.85;
+  }
+  .jp-doc .doc-meta{
+    font-family:var(--mono); font-size:9px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:18px;
+  }
+  .jp-doc .doc-org{ font-family:var(--serif); font-size:22px; color:var(--ink); line-height:1.15; margin-bottom:14px; }
+  .jp-doc .doc-spec{ font-family:var(--mono); font-size:11px; color:var(--violet-bright); letter-spacing:0.08em; margin-bottom:4px; }
+  .jp-doc .doc-rule{ height:1px; background:var(--line); margin:16px 0; }
+  .jp-doc .doc-lines{ display:flex; flex-direction:column; gap:8px; }
+  .jp-doc .doc-lines span{ display:block; height:5px; background:var(--line-strong); border-radius:1px; }
+  .jp-doc .doc-lines span:nth-child(2){ width:70%; }
+  .jp-doc .doc-lines span:nth-child(3){ width:45%; }
+  .jp-doc .doc-desc{ margin-top:18px; font-family:var(--sans); font-weight:300; font-size:11.5px; line-height:1.6; color:var(--ink-dim); }
+  .jp-doc .doc-stamp{
+    position:absolute; bottom:20px; left:22px;
+    font-family:var(--mono); font-size:9px; letter-spacing:0.16em; color:var(--ink-faint);
+    text-transform:uppercase; display:flex; align-items:center; gap:8px;
+  }
+  .jp-doc .doc-stamp::before{ content:''; width:14px; height:14px; border:1px solid var(--ink-faint); border-radius:50%; }
+
+  #end-cap{
+    padding:130px 8vw 200px; text-align:center; background:var(--navy-950); border-top:1px solid var(--line);
+  }
+  #end-cap .mono-label{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.16em; color:var(--ink-faint);
+    text-transform:uppercase; margin-bottom:18px;
+  }
+  #end-cap p{ font-family:var(--serif); font-size:clamp(19px,2.1vw,26px); color:var(--ink-dim); max-width:52ch; margin:0 auto; }
+
+  @media (max-width:860px){
+    #jp-split{ grid-template-columns:1fr; }
+    .jp-split-right{ display:none; }
+    .jp-c-org{ font-size:clamp(30px,9vw,52px); }
+    #jp-track{ height:900vh; }
+  }
+</style>
+</head>
+<body>
+
+<div id="top-note">
+  <span>Triveni · Major Approvals — Combined Concept</span>
+  <span><b>Approved</b> → <b>Proven</b> · one continuous scroll</span>
+</div>
+
+<section class="hero-frame">
+  <div class="tag">Approved → Proven</div>
+  <h1>One continuous narrative: the first half establishes where Triveni is approved, the second reveals the evidence behind it.</h1>
+  <p>Approval Journey's cinematic, centered storytelling carries the section through POWERGRID and RDSO — then the composition itself transforms into Proof in Motion's layered technical archive for NTPC and PSTCL. Scroll through the full sequence below.</p>
+</section>
+
+<div id="jp-track">
+  <div id="jp-pin">
+    <div class="schematic-noise"></div>
+    <div class="chapter-label">Chapter <b data-chapter-num>01</b> — <span data-chapter-name>Introduction</span></div>
+
+    <!-- centered / immersive stage -->
+    <div id="jp-centered">
+      <div class="jp-geo" data-geo-slot></div>
+      <div class="jp-c-stage" data-c-stage>
+        <div class="eyebrow jp-c-eyebrow">02 — Major Approvals</div>
+        <h2 class="jp-c-org" style="font-size:clamp(32px,5vw,64px);">Approved where<br>performance matters.</h2>
+        <p class="jp-c-desc">Our radiators are approved by leading utilities and railway organisations for critical applications.</p>
+      </div>
+    </div>
+
+    <!-- bridging morph element -->
+    <div id="jp-morph"></div>
+
+    <!-- split / proof stage -->
+    <div id="jp-split">
+      <div class="jp-split-left">
+        <div class="eyebrow">02 — Major Approvals</div>
+        <h3 class="headline">Approved where<br>performance matters.</h3>
+        <p class="sub">Our radiators are approved by leading utilities and railway organisations for critical applications.</p>
+
+        <div class="jp-index">
+          <div class="jp-index-item" data-idx-item="0"><span class="n">01</span><span>POWERGRID / PGCIL</span><div class="track"></div></div>
+          <div class="jp-index-item" data-idx-item="1"><span class="n">02</span><span>RDSO / Railways</span><div class="track"></div></div>
+          <div class="jp-index-item" data-idx-item="2"><span class="n">03</span><span>NTPC</span><div class="track"></div></div>
+          <div class="jp-index-item" data-idx-item="3"><span class="n">04</span><span>PSTCL — Punjab</span><div class="track"></div></div>
+        </div>
+
+        <p class="jp-closing" data-closing>Trusted across critical power infrastructure.</p>
+      </div>
+
+      <div class="jp-split-right">
+        <div class="jp-doc" data-doc="ntpc">
+          <div class="doc-corner">C</div>
+          <div class="doc-meta">Record 03 / 04 — Generation</div>
+          <div class="doc-org">NTPC</div>
+          <div class="doc-spec">GENERATION PROJECTS</div>
+          <div class="doc-rule"></div>
+          <div class="doc-lines"><span></span><span></span><span></span></div>
+          <p class="doc-desc">Approved vendor for NTPC generation projects.</p>
+          <div class="doc-stamp">On file</div>
+        </div>
+        <div class="jp-doc" data-doc="pstcl">
+          <div class="doc-corner">D</div>
+          <div class="doc-meta">Record 04 / 04 — State Transmission</div>
+          <div class="doc-org">PSTCL<br>Punjab</div>
+          <div class="doc-spec">UP TO 220 kV / 160 MVA</div>
+          <div class="doc-rule"></div>
+          <div class="doc-lines"><span></span><span></span><span></span></div>
+          <p class="doc-desc">Approved vendor for power transformers up to 220 kV / 160 MVA.</p>
+          <div class="doc-stamp">On file</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-dots">
+      <div class="d active" data-dot="0"></div>
+      <div class="d" data-dot="1"></div>
+      <div class="d" data-dot="2"></div>
+      <div class="d" data-dot="3"></div>
+      <div class="d" data-dot="4"></div>
+      <div class="d" data-dot="5"></div>
+      <div class="d" data-dot="6"></div>
+    </div>
+  </div>
+</div>
+
+<div id="end-cap">
+  <div class="mono-label">End of sequence</div>
+  <p>Approved in critical infrastructure. Proven through documented performance — ready to sit directly in the credentials page.</p>
+</div>
+
+<!-- geometry templates -->
+<template id="tpl-geo-intro">
+  <svg viewBox="0 0 800 600" fill="none">
+    <path class="geo-line geo-fine" d="M40 300 L760 300" />
+    <path class="geo-line geo-fine" d="M400 40 L400 560" />
+    <circle class="geo-line" cx="400" cy="300" r="180" />
+  </svg>
+</template>
+<template id="tpl-geo-grid">
+  <svg viewBox="0 0 800 600" fill="none">
+    <path class="geo-line" d="M120 520 L200 120 L280 520" />
+    <path class="geo-line" d="M180 300 L220 300 M195 220 L205 220" />
+    <path class="geo-line geo-fine" d="M40 460 Q 400 380 760 460" />
+    <path class="geo-line geo-fine" d="M40 380 Q 400 300 760 380" />
+    <path class="geo-line" d="M480 520 L560 100 L640 520" />
+    <path class="geo-line" d="M540 260 L580 260 M555 190 L565 190" />
+    <circle class="geo-node" cx="200" cy="120" r="4" />
+    <circle class="geo-node" cx="560" cy="100" r="4" />
+    <path class="geo-line geo-fine" d="M0 540 L800 540" />
+  </svg>
+</template>
+<template id="tpl-geo-rail">
+  <svg viewBox="0 0 800 600" fill="none">
+    <path class="geo-line" d="M60 560 L400 80 L740 560" />
+    <path class="geo-line" d="M170 560 L400 200 L630 560" />
+    <path class="geo-line geo-fine" d="M250 460 L550 460" />
+    <path class="geo-line geo-fine" d="M280 380 L520 380" />
+    <path class="geo-line geo-fine" d="M310 300 L490 300" />
+    <path class="geo-line geo-fine" d="M335 235 L465 235" />
+    <circle class="geo-node" cx="400" cy="80" r="3.5" />
+  </svg>
+</template>
+
+<script>
+(function(){
+  function setGeo(el, key){
+    el.innerHTML = '';
+    var tpl = document.getElementById('tpl-geo-' + key);
+    if(tpl){ el.appendChild(tpl.content.cloneNode(true)); }
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  var geoSlot = document.querySelector('[data-geo-slot]');
+  var cStage = document.querySelector('[data-c-stage]');
+  var morph = document.getElementById('jp-morph');
+  var split = document.getElementById('jp-split');
+  var docNtpc = document.querySelector('[data-doc="ntpc"]');
+  var docPstcl = document.querySelector('[data-doc="pstcl"]');
+  var indexItems = gsap.utils.toArray('.jp-index-item');
+  var closingEl = document.querySelector('[data-closing]');
+  var dots = gsap.utils.toArray('.chapter-dots .d');
+  var chapNum = document.querySelector('[data-chapter-num]');
+  var chapName = document.querySelector('[data-chapter-name]');
+
+  var CHAPTERS = [
+    { key:'intro',    name:'Introduction' },
+    { key:'powergrid',name:'Powergrid / PGCIL' },
+    { key:'rdso',     name:'RDSO / Indian Railways' },
+    { key:'bridge',   name:'Engineering \u2192 Proof' },
+    { key:'ntpc',     name:'NTPC \u2014 Proof' },
+    { key:'pstcl',    name:'PSTCL \u2014 Proof' },
+    { key:'closing',  name:'Trusted Record' }
+  ];
+  var N = CHAPTERS.length; // 7
+
+  var centeredContent = {
+    intro: {
+      eyebrow:'02 — Major Approvals',
+      org:'Approved where<br>performance matters.',
+      orgSize:'clamp(32px,5vw,64px)',
+      spec:[],
+      desc:'Our radiators are approved by leading utilities and railway organisations for critical applications.',
+      geo:'intro'
+    },
+    powergrid: {
+      eyebrow:'01 / 04 — Utility · Transmission',
+      org:'POWERGRID<br>PGCIL',
+      orgSize:'clamp(38px,6.4vw,88px)',
+      spec:['Grade A','Up to 765 kV'],
+      desc:'Approved vendor for supply of radiators for power transformers up to 765 kV class.',
+      geo:'grid'
+    },
+    rdso: {
+      eyebrow:'02 / 04 — Railways · Traction',
+      org:'RDSO<br>Indian Railways',
+      orgSize:'clamp(38px,6.4vw,88px)',
+      spec:['Traction Transformers'],
+      desc:'Approved for supply of radiators for traction transformers.',
+      geo:'rail'
+    }
+  };
+
+  function renderCentered(key){
+    var d = centeredContent[key];
+    if(!d) return;
+    cStage.innerHTML =
+      '<div class="eyebrow jp-c-eyebrow">' + d.eyebrow + '</div>' +
+      '<h2 class="jp-c-org" style="font-size:' + d.orgSize + ';">' + d.org + '</h2>' +
+      (d.spec.length ? '<div class="jp-c-spec">' + d.spec.map(function(s){return '<span>'+s+'</span>';}).join('') + '</div>' : '') +
+      '<p class="jp-c-desc">' + d.desc + '</p>';
+    setGeo(geoSlot, d.geo);
+  }
+
+  var lastCenteredKey = null;
+  var clamp01 = function(v){ return Math.max(0, Math.min(1, v)); };
+  var lerp = function(a,b,t){ return a + (b-a)*t; };
+
+  ScrollTrigger.create({
+    trigger:'#jp-track',
+    start:'top top',
+    end:'bottom bottom',
+    scrub:0.6,
+    onUpdate:function(self){
+      var p = self.progress * N;
+      var idx = Math.min(N-1, Math.floor(p));
+      var local = p - idx;
+
+      chapNum.textContent = String(idx+1).padStart(2,'0');
+      chapName.textContent = CHAPTERS[idx].name;
+      dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+
+      var centeredOpacity = 0, splitOpacity = 0, morphOpacity = 0;
+      var morphStyle = null;
+
+      if(idx <= 1){
+        // idx 0 = intro, idx 1 = powergrid (each with its own fade window)
+        var key = idx===0 ? 'intro' : 'powergrid';
+        if(lastCenteredKey !== key){ renderCentered(key); lastCenteredKey = key; }
+        var fadeIn = clamp01(local*3);
+        var fadeOut = clamp01(1-(local-0.78)*4.5);
+        centeredOpacity = Math.min(fadeIn, fadeOut);
+        geoSlot.style.opacity = centeredOpacity * (idx===0 ? 0.35 : 0.6);
+      } else if(idx === 2){
+        // rdso — fades out earlier to lead into the bridge
+        if(lastCenteredKey !== 'rdso'){ renderCentered('rdso'); lastCenteredKey = 'rdso'; }
+        var fadeIn2 = clamp01(local*3);
+        var fadeOut2 = clamp01(1-(local-0.55)*3.2);
+        centeredOpacity = Math.min(fadeIn2, fadeOut2);
+        geoSlot.style.opacity = centeredOpacity * 0.6;
+      } else {
+        geoSlot.style.opacity = 0;
+      }
+      cStage.style.opacity = idx<=2 ? centeredOpacity : 0;
+      cStage.style.transform = 'translateY(' + (14*(1-(idx<=2?centeredOpacity:0))) + 'px)';
+
+      if(idx === 3){
+        // bridge: geometry collapses, doc outline emerges, split fades in
+        var t = clamp01((local-0.1)/0.8);
+        var w = lerp(8, 320, t);
+        var h = lerp(8, 400, t);
+        var leftPct = lerp(50, 70, t);
+        morphOpacity = clamp01(local*4) * (1-clamp01((local-0.9)*8));
+        morph.style.width = w + 'px';
+        morph.style.height = h + 'px';
+        morph.style.left = leftPct + '%';
+        morph.style.top = '50%';
+        morph.style.transform = 'translate(-50%,-50%)';
+        morph.style.opacity = morphOpacity;
+
+        splitOpacity = clamp01((local-0.5)*2.4);
+      } else if(idx > 3){
+        splitOpacity = 1;
+        morphOpacity = 0;
+      } else {
+        splitOpacity = 0;
+        morphOpacity = 0;
+      }
+      morph.style.opacity = idx===3 ? morphOpacity : 0;
+      split.style.opacity = splitOpacity;
+      split.style.pointerEvents = splitOpacity > 0.5 ? 'auto' : 'none';
+
+      // proof docs
+      var ntpcState = { op:0, x:40, scale:0.88, blur:6 };
+      var pstclState = { op:0, x:40, scale:0.88, blur:6 };
+
+      if(idx === 4){
+        var fi = clamp01(local*3);
+        ntpcState = { op:fi, x:(1-fi)*40, scale:0.88+fi*0.12, blur:(1-fi)*6 };
+        pstclState = { op:0, x:60, scale:0.85, blur:6 };
+      } else if(idx === 5){
+        var recede = clamp01(local*2.2);
+        ntpcState = { op:lerp(1,0.22,recede), x:lerp(0,-60,recede), scale:lerp(1,0.85,recede), blur:lerp(0,4,recede) };
+        var fi2 = clamp01(local*2.8);
+        pstclState = { op:fi2, x:(1-fi2)*40, scale:0.88+fi2*0.12, blur:(1-fi2)*6 };
+      } else if(idx === 6){
+        var settle = clamp01(local*2);
+        ntpcState = { op:lerp(0.22,0.1,settle), x:-60, scale:0.85, blur:4 };
+        pstclState = { op:1, x:0, scale:1, blur:0 };
+      } else if(idx > 6){
+        ntpcState = { op:0.1, x:-60, scale:0.85, blur:4 };
+        pstclState = { op:1, x:0, scale:1, blur:0 };
+      }
+
+      docNtpc.style.opacity = ntpcState.op;
+      docNtpc.style.transform = 'translate(-50%,-50%) translateX(' + ntpcState.x + 'px) scale(' + ntpcState.scale + ')';
+      docNtpc.style.filter = 'blur(' + ntpcState.blur + 'px)';
+      docNtpc.style.zIndex = idx===5 || idx===6 ? 1 : 2;
+
+      docPstcl.style.opacity = pstclState.op;
+      docPstcl.style.transform = 'translate(-50%,-50%) translateX(' + pstclState.x + 'px) scale(' + pstclState.scale + ')';
+      docPstcl.style.filter = 'blur(' + pstclState.blur + 'px)';
+      docPstcl.style.zIndex = 3;
+
+      // index highlighting
+      var activeIdxItem = -1;
+      var completeUpTo = -1;
+      if(idx===1) activeIdxItem = 0;
+      else if(idx===2) activeIdxItem = 1;
+      else if(idx===4) activeIdxItem = 2;
+      else if(idx===5) activeIdxItem = 3;
+      else if(idx>=6){ activeIdxItem = 3; completeUpTo = 2; }
+      if(idx>4) completeUpTo = Math.max(completeUpTo, 1);
+      if(idx>5) completeUpTo = Math.max(completeUpTo, 2);
+      if(idx>2) completeUpTo = Math.max(completeUpTo, idx>3 ? 1 : 0);
+
+      indexItems.forEach(function(item,i){
+        item.classList.toggle('active', i===activeIdxItem);
+        item.classList.toggle('complete', i<=completeUpTo && i!==activeIdxItem);
+      });
+
+      // closing statement
+      if(idx===6){
+        closingEl.style.opacity = clamp01((local-0.25)/0.55);
+      } else if(idx>6){
+        closingEl.style.opacity = 1;
+      } else {
+        closingEl.style.opacity = 0;
+      }
+    }
+  });
+
+  renderCentered('intro');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<title>Ready For Your Next Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ivory:#FCFBF9;
+    --lavender-50:#F3F1F8;
+    --lavender-100:#EDE9F5;
+    --navy:#241F2E;
+    --navy-2:#332B47;
+    --violet-deep:#4A2E82;
+    --violet:#6A45C0;
+    --violet-soft:#9B91E8;
+    --muted:#6B6577;
+    --muted-2:#9C95A6;
+    --line-violet:rgba(74,46,130,.13);
+    --panel:#FFFFFF;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  body{
+    background:var(--ivory);
+    color:var(--navy);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:1560px;margin:0 auto;padding:3.5rem 0 5rem;}
+
+  /* ============ HERO / MAIN CTA ============ */
+  .cta-hero{
+    position:relative;
+    overflow:hidden;
+    padding:6.5rem 4rem 7rem;
+    background:linear-gradient(165deg,var(--ivory) 0%,#F7F4EF 42%,var(--lavender-50) 100%);
+    border-radius:28px;
+  }
+
+  /* world-dot backdrop, masked to a loose world silhouette, extremely faint */
+  .world-dots{
+    position:absolute; inset:8% 6% auto 6%; height:56%;
+    background-image:radial-gradient(circle, var(--violet) 1.4px, transparent 1.6px);
+    background-size:15px 15px;
+    -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500"><path d="M55,70 C40,110 45,150 75,175 C60,205 90,225 130,215 C110,250 140,270 165,255 C150,190 175,150 210,140 C240,130 235,90 205,75 C175,55 100,45 55,70 Z M160,270 C140,310 150,360 175,395 C165,420 185,440 205,420 C230,405 250,370 245,335 C260,300 250,270 220,260 C195,250 175,255 160,270 Z M470,75 C450,95 460,120 490,125 C515,130 535,110 525,90 C515,70 490,60 470,75 Z M470,150 C440,180 435,230 455,270 C445,310 465,350 495,375 C520,395 555,385 560,355 C580,330 570,295 545,280 C560,250 550,215 525,200 C540,175 530,150 505,145 C490,140 480,140 470,150 Z M600,60 C570,90 575,140 610,170 C600,200 620,230 655,225 C700,220 745,200 780,170 C815,145 810,105 775,85 C735,60 685,45 640,50 C625,52 610,55 600,60 Z M650,255 C635,275 645,300 670,300 C695,300 715,280 705,260 C695,242 665,238 650,255 Z M735,300 C710,330 715,375 745,400 C775,420 815,410 825,380 C840,350 825,315 795,305 C775,298 750,285 735,300 Z"/></svg>');
+    mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500"><path d="M55,70 C40,110 45,150 75,175 C60,205 90,225 130,215 C110,250 140,270 165,255 C150,190 175,150 210,140 C240,130 235,90 205,75 C175,55 100,45 55,70 Z M160,270 C140,310 150,360 175,395 C165,420 185,440 205,420 C230,405 250,370 245,335 C260,300 250,270 220,260 C195,250 175,255 160,270 Z M470,75 C450,95 460,120 490,125 C515,130 535,110 525,90 C515,70 490,60 470,75 Z M470,150 C440,180 435,230 455,270 C445,310 465,350 495,375 C520,395 555,385 560,355 C580,330 570,295 545,280 C560,250 550,215 525,200 C540,175 530,150 505,145 C490,140 480,140 470,150 Z M600,60 C570,90 575,140 610,170 C600,200 620,230 655,225 C700,220 745,200 780,170 C815,145 810,105 775,85 C735,60 685,45 640,50 C625,52 610,55 600,60 Z M650,255 C635,275 645,300 670,300 C695,300 715,280 705,260 C695,242 665,238 650,255 Z M735,300 C710,330 715,375 745,400 C775,420 815,410 825,380 C840,350 825,315 795,305 C775,298 750,285 735,300 Z"/></svg>');
+    -webkit-mask-size:contain; mask-size:contain;
+    -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+    -webkit-mask-position:center; mask-position:center;
+    opacity:.55;
+    left:50%; transform:translateX(-50%);
+    width:min(1180px,88%);
+    pointer-events:none;
+  }
+
+  /* thin technical sweep line near the bottom of the hero */
+  .tech-sweep{position:absolute; left:0; right:0; bottom:9.5%; height:1px; pointer-events:none;}
+  .tech-sweep svg{width:100%; height:100%; display:block; overflow:visible;}
+
+  /* large soft connecting arcs */
+  .arc-field{position:absolute; inset:0; pointer-events:none;}
+  .arc-field svg{width:100%; height:100%;}
+
+  /* side industrial illustrations, cropped at the section edge */
+  .side-art{position:absolute; top:50%; transform:translateY(-50%); width:340px; opacity:.9; pointer-events:none;}
+  .side-art svg{width:100%; height:auto; display:block;}
+  .side-art--left{left:-92px;}
+  .side-art--right{right:-104px;}
+
+  .cta-content{position:relative; z-index:2; max-width:760px; margin:0 auto; text-align:center;}
+  .eyebrow{
+    display:inline-block; font-size:.74rem; font-weight:600; letter-spacing:.28em;
+    text-transform:uppercase; color:var(--violet); margin-bottom:1.6rem;
+  }
+  .cta-headline{
+    font-family:'Poppins',sans-serif; font-weight:300; letter-spacing:-.02em;
+    font-size:clamp(2.8rem,5vw,4.6rem); line-height:1.08; margin:0 0 1.7rem;
+    text-wrap:balance;
+  }
+  .cta-headline .line1{display:block; color:var(--navy);}
+  .cta-headline .line2{display:block; color:var(--violet); font-weight:400;}
+  .cta-sub{
+    font-size:1.08rem; line-height:1.65; color:var(--muted); max-width:560px;
+    margin:0 auto 2.6rem;
+  }
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:.6rem;
+    background:var(--violet-deep); color:#fff; text-decoration:none;
+    font-size:.98rem; font-weight:500; letter-spacing:.01em;
+    padding:1.05rem 2.3rem; border-radius:999px;
+    box-shadow:0 18px 34px -14px rgba(74,46,130,.45);
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .cta-btn:hover{background:var(--violet); transform:translateY(-2px); box-shadow:0 22px 40px -14px rgba(74,46,130,.55);}
+  .cta-btn:focus-visible{outline:2px solid var(--violet-soft); outline-offset:3px;}
+  .cta-btn .arrow{transition:transform .2s ease;}
+  .cta-btn:hover .arrow{transform:translateX(3px);}
+
+  /* ============ TRUST STRIP ============ */
+  .trust-wrap{margin:-3.4rem 3rem 0; position:relative; z-index:3;}
+  .trust-strip{
+    background:var(--panel);
+    border-radius:22px;
+    box-shadow:0 30px 60px -32px rgba(36,31,46,.22), 0 2px 0 rgba(36,31,46,.02);
+    display:grid; grid-template-columns:repeat(4,1fr);
+    padding:2.6rem 1rem;
+  }
+  .trust-col{
+    padding:.4rem 2.1rem; position:relative;
+    display:flex; flex-direction:column; align-items:flex-start; gap:.9rem;
+  }
+  .trust-col + .trust-col::before{
+    content:''; position:absolute; left:0; top:.4rem; bottom:.4rem; width:1px;
+    background:var(--line-violet);
+  }
+  .trust-badge{
+    width:46px; height:46px; border-radius:50%; background:var(--lavender-100);
+    display:flex; align-items:center; justify-content:center; color:var(--violet-deep);
+    flex-shrink:0;
+  }
+  .trust-badge svg{width:21px; height:21px;}
+  .trust-col h3{
+    font-family:'Poppins',sans-serif; font-weight:500; font-size:1.06rem; color:var(--navy);
+  }
+  .trust-col p{font-size:.9rem; line-height:1.55; color:var(--muted);}
+
+  /* ============ CONTACT BAR ============ */
+  .contact-wrap{margin:2.4rem 3rem 0;}
+  .contact-bar{
+    position:relative; overflow:hidden;
+    background:linear-gradient(120deg,var(--navy) 0%,var(--navy-2) 100%);
+    border-radius:22px;
+    padding:3.1rem 3.6rem;
+    display:grid; grid-template-columns:1.35fr 1px 1fr 1px 1fr;
+    align-items:center; gap:2.6rem;
+  }
+  .cb-divider{width:1px; height:100%; background:rgba(255,255,255,.12); align-self:stretch;}
+  .cb-left h3{
+    font-family:'Poppins',sans-serif; font-weight:400; font-size:1.5rem; color:#fff;
+    line-height:1.3; margin-bottom:.55rem; max-width:360px;
+  }
+  .cb-left p{font-size:.92rem; color:rgba(255,255,255,.58); max-width:340px;}
+  .cb-label{
+    display:block; font-size:.68rem; font-weight:600; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--violet-soft); margin-bottom:.7rem;
+  }
+  .cb-mid a, .cb-right a{
+    font-family:'Poppins',sans-serif; font-size:1.22rem; font-weight:400; color:#fff;
+    text-decoration:none; letter-spacing:-.01em;
+  }
+  .cb-mid a:hover, .cb-right a:hover{color:var(--violet-soft);}
+  .globe-dots{
+    position:absolute; right:-70px; top:50%; transform:translateY(-50%);
+    width:260px; height:260px; opacity:.16; pointer-events:none;
+  }
+
+  @media(max-width:1180px){
+    .side-art{display:none;}
+    .trust-wrap, .contact-wrap{margin-left:1.4rem; margin-right:1.4rem;}
+  }
+  @media(max-width:860px){
+    .cta-hero{padding:4.5rem 1.6rem 5.5rem; border-radius:20px;}
+    .trust-strip{grid-template-columns:1fr 1fr; row-gap:2.2rem;}
+    .trust-col + .trust-col::before{display:none;}
+    .trust-col:nth-child(3)::before{display:none;}
+    .contact-bar{grid-template-columns:1fr; text-align:left;}
+    .cb-divider{display:none;}
+    .contact-wrap, .trust-wrap{margin-left:1rem; margin-right:1rem;}
+  }
+</style>
+
+<div class="page">
+
+  <section class="cta-hero">
+    <div class="world-dots" aria-hidden="true"></div>
+
+    <div class="arc-field" aria-hidden="true">
+      <svg viewBox="0 0 1560 760" preserveAspectRatio="none">
+        <path d="M -40,430 C 260,230 520,560 780,380 C 1040,200 1300,540 1600,340"
+              fill="none" stroke="var(--violet-soft)" stroke-width="1.1" opacity=".35"/>
+        <path d="M -40,300 C 300,120 480,420 780,300 C 1080,180 1260,420 1600,220"
+              fill="none" stroke="var(--violet)" stroke-width="1" opacity=".2"/>
+      </svg>
+    </div>
+
+    <div class="tech-sweep" aria-hidden="true">
+      <svg viewBox="0 0 1560 2" preserveAspectRatio="none">
+        <line x1="0" y1="1" x2="1560" y2="1" stroke="var(--violet)" stroke-width="1" opacity=".3"/>
+        <circle cx="230" cy="1" r="2.5" fill="var(--violet)" opacity=".5"/>
+        <circle cx="780" cy="1" r="2.5" fill="var(--violet)" opacity=".5"/>
+        <circle cx="1330" cy="1" r="2.5" fill="var(--violet)" opacity=".5"/>
+      </svg>
+    </div>
+
+    <!-- LEFT — industrial power transformer, radiator bank, line-art monochrome -->
+    <div class="side-art side-art--left" aria-hidden="true">
+      <svg viewBox="0 0 340 460" fill="none">
+        <defs>
+          <linearGradient id="tFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#EDE9F5"/>
+            <stop offset="1" stop-color="#E3DEF2"/>
+          </linearGradient>
+        </defs>
+        <!-- bushings -->
+        <g stroke="#7A6FAE" stroke-width="1.4">
+          <rect x="150" y="30" width="14" height="70" rx="6" fill="url(#tFill)"/>
+          <g fill="none">
+            <line x1="150" y1="42" x2="164" y2="42"/><line x1="150" y1="52" x2="164" y2="52"/>
+            <line x1="150" y1="62" x2="164" y2="62"/><line x1="150" y1="72" x2="164" y2="72"/>
+            <line x1="150" y1="82" x2="164" y2="82"/>
+          </g>
+          <rect x="188" y="46" width="12" height="54" rx="6" fill="url(#tFill)"/>
+          <g fill="none"><line x1="188" y1="56" x2="200" y2="56"/><line x1="188" y1="66" x2="200" y2="66"/><line x1="188" y1="76" x2="200" y2="76"/><line x1="188" y1="86" x2="200" y2="86"/></g>
+        </g>
+        <!-- conservator tank -->
+        <rect x="70" y="58" width="70" height="30" rx="15" fill="url(#tFill)" stroke="#7A6FAE" stroke-width="1.4"/>
+        <!-- main tank -->
+        <rect x="60" y="96" width="180" height="140" rx="10" fill="url(#tFill)" stroke="#5C5290" stroke-width="1.6"/>
+        <g stroke="#9B91E8" stroke-width="1" opacity=".7">
+          <line x1="78" y1="112" x2="222" y2="112"/>
+          <line x1="78" y1="128" x2="222" y2="128"/>
+        </g>
+        <circle cx="212" cy="200" r="16" fill="none" stroke="#7A6FAE" stroke-width="1.4"/>
+        <text x="212" y="205" text-anchor="middle" font-family="Poppins" font-size="13" fill="#7A6FAE">T</text>
+        <!-- radiator fin bank -->
+        <g stroke="#5C5290" stroke-width="1.3">
+          <rect x="-40" y="104" width="106" height="124" rx="8" fill="url(#tFill)"/>
+          <line x1="-24" y1="104" x2="-24" y2="228"/>
+          <line x1="-6" y1="104" x2="-6" y2="228"/>
+          <line x1="12" y1="104" x2="12" y2="228"/>
+          <line x1="30" y1="104" x2="30" y2="228"/>
+          <line x1="48" y1="104" x2="48" y2="228"/>
+        </g>
+        <!-- radiator header pipes -->
+        <rect x="-42" y="96" width="110" height="8" rx="4" fill="#C9C0E8"/>
+        <rect x="-42" y="228" width="110" height="8" rx="4" fill="#C9C0E8"/>
+        <!-- base / plinth -->
+        <rect x="30" y="236" width="220" height="14" rx="3" fill="#DAD3EE"/>
+        <g stroke="#9B91E8" stroke-width="1.2">
+          <line x1="70" y1="250" x2="70" y2="266"/>
+          <line x1="220" y1="250" x2="220" y2="266"/>
+        </g>
+        <line x1="0" y1="266" x2="340" y2="266" stroke="#D7D0EC" stroke-width="1.2"/>
+      </svg>
+    </div>
+
+    <!-- RIGHT — substation / transmission infrastructure, line-art monochrome -->
+    <div class="side-art side-art--right" aria-hidden="true">
+      <svg viewBox="0 0 340 460" fill="none">
+        <g stroke="#7A6FAE" stroke-width="1.3" opacity=".9">
+          <!-- lattice tower -->
+          <path d="M170,40 L120,270 M170,40 L220,270 M140,150 L200,150 M130,200 L210,200 M120,270 L220,270"/>
+          <path d="M170,40 L150,90 M170,40 L190,90 M150,90 L190,90"/>
+          <line x1="90" y1="70" x2="250" y2="70"/>
+          <line x1="90" y1="70" x2="90" y2="82"/>
+          <line x1="250" y1="70" x2="250" y2="82"/>
+        </g>
+        <!-- insulator strings -->
+        <g stroke="#5C5290" stroke-width="1.2">
+          <line x1="90" y1="82" x2="90" y2="118"/>
+          <line x1="250" y1="82" x2="250" y2="118"/>
+          <line x1="170" y1="40" x2="170" y2="70"/>
+        </g>
+        <g fill="#DAD3EE" stroke="#7A6FAE" stroke-width="1">
+          <circle cx="90" cy="90" r="4.5"/><circle cx="90" cy="100" r="4.5"/><circle cx="90" cy="110" r="4.5"/>
+          <circle cx="250" cy="90" r="4.5"/><circle cx="250" cy="100" r="4.5"/><circle cx="250" cy="110" r="4.5"/>
+        </g>
+        <!-- transmission lines sweeping off-canvas -->
+        <path d="M90,118 C 40,140 10,120 -30,150" fill="none" stroke="#9B91E8" stroke-width="1" opacity=".55"/>
+        <path d="M250,118 C 300,145 320,125 360,158" fill="none" stroke="#9B91E8" stroke-width="1" opacity=".55"/>
+        <!-- ground-mounted power transformer -->
+        <rect x="120" y="290" width="150" height="90" rx="8" fill="#EDE9F5" stroke="#5C5290" stroke-width="1.5"/>
+        <g stroke="#9B91E8" stroke-width="1" opacity=".7">
+          <line x1="134" y1="304" x2="256" y2="304"/>
+          <line x1="134" y1="318" x2="256" y2="318"/>
+        </g>
+        <g stroke="#7A6FAE" stroke-width="1.3">
+          <rect x="150" y="262" width="10" height="30" rx="4" fill="#EDE9F5"/>
+          <rect x="180" y="262" width="10" height="30" rx="4" fill="#EDE9F5"/>
+          <rect x="210" y="262" width="10" height="30" rx="4" fill="#EDE9F5"/>
+        </g>
+        <!-- fence line -->
+        <g stroke="#D7D0EC" stroke-width="1.1">
+          <line x1="60" y1="392" x2="310" y2="392"/>
+          <line x1="80" y1="380" x2="80" y2="392"/><line x1="110" y1="380" x2="110" y2="392"/>
+          <line x1="140" y1="380" x2="140" y2="392"/><line x1="280" y1="380" x2="280" y2="392"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="cta-content">
+      <span class="eyebrow">Work With Us</span>
+      <h1 class="cta-headline">
+        <span class="line1">Ready for your</span>
+        <span class="line2">next project?</span>
+      </h1>
+      <p class="cta-sub">Join leading OEMs and utilities worldwide who trust Triveni for radiator performance and on-time reliability.</p>
+      <a href="#" class="cta-btn">Request a Quote <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- ============ TRUST / VALUE STRIP ============ -->
+  <div class="trust-wrap">
+    <div class="trust-strip">
+
+      <div class="trust-col">
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.7 4 6 4 9s-1.4 6.3-4 9c-2.6-2.7-4-6-4-9s1.4-6.3 4-9Z"/>
+          </svg>
+        </div>
+        <h3>Trusted Worldwide</h3>
+        <p>Preferred by OEMs and utilities across the globe.</p>
+      </div>
+
+      <div class="trust-col">
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 15a8 8 0 1 1 16 0"/><path d="M12 15l4.2-5.2"/><circle cx="12" cy="15" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <h3>Performance Assured</h3>
+        <p>Engineered radiators for maximum efficiency and durability.</p>
+      </div>
+
+      <div class="trust-col">
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.4 2"/>
+          </svg>
+        </div>
+        <h3>On-time, Every Time</h3>
+        <p>Reliable delivery and responsiveness you can count on.</p>
+      </div>
+
+      <div class="trust-col">
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7.5" cy="12" r="3.2"/><circle cx="16.5" cy="12" r="3.2"/><path d="M10.3 12h3.4"/>
+          </svg>
+        </div>
+        <h3>Partnership Approach</h3>
+        <p>Collaborative support throughout your project lifecycle.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ CONTACT BAR ============ -->
+  <div class="contact-wrap">
+    <div class="contact-bar">
+      <svg class="globe-dots" viewBox="0 0 260 260" aria-hidden="true">
+        <g fill="#fff">
+          <circle cx="130" cy="130" r="1.6"/>
+        </g>
+        <mask id="gm"><circle cx="130" cy="130" r="115" fill="#fff"/></mask>
+        <g mask="url(#gm)">
+          <g fill="#fff">
+            <!-- generated dot ring lattice suggesting a globe -->
+            <g id="row"></g>
+          </g>
+          <circle cx="130" cy="130" r="115" fill="none" stroke="#fff" stroke-width="1"/>
+          <ellipse cx="130" cy="130" rx="115" ry="46" fill="none" stroke="#fff" stroke-width="1"/>
+          <ellipse cx="130" cy="130" rx="115" ry="80" fill="none" stroke="#fff" stroke-width="1"/>
+          <line x1="15" y1="130" x2="245" y2="130" stroke="#fff" stroke-width="1"/>
+          <ellipse cx="130" cy="130" rx="46" ry="115" fill="none" stroke="#fff" stroke-width="1"/>
+          <ellipse cx="130" cy="130" rx="80" ry="115" fill="none" stroke="#fff" stroke-width="1"/>
+          <line x1="130" y1="15" x2="130" y2="245" stroke="#fff" stroke-width="1"/>
+        </g>
+      </svg>
+
+      <div class="cb-left">
+        <h3>Let&rsquo;s build powerful partnerships.</h3>
+        <p>Our team is ready to understand your needs.</p>
+      </div>
+      <div class="cb-divider"></div>
+      <div class="cb-mid">
+        <span class="cb-label">Email Us</span>
+        <a href="mailto:info@triveniradiators.com">info@triveniradiators.com</a>
+      </div>
+      <div class="cb-divider"></div>
+      <div class="cb-right">
+        <span class="cb-label">Call Us</span>
+        <a href="tel:+911204308000">+91 120 430 8000</a>
+      </div>
+    </div>
+  </div>
+
+</div>

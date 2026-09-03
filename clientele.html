@@ -229,7 +229,7 @@ img { display:block; max-width:100%; }
   padding-top:4.8rem; padding-bottom:4.8rem;
 }
 .sec--reach :is(.reach-label .lbl,.reach-label .num,.reach-h2,.reach-lead,.metric-num,.metric-lbl,
-  .ic-eyebrow,.ic-title,.ic-sub,.ic-body,.ic-list,.ic-cta,.mapback,.explore-prompt,.maplegend,
+  .ic-eyebrow,.ic-title,.ic-sub,.ic-body,.ic-list,.ic-cta,.mapback,.maplegend,
   .wmk-lbl,.tmk-t,.in-mk-lbl,.imk-t) { font-family:'Poppins',sans-serif; }
 
 .reach-grid {
@@ -281,14 +281,30 @@ img { display:block; max-width:100%; }
   transition:transform .4s cubic-bezier(.16,1,.3,1);
 }
 .maplayer[hidden] { display:flex; opacity:0; pointer-events:none; }
-#mapWorldLayer { transform-origin:72% 42%; }
+#mapWorldLayer { transform-origin:72% 48%; }
 #mapWorldLayer[hidden] { transform:scale(2); }
 #mapIndiaLayer { transform:scale(1.08); }
 #mapIndiaLayer[hidden] { transform:scale(.88); }
 
-/* world map */
-.graticule { stroke:#E7E4F0; stroke-width:.7; fill:none; }
+/* world map — clean simplified continents, no grid */
 .wland { fill:url(#triDots); }
+.wland path { stroke:#C7C2DB; stroke-width:.8; stroke-linejoin:round; }
+/* India — the one interactive region (drill-down target), no supply claim */
+.india-region { cursor:pointer; }
+.india-region:focus { outline:none; }
+.wland-india {
+  fill:rgba(112,85,200,.16); stroke:#8981BE; stroke-width:1.3; stroke-linejoin:round;
+  transition:fill .2s, stroke .2s;
+}
+.india-region:hover .wland-india,
+.india-region:focus .wland-india,
+.india-region.is-active .wland-india { fill:rgba(112,85,200,.3); stroke:#5B3FB0; }
+.india-hint { pointer-events:none; }
+.india-hint text { font-size:11px; font-weight:600; fill:#5B3FB0; letter-spacing:.02em; }
+.india-hint .chev { fill:none; stroke:#8981BE; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+@media (prefers-reduced-motion:no-preference){
+  .india-hint .chev { animation:chevBob 1.8s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+}
 .wmk { cursor:pointer; }
 .wmk .hit { fill:transparent; }
 .wmk-lbl {
@@ -334,15 +350,7 @@ img { display:block; max-width:100%; }
   box-shadow:0 10px 26px -14px rgba(32,27,50,.28); padding:.8rem .9rem .85rem;
   transition:top .5s cubic-bezier(.16,1,.3,1), right .5s cubic-bezier(.16,1,.3,1), bottom .5s cubic-bezier(.16,1,.3,1);
 }
-#mapMod[data-view="world"] .infocard { right:18%; top:48%; }
-#mapMod[data-view="world"] .infocard::after {
-  content:''; position:absolute; right:1.8rem; top:-46px; width:1px; height:44px;
-  background:linear-gradient(to top, rgba(112,85,200,.55), transparent);
-}
-#mapMod[data-view="world"] .infocard::before {
-  content:''; position:absolute; right:1.55rem; top:-49px; width:6px; height:6px;
-  border-radius:50%; background:#7055C8; opacity:.55;
-}
+#mapMod[data-view="world"] .infocard { right:4%; top:50%; }
 #mapMod[data-view="india"] .infocard { right:.6rem; bottom:.6rem; top:auto; width:12.75rem; }
 .ic-flag { width:19px; height:12px; border-radius:2px; overflow:hidden; display:flex; flex-direction:column; margin-bottom:.45rem; border:1px solid rgba(32,27,50,.12); }
 .ic-flag i { flex:1; }
@@ -386,26 +394,13 @@ img { display:block; max-width:100%; }
 .mapzoom button:hover { background:#F1EEE6; color:#5B3FB0; }
 .mapstage[data-view="india"] .mapzoom { right:auto; left:.4rem; top:2.9rem; }
 
-/* exploration cue — bottom-left, clear of the India callout */
-.explore-prompt {
-  position:absolute; left:.2rem; bottom:.3rem; z-index:5;
-  display:flex; flex-direction:column; align-items:flex-start; gap:.2rem;
-  background:none; border:none; cursor:pointer;
-  font-size:.58rem; letter-spacing:.1em; font-weight:500;
-  text-transform:uppercase; color:#8a8397; text-align:left; line-height:1.6;
-}
-.explore-prompt .chev { width:14px; height:14px; color:#9B91E8; }
-@media (prefers-reduced-motion:no-preference){ .explore-prompt .chev { animation:chevBob 1.8s ease-in-out infinite; } }
-@keyframes chevBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
-.explore-prompt:hover { color:#201B32; }
-.mapstage[data-view="india"] .explore-prompt { display:none; }
-
 /* legend — beneath the map */
 .maplegend {
   margin-top:.6rem; display:flex; flex-wrap:wrap; gap:.9rem 1.4rem;
   font-size:.6rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:#65708A;
 }
 .legend-world, .legend-india { display:flex; flex-wrap:wrap; gap:.9rem 1.4rem; }
+.maplegend[hidden] { display:none; }
 .maplegend > div > div { display:flex; align-items:center; gap:.45rem; }
 #mapMod .legend-india { display:none; }
 #mapMod[data-view="india"] .legend-world { display:none; }
@@ -675,31 +670,107 @@ img { display:block; max-width:100%; }
 .ecd-more:hover .arw { transform:translateX(3px); }
 
 /* ===================================================
-   CTA  (soft lavender, compact)
+   CTA  —  premium hero + floating trust strip + contact bar
    =================================================== */
-.sec--cta { position:relative; overflow:hidden; text-align:center; padding:6rem 4rem; }
-.cta-lines { position:absolute; inset:0; pointer-events:none; opacity:.5;
-  background-image:
-    linear-gradient(rgba(76,29,149,.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(76,29,149,.06) 1px,transparent 1px);
-  background-size:52px 52px;
-  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%);
-          mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%);
+.sec--cta { position:relative; overflow:hidden; padding:7.5rem 4rem 6rem; }
+
+/* Layer 1 — dotted world-map artwork, full-bleed behind everything */
+.cta-world-dots {
+  position:absolute; inset:0; z-index:0;
+  background-image:url('assets/work with us bg.png');
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  opacity:.55;
+  pointer-events:none;
 }
-.cta-inner { position:relative; z-index:2; max-width:40rem; margin:0 auto; }
-.cta-inner .h2 { color:var(--navy-ink); }
-.cta-sub { font-size:1rem; line-height:1.7; color:var(--muted); margin:1.3rem auto 2.4rem; max-width:32rem; }
+
+/* Layer 2 — the industrial composite, used only at its clean far edges
+   (its own middle third is a corrupted render) with a soft inward fade
+   so the crop line is never visible and it can never reach the headline */
+.cta-industrial-left, .cta-industrial-right {
+  /* width tracks the true gutter outside the centered 38rem cta-inner (gutter = 50vw - 320px,
+     derived from section padding + (content-width - 608px)/2, padding terms cancel out),
+     with 16px of built-in safety margin so the fade always resolves before the text starts */
+  position:absolute; top:0; height:100%; width:clamp(40px,calc(50vw - 320px),320px); z-index:1;
+  background-image:url('assets/images work with us bg.png');
+  background-size:auto 100%;
+  background-repeat:no-repeat;
+  pointer-events:none;
+}
+.cta-industrial-left {
+  left:0; background-position:left center;
+  -webkit-mask-image:linear-gradient(to right, #000 55%, transparent 100%);
+  mask-image:linear-gradient(to right, #000 55%, transparent 100%);
+}
+.cta-industrial-right {
+  right:0; background-position:right center;
+  -webkit-mask-image:linear-gradient(to left, #000 55%, transparent 100%);
+  mask-image:linear-gradient(to left, #000 55%, transparent 100%);
+}
+
+/* one soft arc suggesting global reach, and a thin technical sweep line */
+.cta-arc { position:absolute; inset:0; z-index:1; pointer-events:none; }
+.cta-arc svg { width:100%; height:100%; }
+.cta-sweep { position:absolute; left:5%; right:5%; bottom:10%; height:1px; z-index:1; pointer-events:none; }
+.cta-sweep svg { width:100%; height:100%; display:block; overflow:visible; }
+
+.cta-inner { position:relative; z-index:2; max-width:38rem; margin:0 auto; text-align:center; }
+.cta-eyebrow {
+  font-family:'Poppins',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.28em;
+  text-transform:uppercase; color:var(--violet); margin-bottom:1.3rem;
+}
+.cta-headline {
+  font-family:'Poppins',sans-serif; font-weight:300; letter-spacing:-.02em;
+  font-size:clamp(2.4rem,4.6vw,3.7rem); line-height:1.1; margin-bottom:1.4rem;
+}
+.cta-headline .l1 { display:block; color:var(--navy-ink); }
+.cta-headline .l2 { display:block; color:var(--violet); font-weight:400; }
+.cta-sub { font-family:'Poppins',sans-serif; font-weight:300; font-size:1.02rem; line-height:1.7; color:var(--muted); margin:0 auto 2.3rem; max-width:32rem; }
 .cta-btn {
+  font-family:'Poppins',sans-serif;
   display:inline-flex; align-items:center; gap:.6rem;
-  font-size:.9rem; font-weight:600; letter-spacing:.02em;
-  color:#fff; background:var(--violet);
-  padding:1rem 2.5rem; border-radius:999px;
-  box-shadow:0 14px 40px -12px rgba(106,69,192,.55);
+  font-size:.92rem; font-weight:500; letter-spacing:.02em;
+  color:#fff; background:var(--violet-deep);
+  padding:1rem 2.4rem; border-radius:999px;
+  box-shadow:0 16px 38px -14px rgba(74,46,130,.5);
   transition:background .2s, transform .2s, box-shadow .2s;
 }
-.cta-btn:hover { background:var(--violet-strong); transform:translateY(-2px); box-shadow:0 20px 50px -14px rgba(76,29,149,.6); }
+.cta-btn:hover { background:var(--violet); transform:translateY(-2px); box-shadow:0 20px 46px -14px rgba(74,46,130,.6); }
 .cta-btn span { transition:transform .2s; }
 .cta-btn:hover span { transform:translateX(4px); }
+
+/* floating trust strip */
+.cta-trust-wrap { position:relative; z-index:3; margin:-3rem 4rem 0; }
+.cta-trust {
+  background:#fff; border-radius:20px;
+  box-shadow:0 30px 60px -32px rgba(20,32,74,.22);
+  display:grid; grid-template-columns:repeat(4,1fr);
+  padding:2.4rem .5rem;
+}
+.cta-trust-col { padding:.3rem 1.8rem; position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:.8rem; }
+.cta-trust-col + .cta-trust-col::before { content:''; position:absolute; left:0; top:.3rem; bottom:.3rem; width:1px; background:var(--line-cool); }
+.cta-trust-badge { width:44px; height:44px; border-radius:50%; background:var(--lav-pale); display:flex; align-items:center; justify-content:center; color:var(--violet-deep); flex-shrink:0; }
+.cta-trust-badge svg { width:20px; height:20px; }
+.cta-trust-col h3 { font-family:'Poppins',sans-serif; font-weight:500; font-size:1.02rem; color:var(--navy-ink); }
+.cta-trust-col p { font-family:'Poppins',sans-serif; font-weight:300; font-size:.87rem; line-height:1.55; color:var(--muted); }
+
+/* navy contact bar */
+.cta-contact-wrap { position:relative; z-index:3; margin:2.2rem 4rem 0; }
+.cta-contact-bar {
+  position:relative; overflow:hidden;
+  background:linear-gradient(120deg,var(--navy) 0%,var(--navy-2) 100%);
+  border-radius:20px; padding:2.8rem 3.4rem;
+  display:grid; grid-template-columns:1.35fr 1px 1fr 1px 1fr;
+  align-items:center; gap:2.4rem; text-align:left;
+}
+.cb-div { width:1px; align-self:stretch; background:rgba(255,255,255,.12); }
+.cb-left h3 { font-family:'Poppins',sans-serif; font-weight:400; font-size:1.35rem; color:#fff; line-height:1.35; margin-bottom:.5rem; max-width:22rem; }
+.cb-left p { font-family:'Poppins',sans-serif; font-weight:300; font-size:.88rem; color:rgba(255,255,255,.55); max-width:20rem; }
+.cb-label { display:block; font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--lav-hi); margin-bottom:.6rem; }
+.cb-mid a, .cb-right a { font-family:'Poppins',sans-serif; font-size:1.14rem; font-weight:400; color:#fff; text-decoration:none; letter-spacing:-.005em; }
+.cb-mid a:hover, .cb-right a:hover { color:var(--lav-hi); }
+.cta-globe { position:absolute; right:-64px; top:50%; transform:translateY(-50%); width:230px; height:230px; opacity:.14; pointer-events:none; }
 
 /* ===================================================
    REVEAL
@@ -740,6 +811,8 @@ img { display:block; max-width:100%; }
   .pd-illo { width:24rem; }
   .ecd-wrap { gap:2.8rem; }
   .ecd-tiles { grid-template-columns:repeat(3,1fr); }
+  .cta-trust-wrap, .cta-contact-wrap { margin-left:2rem; margin-right:2rem; }
+  .cta-contact-bar { padding:2.4rem 2.2rem; }
 }
 @media (max-width:960px){
   .mc-grid { grid-template-columns:1fr; gap:2.2rem; }
@@ -764,6 +837,21 @@ img { display:block; max-width:100%; }
   .ch { padding:1.25rem 1.4rem 3.5rem; min-height:60vh; }
   .sec, .sec--cta { padding:4rem 1.4rem; }
   .h2 { font-size:2rem; }
+  .cta-trust-wrap, .cta-contact-wrap { margin-left:1rem; margin-right:1rem; }
+  .cta-trust { grid-template-columns:1fr 1fr; row-gap:2rem; padding:2rem 1.2rem; }
+  .cta-trust-col:nth-child(2n+1)::before { display:none; }
+  .cta-contact-bar { grid-template-columns:1fr; gap:1.6rem; padding:2.2rem 1.6rem; }
+  .cb-div { display:none; }
+  .cta-globe { display:none; }
+  .cta-arc { display:none; }
+  .cta-world-dots { opacity:.4; }
+  .cta-inner { padding:0 2.4rem; }
+  /* below this width cta-inner has no extra margin (gutter = section padding only, ~22px),
+     so the fade is pinned to an absolute px distance rather than a % of box width — it
+     resolves to fully transparent well inside that gutter no matter how wide the box is */
+  .cta-industrial-left, .cta-industrial-right { width:84px; }
+  .cta-industrial-left { -webkit-mask-image:linear-gradient(to right,#000 0,#000 6px,transparent 18px); mask-image:linear-gradient(to right,#000 0,#000 6px,transparent 18px); }
+  .cta-industrial-right { -webkit-mask-image:linear-gradient(to left,#000 0,#000 6px,transparent 18px); mask-image:linear-gradient(to left,#000 0,#000 6px,transparent 18px); }
   .mc-head { display:none; }
   .mc-row { grid-template-columns:1fr; gap:.5rem; padding:1rem .85rem; }
   .mc-since { text-align:left; }
@@ -776,7 +864,6 @@ img { display:block; max-width:100%; }
     box-shadow:none; border-color:rgba(112,85,200,.16);
   }
   .infocard::after { display:none !important; }
-  .explore-prompt { bottom:.4rem; }
   .pd-h2 { font-size:2.15rem; }
   .pd-stat { padding:0 1.3rem; }
   .pd-stat:nth-child(n+3) { padding-top:2.6rem; }
@@ -920,132 +1007,53 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
 
           <!-- WORLD LAYER -->
           <div class="maplayer" id="mapWorldLayer">
-            <svg viewBox="0 38 1000 414" role="img" aria-label="World map showing confirmed Triveni supply and representative locations">
+            <svg viewBox="0 0 1000 400" role="img" aria-label="World map. India is highlighted as an interactive region — activate it to explore Triveni's domestic footprint.">
               <defs>
-                <pattern id="triDots" width="14" height="14" patternUnits="userSpaceOnUse">
-                  <rect width="14" height="14" fill="#DCD9EA"/>
-                  <circle cx="2.4" cy="2.4" r="1.3" fill="#CFCBE2"/>
+                <pattern id="triDots" width="15" height="15" patternUnits="userSpaceOnUse">
+                  <rect width="15" height="15" fill="#DEDBEC"/>
+                  <circle cx="2.6" cy="2.6" r="1.2" fill="#CBC6DF"/>
                 </pattern>
               </defs>
-              <g class="graticule">
-                <line x1="0" y1="125" x2="1000" y2="125"/><line x1="0" y1="245" x2="1000" y2="245"/><line x1="0" y1="365" x2="1000" y2="365"/>
-                <line x1="200" y1="38" x2="200" y2="452"/><line x1="400" y1="38" x2="400" y2="452"/><line x1="600" y1="38" x2="600" y2="452"/><line x1="800" y1="38" x2="800" y2="452"/>
-              </g>
+
+              <!-- Land — geographically simplified silhouettes (not to survey accuracy). -->
               <g class="wland">
-                <path d="M150,110 C170,68 250,58 300,80 C342,96 332,140 310,150 C332,172 300,212 270,216 C260,242 228,248 220,222 C200,232 178,210 185,184 C160,180 138,150 150,110 Z"/>
-                <path d="M270,216 C286,232 300,256 316,262 C322,270 312,278 304,270 C289,256 268,236 264,222 Z"/>
-                <path d="M305,268 C342,264 362,300 352,342 C346,392 320,432 300,432 C284,420 285,380 296,350 C284,320 285,286 305,268 Z"/>
-                <path d="M462,100 C470,94 476,104 471,113 C463,119 456,106 462,100 Z"/>
-                <path d="M470,96 C500,80 542,84 558,100 C562,122 546,136 526,136 C521,152 496,152 490,136 C470,132 458,112 470,96 Z"/>
-                <path d="M492,164 C542,153 592,168 602,200 C612,242 582,302 552,346 C537,362 516,357 513,336 C496,320 486,280 491,244 C479,214 476,180 492,164 Z"/>
-                <path d="M560,88 C642,56 782,66 862,94 C892,110 882,150 852,166 C822,176 802,160 782,170 C762,150 722,176 702,186 C672,180 642,206 622,196 C602,206 576,190 571,164 C551,138 545,104 560,88 Z"/>
-                <path d="M700,184 C721,190 736,212 726,232 C719,248 705,242 702,224 C692,210 690,192 700,184 Z"/>
-                <path d="M782,240 C822,234 862,250 872,266 C856,278 820,272 800,263 C788,258 776,250 782,240 Z"/>
-                <path d="M800,318 C852,308 896,324 896,360 C890,392 850,402 820,392 C800,382 790,340 800,318 Z"/>
-                <path d="M894,148 C905,143 913,160 905,176 C897,184 888,170 894,148 Z"/>
+                <path d="M96,54 C60,52 40,70 50,88 C58,104 84,104 92,120 C98,140 116,158 126,178 C132,196 148,204 150,186 C154,214 178,238 198,250 C214,262 226,252 216,234 C206,220 196,210 202,198 C214,188 236,192 252,186 C254,202 266,204 270,188 C268,174 280,166 296,162 C320,154 342,136 340,114 C338,96 352,84 338,72 C316,60 280,50 240,48 C190,44 140,44 96,54 Z"/>
+                <path d="M386,24 C360,28 352,52 366,70 C380,86 416,86 432,70 C446,54 442,28 416,20 C404,16 396,18 386,24 Z"/>
+                <path d="M300,206 C276,206 262,224 268,244 C272,258 286,266 290,282 C294,304 288,330 292,354 C296,374 310,392 322,384 C332,377 334,356 336,338 C342,314 356,296 362,272 C368,250 366,226 348,214 C332,204 318,204 300,206 Z"/>
+                <path d="M486,64 C468,62 460,80 470,92 C478,104 496,106 502,118 C514,122 522,110 528,118 C538,126 550,120 558,128 C568,118 574,100 566,88 C560,70 566,54 550,50 C532,46 516,58 504,54 C494,51 490,56 486,64 Z"/>
+                <path d="M470,150 C452,148 446,170 454,190 C458,208 470,218 472,238 C474,262 488,280 500,294 C510,314 522,338 540,338 C558,338 568,314 572,292 C580,264 600,244 608,216 C616,198 634,188 632,170 C628,156 606,152 588,150 C560,146 540,142 512,144 C496,145 480,146 470,150 Z"/>
+                <path d="M566,88 C560,70 568,52 590,46 C650,38 732,38 812,44 C888,50 958,48 986,66 C1000,82 984,98 962,102 C932,110 902,102 878,114 C852,128 862,150 846,160 C824,174 802,178 786,192 C774,182 758,182 748,192 C742,178 736,166 728,152 C704,146 668,146 636,148 C616,149 600,150 592,140 C584,126 588,108 580,104 C574,100 568,100 566,88 Z"/>
+                <path d="M600,150 C596,166 604,186 620,196 C636,204 652,196 654,180 C656,166 646,156 632,152 C620,149 608,148 600,150 Z"/>
+                <path d="M838,264 C812,262 804,286 816,306 C826,326 850,340 876,346 C902,352 926,336 928,310 C930,288 916,266 892,258 C872,252 852,258 838,264 Z"/>
+                <path d="M792,206 C806,200 826,206 826,218 C820,230 800,228 792,218 Z"/>
+                <path d="M840,224 C854,220 872,228 868,240 C858,250 838,244 840,224 Z"/>
+                <path d="M812,238 C822,234 834,240 830,250 C822,256 810,250 812,238 Z"/>
               </g>
 
-              <!-- confirmed supply -->
-              <g class="wmk" data-key="usa" tabindex="0" role="button" aria-label="United States — confirmed export">
-                <circle class="hit" cx="228" cy="142" r="22"/>
-                <circle class="wmk-halo" cx="228" cy="142" r="9"/>
-                <circle class="tmk-dot" cx="228" cy="142" r="9"/>
-                <text class="tmk-t" x="228" y="145.5" font-size="10">T</text>
-                <text class="wmk-lbl" x="228" y="126" text-anchor="middle">United States</text>
-              </g>
-              <g class="wmk" data-key="bangladesh" tabindex="0" role="button" aria-label="Bangladesh — confirmed project">
-                <circle class="hit" cx="775" cy="196" r="22"/>
-                <circle class="wmk-halo" cx="775" cy="196" r="9"/>
-                <circle class="tmk-dot" cx="775" cy="196" r="9"/>
-                <text class="tmk-t" x="775" y="199.5" font-size="10">T</text>
-                <text class="wmk-lbl" x="775" y="180" text-anchor="middle">Bangladesh</text>
-              </g>
-
-              <!-- representative presence -->
-              <g class="wmk" data-key="france" tabindex="0" role="button" aria-label="France — representative relationship">
-                <circle class="hit" cx="506" cy="121" r="20"/>
-                <circle class="wmk-halo" cx="506" cy="121" r="7.5"/>
-                <circle class="rep-dot" cx="506" cy="121" r="6.5"/>
-                <text class="wmk-lbl" x="506" y="106" text-anchor="middle">France</text>
-              </g>
-
-              <!-- India — home base, interactive -->
-              <g class="wmk is-primary" data-key="india" tabindex="0" role="button" aria-label="India — explore domestic footprint">
-                <circle class="hit" cx="722" cy="188" r="28"/>
-                <circle class="wmk-halo" cx="722" cy="188" r="11"/>
-                <circle class="tmk-dot" cx="722" cy="188" r="11"/>
-                <text class="tmk-t" x="722" y="192" font-size="12">T</text>
-                <text class="wmk-lbl" x="722" y="169" text-anchor="middle">India</text>
+              <!-- India — the sole interactive region (drill-down). No supply markers yet. -->
+              <g class="india-region" data-region="india" tabindex="0" role="button"
+                 aria-label="Explore India — Triveni's domestic footprint">
+                <path class="wland-india" d="M690,150 C680,148 676,161 681,175 C686,189 694,198 700,210 C706,222 715,234 723,231 C731,227 736,212 740,198 C745,184 757,174 759,162 C761,152 751,146 741,146 C723,144 706,146 690,150 Z"/>
+                <circle class="wland-india" cx="726" cy="242" r="4"/>
+                <g class="india-hint">
+                  <text x="719" y="190" text-anchor="middle">India</text>
+                  <path class="chev" d="M711,198 l8,7 l8,-7"/>
+                </g>
               </g>
             </svg>
           </div>
 
           <!-- INDIA LAYER -->
           <div class="maplayer" id="mapIndiaLayer" hidden>
-            <svg viewBox="10 10 690 650" role="img" aria-label="Map of India showing confirmed Triveni facility, supply, project and customer locations">
+            <svg viewBox="10 10 690 650" role="img" aria-label="Map of India. Location markers are added from verified data.">
               <defs>
-                <pattern id="triDotsIn" width="14" height="14" patternUnits="userSpaceOnUse">
-                  <rect width="14" height="14" fill="#DCD9EA"/>
-                  <circle cx="2.4" cy="2.4" r="1.3" fill="#CFCBE2"/>
+                <pattern id="triDotsIn" width="15" height="15" patternUnits="userSpaceOnUse">
+                  <rect width="15" height="15" fill="#DEDBEC"/>
+                  <circle cx="2.6" cy="2.6" r="1.2" fill="#CBC6DF"/>
                 </pattern>
               </defs>
               <path class="in-outline" d="M 248.0,32.9 L 271.5,58.6 L 269.3,76.4 L 278.0,87.6 L 277.3,98.8 L 261.6,95.9 L 267.7,120.0 L 289.2,133.8 L 319.6,149.1 L 305.7,159.0 L 297.2,179.5 L 318.4,187.8 L 339.1,198.5 L 367.6,210.8 L 397.6,213.6 L 410.2,224.7 L 427.1,226.8 L 453.4,231.9 L 471.6,231.6 L 474.1,222.9 L 471.3,209.0 L 472.9,199.6 L 486.3,195.0 L 488.1,212.2 L 488.6,216.6 L 508.5,224.9 L 522.2,221.5 L 540.7,222.9 L 558.5,222.3 L 560.1,208.8 L 551.2,201.9 L 568.8,199.1 L 588.7,182.9 L 613.9,168.9 L 632.3,174.3 L 647.9,165.1 L 658.1,178.7 L 650.8,187.9 L 674.3,191.2 L 676.0,199.4 L 668.3,203.5 L 670.1,216.9 L 654.5,213.0 L 626.2,228.1 L 626.8,240.6 L 614.8,258.9 L 613.7,269.6 L 603.9,287.6 L 586.8,282.7 L 586.0,305.3 L 581.0,312.7 L 583.3,322.0 L 572.5,327.2 L 561.0,292.5 L 555.0,292.6 L 551.4,306.6 L 539.4,295.2 L 546.2,282.8 L 556.0,281.5 L 566.0,263.0 L 553.4,259.3 L 533.1,259.6 L 512.3,256.6 L 510.4,241.4 L 500.0,240.3 L 482.6,230.9 L 474.9,245.7 L 490.7,257.3 L 477.0,265.4 L 472.2,273.4 L 485.6,279.3 L 481.9,292.4 L 489.5,308.9 L 492.9,326.9 L 489.8,334.9 L 474.9,334.6 L 447.9,339.2 L 449.2,355.6 L 437.5,368.6 L 406.0,383.3 L 381.5,409.0 L 365.1,422.8 L 343.3,437.1 L 343.2,447.2 L 332.3,452.6 L 312.6,460.4 L 302.4,461.6 L 295.9,478.3 L 300.4,506.7 L 301.6,524.9 L 292.3,545.6 L 292.2,582.8 L 280.9,583.9 L 270.9,600.6 L 277.6,607.8 L 257.6,614.0 L 250.3,628.8 L 241.5,635.1 L 220.8,614.7 L 210.7,584.1 L 202.3,562.0 L 194.6,551.7 L 183.0,530.6 L 177.6,503.3 L 173.8,489.6 L 153.9,459.6 L 144.8,417.2 L 138.3,389.2 L 138.3,362.7 L 134.1,342.2 L 102.3,355.3 L 86.9,352.7 L 58.3,326.2 L 68.8,318.3 L 62.3,309.7 L 36.7,291.1 L 51.2,276.5 L 99.4,276.6 L 95.0,257.8 L 82.8,246.7 L 80.3,229.9 L 65.9,220.0 L 90.0,197.1 L 115.4,198.8 L 138.3,175.8 L 152.0,153.6 L 173.3,131.7 L 172.9,116.1 L 191.6,103.4 L 173.9,92.6 L 166.3,77.8 L 158.6,58.7 L 169.3,49.2 L 202.5,54.6 L 226.9,51.3 L 248.0,32.9 Z"/>
-
-              <!-- Triveni facility -->
-              <g class="in-mk is-facility" data-key="naini" tabindex="0" role="button" aria-label="Naini, Prayagraj — Triveni manufacturing facility">
-                <circle class="hit" cx="335.8" cy="253.3" r="24"/>
-                <circle class="in-halo" cx="335.8" cy="253.3" r="13"/>
-                <circle class="in-facility-pulse" cx="335.8" cy="253.3" r="7"/>
-                <circle class="imk-dot" cx="335.8" cy="253.3" r="11"/>
-                <text class="imk-t" x="335.8" y="257.5" font-size="12">T</text>
-                <text class="in-mk-lbl" x="335.8" y="234" text-anchor="middle">Naini, Prayagraj</text>
-              </g>
-
-              <!-- supply / project -->
-              <g class="in-mk is-supply" data-key="bhuj" tabindex="0" role="button" aria-label="Bhuj — supply / project location">
-                <circle class="hit" cx="66" cy="284" r="20"/>
-                <circle class="in-halo" cx="66" cy="284" r="10"/>
-                <circle class="imk-dot" cx="66" cy="284" r="9"/>
-                <text class="imk-t" x="66" y="288" font-size="10">T</text>
-                <text class="in-mk-lbl" x="66" y="267" text-anchor="middle">Bhuj</text>
-              </g>
-              <g class="in-mk is-supply" data-key="khargone" tabindex="0" role="button" aria-label="Khargone — supply / project location">
-                <circle class="hit" cx="210" cy="352" r="20"/>
-                <circle class="in-halo" cx="210" cy="352" r="10"/>
-                <circle class="imk-dot" cx="210" cy="352" r="9"/>
-                <text class="imk-t" x="210" y="356" font-size="10">T</text>
-                <text class="in-mk-lbl" x="210" y="335" text-anchor="middle">Khargone</text>
-              </g>
-              <g class="in-mk is-supply" data-key="punjab" tabindex="0" role="button" aria-label="Punjab — supply / grid">
-                <circle class="hit" cx="205" cy="135" r="20"/>
-                <circle class="in-halo" cx="205" cy="135" r="10"/>
-                <circle class="imk-dot" cx="205" cy="135" r="9"/>
-                <text class="imk-t" x="205" y="139" font-size="10">T</text>
-                <text class="in-mk-lbl" x="205" y="118" text-anchor="middle">Punjab</text>
-              </g>
-
-              <!-- customer / representative -->
-              <g class="in-mk is-rep" data-key="vadodara" tabindex="0" role="button" aria-label="Vadodara — customer location">
-                <circle class="hit" cx="122" cy="300" r="20"/>
-                <circle class="in-halo" cx="122" cy="300" r="10"/>
-                <circle class="imk-dot" cx="122" cy="300" r="9"/>
-                <text class="imk-t" x="122" y="304" font-size="10">T</text>
-                <text class="in-mk-lbl" x="122" y="321" text-anchor="middle">Vadodara</text>
-              </g>
-              <g class="in-mk is-rep" data-key="navi-mumbai" tabindex="0" role="button" aria-label="Navi Mumbai — customer location">
-                <circle class="hit" cx="150" cy="388" r="20"/>
-                <circle class="in-halo" cx="150" cy="388" r="10"/>
-                <circle class="imk-dot" cx="150" cy="388" r="9"/>
-                <text class="imk-t" x="150" y="392" font-size="10">T</text>
-                <text class="in-mk-lbl" x="150" y="409" text-anchor="middle">Navi Mumbai</text>
-              </g>
-              <g class="in-mk is-rep" data-key="mandideep" tabindex="0" role="button" aria-label="Mandideep — customer location">
-                <circle class="hit" cx="240" cy="315" r="20"/>
-                <circle class="in-halo" cx="240" cy="315" r="10"/>
-                <circle class="imk-dot" cx="240" cy="315" r="9"/>
-                <text class="imk-t" x="240" y="319" font-size="10">T</text>
-                <text class="in-mk-lbl" x="240" y="298" text-anchor="middle">Mandideep</text>
-              </g>
+              <!-- markers render here from INDIA_MARKERS (none yet) -->
             </svg>
           </div>
 
@@ -1054,10 +1062,6 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
             <button type="button" id="zoomOut" aria-label="Zoom out">&minus;</button>
           </div>
 
-          <button class="explore-prompt" id="explorePrompt" type="button">
-            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-            Click India to explore<br>our domestic footprint
-          </button>
         </div>
 
         <!-- India callout -->
@@ -1071,8 +1075,8 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
           <button class="ic-cta" id="icCta" type="button" hidden><span id="icCtaLabel">Explore India</span> <span>&rarr;</span></button>
         </aside>
 
-        <!-- legend -->
-        <div class="maplegend" id="mapLegend">
+        <!-- legend — shown only once verified location markers exist -->
+        <div class="maplegend" id="mapLegend" hidden>
           <div class="legend-world">
             <div><span class="lg-dot violet"></span> Triveni supply locations</div>
             <div><span class="lg-dot gold"></span> Sales / representative presence</div>
@@ -1507,14 +1511,111 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
 
 <!-- ===== CTA ===== -->
 <section class="sec--cta" id="cta">
-  <div class="cta-lines"></div>
+  <div class="cta-world-dots" aria-hidden="true"></div>
+  <div class="cta-industrial-left" aria-hidden="true"></div>
+  <div class="cta-industrial-right" aria-hidden="true"></div>
+
+  <div class="cta-arc" aria-hidden="true">
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="none">
+      <path d="M -30,340 C 260,190 480,430 700,300 C 920,170 1080,400 1230,270"
+            fill="none" stroke="var(--lav-hi)" stroke-width="1" opacity=".28"/>
+    </svg>
+  </div>
+
+  <div class="cta-sweep" aria-hidden="true">
+    <svg viewBox="0 0 1200 2" preserveAspectRatio="none">
+      <line x1="0" y1="1" x2="1200" y2="1" stroke="var(--violet)" stroke-width="1" opacity=".26"/>
+      <circle cx="180" cy="1" r="2.4" fill="var(--violet)" opacity=".5"/>
+      <circle cx="600" cy="1" r="2.4" fill="var(--violet)" opacity=".5"/>
+      <circle cx="1020" cy="1" r="2.4" fill="var(--violet)" opacity=".5"/>
+    </svg>
+  </div>
+
   <div class="cta-inner reveal">
-    <div class="kicker plain" style="justify-content:center;color:var(--violet);">Work with us</div>
-    <h2 class="h2">Ready for your<br><em>next project?</em></h2>
+    <div class="cta-eyebrow">Work with us</div>
+    <h2 class="cta-headline">
+      <span class="l1">Ready for your</span>
+      <span class="l2">next project?</span>
+    </h2>
     <p class="cta-sub">Join the leading OEMs and utilities who trust Triveni for radiator performance and on-time reliability.</p>
     <a href="contact.html" class="cta-btn">Request a Quote <span>&rarr;</span></a>
   </div>
 </section>
+
+<div class="cta-trust-wrap reveal">
+  <div class="cta-trust">
+
+    <div class="cta-trust-col">
+      <div class="cta-trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.7 4 6 4 9s-1.4 6.3-4 9c-2.6-2.7-4-6-4-9s1.4-6.3 4-9Z"/>
+        </svg>
+      </div>
+      <h3>Trusted Worldwide</h3>
+      <p>Preferred by OEMs and utilities across the globe.</p>
+    </div>
+
+    <div class="cta-trust-col">
+      <div class="cta-trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 15a8 8 0 1 1 16 0"/><path d="M12 15l4.2-5.2"/><circle cx="12" cy="15" r="1.1" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <h3>Performance Assured</h3>
+      <p>Engineered radiators for maximum efficiency and durability.</p>
+    </div>
+
+    <div class="cta-trust-col">
+      <div class="cta-trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.4 2"/>
+        </svg>
+      </div>
+      <h3>On-time, Every Time</h3>
+      <p>Reliable delivery and responsiveness you can count on.</p>
+    </div>
+
+    <div class="cta-trust-col">
+      <div class="cta-trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="7.5" cy="12" r="3.2"/><circle cx="16.5" cy="12" r="3.2"/><path d="M10.3 12h3.4"/>
+        </svg>
+      </div>
+      <h3>Partnership Approach</h3>
+      <p>Collaborative support throughout your project lifecycle.</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="cta-contact-wrap reveal">
+  <div class="cta-contact-bar">
+    <svg class="cta-globe" viewBox="0 0 230 230" aria-hidden="true">
+      <circle cx="115" cy="115" r="100" fill="none" stroke="#fff" stroke-width="1"/>
+      <ellipse cx="115" cy="115" rx="100" ry="40" fill="none" stroke="#fff" stroke-width="1"/>
+      <ellipse cx="115" cy="115" rx="100" ry="70" fill="none" stroke="#fff" stroke-width="1"/>
+      <line x1="15" y1="115" x2="215" y2="115" stroke="#fff" stroke-width="1"/>
+      <ellipse cx="115" cy="115" rx="40" ry="100" fill="none" stroke="#fff" stroke-width="1"/>
+      <ellipse cx="115" cy="115" rx="70" ry="100" fill="none" stroke="#fff" stroke-width="1"/>
+      <line x1="115" y1="15" x2="115" y2="215" stroke="#fff" stroke-width="1"/>
+    </svg>
+
+    <div class="cb-left">
+      <h3>Let&rsquo;s build powerful partnerships.</h3>
+      <p>Our team is ready to understand your needs.</p>
+    </div>
+    <div class="cb-div"></div>
+    <div class="cb-mid">
+      <span class="cb-label">Email Us</span>
+      <a href="mailto:info@triveniradiators.com">info@triveniradiators.com</a>
+    </div>
+    <div class="cb-div"></div>
+    <div class="cb-right">
+      <span class="cb-label">Call Us</span>
+      <a href="tel:+910000000000">+91 00000 00000</a>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer class="site-footer">
@@ -1661,67 +1762,34 @@ if (reduce) {
 
 /* ===================================================
    GLOBAL REACH — interactive map module
-   All data below is CONFIRMED from Triveni's documents /
-   published record. The export-market count is a
-   placeholder until the client's list is supplied.
+
+   The map ships with NO location markers. To add a
+   VERIFIED export / supply / project / customer
+   location later, push one object into WORLD_MARKERS or
+   INDIA_MARKERS below — it renders on the correct layer
+   and wires itself up automatically. The map structure
+   does not change.
+
+     { key:  'unique-id',
+       name: 'Display Name',
+       x: <number>, y: <number>,   // SVG coords in that
+                                   // layer's own viewBox
+       kind: 'supply' | 'project' | 'customer'
+             | 'facility' | 'rep',
+       eyebrow: '', sub: '', body: '', list: [] }
    =================================================== */
-const WORLD_DEFAULT = {
-  flag: true, eyebrow: '', title: 'India', sub: '20+ states served',
-  body: 'Our primary market and manufacturing base.',
+const WORLD_MARKERS = [];
+const INDIA_MARKERS = [];
+
+/* static callout copy — carries no geographic claim */
+const WORLD_INFO = {
+  flag: true, eyebrow: '', title: 'India', sub: '',
+  body: "Triveni's primary market and manufacturing base.",
   list: [], cta: 'Explore India'
 };
-const WORLD = {
-  usa: {
-    eyebrow: 'Confirmed export', title: 'United States', sub: 'Via Toshiba T&D',
-    body: 'Direct exports for GE USA solar-transformer projects, through Toshiba T&D.',
-    list: []
-  },
-  bangladesh: {
-    eyebrow: 'Confirmed project', title: 'Bangladesh', sub: 'Via Siemens Ltd',
-    body: "Triveni's first major international project — delivered for M/s Siemens Ltd.",
-    list: []
-  },
-  france: {
-    eyebrow: 'Representative relationship', title: 'France', sub: 'MOU',
-    body: 'MOU with a French multinational — the basis on which Unit III was established.',
-    list: []
-  }
-};
-
-const INDIA_DEFAULT = {
-  flag: false, eyebrow: 'India', title: 'Confirmed footprint', sub: '',
-  body: 'Hover or tap a marker for its facility, supply, project or customer detail.',
-  list: []
-};
-const INDIA = {
-  naini: {
-    eyebrow: 'Triveni facility', title: 'Naini, Prayagraj', sub: 'Manufacturing · Uttar Pradesh',
-    body: 'The 6,503 sqm automated facility — pressed-steel radiators up to 765 kV class.', list: []
-  },
-  bhuj: {
-    eyebrow: 'Supply / project', title: 'Bhuj, Gujarat', sub: '765 kV / 500 MVA · PGCIL',
-    body: 'Largest rating order to date — 1,008 radiators for PGCIL transformers, via Siemens Ltd.', list: []
-  },
-  khargone: {
-    eyebrow: 'Supply / project', title: 'Khargone, Madhya Pradesh', sub: 'NTPC · 2×660 MW',
-    body: 'NTPC Khargone Super Thermal Power Project — approved sub-vendor for the generation transformers.', list: []
-  },
-  punjab: {
-    eyebrow: 'Supply / grid', title: 'Punjab', sub: 'PSTCL grid',
-    body: 'Approved vendor to Punjab State Transmission Corporation, 66 kV / 20 MVA to 220 kV / 160 MVA.', list: []
-  },
-  vadodara: {
-    eyebrow: 'Customer location', title: 'Vadodara, Gujarat', sub: 'GE T&D · ABB · TBEA',
-    body: 'HV large-power-transformer factories of three of our OEM customers.', list: []
-  },
-  'navi-mumbai': {
-    eyebrow: 'Customer location', title: 'Navi Mumbai, Maharashtra', sub: 'Siemens Energy',
-    body: 'Siemens Energy power transformer & reactor works — a customer since 2016.', list: []
-  },
-  mandideep: {
-    eyebrow: 'Customer location', title: 'Mandideep, Madhya Pradesh', sub: 'CG Power',
-    body: 'CG Power power-transformer plant near Bhopal — radiators to 420 kV, since 2022.', list: []
-  }
+const INDIA_INFO = {
+  flag: false, eyebrow: '', title: 'India', sub: '',
+  body: "Triveni's domestic footprint.", list: []
 };
 
 const mapMod  = document.getElementById('mapMod');
@@ -1729,7 +1797,7 @@ const stage   = document.getElementById('mapStage');
 const worldL  = document.getElementById('mapWorldLayer');
 const indiaL  = document.getElementById('mapIndiaLayer');
 const backBtn = document.getElementById('mapBack');
-const explorePrompt = document.getElementById('explorePrompt');
+const mapLegend = document.getElementById('mapLegend');
 const IC = {
   flag:    document.getElementById('icFlag'),
   eyebrow: document.getElementById('icEyebrow'),
@@ -1749,49 +1817,88 @@ function paint(d) {
   IC.sub.hidden = !d.sub;
   IC.sub.textContent = d.sub || '';
   IC.body.textContent = d.body || '';
-  IC.list.innerHTML = (d.list || []).map(x => '<div></div>').join('');
+  IC.list.innerHTML = (d.list || []).map(() => '<div></div>').join('');
   (d.list || []).forEach((x, i) => { IC.list.children[i].textContent = x; });
   if (d.cta) { IC.ctaLbl.textContent = d.cta; IC.cta.hidden = false; }
   else { IC.cta.hidden = true; }
 }
-paint(WORLD_DEFAULT);
 
 function setActive(group, el) {
   group.forEach(g => g.classList.remove('is-active'));
   if (el) el.classList.add('is-active');
 }
 
-/* ---- world markers ---- */
-const wmks = [...worldL.querySelectorAll('.wmk')];
-wmks.forEach(mk => {
-  const key = mk.dataset.key;
-  const show = () => {
-    if (key === 'india') { paint(WORLD_DEFAULT); }
-    else { paint(WORLD[key]); }
-    setActive(wmks, mk);
-  };
-  mk.addEventListener('mouseenter', show);
-  mk.addEventListener('focus', show);
-  mk.addEventListener('click', () => { if (key === 'india') enterIndia(); else show(); });
-  mk.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); mk.click(); } });
-});
-worldL.addEventListener('mouseleave', () => {
-  if (stage.dataset.view === 'world') { paint(WORLD_DEFAULT); setActive(wmks, null); }
-});
+/* ---- modular marker layer — built from the arrays above ---- */
+const SVGNS = 'http://www.w3.org/2000/svg';
+function buildMarkers(layerEl, markers, groupClass) {
+  const svg = layerEl.querySelector('svg');
+  const prev = svg.querySelector('.mk-layer');
+  if (prev) prev.remove();
+  if (!markers.length) return [];
+  const isWorld = groupClass === 'wmk';
+  const dotCls  = isWorld ? 'tmk-dot'  : 'imk-dot';
+  const tCls    = isWorld ? 'tmk-t'    : 'imk-t';
+  const haloCls = isWorld ? 'wmk-halo' : 'in-halo';
+  const lblCls  = isWorld ? 'wmk-lbl'  : 'in-mk-lbl';
+  const wrap = document.createElementNS(SVGNS, 'g');
+  wrap.setAttribute('class', 'mk-layer');
+  const out = markers.map(m => {
+    const g = document.createElementNS(SVGNS, 'g');
+    g.setAttribute('class', groupClass + ' is-' + (m.kind || 'supply'));
+    g.setAttribute('tabindex', '0');
+    g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', m.name + (m.eyebrow ? ' — ' + m.eyebrow : ''));
+    g.dataset.key = m.key;
+    g.innerHTML =
+      '<circle class="hit" cx="' + m.x + '" cy="' + m.y + '" r="22"/>' +
+      '<circle class="' + haloCls + '" cx="' + m.x + '" cy="' + m.y + '" r="10"/>' +
+      '<circle class="' + dotCls + '" cx="' + m.x + '" cy="' + m.y + '" r="9"/>' +
+      '<text class="' + tCls + '" x="' + m.x + '" y="' + (m.y + 3.5) + '" font-size="10">T</text>' +
+      '<text class="' + lblCls + '" x="' + m.x + '" y="' + (m.y - 15) + '" text-anchor="middle"></text>';
+    g.querySelector('.' + lblCls).textContent = m.name;
+    wrap.appendChild(g);
+    return { g, m };
+  });
+  svg.appendChild(wrap);
+  return out;
+}
 
-/* ---- india markers ---- */
-const imks = [...indiaL.querySelectorAll('.in-mk')];
-imks.forEach(mk => {
-  const key = mk.dataset.key;
-  const show = () => { paint(INDIA[key]); setActive(imks, mk); };
-  mk.addEventListener('mouseenter', show);
-  mk.addEventListener('focus', show);
-  mk.addEventListener('click', show);
-  mk.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(); } });
+function wire(nodes) {
+  const els = nodes.map(n => n.g);
+  nodes.forEach(({ g, m }) => {
+    const show = () => {
+      paint({ flag: false, eyebrow: m.eyebrow || '', title: m.name, sub: m.sub || '', body: m.body || '', list: m.list || [] });
+      setActive(els, g);
+    };
+    g.addEventListener('mouseenter', show);
+    g.addEventListener('focus', show);
+    g.addEventListener('click', show);
+    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(); } });
+  });
+  return els;
+}
+
+const wmks = wire(buildMarkers(worldL, WORLD_MARKERS, 'wmk'));
+const imks = wire(buildMarkers(indiaL, INDIA_MARKERS, 'in-mk'));
+
+worldL.addEventListener('mouseleave', () => {
+  if (stage.dataset.view === 'world') { paint(WORLD_INFO); setActive(wmks, null); }
 });
 indiaL.addEventListener('mouseleave', () => {
-  if (stage.dataset.view === 'india') { paint(INDIA_DEFAULT); setActive(imks, null); }
+  if (stage.dataset.view === 'india') { paint(INDIA_INFO); setActive(imks, null); }
 });
+
+/* legend appears only once verified markers exist */
+if (mapLegend) mapLegend.hidden = !(WORLD_MARKERS.length || INDIA_MARKERS.length);
+
+/* ---- India region on the world map → drill-down ---- */
+const indiaRegion = worldL.querySelector('.india-region');
+if (indiaRegion) {
+  indiaRegion.addEventListener('click', () => enterIndia());
+  indiaRegion.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enterIndia(); } });
+}
+
+paint(WORLD_INFO);
 
 /* ---- world <-> india transition ---- */
 let mapZoom = 1;
@@ -1805,7 +1912,7 @@ function enterIndia() {
   stage.dataset.view = 'india';
   mapMod.dataset.view = 'india';
   setZoom(1);
-  paint(INDIA_DEFAULT);
+  paint(INDIA_INFO);
   setActive(imks, null);
 }
 function exitIndia() {
@@ -1814,11 +1921,10 @@ function exitIndia() {
   stage.dataset.view = 'world';
   mapMod.dataset.view = 'world';
   setZoom(1);
-  paint(WORLD_DEFAULT);
+  paint(WORLD_INFO);
   setActive(wmks, null);
 }
 backBtn.addEventListener('click', exitIndia);
-explorePrompt.addEventListener('click', enterIndia);
 IC.cta.addEventListener('click', enterIndia);
 
 /* ---- zoom controls ---- */
