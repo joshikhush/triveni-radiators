@@ -795,10 +795,8 @@ img { display:block; max-width:100%; }
 .cb-mid a:hover, .cb-right a:hover { color:var(--lav-hi); }
 
 .cb-globe {
-  position:absolute; right:-34px; top:50%; transform:translateY(-50%);
-  width:120px; height:120px; z-index:0; pointer-events:none; opacity:.5;
-  -webkit-mask-image:radial-gradient(circle at 42% 38%,#000 45%,rgba(0,0,0,.35) 72%,transparent 96%);
-          mask-image:radial-gradient(circle at 42% 38%,#000 45%,rgba(0,0,0,.35) 72%,transparent 96%);
+  position:absolute; right:-66px; top:50%; transform:translateY(-50%);
+  width:176px; height:176px; z-index:0; pointer-events:none; opacity:.68;
 }
 /* below the container's max-width cap the single row can't hold the partnership line without
    wrapping, so stack the three blocks (icon + text kept side by side) */
@@ -1648,15 +1646,7 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
 
 <div class="cta-contact-wrap reveal">
   <div class="cta-contact-bar">
-    <svg class="cb-globe" viewBox="0 0 120 120" aria-hidden="true">
-      <defs>
-        <pattern id="cbGlobeDots" width="7" height="7" patternUnits="userSpaceOnUse">
-          <circle cx="1.7" cy="1.7" r="1.5" fill="#8B8CF0"/>
-        </pattern>
-        <clipPath id="cbGlobeClip"><circle cx="60" cy="60" r="58"/></clipPath>
-      </defs>
-      <rect width="120" height="120" fill="url(#cbGlobeDots)" clip-path="url(#cbGlobeClip)"/>
-    </svg>
+    <img class="cb-globe" src="assets/contact-globe.svg" alt="" aria-hidden="true">
 
     <div class="cb-left">
       <span class="cb-ico" aria-hidden="true">
