@@ -769,22 +769,45 @@ img { display:block; max-width:100%; }
   line-height:1.6; color:#39456A; max-width:15rem;
 }
 
-/* navy contact bar */
-.cta-contact-wrap { position:relative; z-index:3; margin:2.2rem 4rem 0; }
+/* navy contact bar — one compact row: partnership | email | call, dotted globe cropped at right */
+.cta-contact-wrap { position:relative; z-index:3; width:93%; max-width:72rem; margin:1.6rem auto 0; }
 .cta-contact-bar {
   position:relative; overflow:hidden;
   background:linear-gradient(120deg,var(--navy) 0%,var(--navy-2) 100%);
-  border-radius:20px; padding:2.8rem 3.4rem;
-  display:grid; grid-template-columns:1.35fr 1px 1fr 1px 1fr;
-  align-items:center; gap:2.4rem; text-align:left;
+  border-radius:18px; padding:1.45rem 2.4rem;
+  display:grid; grid-template-columns:minmax(0,1.5fr) 1px minmax(0,1fr) 1px minmax(0,1fr);
+  align-items:center; column-gap:1.5rem; text-align:left;
 }
-.cb-div { width:1px; align-self:stretch; background:rgba(255,255,255,.12); }
-.cb-left h3 { font-family:'Poppins',sans-serif; font-weight:400; font-size:1.35rem; color:#fff; line-height:1.35; margin-bottom:.5rem; max-width:22rem; }
-.cb-left p { font-family:'Poppins',sans-serif; font-weight:300; font-size:.88rem; color:rgba(255,255,255,.55); max-width:20rem; }
-.cb-label { display:block; font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--lav-hi); margin-bottom:.6rem; }
-.cb-mid a, .cb-right a { font-family:'Poppins',sans-serif; font-size:1.14rem; font-weight:400; color:#fff; text-decoration:none; letter-spacing:-.005em; }
+.cta-contact-bar > * { position:relative; z-index:1; }
+.cb-div { width:1px; height:58px; background:rgba(255,255,255,.14); justify-self:center; }
+
+.cb-left, .cb-mid, .cb-right { display:flex; align-items:center; gap:.85rem; min-width:0; }
+.cb-ico { border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.cb-ico svg { width:20px; height:20px; }
+.cb-left .cb-ico { width:53px; height:53px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); }
+.cb-mid .cb-ico, .cb-right .cb-ico { width:46px; height:46px; background:var(--violet); }
+
+.cb-txt { display:flex; flex-direction:column; min-width:0; }
+.cb-left h3 { font-family:'Poppins',sans-serif; font-weight:600; font-size:.97rem; color:#fff; line-height:1.35; white-space:nowrap; }
+.cb-left p { font-family:'Poppins',sans-serif; font-weight:300; font-size:.84rem; color:rgba(226,224,245,.62); line-height:1.4; }
+.cb-label { display:block; font-family:'Poppins',sans-serif; font-size:.64rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--lav-hi); margin-bottom:.2rem; }
+.cb-mid a, .cb-right a { display:block; font-family:'Poppins',sans-serif; font-size:.98rem; font-weight:400; color:#fff; text-decoration:none; letter-spacing:-.005em; white-space:nowrap; }
 .cb-mid a:hover, .cb-right a:hover { color:var(--lav-hi); }
-.cta-globe { position:absolute; right:-64px; top:50%; transform:translateY(-50%); width:230px; height:230px; opacity:.14; pointer-events:none; }
+
+.cb-globe {
+  position:absolute; right:-34px; top:50%; transform:translateY(-50%);
+  width:120px; height:120px; z-index:0; pointer-events:none; opacity:.5;
+  -webkit-mask-image:radial-gradient(circle at 42% 38%,#000 45%,rgba(0,0,0,.35) 72%,transparent 96%);
+          mask-image:radial-gradient(circle at 42% 38%,#000 45%,rgba(0,0,0,.35) 72%,transparent 96%);
+}
+/* below the container's max-width cap the single row can't hold the partnership line without
+   wrapping, so stack the three blocks (icon + text kept side by side) */
+@media (max-width:1240px){
+  .cta-contact-bar { grid-template-columns:1fr; row-gap:1.3rem; padding:1.7rem 1.9rem; }
+  .cb-div { display:none; }
+  .cb-globe { display:none; }
+  .cb-left h3 { white-space:normal; }
+}
 
 /* ===================================================
    REVEAL
@@ -825,10 +848,9 @@ img { display:block; max-width:100%; }
   .pd-illo { width:24rem; }
   .ecd-wrap { gap:2.8rem; }
   .ecd-tiles { grid-template-columns:repeat(3,1fr); }
-  .cta-contact-wrap { margin-left:2rem; margin-right:2rem; }
+  .cta-contact-wrap { width:calc(100% - 4rem); }
   .cta-trust-wrap { width:calc(100% - 4rem); }
   .cta-trust-col { padding:.15rem 1rem; }
-  .cta-contact-bar { padding:2.4rem 2.2rem; }
 }
 @media (max-width:960px){
   .mc-grid { grid-template-columns:1fr; gap:2.2rem; }
@@ -853,16 +875,16 @@ img { display:block; max-width:100%; }
   .ch { padding:1.25rem 1.4rem 3.5rem; min-height:60vh; }
   .sec, .sec--cta { padding:4rem 1.4rem; }
   .h2 { font-size:2rem; }
-  .cta-contact-wrap { margin-left:1rem; margin-right:1rem; }
+  .cta-contact-wrap { width:calc(100% - 2rem); }
   .cta-trust-wrap { width:calc(100% - 2rem); }
   /* only now, when four columns genuinely no longer fit, fold to a 2x2 grid —
      same icon -> heading -> description hierarchy, no card treatment */
   .cta-trust { grid-template-columns:1fr 1fr; row-gap:1.8rem; padding:1.8rem 1rem; }
   .cta-trust-col { padding:.15rem 1.2rem; }
   .cta-trust-col:nth-child(3)::before { display:none; }
-  .cta-contact-bar { grid-template-columns:1fr; gap:1.6rem; padding:2.2rem 1.6rem; }
+  .cta-contact-bar { grid-template-columns:1fr; row-gap:1.4rem; padding:1.8rem 1.6rem; }
   .cb-div { display:none; }
-  .cta-globe { display:none; }
+  .cb-globe { display:none; }
   .cta-arc { display:none; }
   .cta-world-dots { opacity:.4; }
   .cta-inner { padding:0 2.4rem; }
@@ -1626,29 +1648,54 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
 
 <div class="cta-contact-wrap reveal">
   <div class="cta-contact-bar">
-    <svg class="cta-globe" viewBox="0 0 230 230" aria-hidden="true">
-      <circle cx="115" cy="115" r="100" fill="none" stroke="#fff" stroke-width="1"/>
-      <ellipse cx="115" cy="115" rx="100" ry="40" fill="none" stroke="#fff" stroke-width="1"/>
-      <ellipse cx="115" cy="115" rx="100" ry="70" fill="none" stroke="#fff" stroke-width="1"/>
-      <line x1="15" y1="115" x2="215" y2="115" stroke="#fff" stroke-width="1"/>
-      <ellipse cx="115" cy="115" rx="40" ry="100" fill="none" stroke="#fff" stroke-width="1"/>
-      <ellipse cx="115" cy="115" rx="70" ry="100" fill="none" stroke="#fff" stroke-width="1"/>
-      <line x1="115" y1="15" x2="115" y2="215" stroke="#fff" stroke-width="1"/>
+    <svg class="cb-globe" viewBox="0 0 120 120" aria-hidden="true">
+      <defs>
+        <pattern id="cbGlobeDots" width="7" height="7" patternUnits="userSpaceOnUse">
+          <circle cx="1.7" cy="1.7" r="1.5" fill="#8B8CF0"/>
+        </pattern>
+        <clipPath id="cbGlobeClip"><circle cx="60" cy="60" r="58"/></clipPath>
+      </defs>
+      <rect width="120" height="120" fill="url(#cbGlobeDots)" clip-path="url(#cbGlobeClip)"/>
     </svg>
 
     <div class="cb-left">
-      <h3>Let&rsquo;s build powerful partnerships.</h3>
-      <p>Our team is ready to understand your needs.</p>
+      <span class="cb-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9Z"/>
+        </svg>
+      </span>
+      <div class="cb-txt">
+        <h3>Let&rsquo;s build powerful partnerships.</h3>
+        <p>Our team is ready to understand your needs.</p>
+      </div>
     </div>
+
     <div class="cb-div"></div>
+
     <div class="cb-mid">
-      <span class="cb-label">Email Us</span>
-      <a href="mailto:info@triveniradiators.com">info@triveniradiators.com</a>
+      <span class="cb-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 6.5L21 6"/>
+        </svg>
+      </span>
+      <div class="cb-txt">
+        <span class="cb-label">Email Us</span>
+        <a href="mailto:info@triveniradiators.com">info@triveniradiators.com</a>
+      </div>
     </div>
+
     <div class="cb-div"></div>
+
     <div class="cb-right">
-      <span class="cb-label">Call Us</span>
-      <a href="tel:+910000000000">+91 00000 00000</a>
+      <span class="cb-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9Z"/>
+        </svg>
+      </span>
+      <div class="cb-txt">
+        <span class="cb-label">Call Us</span>
+        <a href="tel:+911204308000">+91 120 430 8000</a>
+      </div>
     </div>
   </div>
 </div>
