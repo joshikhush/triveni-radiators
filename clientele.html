@@ -685,30 +685,6 @@ img { display:block; max-width:100%; }
   pointer-events:none;
 }
 
-/* Layer 2 — the industrial composite, used only at its clean far edges
-   (its own middle third is a corrupted render) with a soft inward fade
-   so the crop line is never visible and it can never reach the headline */
-.cta-industrial-left, .cta-industrial-right {
-  /* width tracks the true gutter outside the centered 38rem cta-inner (gutter = 50vw - 320px,
-     derived from section padding + (content-width - 608px)/2, padding terms cancel out),
-     with 16px of built-in safety margin so the fade always resolves before the text starts */
-  position:absolute; top:0; height:100%; width:clamp(40px,calc(50vw - 320px),320px); z-index:1;
-  background-image:url('assets/images work with us bg.png');
-  background-size:auto 100%;
-  background-repeat:no-repeat;
-  pointer-events:none;
-}
-.cta-industrial-left {
-  left:0; background-position:left center;
-  -webkit-mask-image:linear-gradient(to right, #000 55%, transparent 100%);
-  mask-image:linear-gradient(to right, #000 55%, transparent 100%);
-}
-.cta-industrial-right {
-  right:0; background-position:right center;
-  -webkit-mask-image:linear-gradient(to left, #000 55%, transparent 100%);
-  mask-image:linear-gradient(to left, #000 55%, transparent 100%);
-}
-
 /* one soft arc suggesting global reach, and a thin technical sweep line */
 .cta-arc { position:absolute; inset:0; z-index:1; pointer-events:none; }
 .cta-arc svg { width:100%; height:100%; }
@@ -895,12 +871,6 @@ img { display:block; max-width:100%; }
   .cta-arc { display:none; }
   .cta-world-dots { opacity:.4; }
   .cta-inner { padding:0 2.4rem; }
-  /* below this width cta-inner has no extra margin (gutter = section padding only, ~22px),
-     so the fade is pinned to an absolute px distance rather than a % of box width — it
-     resolves to fully transparent well inside that gutter no matter how wide the box is */
-  .cta-industrial-left, .cta-industrial-right { width:84px; }
-  .cta-industrial-left { -webkit-mask-image:linear-gradient(to right,#000 0,#000 6px,transparent 18px); mask-image:linear-gradient(to right,#000 0,#000 6px,transparent 18px); }
-  .cta-industrial-right { -webkit-mask-image:linear-gradient(to left,#000 0,#000 6px,transparent 18px); mask-image:linear-gradient(to left,#000 0,#000 6px,transparent 18px); }
   .mc-head { display:none; }
   .mc-row { grid-template-columns:1fr; gap:.5rem; padding:1rem .85rem; }
   .mc-since { text-align:left; }
@@ -1570,8 +1540,6 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
 <!-- ===== CTA ===== -->
 <section class="sec--cta" id="cta">
   <div class="cta-world-dots" aria-hidden="true"></div>
-  <div class="cta-industrial-left" aria-hidden="true"></div>
-  <div class="cta-industrial-right" aria-hidden="true"></div>
 
   <div class="cta-arc" aria-hidden="true">
     <svg viewBox="0 0 1200 600" preserveAspectRatio="none">
