@@ -36,6 +36,8 @@
   --line:        #E7E2D9;
   --line-cool:   #E0DEF0;
   --line-beige:  #E9E1D2;
+
+  --beige:       #EEE7DC;
 }
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -155,10 +157,10 @@ button { font:inherit; }
 .sec { padding:6.5rem 4rem; scroll-margin-top:5rem; }
 .sec-inner { max-width:1240px; margin:0 auto; }
 .sec--values  { background:var(--ivory); }
-.sec--areas   { background:var(--stone); }
+.sec--areas   { background:var(--beige); }
 .sec--talent  { background:var(--sand); }
 .sec--form    { background:var(--ivory); }
-.sec--final   { background:var(--cream); }
+.sec--final   { background:var(--ivory); }
 .sec-head { max-width:38rem; margin-bottom:3.6rem; }
 .sec-head.center { margin-left:auto; margin-right:auto; text-align:center; }
 
@@ -177,13 +179,13 @@ button { font:inherit; }
   transition:transform .5s cubic-bezier(.16,1,.3,1);
   will-change:transform;
 }
-/* directional scrim: strongest left ~42%, fading to near-transparent by ~78% —
-   text-safe zone on the left, faces and machinery stay visible on the right */
+/* directional scrim: strongest right ~42%, fading to near-transparent by ~78% —
+   text-safe zone on the right, faces and machinery stay visible on the left */
 .cr-hero-overlay {
   position:absolute; inset:0; z-index:1; pointer-events:none;
   opacity:0; animation:crFadeIn 1s .12s forwards;
   background:
-    linear-gradient(90deg,
+    linear-gradient(270deg,
       rgba(6,10,28,.8) 0%, rgba(7,11,31,.68) 18%, rgba(9,14,36,.46) 36%,
       rgba(10,15,40,.24) 54%, rgba(10,15,40,.07) 72%, rgba(10,15,40,0) 88%),
     linear-gradient(180deg,
@@ -197,7 +199,7 @@ button { font:inherit; }
 
 .cr-hero-inner {
   position:relative; z-index:2; flex:1;
-  display:flex; align-items:center;
+  display:flex; align-items:center; justify-content:flex-end;
   padding:7rem 4rem 2.4rem;
 }
 .cr-hero-text { max-width:35rem; }
@@ -240,99 +242,154 @@ button { font:inherit; }
 .cr-play:hover .ring { transform:scale(1.12); border-color:var(--gold-2); background:rgba(203,167,108,.08); }
 .cr-play .txt { font-family:'Poppins',sans-serif; font-size:.86rem; font-weight:500; line-height:1.4; }
 
-.cr-hero-spine {
-  position:absolute; top:9.5rem; right:3.4rem; z-index:2;
-  writing-mode:vertical-rl; transform:rotate(180deg);
-  font-family:'Poppins',sans-serif; font-size:.7rem; font-weight:600; letter-spacing:.34em;
-  text-transform:uppercase; color:rgba(255,246,233,.68);
-  display:flex; align-items:center; gap:1.4em;
-  opacity:0; transform:translateY(0) rotate(180deg); animation:crSpineIn .8s 1s forwards;
-}
-.cr-hero-spine::before { content:''; display:block; width:1px; height:52px; background:linear-gradient(180deg,var(--gold-2),transparent); }
-.cr-hero-spine b { font-weight:600; color:#fff; }
-
 @keyframes crImgIn { to { opacity:1; } }
 @keyframes crFadeIn { to { opacity:1; } }
 @keyframes crFadeUp { to { opacity:1; transform:none; } }
 @keyframes crLineUp { to { transform:translateY(0); } }
-@keyframes crSpineIn { to { opacity:1; } }
 
 @media(max-width:1080px){
   .cr-hero-inner { padding:6.5rem 2.2rem 2.4rem; }
-  .cr-hero-spine { right:2rem; }
 }
 @media(max-width:900px){
-  .cr-hero-spine { display:none; }
   .cr-hero-inner { align-items:flex-end; padding:6rem 1.6rem 3.2rem; }
   .cr-hero-overlay {
     background:
       linear-gradient(180deg, rgba(6,10,28,.35) 0%, rgba(6,10,28,.25) 30%, rgba(5,9,26,.55) 62%, rgba(4,7,22,.9) 100%),
-      linear-gradient(90deg, rgba(6,10,28,.55) 0%, rgba(6,10,28,.15) 60%, rgba(6,10,28,0) 100%);
+      linear-gradient(270deg, rgba(6,10,28,.55) 0%, rgba(6,10,28,.15) 60%, rgba(6,10,28,0) 100%);
   }
 }
 @media(max-width:640px){
   .cr-hero-inner { padding:5.6rem 1.3rem 2.6rem; }
 }
 @media(prefers-reduced-motion:reduce){
-  .cr-hero-bg img, .cr-hero-overlay, .cr-eyebrow-line, .cr-hero-title .ln>span, .cr-hero-sub, .cr-hero-ctas, .cr-hero-spine {
+  .cr-hero-bg img, .cr-hero-overlay, .cr-eyebrow-line, .cr-hero-title .ln>span, .cr-hero-sub, .cr-hero-ctas {
     animation:none !important; opacity:1 !important; transform:none !important;
   }
 }
 
 /* ===================================================
-   VALUES
+   VALUES — compact editorial band
    =================================================== */
-.cr-values-row { display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
-.cr-value { position:relative; padding:0 2rem; }
-.cr-value:first-child { padding-left:0; }
-.cr-value:last-child { padding-right:0; }
-.cr-value + .cr-value::before { content:''; position:absolute; left:0; top:.3rem; bottom:.3rem; width:1px; background:var(--line); }
-.cr-value-ico { width:46px; height:46px; border-radius:50%; background:#fff; border:1px solid var(--line-beige); display:flex; align-items:center; justify-content:center; color:var(--violet); margin-bottom:1.4rem; }
-.cr-value-ico svg { width:20px; height:20px; }
-.cr-value-num { font-family:'Newsreader',serif; font-style:italic; font-size:1.2rem; color:var(--gold); margin-bottom:.6rem; }
-.cr-value h3 { font-family:'Poppins',sans-serif; font-weight:500; font-size:1.15rem; color:var(--navy-ink); margin-bottom:.7rem; }
-.cr-value p { font-size:.9rem; line-height:1.7; color:var(--muted); }
-.cr-values-nav { display:flex; gap:.7rem; margin-top:2.6rem; }
-.cr-values-track { overflow:hidden; }
+.sec--values { min-height:68vh; display:flex; flex-direction:column; justify-content:center; padding-top:5.6rem; padding-bottom:5rem; }
+.sec--values .sec-inner { width:100%; }
+
+.val-top { display:flex; justify-content:space-between; align-items:flex-end; gap:3rem; margin-bottom:5.2rem; flex-wrap:wrap; }
+.val-top-left { display:flex; gap:1.15rem; max-width:58%; }
+.val-vline { width:1px; flex-shrink:0; background:linear-gradient(180deg,var(--gold-2),var(--line-beige)); }
+.val-eyebrow.cr-eyebrow { color:var(--gold); font-size:.68rem; letter-spacing:.24em; margin-bottom:.8rem; }
+.val-heading.cr-h2 { margin:0; font-size:clamp(2.6rem,4.6vw,4.6rem); }
+.val-heading .hi { font-style:italic; color:var(--violet); }
+
+.val-top-right { max-width:340px; margin-left:auto; padding-bottom:.3rem; }
+.val-copy { font-size:1.05rem; line-height:1.55; color:var(--muted); text-align:left; }
+
+.val-track { overflow:hidden; }
+.val-grid { display:grid; grid-template-columns:.85fr 1fr 1fr 1fr; gap:0; }
+.val-col { position:relative; padding:0 2.2rem; }
+.val-col:first-child { padding-left:0; }
+.val-col:last-child { padding-right:0; }
+.val-col + .val-col::before { content:''; position:absolute; left:0; top:.2rem; bottom:.2rem; width:1px; background:var(--line-beige); }
+.val-num { font-family:'Newsreader',serif; font-style:italic; font-size:1.15rem; color:var(--gold); margin-bottom:.9rem; transition:color .25s; }
+.val-rule { display:block; width:36px; height:1px; background:var(--line-beige); margin-bottom:1.4rem; }
+.val-col h3 { font-family:'Newsreader',serif; font-weight:400; font-size:clamp(1.7rem,2.1vw,2.15rem); letter-spacing:-.01em; color:var(--navy-ink); margin-bottom:1rem; transition:transform .25s cubic-bezier(.22,1,.36,1); }
+.val-col p { font-size:.92rem; line-height:1.65; color:var(--muted); }
+.val-col:hover .val-num { color:var(--violet); }
+.val-col:hover h3 { transform:translateX(3px); }
 
 @media(max-width:1080px){
-  .cr-values-track { overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; margin:0 -4rem; padding:0 4rem; }
-  .cr-values-row { grid-auto-flow:column; grid-auto-columns:78%; grid-template-columns:none; gap:1.6rem; }
-  .cr-value { scroll-snap-align:start; padding:0 1.6rem 0 0; }
-  .cr-value:first-child { padding-left:0; }
-  .cr-value + .cr-value::before { display:none; }
+  .sec--values { min-height:0; }
+  .val-top { gap:2rem; margin-bottom:3.2rem; }
+  .val-top-left { max-width:100%; }
+  .val-top-right { max-width:100%; margin-left:0; }
+  .val-track { overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; margin:0 -4rem; padding:0 4rem; }
+  .val-grid { grid-auto-flow:column; grid-auto-columns:78%; grid-template-columns:none; gap:1.6rem; }
+  .val-col { scroll-snap-align:start; padding:0 1.6rem 0 0; }
+  .val-col:first-child { padding-left:0; }
+  .val-col + .val-col::before { display:none; }
 }
 @media(max-width:640px){
-  .cr-values-track { margin:0 -1.4rem; padding:0 1.4rem; }
-  .cr-values-row { grid-auto-columns:86%; }
+  .val-track { margin:0 -1.4rem; padding:0 1.4rem; }
+  .val-grid { grid-auto-columns:86%; }
 }
 
 /* ===================================================
-   CAREER AREAS
+   CAREER AREAS — full-viewport editorial chapter
    =================================================== */
-.cr-area-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.8rem; }
-.cr-area-card {
-  position:relative; background:#fff; border-radius:20px; overflow:hidden;
-  border:1px solid var(--line-beige); transition:transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s, border-color .3s;
+.sec--areas {
+  min-height:100svh; height:auto;
+  display:flex; flex-direction:column; justify-content:center;
+  padding-top:4.2rem; padding-bottom:3.4rem;
+  padding-left:clamp(1.6rem,6vw,5rem); padding-right:clamp(1.6rem,6vw,5rem);
 }
-.cr-area-card:hover { transform:translateY(-6px); box-shadow:0 30px 60px -30px rgba(36,31,46,.28); border-color:rgba(106,69,192,.25); }
-.cr-area-media { position:relative; height:11.5rem; overflow:hidden; background:linear-gradient(155deg,var(--navy) 0%,var(--violet-deep) 130%); }
-.cr-area-media svg { position:absolute; inset:0; margin:auto; width:64%; height:64%; color:rgba(255,255,255,.9); transition:transform .5s cubic-bezier(.16,1,.3,1); }
-.cr-area-card:hover .cr-area-media svg { transform:scale(1.08); }
-.cr-area-media::after { content:''; position:absolute; inset:0; background:radial-gradient(circle at 30% 20%,rgba(139,140,240,.35),transparent 60%); pointer-events:none; }
-.cr-area-num { position:absolute; top:1rem; left:1.2rem; font-family:'Newsreader',serif; font-style:italic; font-size:1rem; color:rgba(255,255,255,.75); z-index:2; }
-.cr-area-body { padding:1.7rem 1.7rem 2rem; }
-.cr-area-kicker { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:.7rem; }
-.cr-area-card h3 { font-family:'Poppins',sans-serif; font-weight:500; font-size:1.28rem; color:var(--navy-ink); margin-bottom:.7rem; }
-.cr-area-card p { font-size:.88rem; line-height:1.68; color:var(--muted); margin-bottom:1.3rem; }
-.cr-area-link { font-family:'Poppins',sans-serif; font-size:.84rem; font-weight:500; color:var(--violet-deep); display:inline-flex; align-items:center; gap:.5rem; }
-.cr-area-link span { transition:transform .25s; }
-.cr-area-card:hover .cr-area-link span { transform:translateX(5px); }
-.cr-area-card:hover .cr-area-link { color:var(--violet); }
-.cr-areas-foot { margin-top:2.8rem; text-align:center; }
+.sec--areas .sec-inner { width:100%; }
 
-@media(max-width:1080px){ .cr-area-grid { grid-template-columns:1fr 1fr; } }
-@media(max-width:700px){ .cr-area-grid { grid-template-columns:1fr; } }
+.area-top { display:flex; justify-content:space-between; align-items:flex-end; gap:3rem; margin-bottom:3.2rem; flex-wrap:wrap; }
+.area-heading .cr-eyebrow { color:var(--gold); }
+.area-heading .cr-h2 { font-size:clamp(2.4rem,4.6vw,4.4rem); }
+.area-heading .cr-h2 .hi { font-style:normal; color:var(--violet); }
+.area-top-right { display:flex; flex-direction:column; align-items:flex-end; gap:1.3rem; max-width:280px; margin-left:auto; }
+.area-copy { font-size:.82rem; line-height:1.5; color:var(--muted); text-align:left; }
+.area-arrows { display:flex; gap:.6rem; }
+.val-arrow {
+  width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  border:1px solid rgba(106,69,192,.32); background:transparent; color:var(--violet); cursor:pointer;
+  transition:background .25s, border-color .25s;
+}
+.val-arrow svg { width:14px; height:14px; transition:transform .25s cubic-bezier(.22,1,.36,1); }
+.val-arrow:hover { background:rgba(106,69,192,.07); border-color:var(--violet); }
+.val-arrow.prev:hover svg { transform:translateX(-3px); }
+.val-arrow.next:hover svg { transform:translateX(3px); }
+
+.area-track { overflow:hidden; }
+.area-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+.area-card {
+  position:relative; display:flex; flex-direction:column;
+  height:clamp(400px,54vh,560px);
+  border-radius:10px; overflow:hidden;
+  text-decoration:none; color:inherit;
+  box-shadow:0 22px 50px -32px rgba(36,31,46,.22);
+  transition:transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s cubic-bezier(.16,1,.3,1);
+}
+.area-card:hover { transform:translateY(-5px); box-shadow:0 34px 64px -30px rgba(36,31,46,.3); }
+
+.area-info { position:relative; flex:0 0 37%; background:var(--ivory); padding:1.4rem 1.5rem; border-radius:10px 10px 0 0; }
+.area-num { font-family:'Poppins',sans-serif; font-size:.62rem; font-weight:600; letter-spacing:.1em; color:var(--muted-2); margin-bottom:1.1rem; }
+.area-info h3 { font-family:'Newsreader',serif; font-weight:400; font-size:clamp(1.55rem,1.9vw,1.9rem); color:var(--navy-ink); letter-spacing:-.01em; margin-bottom:.5rem; transition:transform .3s cubic-bezier(.16,1,.3,1); }
+.area-info p { font-family:'Schibsted Grotesk',sans-serif; font-size:.8rem; color:var(--muted); }
+.area-card:hover .area-info h3 { transform:translateX(3px); }
+.area-arrow {
+  position:absolute; top:1.2rem; right:1.3rem; width:34px; height:34px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid rgba(106,69,192,.32); color:var(--violet-deep); background:transparent;
+  transition:border-color .3s, background .3s;
+}
+.area-arrow svg { width:13px; height:13px; transition:transform .3s cubic-bezier(.16,1,.3,1); }
+.area-card:hover .area-arrow { border-color:var(--violet); background:rgba(106,69,192,.06); }
+.area-card:hover .area-arrow svg { transform:translate(3px,-3px); }
+.area-accent { position:absolute; left:1.5rem; bottom:0; width:0; height:2px; background:var(--gold); transition:width .35s ease; }
+.area-card:hover .area-accent { width:28px; }
+
+.area-media { position:relative; flex:1 1 63%; overflow:hidden; }
+.area-media img {
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  filter:saturate(.97) contrast(1.02);
+  transition:transform .4s cubic-bezier(.16,1,.3,1);
+}
+.area-card:hover .area-media img { transform:scale(1.03); }
+
+.area-foot { margin-top:1.8rem; text-align:center; }
+
+@media(max-width:1080px){
+  .area-top { align-items:flex-start; }
+  .area-top-right { max-width:100%; align-items:flex-start; margin-left:0; }
+}
+@media(max-width:900px){
+  .sec--areas { padding-top:3.6rem; }
+  .area-top { margin-bottom:2.2rem; }
+  .area-track { overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; margin:0 -1.6rem; padding:0 1.6rem; }
+  .area-grid { grid-auto-flow:column; grid-auto-columns:87vw; grid-template-columns:none; gap:1rem; }
+  .area-card { scroll-snap-align:start; height:clamp(420px,62vh,560px); }
+}
 
 /* ===================================================
    TALENT POOL
@@ -417,40 +474,87 @@ button { font:inherit; }
 /* ===================================================
    NAINI / WORKPLACE
    =================================================== */
-.cr-naini { position:relative; height:34rem; max-height:70vh; min-height:26rem; overflow:hidden; }
+.cr-naini { position:relative; min-height:100svh; height:auto; overflow:hidden; display:flex; flex-direction:column; }
 .cr-naini-media { position:absolute; inset:0; }
-.cr-naini-media img { width:100%; height:100%; object-fit:cover; object-position:38% 46%; }
-.cr-naini-media::after { content:''; position:absolute; inset:0; background:linear-gradient(100deg, rgba(12,18,51,.92) 0%, rgba(12,18,51,.62) 32%, rgba(12,18,51,.2) 58%, rgba(12,18,51,.55) 100%); }
-.cr-naini-inner { position:relative; z-index:2; height:100%; display:flex; flex-direction:column; justify-content:center; padding:3rem 4rem; max-width:1240px; margin:0 auto; }
+.cr-naini-media img { width:100%; height:100%; object-fit:cover; object-position:62% 50%; transition:transform .6s cubic-bezier(.16,1,.3,1); }
+.cr-naini-media::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg, rgba(6,10,26,.74) 0%, rgba(6,10,26,.46) 28%, rgba(6,10,26,.16) 52%, rgba(6,10,26,0) 74%);
+}
+.cr-naini-inner { position:relative; z-index:2; flex:1; display:flex; flex-direction:column; justify-content:flex-start; padding:7.5rem 3rem 0; max-width:1280px; margin:0 auto; width:100%; }
 .cr-naini-copy { max-width:26rem; }
-.cr-naini-copy .cr-h2 { font-size:clamp(1.9rem,3.2vw,2.6rem); }
-.cr-naini-copy .cr-lead { margin:1rem 0 1.6rem; max-width:24rem; }
-.cr-naini-stats { position:absolute; right:4rem; bottom:2.6rem; z-index:2; display:flex; gap:0; background:rgba(12,18,51,.55); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.14); border-radius:16px; padding:1.3rem 1.6rem; }
-.cr-nstat { padding:0 1.3rem; position:relative; text-align:left; }
+.cr-naini-copy .cr-h2 { font-size:clamp(2rem,3.6vw,3rem); }
+.cr-naini-copy .cr-lead { margin:1.1rem 0 1.7rem; max-width:24rem; }
+
+.cr-naini-stats { position:relative; z-index:2; width:100%; background:linear-gradient(180deg, rgba(6,10,26,0) 0%, rgba(6,10,26,.48) 42%, rgba(6,10,26,.64) 100%); padding:2.2rem 0 2.4rem; }
+.cr-naini-stats-inner { max-width:1280px; margin:0 auto; padding:0 3rem; display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
+.cr-nstat { padding:0 1.7rem; position:relative; text-align:left; }
 .cr-nstat:first-child { padding-left:0; }
-.cr-nstat + .cr-nstat::before { content:''; position:absolute; left:0; top:6%; height:88%; width:1px; background:rgba(255,255,255,.14); }
-.cr-nstat-num { font-family:'Newsreader',serif; font-size:1.35rem; color:#fff; }
+.cr-nstat:last-child { padding-right:0; }
+.cr-nstat:not(:first-child)::before { content:''; position:absolute; left:0; top:8%; height:78%; width:1px; background:rgba(255,255,255,.22); }
+.cr-nstat-num { font-family:'Newsreader',serif; font-size:2.15rem; color:#fff; }
 .cr-nstat-num em { font-style:normal; color:var(--lav-hi); }
-.cr-nstat-label { font-family:'Poppins',sans-serif; font-size:.6rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-top:.3rem; max-width:6.5rem; }
+.cr-nstat-label { font-family:'Poppins',sans-serif; font-size:.62rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-top:.4rem; max-width:8rem; }
 
 @media(max-width:1080px){
-  .cr-naini { height:auto; max-height:none; }
-  .cr-naini-inner { padding:3.4rem 2rem 2rem; }
-  .cr-naini-stats { position:static; margin:2rem 2rem 2.4rem; flex-wrap:wrap; row-gap:1.2rem; background:rgba(12,18,51,.4); }
-  .cr-nstat { flex:0 0 46%; }
-  .cr-nstat:nth-child(3)::before { display:none; }
+  .cr-naini-inner { padding:7rem 2.2rem 0; }
+  .cr-naini-stats-inner { padding:0 2.2rem; }
+}
+@media(max-width:900px){
+  .cr-naini { min-height:92svh; }
+  .cr-naini-media::after {
+    background:linear-gradient(180deg, rgba(6,10,26,.12) 0%, rgba(6,10,26,.34) 55%, rgba(6,10,26,.5) 100%);
+  }
+  .cr-naini-inner { padding:6rem 1.6rem 0; justify-content:flex-end; }
+  .cr-naini-stats { padding:1.8rem 0 2rem; }
+  .cr-naini-stats-inner { padding:0 1.6rem; grid-template-columns:repeat(2,1fr); row-gap:1.5rem; }
+  .cr-nstat { padding:0 0 0 1.4rem; }
+  .cr-nstat:nth-child(odd) { padding-left:0; }
+  .cr-nstat:not(:first-child)::before { display:none; }
+  .cr-nstat:nth-child(even)::before { display:block; }
+  .cr-nstat-num { font-size:1.7rem; }
 }
 @media(max-width:520px){
-  .cr-naini-inner { padding:2.6rem 1.4rem 1.6rem; }
-  .cr-naini-stats { margin:1.6rem 1.4rem 2rem; padding:1.1rem 1.2rem; }
+  .cr-naini-inner { padding:5.4rem 1.3rem 0; }
 }
 
 /* ===================================================
    FINAL CTA
    =================================================== */
-.cr-final { text-align:center; padding:6rem 4rem; }
-.cr-final .cr-h2 { margin:0 auto 1.6rem; }
-.cr-final .btn { margin-top:.4rem; }
+.cr-final { position:relative; overflow:hidden; min-height:48vh; display:flex; align-items:center; padding:6.4rem 5.5rem; }
+.cr-final .reveal { transition-duration:.6s; }
+.cr-final-deco { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.cr-final-deco svg { position:absolute; top:-22%; right:-12%; width:30%; max-width:440px; height:auto; opacity:.05; }
+
+.cr-final-grid { position:relative; z-index:1; width:100%; max-width:1240px; margin:0 auto; display:grid; grid-template-columns:1.3fr 1px 1fr; column-gap:3.4rem; align-items:stretch; }
+.cr-final-left { display:flex; flex-direction:column; justify-content:flex-start; }
+.cr-final-left .cr-eyebrow { margin-bottom:1.2rem; }
+.cr-final-left .cr-h2 { max-width:none; font-size:clamp(2.6rem,4.4vw,4.75rem); }
+.cr-final-divider { background:linear-gradient(180deg, transparent 0%, rgba(16,27,77,.16) 18%, rgba(16,27,77,.16) 82%, transparent 100%); }
+.cr-final-right { display:flex; flex-direction:column; justify-content:center; }
+.cr-final-text { font-size:1.1rem; line-height:1.6; color:var(--muted); max-width:34rem; margin-bottom:1.8rem; }
+
+.cr-final-cta { display:inline-flex; align-items:center; gap:.55rem; align-self:flex-start; font-family:'Poppins',sans-serif; font-size:.95rem; font-weight:500; color:var(--violet-deep); padding-bottom:.4rem; border-bottom:1px solid rgba(106,69,192,.32); transition:color .25s, border-color .25s; }
+.cr-final-cta span { transition:transform .25s cubic-bezier(.22,1,.36,1); }
+.cr-final-cta:hover { color:var(--violet); border-color:var(--violet); }
+.cr-final-cta:hover span { transform:translateX(4px); }
+
+.cr-final-meta { position:absolute; right:5.5rem; bottom:2.2rem; z-index:1; font-family:'Poppins',sans-serif; font-size:.62rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--muted-2); opacity:.7; text-align:right; line-height:1.6; }
+
+@media(max-width:1024px){
+  .cr-final { padding:5.6rem 2.4rem; }
+  .cr-final-meta { right:2.4rem; }
+}
+@media(max-width:800px){
+  .cr-final-grid { grid-template-columns:1fr; }
+  .cr-final-divider { display:none; }
+  .cr-final-right { margin-top:2.2rem; }
+  .cr-final-deco svg { width:46%; top:-10%; right:-18%; }
+}
+@media(max-width:700px){
+  .cr-final { min-height:auto; padding:4.6rem 1.5rem; align-items:flex-start; }
+  .cr-final-meta { display:none; }
+}
 
 /* ===================================================
    SITE FOOTER (common, site-consistent)
@@ -523,8 +627,6 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
     <span class="cr-hero-dot"></span>
   </div>
 
-  <div class="cr-hero-spine" aria-hidden="true"><b>People</b>Engineering<b>A Brighter</b>Tomorrow</div>
-
   <div class="cr-hero-inner">
     <div class="cr-hero-text">
       <div class="cr-eyebrow-line"><span>Careers</span><i></i></div>
@@ -548,106 +650,108 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
 <!-- ===== 01 — VALUES ===== -->
 <section class="sec sec--values" id="values">
   <div class="sec-inner">
-    <div class="sec-head reveal">
-      <div class="cr-eyebrow">Our Values</div>
-      <h2 class="cr-h2">What matters here.</h2>
-      <p class="cr-lead" style="margin-top:1.1rem;">The same values that go into our products drive the way we build our team.</p>
+
+    <div class="val-top">
+      <div class="val-top-left reveal">
+        <span class="val-vline" aria-hidden="true"></span>
+        <div>
+          <div class="cr-eyebrow val-eyebrow">Our Values</div>
+          <h2 class="cr-h2 val-heading">What matters <span class="hi">here.</span></h2>
+        </div>
+      </div>
+      <div class="val-top-right reveal reveal-d1">
+        <p class="val-copy">The same values that go into our products drive the way we build our team.</p>
+      </div>
     </div>
 
-    <div class="cr-values-track reveal reveal-d1">
-      <div class="cr-values-row" id="valuesRow">
-        <div class="cr-value">
-          <div class="cr-value-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 5.6v5.1c0 4.3 2.9 8.2 7 9.3 4.1-1.1 7-5 7-9.3V5.6L12 3Z"/><path d="m8.8 12 2.2 2.2L15.4 10"/></svg></div>
-          <div class="cr-value-num">01</div>
+    <div class="val-track">
+      <div class="val-grid" id="valuesRow">
+        <div class="val-col reveal">
+          <div class="val-num">i</div>
+          <span class="val-rule"></span>
           <h3>Integrity</h3>
           <p>Honest dealings, every time. Non-negotiable — and the first thing we look for in people, too.</p>
         </div>
-        <div class="cr-value">
-          <div class="cr-value-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5.2"/><path d="M8.5 13.2 7 21l5-2.6L17 21l-1.5-7.8"/></svg></div>
-          <div class="cr-value-num">02</div>
+        <div class="val-col reveal reveal-d1">
+          <div class="val-num">ii</div>
+          <span class="val-rule"></span>
           <h3>Excellence</h3>
-          <p>Best-in-class quality: automated manufacturing, rigorous testing and PGCIL Grade A discipline.</p>
+          <p>Best-in-class quality, automated manufacturing, rigorous testing and strict quality standards.</p>
         </div>
-        <div class="cr-value">
-          <div class="cr-value-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
-          <div class="cr-value-num">03</div>
+        <div class="val-col reveal reveal-d2">
+          <div class="val-num">iii</div>
+          <span class="val-rule"></span>
           <h3>Innovation</h3>
-          <p>From India's first fully automatic radiator line in 2012 to welding automation in 2024.</p>
+          <p>From India's first fully automatic radiator line in 2012 to evolving automation today.</p>
         </div>
-        <div class="cr-value">
-          <div class="cr-value-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="12" r="3.2"/><circle cx="16.5" cy="12" r="3.2"/><path d="M10.3 12h3.4"/></svg></div>
-          <div class="cr-value-num">04</div>
+        <div class="val-col reveal reveal-d3">
+          <div class="val-num">iv</div>
+          <span class="val-rule"></span>
           <h3>Teamwork</h3>
           <p>Trust within the team and beyond. The people behind Triveni matter as much as the product.</p>
         </div>
       </div>
     </div>
-    <div class="cr-values-nav reveal reveal-d2">
-      <button class="arrow-nav" id="valuesPrev" aria-label="Scroll values left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-      <button class="arrow-nav" id="valuesNext" aria-label="Scroll values right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-    </div>
+
   </div>
 </section>
 
 <!-- ===== 02 — CAREER AREAS ===== -->
 <section class="sec sec--areas" id="areas">
   <div class="sec-inner">
-    <div class="sec-head reveal">
-      <div class="cr-eyebrow">Where You Can Make An Impact</div>
-      <h2 class="cr-h2">Three ways in.</h2>
-      <p class="cr-lead" style="margin-top:1.1rem;">Different roles. A shared purpose. Explore the areas where you can grow, contribute and do your best work.</p>
-    </div>
 
-    <div class="cr-area-grid reveal reveal-d1">
-      <div class="cr-area-card">
-        <div class="cr-area-media">
-          <div class="cr-area-num">01</div>
-          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="14" y="10" width="8" height="44"/><rect x="28" y="10" width="8" height="44"/><rect x="42" y="10" width="8" height="44"/>
-            <path d="M10 10h44M10 54h44"/>
-          </svg>
-        </div>
-        <div class="cr-area-body">
-          <div class="cr-area-kicker">01 &middot; Engineering</div>
-          <h3>Design &amp; Production</h3>
-          <p>Work on automated radiator lines, welding automation and the manufacturing systems behind 765 kV-class projects.</p>
-          <span class="cr-area-link">Where engineers grow <span>&rarr;</span></span>
-        </div>
+    <div class="area-top">
+      <div class="area-heading reveal">
+        <div class="cr-eyebrow">Where You Can Make An Impact</div>
+        <h2 class="cr-h2">Three ways <span class="hi">in.</span></h2>
       </div>
-
-      <div class="cr-area-card">
-        <div class="cr-area-media">
-          <div class="cr-area-num">02</div>
-          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="30" cy="30" r="17"/><path d="M22 30l6 6 12-13"/><path d="M45 45l11 11"/>
-          </svg>
+      <div class="area-top-right reveal reveal-d1">
+        <div class="area-arrows">
+          <button class="val-arrow prev" id="areasPrev" aria-label="Scroll career areas left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button class="val-arrow next" id="areasNext" aria-label="Scroll career areas right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
-        <div class="cr-area-body">
-          <div class="cr-area-kicker">02 &middot; Quality</div>
-          <h3>QA &amp; Testing</h3>
-          <p>Own the leak-proof pressure testing and documentation discipline behind PGCIL Grade A, RDSO and EN ISO 3834-2.</p>
-          <span class="cr-area-link">Where precision matters <span>&rarr;</span></span>
-        </div>
-      </div>
-
-      <div class="cr-area-card">
-        <div class="cr-area-media">
-          <div class="cr-area-num">03</div>
-          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="26" cy="32" r="16"/><path d="M26 16v32M10 32h32"/><path d="M15 21c6 4 16 4 22 0M15 43c6-4 16-4 22 0"/>
-            <path d="M46 20 58 8M58 8h-9M58 8v9"/>
-          </svg>
-        </div>
-        <div class="cr-area-body">
-          <div class="cr-area-kicker">03 &middot; Commercial</div>
-          <h3>Sales &amp; Exports</h3>
-          <p>Help grow Triveni's OEM partnerships across India and its direct exports to global markets.</p>
-          <span class="cr-area-link">Where reach expands <span>&rarr;</span></span>
-        </div>
+        <p class="area-copy">Different roles. A shared purpose. Explore the areas where you can grow, contribute and do your best work.</p>
       </div>
     </div>
 
-    <div class="cr-areas-foot reveal reveal-d2">
+    <div class="area-track">
+      <div class="area-grid" id="areasRow">
+        <a href="#profile" class="area-card reveal reveal-d2">
+          <div class="area-info">
+            <div class="area-num">01</div>
+            <h3>Engineering</h3>
+            <p>Design. Build. Improve.</p>
+            <span class="area-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+            <span class="area-accent"></span>
+          </div>
+          <div class="area-media"><img src="assets/engineering%20card.png" alt="Triveni technicians lifting and assembling a transformer radiator core on the manufacturing floor" loading="lazy" style="object-position:42% 38%;"></div>
+        </a>
+
+        <a href="#profile" class="area-card reveal reveal-d3">
+          <div class="area-info">
+            <div class="area-num">02</div>
+            <h3>Quality</h3>
+            <p>Test. Challenge. Deliver.</p>
+            <span class="area-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+            <span class="area-accent"></span>
+          </div>
+          <div class="area-media"><img src="assets/quality%20card.png" alt="Triveni technician testing a transformer radiator with precision measurement equipment" loading="lazy" style="object-position:62% 45%;"></div>
+        </a>
+
+        <a href="#profile" class="area-card reveal reveal-d4">
+          <div class="area-info">
+            <div class="area-num">03</div>
+            <h3>Commercial</h3>
+            <p>Connect. Grow. Expand.</p>
+            <span class="area-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></span>
+            <span class="area-accent"></span>
+          </div>
+          <div class="area-media"><img src="assets/commercial%20card.png" alt="Triveni engineers discussing technical drawings for a transformer radiator on the shop floor" loading="lazy" style="object-position:38% 40%;"></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="area-foot reveal reveal-d4">
       <a href="#profile" class="btn-text">Don't see your role listed? Submit your profile anyway <span>&rarr;</span></a>
     </div>
   </div>
@@ -665,7 +769,7 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
       </div>
       <div class="cr-talent-media reveal reveal-d1">
         <div class="cr-talent-frame">
-          <img src="assets/careers%20bg.png" alt="Triveni engineers at work on the automated radiator line in Naini" loading="lazy" style="object-position:15% 40%;">
+          <img src="assets/real%20people%20card.png" alt="Three Triveni technicians examining a component together on the shop floor" loading="lazy" style="object-position:50% 32%;">
         </div>
         <div class="cr-talent-tag"><span class="k">Real People.</span><span class="v">Real progress.</span></div>
       </div>
@@ -759,7 +863,7 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
 
 <!-- ===== 05 — NAINI / WORKPLACE ===== -->
 <section class="cr-naini" id="naini">
-  <div class="cr-naini-media reveal"><img id="nainiImg" src="assets/careers%20bg.png" alt="Wide view of the automated radiator manufacturing line at Triveni's Naini works" loading="lazy"></div>
+  <div class="cr-naini-media reveal"><img id="nainiImg" src="assets/made%20in%20naini.png" alt="The cable-stayed bridge over the river at Prayagraj at dusk, lights reflecting on the water near Triveni's Naini works" loading="lazy"></div>
   <div class="cr-naini-inner">
     <div class="cr-naini-copy reveal">
       <div class="cr-eyebrow on-dark">The Works</div>
@@ -769,18 +873,32 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
     </div>
   </div>
   <div class="cr-naini-stats reveal reveal-d1">
-    <div class="cr-nstat"><div class="cr-nstat-num" data-count="8300" data-suffix=" m&sup2;">0</div><div class="cr-nstat-label">Works Area</div></div>
-    <div class="cr-nstat"><div class="cr-nstat-num" data-count="4000" data-suffix=" MT">0</div><div class="cr-nstat-label">Annual Capacity</div></div>
-    <div class="cr-nstat"><div class="cr-nstat-num" data-count="1" data-plain="1" data-suffix="st">0</div><div class="cr-nstat-label">Fully Automatic Line in India</div></div>
-    <div class="cr-nstat"><div class="cr-nstat-num" data-count="15" data-suffix="+">0</div><div class="cr-nstat-label">States Supplied</div></div>
+    <div class="cr-naini-stats-inner">
+      <div class="cr-nstat"><div class="cr-nstat-num" data-count="8300" data-suffix=" m&sup2;">0</div><div class="cr-nstat-label">Works Area</div></div>
+      <div class="cr-nstat"><div class="cr-nstat-num" data-count="4000" data-suffix=" MT">0</div><div class="cr-nstat-label">Annual Capacity</div></div>
+      <div class="cr-nstat"><div class="cr-nstat-num" data-count="1" data-plain="1" data-suffix="st">0</div><div class="cr-nstat-label">Fully Automatic Line in India</div></div>
+      <div class="cr-nstat"><div class="cr-nstat-num" data-count="15" data-suffix="+">0</div><div class="cr-nstat-label">States Supplied</div></div>
+    </div>
   </div>
 </section>
 
 <!-- ===== 06 — FINAL CTA ===== -->
 <section class="cr-final sec--final">
-  <div class="cr-eyebrow" style="justify-content:center;display:flex;">Ready When You Are</div>
-  <h2 class="cr-h2" style="max-width:36rem;margin-left:auto;margin-right:auto;">Let's build what's next, <span class="hi">together.</span></h2>
-  <a href="#profile" class="btn btn-primary">Submit Your Profile <span>&rarr;</span></a>
+  <div class="cr-final-deco" aria-hidden="true">
+    <svg viewBox="0 0 300 320" fill="none"><path d="M-40 20C120 0 220 140 260 300" stroke="#6A45C0" stroke-width="1"/></svg>
+  </div>
+  <div class="cr-final-grid">
+    <div class="cr-final-left reveal">
+      <div class="cr-eyebrow">Ready When You Are</div>
+      <h2 class="cr-h2">Let's build what's next, <span class="hi">together.</span></h2>
+    </div>
+    <div class="cr-final-divider" aria-hidden="true"></div>
+    <div class="cr-final-right reveal reveal-d1">
+      <p class="cr-final-text">Send us your profile — we'll be in touch when the right opportunity comes along.</p>
+      <a href="#profile" class="cr-final-cta">Submit your profile <span>&rarr;</span></a>
+    </div>
+  </div>
+  <div class="cr-final-meta reveal reveal-d2">Careers<br>Triveni Radiators</div>
 </section>
 
 <!-- FOOTER -->
@@ -922,13 +1040,13 @@ if (reduceMotion) {
   counters.forEach(el => co.observe(el));
 }
 
-/* ---- values row arrow scroll (mobile / tablet) ---- */
-const valuesRow = document.getElementById('valuesRow');
-const vPrev = document.getElementById('valuesPrev'), vNext = document.getElementById('valuesNext');
-if (valuesRow && vPrev && vNext) {
-  const step = () => valuesRow.clientWidth * 0.82;
-  vPrev.addEventListener('click', () => valuesRow.parentElement.scrollBy({ left: -step(), behavior:'smooth' }));
-  vNext.addEventListener('click', () => valuesRow.parentElement.scrollBy({ left: step(), behavior:'smooth' }));
+/* ---- career areas row arrow scroll (mobile / tablet) ---- */
+const areasRow = document.getElementById('areasRow');
+const aPrev = document.getElementById('areasPrev'), aNext = document.getElementById('areasNext');
+if (areasRow && aPrev && aNext) {
+  const astep = () => areasRow.clientWidth * 0.9;
+  aPrev.addEventListener('click', () => areasRow.parentElement.scrollBy({ left: -astep(), behavior:'smooth' }));
+  aNext.addEventListener('click', () => areasRow.parentElement.scrollBy({ left: astep(), behavior:'smooth' }));
 }
 
 /* ---- profile form submit (client-side placeholder until backend/ATS is wired up) ---- */
