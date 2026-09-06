@@ -268,48 +268,71 @@ button { font:inherit; }
 }
 
 /* ===================================================
-   VALUES — compact editorial band
+   VALUES — horizontal editorial card strip
    =================================================== */
-.sec--values { min-height:68vh; display:flex; flex-direction:column; justify-content:center; padding-top:5.6rem; padding-bottom:5rem; }
-.sec--values .sec-inner { width:100%; }
+.sec--values { padding-top:5.6rem; padding-bottom:5.2rem; }
 
-.val-top { display:flex; justify-content:space-between; align-items:flex-end; gap:3rem; margin-bottom:5.2rem; flex-wrap:wrap; }
+.val-top { display:flex; justify-content:space-between; align-items:flex-end; gap:3rem; margin-bottom:3.4rem; flex-wrap:wrap; }
 .val-top-left { display:flex; gap:1.15rem; max-width:58%; }
 .val-vline { width:1px; flex-shrink:0; background:linear-gradient(180deg,var(--gold-2),var(--line-beige)); }
 .val-eyebrow.cr-eyebrow { color:var(--gold); font-size:.68rem; letter-spacing:.24em; margin-bottom:.8rem; }
 .val-heading.cr-h2 { margin:0; font-size:clamp(2.6rem,4.6vw,4.6rem); }
 .val-heading .hi { font-style:italic; color:var(--violet); }
 
-.val-top-right { max-width:340px; margin-left:auto; padding-bottom:.3rem; }
+.val-top-right { display:flex; flex-direction:column; align-items:flex-end; gap:1.1rem; max-width:340px; margin-left:auto; }
 .val-copy { font-size:1.05rem; line-height:1.55; color:var(--muted); text-align:left; }
+.val-arrows { display:flex; gap:.6rem; }
 
-.val-track { overflow:hidden; }
-.val-grid { display:grid; grid-template-columns:.85fr 1fr 1fr 1fr; gap:0; }
-.val-col { position:relative; padding:0 2.2rem; }
-.val-col:first-child { padding-left:0; }
-.val-col:last-child { padding-right:0; }
-.val-col + .val-col::before { content:''; position:absolute; left:0; top:.2rem; bottom:.2rem; width:1px; background:var(--line-beige); }
-.val-num { font-family:'Newsreader',serif; font-style:italic; font-size:1.15rem; color:var(--gold); margin-bottom:.9rem; transition:color .25s; }
-.val-rule { display:block; width:36px; height:1px; background:var(--line-beige); margin-bottom:1.4rem; }
-.val-col h3 { font-family:'Newsreader',serif; font-weight:400; font-size:clamp(1.7rem,2.1vw,2.15rem); letter-spacing:-.01em; color:var(--navy-ink); margin-bottom:1rem; transition:transform .25s cubic-bezier(.22,1,.36,1); }
-.val-col p { font-size:.92rem; line-height:1.65; color:var(--muted); }
-.val-col:hover .val-num { color:var(--violet); }
-.val-col:hover h3 { transform:translateX(3px); }
-
-@media(max-width:1080px){
-  .sec--values { min-height:0; }
-  .val-top { gap:2rem; margin-bottom:3.2rem; }
-  .val-top-left { max-width:100%; }
-  .val-top-right { max-width:100%; margin-left:0; }
-  .val-track { overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; margin:0 -4rem; padding:0 4rem; }
-  .val-grid { grid-auto-flow:column; grid-auto-columns:78%; grid-template-columns:none; gap:1.6rem; }
-  .val-col { scroll-snap-align:start; padding:0 1.6rem 0 0; }
-  .val-col:first-child { padding-left:0; }
-  .val-col + .val-col::before { display:none; }
+/* ---- track ---- */
+.val-track {
+  display:flex; gap:24px; overflow-x:auto; overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none; cursor:grab; padding:.4rem .2rem 1.6rem;
 }
-@media(max-width:640px){
-  .val-track { margin:0 -1.4rem; padding:0 1.4rem; }
-  .val-grid { grid-auto-columns:86%; }
+.val-track::-webkit-scrollbar { display:none; }
+.val-track.dragging { cursor:grabbing; scroll-snap-type:none; }
+
+.val-card {
+  position:relative; flex:0 0 auto; width:min(370px,78vw); height:420px;
+  overflow:hidden; border:1px solid var(--line-beige); border-radius:4px;
+  background:var(--cream); scroll-snap-align:start;
+}
+.val-card-face { position:absolute; inset:0; padding:2.1rem 2.2rem; display:flex; flex-direction:column; }
+.val-card-top { display:flex; align-items:baseline; gap:.9rem; margin-bottom:1.7rem; }
+.val-card-num { font-family:'Newsreader',serif; font-style:italic; font-size:1.2rem; color:var(--gold-2); }
+.val-card-rule { display:block; width:36px; height:1px; background:var(--line-beige); }
+.val-card-face h3 { font-family:'Newsreader',serif; font-weight:400; font-size:1.9rem; letter-spacing:-.01em; margin-bottom:1.1rem; }
+.val-card-face--light h3 { color:var(--navy-ink); }
+.val-card-face p { font-size:.95rem; line-height:1.65; flex:1; }
+.val-card-face--light p { color:var(--muted); }
+.val-card-cta { font-family:'Poppins',sans-serif; font-size:.82rem; font-weight:500; display:inline-flex; align-items:center; gap:.5rem; margin-top:1.3rem; }
+.val-card-face--light .val-card-cta { color:var(--violet-deep); }
+.val-card-cta .arrow { display:inline-block; transition:transform .3s cubic-bezier(.22,1,.36,1); }
+.val-card:hover .val-card-cta .arrow, .val-card:focus-within .val-card-cta .arrow { transform:translateX(4px); }
+.val-card-shutter {
+  position:absolute; inset:0; clip-path:inset(100% 0 0 0);
+  transition:clip-path .62s cubic-bezier(.65,0,.35,1);
+}
+.val-card:hover .val-card-shutter, .val-card:focus-within .val-card-shutter { clip-path:inset(0% 0 0 0); }
+.val-card-face--dark { background:var(--navy-2); color:#fff; }
+.val-card-face--dark .val-card-num { color:var(--gold-2); }
+.val-card-face--dark .val-card-rule { background:rgba(139,140,240,.4); }
+.val-card-face--dark h3 { color:#fff; }
+.val-card-face--dark p { color:rgba(240,238,250,.72); }
+.val-card-face--dark .val-card-cta { color:var(--lav-hi); }
+
+@media(prefers-reduced-motion:reduce){
+  .val-card-shutter, .val-card-cta .arrow { transition:none; }
+}
+@media(max-width:1080px){
+  .val-top { gap:2rem; margin-bottom:2.8rem; }
+  .val-top-left { max-width:100%; }
+  .val-top-right { max-width:100%; align-items:flex-start; margin-left:0; }
+  .val-card { width:min(330px,80vw); height:400px; }
+}
+@media(max-width:700px){
+  .val-track { margin:0 -1.4rem; padding:.4rem 1.4rem 1.6rem; gap:16px; }
+  .val-card { width:87vw; height:auto; min-height:380px; }
 }
 
 /* ===================================================
@@ -660,37 +683,82 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
         </div>
       </div>
       <div class="val-top-right reveal reveal-d1">
+        <div class="val-arrows">
+          <button class="val-arrow prev" id="valuesPrev" aria-label="Previous value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button class="val-arrow next" id="valuesNext" aria-label="Next value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
         <p class="val-copy">The same values that go into our products drive the way we build our team.</p>
       </div>
     </div>
 
-    <div class="val-track">
-      <div class="val-grid" id="valuesRow">
-        <div class="val-col reveal">
-          <div class="val-num">i</div>
-          <span class="val-rule"></span>
+    <div class="val-track reveal reveal-d2" id="valuesTrack">
+      <article class="val-card">
+        <div class="val-card-face val-card-face--light">
+          <div class="val-card-top"><span class="val-card-num">i</span><span class="val-card-rule"></span></div>
           <h3>Integrity</h3>
           <p>Honest dealings, every time. Non-negotiable — and the first thing we look for in people, too.</p>
+          <span class="val-card-cta">Learn more <span class="arrow">&rarr;</span></span>
         </div>
-        <div class="val-col reveal reveal-d1">
-          <div class="val-num">ii</div>
-          <span class="val-rule"></span>
+        <div class="val-card-shutter">
+          <div class="val-card-face val-card-face--dark">
+            <div class="val-card-top"><span class="val-card-num">i</span><span class="val-card-rule"></span></div>
+            <h3>Integrity</h3>
+            <p>Honest dealings, every time. Non-negotiable — and the first thing we look for in people, too.</p>
+            <span class="val-card-cta">Learn more <span class="arrow">&rarr;</span></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="val-card">
+        <div class="val-card-face val-card-face--light">
+          <div class="val-card-top"><span class="val-card-num">ii</span><span class="val-card-rule"></span></div>
           <h3>Excellence</h3>
           <p>Best-in-class quality, automated manufacturing, rigorous testing and strict quality standards.</p>
+          <span class="val-card-cta">Learn more <span class="arrow">&rarr;</span></span>
         </div>
-        <div class="val-col reveal reveal-d2">
-          <div class="val-num">iii</div>
-          <span class="val-rule"></span>
+        <div class="val-card-shutter">
+          <div class="val-card-face val-card-face--dark">
+            <div class="val-card-top"><span class="val-card-num">ii</span><span class="val-card-rule"></span></div>
+            <h3>Excellence</h3>
+            <p>Best-in-class quality, automated manufacturing, rigorous testing and strict quality standards.</p>
+            <span class="val-card-cta">Learn more <span class="arrow">&rarr;</span></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="val-card">
+        <div class="val-card-face val-card-face--light">
+          <div class="val-card-top"><span class="val-card-num">iii</span><span class="val-card-rule"></span></div>
           <h3>Innovation</h3>
           <p>From India's first fully automatic radiator line in 2012 to evolving automation today.</p>
+          <span class="val-card-cta">Learn more <span class="arrow">&rarr;</span></span>
         </div>
-        <div class="val-col reveal reveal-d3">
-          <div class="val-num">iv</div>
-          <span class="val-rule"></span>
+        <div class="val-card-shutter">
+          <div class="val-card-face val-card-face--dark">
+            <div class="val-card-top"><span class="val-card-num">iii</span><span class="val-card-rule"></span></div>
+            <h3>Innovation</h3>
+            <p>From India's first fully automatic radiator line in 2012 to evolving automation today.</p>
+            <span class="val-card-cta">Learn more <span class="arrow">&rarr;</span></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="val-card">
+        <div class="val-card-face val-card-face--light">
+          <div class="val-card-top"><span class="val-card-num">iv</span><span class="val-card-rule"></span></div>
           <h3>Teamwork</h3>
           <p>Trust within the team and beyond. The people behind Triveni matter as much as the product.</p>
+          <span class="val-card-cta">Learn more <span class="arrow">&rarr;</span></span>
         </div>
-      </div>
+        <div class="val-card-shutter">
+          <div class="val-card-face val-card-face--dark">
+            <div class="val-card-top"><span class="val-card-num">iv</span><span class="val-card-rule"></span></div>
+            <h3>Teamwork</h3>
+            <p>Trust within the team and beyond. The people behind Triveni matter as much as the product.</p>
+            <span class="val-card-cta">Learn more <span class="arrow">&rarr;</span></span>
+          </div>
+        </div>
+      </article>
     </div>
 
   </div>
@@ -1039,6 +1107,116 @@ if (reduceMotion) {
   }, { threshold:.5 });
   counters.forEach(el => co.observe(el));
 }
+
+/* ---- values: infinite auto-scrolling card strip with shutter hover ---- */
+(function initValuesCarousel(){
+  const track = document.getElementById('valuesTrack');
+  if (!track) return;
+  const vPrev = document.getElementById('valuesPrev'), vNext = document.getElementById('valuesNext');
+  const realCards = Array.from(track.children);
+  const count = realCards.length;
+
+  // duplicate the set once before and once after for a seamless loop
+  const before = realCards.map(c => { const n = c.cloneNode(true); n.setAttribute('aria-hidden', 'true'); n.querySelectorAll('a,button').forEach(el => el.setAttribute('tabindex', '-1')); return n; });
+  const after  = realCards.map(c => { const n = c.cloneNode(true); n.setAttribute('aria-hidden', 'true'); n.querySelectorAll('a,button').forEach(el => el.setAttribute('tabindex', '-1')); return n; });
+  before.reverse().forEach(n => track.insertBefore(n, track.firstChild));
+  after.forEach(n => track.appendChild(n));
+
+  let setWidth = 0, cardStep = 0;
+  function measure(){
+    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+    const w = track.children[0].getBoundingClientRect().width;
+    cardStep = w + gap;
+    setWidth = cardStep * count;
+  }
+  measure();
+  track.scrollLeft = setWidth; // start on the real (middle) set
+
+  let paused = false, dragging = false, manualUntil = 0;
+  const AUTO_CYCLE_MS = 24000; // full loop duration
+  let speed = setWidth / AUTO_CYCLE_MS; // px per ms
+  function updateSpeed(){ speed = setWidth / AUTO_CYCLE_MS; }
+
+  function wrap(){
+    if (track.scrollLeft >= setWidth * 2) track.scrollLeft -= setWidth;
+    else if (track.scrollLeft <= 0) track.scrollLeft += setWidth;
+  }
+
+  let lastTs = null;
+  function raf(ts){
+    if (lastTs == null) lastTs = ts;
+    const dt = ts - lastTs; lastTs = ts;
+    const now = Date.now();
+    if (!reduceMotion && !paused && !dragging && now > manualUntil) {
+      track.scrollLeft += speed * dt;
+      wrap();
+    }
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  track.addEventListener('mouseenter', () => { paused = true; });
+  track.addEventListener('mouseleave', () => { paused = false; });
+  track.addEventListener('focusin', () => { paused = true; });
+  track.addEventListener('focusout', () => { paused = false; });
+
+  if (vPrev && vNext) {
+    vPrev.addEventListener('click', () => {
+      manualUntil = Date.now() + 3500;
+      track.scrollBy({ left: -cardStep, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+    vNext.addEventListener('click', () => {
+      manualUntil = Date.now() + 3500;
+      track.scrollBy({ left: cardStep, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+  }
+
+  // pointer drag-to-scroll (desktop) — native touch already handles swipe
+  let startX = 0, startScroll = 0;
+  track.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'touch') return; // let native touch scrolling handle it
+    dragging = true; track.classList.add('dragging');
+    startX = e.clientX; startScroll = track.scrollLeft;
+    track.setPointerCapture(e.pointerId);
+  });
+  track.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    track.scrollLeft = startScroll - (e.clientX - startX);
+  });
+  function endDrag(e){
+    if (!dragging) return;
+    dragging = false; track.classList.remove('dragging');
+    manualUntil = Date.now() + 2000;
+    wrap();
+  }
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+
+  // native touch swipe: pause auto-scroll during the gesture, then settle to the
+  // nearest card once the browser's own momentum scrolling comes to rest
+  let touchActive = false, settleTimer;
+  track.addEventListener('touchstart', () => { touchActive = true; paused = true; }, { passive: true });
+  track.addEventListener('touchend', () => {
+    touchActive = false;
+    manualUntil = Date.now() + 1200;
+    paused = false;
+  }, { passive: true });
+  track.addEventListener('scroll', () => {
+    if (!touchActive) return;
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(() => {
+      wrap();
+      const idx = Math.round(track.scrollLeft / cardStep);
+      track.scrollTo({ left: idx * cardStep, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }, 100);
+  }, { passive: true });
+
+  let resizeTimer;
+  addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { measure(); updateSpeed(); track.scrollLeft = setWidth; }, 200);
+  });
+})();
 
 /* ---- career areas row arrow scroll (mobile / tablet) ---- */
 const areasRow = document.getElementById('areasRow');
