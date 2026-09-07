@@ -443,15 +443,7 @@ button { font:inherit; }
 /* ===================================================
    PROFILE FORM
    =================================================== */
-.cr-form-head { max-width:34rem; margin:0 auto 3rem; text-align:center; }
-.cr-steps { display:flex; justify-content:center; align-items:flex-start; gap:0; max-width:52rem; margin:0 auto 3.6rem; }
-.cr-step { flex:1; position:relative; text-align:center; padding-top:2.4rem; }
-.cr-step::before { content:attr(data-n); position:absolute; top:0; left:50%; transform:translateX(-50%); width:34px; height:34px; border-radius:50%; background:#fff; border:1.5px solid var(--line-cool); display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-size:.78rem; font-weight:600; color:var(--muted-2); z-index:2; }
-.cr-step.active::before { border-color:var(--violet); color:var(--violet); background:#fff; }
-.cr-step::after { content:''; position:absolute; top:17px; left:-50%; width:100%; height:1px; background:var(--line-cool); z-index:1; }
-.cr-step:first-child::after { display:none; }
-.cr-step-label { font-family:'Poppins',sans-serif; font-size:.72rem; font-weight:500; color:var(--muted); letter-spacing:.02em; }
-.cr-step.active .cr-step-label { color:var(--navy-ink); font-weight:600; }
+.cr-form-head { max-width:34rem; margin:0 auto 3.6rem; text-align:center; }
 
 .cr-form-card { max-width:44rem; margin:0 auto; background:#fff; border:1px solid var(--line-beige); border-radius:24px; padding:3rem 3.2rem; box-shadow:0 30px 70px -40px rgba(36,31,46,.3); }
 .cr-fgroup { margin-bottom:2.2rem; }
@@ -490,9 +482,6 @@ button { font:inherit; }
 @media(max-width:700px){
   .cr-form-card { padding:2.2rem 1.5rem; border-radius:20px; }
   .cr-frow { grid-template-columns:1fr; }
-  .cr-steps { flex-wrap:wrap; row-gap:1.6rem; }
-  .cr-step { flex:0 0 46%; }
-  .cr-step:nth-child(3)::after { display:none; }
 }
 
 /* ===================================================
@@ -855,14 +844,7 @@ footer.site-footer { display:block; padding:0; border-top:none; text-align:left;
       <p class="cr-lead" style="margin:1rem auto 0;">It only takes a few minutes.</p>
     </div>
 
-    <div class="cr-steps reveal reveal-d1">
-      <div class="cr-step active" data-n="01"><div class="cr-step-label">Your Details</div></div>
-      <div class="cr-step" data-n="02"><div class="cr-step-label">Your Background</div></div>
-      <div class="cr-step" data-n="03"><div class="cr-step-label">Your Interests</div></div>
-      <div class="cr-step" data-n="04"><div class="cr-step-label">Upload CV</div></div>
-    </div>
-
-    <div class="cr-form-card reveal reveal-d2">
+    <div class="cr-form-card reveal reveal-d1">
       <form id="profileForm" novalidate>
 
         <div class="cr-fgroup">
