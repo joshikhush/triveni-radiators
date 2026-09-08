@@ -120,39 +120,84 @@ ul{margin:0;padding:0;list-style:none;}
 }
 
 /* ==========================================================
-   01 — HERO — clean, minimal, centered editorial composition
+   01 — HERO — full-bleed aerial photograph, centered left text
+   One authoritative layout. Image is decoupled from text height.
    ========================================================== */
 .tg-hero{background:#04091E;position:relative;overflow:hidden;
-  display:flex;align-items:flex-start;justify-content:center;
-  min-height:calc(100vh - var(--header-height));
-  min-height:calc(100svh - var(--header-height));
-  min-height:calc(100dvh - var(--header-height));}
-.tg-hero-panel{position:absolute;inset:0;
-  background:radial-gradient(ellipse 70% 60% at 50% 32%, rgba(79,70,229,.16) 0%, transparent 65%),
-    linear-gradient(160deg, #050B22 0%, #0A1338 55%, #12124A 100%);}
-.tg-hero-inner{position:relative;z-index:2;width:100%;max-width:760px;margin:0 auto;box-sizing:border-box;
-  padding:28px var(--pad) 76px;text-align:center;}
-.tg-eyebrow{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ind-lt);
-  margin-bottom:22px;opacity:0;transform:translateY(18px);
-  transition:opacity .7s var(--ez),transform .7s var(--ez);}
-.tg-hero.in .tg-eyebrow{opacity:1;transform:none;transition-delay:.1s;}
-.tg-h1{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(38px,5.2vw,64px);line-height:1.1;
-  letter-spacing:-.015em;color:#fff;
-  opacity:0;transform:translateY(24px);transition:opacity .8s var(--ez),transform .8s var(--ez);}
-.tg-hero.in .tg-h1{opacity:1;transform:none;transition-delay:.22s;}
-.tg-h1 .ac{color:#EFDDB8;}
-.tg-hero-divider{width:48px;height:2px;border-radius:1px;background:var(--ind-lt);margin:28px auto 0;
-  opacity:0;transform:scaleX(0);transform-origin:center;
-  transition:opacity .6s var(--ez),transform .6s var(--ez);}
-.tg-hero.in .tg-hero-divider{opacity:1;transform:scaleX(1);transition-delay:.36s;}
-.tg-sub{margin:28px auto 0;max-width:480px;font-size:16px;line-height:1.75;color:var(--on-d-2);
-  opacity:0;transform:translateY(18px);transition:opacity .8s var(--ez),transform .8s var(--ez);}
-.tg-hero.in .tg-sub{opacity:1;transform:none;transition-delay:.46s;}
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding-block:clamp(2.5rem,5vh,4rem);
+  padding-left:var(--pad);padding-right:var(--pad);
+  height:calc(100vh - var(--header-height));
+  height:calc(100svh - var(--header-height));
+  height:calc(100dvh - var(--header-height));}
+
+.tg-hero-image{position:absolute;inset:0;z-index:0;}
+.tg-hero-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:65% 50%;
+  transform:scale(1.02);transition:transform .7s ease-out;}
+.tg-hero.in .tg-hero-image img{transform:scale(1);}
+
+.tg-hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(100deg,
+      rgba(8,12,32,.92) 0%,
+      rgba(8,12,32,.78) 32%,
+      rgba(8,12,32,.35) 55%,
+      rgba(8,12,32,.05) 75%,
+      transparent 100%),
+    linear-gradient(0deg,
+      rgba(8,12,32,.55) 0%,
+      transparent 35%);}
+
+.tg-hero-content{position:relative;z-index:2;max-width:62ch;margin-block:auto;
+  opacity:0;transform:translateY(12px);
+  transition:opacity .7s ease-out,transform .7s ease-out;}
+.tg-hero.in .tg-hero-content{opacity:1;transform:none;}
+.tg-eyebrow{font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ind-lt);
+  margin-bottom:.75rem;}
+.tg-h1{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(2.75rem,5.2vw,5.25rem);line-height:1.04;
+  letter-spacing:-.02em;color:#fff;max-width:55vw;text-shadow:0 2px 24px rgba(8,12,32,.5);}
+.tg-h1-line{display:block;white-space:nowrap;}
+.tg-h1-line.ac{color:#EFDDB8;}
+.tg-hero-divider{width:60px;height:1px;background:var(--ind-lt);margin:22px 0 20px;}
+.tg-sub{max-width:520px;font-size:clamp(1rem,1.15vw,1.3rem);line-height:1.5;color:rgba(255,255,255,.9);
+  text-shadow:0 2px 24px rgba(8,12,32,.5);}
+
+.tg-hero-footer{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:2rem;
+  opacity:0;transition:opacity .7s ease-out;transition-delay:.25s;}
+.tg-hero.in .tg-hero-footer{opacity:1;}
+.tg-hero-stats{display:flex;align-items:center;}
+.tg-hero-stat{padding:0 20px;border-left:1px solid rgba(255,255,255,.18);
+  font-family:'Poppins',sans-serif;font-size:12.5px;letter-spacing:.03em;color:var(--on-d-2);white-space:nowrap;}
+.tg-hero-stat:first-child{border-left:none;padding-left:0;}
+.tg-hero-footer-right{display:flex;align-items:center;gap:2.4rem;}
+.tg-hero-year{font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;letter-spacing:.12em;color:var(--ind-lt);white-space:nowrap;}
+.tg-hero-scroll{display:flex;align-items:center;gap:10px;
+  font-family:'Poppins',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--on-d-2);}
+.tg-hero-scroll i{display:block;width:1px;height:22px;background:linear-gradient(180deg,rgba(255,255,255,.5),transparent);font-style:normal;}
+
 @media(prefers-reduced-motion:reduce){
-  .tg-eyebrow,.tg-h1,.tg-hero-divider,.tg-sub{opacity:1!important;transform:none!important;transition:none!important;}
+  .tg-hero-image img,.tg-hero-content,.tg-hero-footer{opacity:1!important;transform:none!important;transition:none!important;}
 }
-@media(max-width:600px){
-  .tg-hero-inner{padding:20px var(--pad) 60px;}
+@media(max-width:900px){
+  .tg-hero-content{max-width:none;}
+}
+@media(max-width:768px){
+  .tg-hero{
+    height:auto;min-height:88vh;
+  }
+  .tg-hero-overlay{
+    background:linear-gradient(180deg,
+      rgba(8,12,32,.68) 0%,
+      rgba(8,12,32,.78) 30%,
+      rgba(8,12,32,.85) 60%,
+      rgba(8,12,32,.9) 100%);
+  }
+  .tg-h1{font-size:clamp(30px,10vw,46px);max-width:none;line-height:1.02;}
+  .tg-h1-line{white-space:normal;}
+  .tg-sub{max-width:none;font-size:16px;}
+  .tg-hero-footer{flex-direction:column;align-items:flex-start;gap:1rem;margin-top:2rem;}
+  .tg-hero-footer-right{width:100%;justify-content:space-between;}
+  .tg-hero-scroll{display:none;}
 }
 
 /* ==========================================================
@@ -458,12 +503,26 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
 
 <!-- ===================== 01 — HERO ===================== -->
 <header class="tg-hero" id="tgHero">
-  <div class="tg-hero-panel" aria-hidden="true"></div>
-  <div class="tg-hero-inner">
+  <div class="tg-hero-image" aria-hidden="true"><img src="assets/triveni%20grp%20hero.jpg" alt="Aerial view of the Triveni Group's manufacturing facility in Naini, surrounded by greenery" loading="eager"></div>
+  <div class="tg-hero-overlay" aria-hidden="true"></div>
+
+  <div class="tg-hero-content">
     <div class="tg-eyebrow">Triveni Group</div>
-    <h1 class="tg-h1">Built across generations.<br><span class="ac">Growing with purpose.</span></h1>
+    <h1 class="tg-h1"><span class="tg-h1-line">Built across generations.</span><span class="tg-h1-line ac">Growing with purpose.</span></h1>
     <div class="tg-hero-divider" aria-hidden="true"></div>
     <p class="tg-sub">From a single unit in Allahabad in 1991 to a multi-sector manufacturing group spanning telecom &amp; meter components, wire harnesses for white goods, and transformer radiators. This is the Triveni Group's documented journey, 1991–2026.</p>
+  </div>
+
+  <div class="tg-hero-footer">
+    <div class="tg-hero-stats">
+      <span class="tg-hero-stat">35+ Years</span>
+      <span class="tg-hero-stat">3 Sectors</span>
+      <span class="tg-hero-stat">Allahabad</span>
+    </div>
+    <div class="tg-hero-footer-right">
+      <div class="tg-hero-year">1991 — 2026</div>
+      <div class="tg-hero-scroll" aria-hidden="true"><span>Scroll</span><i></i></div>
+    </div>
   </div>
 </header>
 
