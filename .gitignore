@@ -4,3 +4,4 @@ triveni_docs
 triveni_template*
 *.docx
 node_modules
+assets/videos/*.mov

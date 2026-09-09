@@ -7,12 +7,15 @@
 <meta name="description" content="Triveni Radiators (Triveni Electroplast Pvt. Ltd., Naini, Prayagraj) manufactures pressed-steel transformer radiators up to 765 kV class — trusted by Siemens Energy, GE, ABB, TBEA, CG Power and Shirdi Sai Electricals.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================
    DESIGN TOKENS — indigo is the only accent. No other hues.
    ========================================================== */
 :root{
+  --nav-h:87px; /* #nav's rendered height (18px padding + 34px logo + 1px border), constant
+                   across breakpoints -- used by .hero to size itself against the *remaining*
+                   viewport below the in-flow nav, not the full 100svh. */
   --navy:#0C1830;
   --navy-2:#16274A;
   --navy-3:#22375F;
@@ -240,75 +243,129 @@ ul{margin:0;padding:0;list-style:none;}
 .nav-toggle span{display:block;width:22px;height:2px;background:var(--white);}
 
 /* ==========================================================
-   HERO
+   HERO — video-first cinematic redesign. The drone footage is the primary
+   visual (near-full-viewport, cover-cropped, no heavy full-frame overlay);
+   typography sits lower-left, small and restrained, over a scrim localised
+   to just that corner so the rest of the frame stays clear. The stats/
+   clients strip that used to live pinned inside an oversized (158svh) hero
+   now lives in its own section (.hero-stats) directly below — same content,
+   unchanged, just no longer forcing the hero itself to be that tall.
    ========================================================== */
 .hero{
-  position:relative;min-height:158svh;overflow:hidden;
-  display:block;isolation:isolate;padding:0;
-  background:var(--navy);
+  position:relative;height:calc(100svh - var(--nav-h));min-height:560px;overflow:hidden;
+  isolation:isolate;background:var(--navy);
 }
-/* layer 1 — sky gradient. Renders instantly, costs nothing, and is the fallback if the
-   photo below fails to load. Extended to resolve at a light horizon at the very bottom of
-   the taller section, meeting the ground plane the (fallback) image sits on. */
-.hero-sky{position:absolute;inset:0;z-index:0;background:linear-gradient(178deg,#0B1730 0%,#16274A 26%,#26406E 44%,#3A5488 60%,#6E86AB 76%,#A8B6CC 100%);}
-
-/* INTERIM FALLBACK, still — no ML/segmentation tooling is available in this environment to
-   produce a clean transformer cutout, so this remains the full approved hero photo rather
-   than a true transparent .unit cutout. The target tall-hero composition assumes a cutout
-   sized by width (min(74%,1180px)) and bottom-anchored with sky visible around it; sizing
-   our landscape fallback photo that way would leave a large dead-sky gap in the lower half
-   of the now much-taller section — exactly what the target composition is designed to avoid.
-   Kept it full-bleed cover across the whole 158svh section instead: still delivers "scroll
-   once, see more of the transformer," just without sky visible around a distinct silhouette.
-   Swap in the true .unit treatment (commented below) once a real cutout asset exists.
-   Brightness/contrast lifted per instruction — flag: if this still reads too dark, the fix
-   is a brighter source photo, not more filtering. */
-.hero-media{position:absolute;inset:0;z-index:1;}
-.hero-media img{width:100%;height:100%;object-fit:cover;object-position:65% 30%;filter:brightness(1.18) saturate(.9) contrast(1.04);}
-/* soft indigo glow for separation from the navy. Spec places this "behind the machine,"
-   which assumes a transparent cutout with visible edges — our full-bleed fallback photo has
-   no such edge for a glow to peek around, so this sits ABOVE the photo (z-index 2) instead,
-   reading as a soft indigo colour-wash in the lower-right rather than a rim light. */
-.hero-glow{position:absolute;right:4%;bottom:12%;width:52%;aspect-ratio:1;z-index:2;background:radial-gradient(circle,rgba(79,70,229,.22),transparent 62%);filter:blur(60px);pointer-events:none;}
-.hero-veil{
-  position:absolute;inset:0;z-index:3;
-  background:linear-gradient(90deg,rgba(12,24,48,.98) 0%,rgba(12,24,48,.95) 30%,rgba(12,24,48,.82) 50%,rgba(12,24,48,.48) 70%,rgba(12,24,48,.2) 100%);
+.hero-media{position:absolute;inset:0;z-index:1;background:#0B1730;}
+.hero-media video,.hero-media .hero-media-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(1.04) saturate(1.05) contrast(1.02);}
+/* per-clip crop — chosen by inspecting each clip's actual composition rather
+   than sharing one guessed offset: video 1's building sits centred a little
+   below frame-middle, video 2's sits higher, closer to the top third. */
+#heroVideo1,#heroVideo1 ~ .hero-media-fallback{object-position:center 46%;}
+#heroVideo2{object-position:center 32%;}
+/* two videos stacked in the same box, crossfaded via opacity — JS keeps exactly one
+   .is-active at a time and drives the 1→2→1 alternation; a slow opacity transition (not a
+   hard cut) is the "subtle crossfade" between clips. */
+.hero-video{opacity:0;transition:opacity 1.4s ease;}
+.hero-video.is-active{opacity:1;}
+.hero-media-fallback{display:none;}
+@media(prefers-reduced-motion:reduce){
+  .hero-video{display:none;}
+  .hero-media-fallback{display:block;}
+  .hero-seq{display:none;}
 }
-/* layer — decorative dot arc, scaled with the taller section. */
-.hero-arc{position:absolute;right:-10%;bottom:-8%;width:88%;aspect-ratio:1;z-index:2;opacity:.4;pointer-events:none;color:var(--ind-lt);}
 
-/* the first screenful — text sits centred here, exactly one viewport tall, so on load the
-   composition reads as a normal full-height hero. z-index 4, not 3, because the fallback
-   also needs .hero-veil (z-index 3) for text legibility over a full-bleed photo — a true
-   cutout composition, with nothing behind the text column, wouldn't need a veil at all. */
-/* top padding used to reserve space under the fixed nav that overlaid the hero; the nav is
-   now in normal flow above the hero instead, so no compensation is needed here. */
-.hero-stage{position:relative;z-index:4;height:100svh;display:flex;align-items:center;}
-.hero-col{max-width:54%;}
-.hero-eyebrow{font-size:12px;font-weight:500;color:var(--ind-lt);letter-spacing:.14em;text-transform:uppercase;margin-bottom:26px;}
-.hero-title{font-size:clamp(40px,5vw,78px);font-weight:400;line-height:1.08;letter-spacing:-.02em;color:var(--white);}
-.hero-title .l2{color:rgba(255,255,255,.55);}
-.hero-sub{margin-top:34px;max-width:34ch;font-size:clamp(18px,1.6vw,24px);font-weight:400;line-height:1.5;letter-spacing:-.01em;color:var(--on-d-2);}
-.hero-ctas{display:flex;align-items:center;gap:24px;margin-top:48px;margin-bottom:112px;flex-wrap:wrap;}
-/* scoped to hero only -- does not touch the sitewide .btn padding used elsewhere */
-.hero-ctas .btn{padding:17px 32px;}
-/* solid indigo read as visually muted against the hero's dark photo background, so the
-   primary CTA here uses the white-button pattern already used elsewhere on the site (e.g.
-   .tl-navbtn in Milestones) -- white by default, flips to indigo on hover. */
-.hero-ctas .btn-p{background:var(--white);color:var(--ink);}
+/* very light, neutral dark wash (~9% flat -- inside the "8-12%" brief) plus one small, soft
+   concentration directly behind the headline for extra contrast right where it's actually
+   needed. Neutral near-black, not navy/blue, so it reads as a light cinematic dimming rather
+   than a colour cast -- the footage's own greens/blues stay natural everywhere else.
+   Readability now leans on the typography (weight, stroke, shadow) instead of this layer. */
+.hero-scrim{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    radial-gradient(ellipse 42% 30% at 50% 45%,rgba(6,10,20,.16) 0%,rgba(6,10,20,.06) 55%,rgba(6,10,20,0) 82%),
+    rgba(6,10,20,.09);
+}
+
+/* content centred on the frame -- no left column, no rule, no oversized numeral. Flex-
+   centred on the whole hero box. */
+.hero-content{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;padding:0 var(--pad);text-align:center;}
+.hero-center{max-width:680px;}
+.hero-eyebrow{font-size:12px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#fff;margin-bottom:22px;text-shadow:0 1px 6px rgba(0,0,0,.4);}
+/* now that .hero-scrim is very light, legibility comes from the type itself: the heaviest
+   weight this page loads (700, added specifically for this), tighter tracking, and a tight,
+   low-blur shadow -- not a glow -- rather than from darkening the video further. */
+.hero-title{font-size:clamp(34px,5vw,80px);font-weight:700;line-height:1.08;letter-spacing:-.02em;text-transform:uppercase;text-shadow:0 2px 10px rgba(0,0,0,.4);}
+/* sitewide warm-ivory token (matches products.html/contact.html's --ivory) for line 1 only --
+   index.html's own palette doesn't define it, since this hero is the first place on this
+   page calling for a warm (not pure) white. */
+.hero-title .l1{color:#FAF6EC;}
+/* solid deep-navy fill, no stroke/outline -- simpler than the navy-fill-plus-outline
+   treatment this went through earlier. The genuine italic weight stays loaded (see the font
+   <link> in <head>: family=Schibsted+Grotesk:ital,wght@...;1,700) since real italic glyphs
+   simply look better than a synthetic skew, independent of whether there's a stroke. */
+.hero-title em{font-style:italic;color:var(--navy);}
+
+/* shorter laptop heights (a real 768-820px, not just a narrow phone) get a slightly smaller
+   headline and tighter spacing so the centred block never crowds the bottom UI row. */
+@media(max-height:820px) and (min-width:861px){
+  .hero-title{font-size:clamp(30px,4.4vw,60px);}
+  .hero-eyebrow{margin-bottom:16px;}
+  .hero-ctas{margin-top:26px;}
+}
+
+/* centred pill CTAs beneath the headline -- primary solid white/navy with the shared violet
+   .ar-badge, secondary a thin-bordered transparent pill (reuses .btn-ghost-dark, already
+   defined sitewide) rather than the plain text link used in earlier passes. */
+.hero-ctas{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:36px;flex-wrap:wrap;}
+/* sitewide .btn only carries a 4px corner (--radius) -- the hero pair needs the fully
+   rounded "pill" shape from the reference, scoped to just these two buttons. */
+.hero-ctas .btn{padding:15px 30px;font-size:14px;border-radius:999px;}
+.hero-ctas .btn-p{background:var(--white);color:var(--navy);box-shadow:0 8px 20px -10px rgba(0,0,0,.55);}
 .hero-ctas .btn-p .ar-badge{background:var(--ind);color:#fff;}
-.hero-ctas .btn-p:hover,.hero-ctas .btn-p:focus-visible{background:var(--ind);color:#fff;}
+.hero-ctas .btn-p:hover,.hero-ctas .btn-p:focus-visible{background:var(--ind);color:#fff;box-shadow:0 12px 30px -8px rgba(79,70,229,.55);}
 .hero-ctas .btn-p:hover .ar-badge,.hero-ctas .btn-p:focus-visible .ar-badge{background:#fff;color:var(--ind);}
-
-/* lower band — occupies the part of the section revealed on first scroll, so screen two
-   isn't just empty sky/photo. Sits over the image with its own gradient (::before) for
-   legibility, independent of .hero-veil (which only covers the first screen's text side). */
-.hero-band{position:absolute;left:0;right:0;bottom:0;z-index:4;padding:0 0 72px;}
-.hero-band::before{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:190%;
-  background:linear-gradient(180deg,rgba(12,24,48,0) 0%,rgba(12,24,48,.72) 42%,rgba(12,24,48,.94) 100%);
-  z-index:-1;pointer-events:none;
+/* the sitewide .btn-ghost-dark default (30%-opacity border, transparent fill) reads as
+   "barely there" once .hero-scrim is this light -- a genuinely visible border plus a slight
+   translucent dark fill so the pill shape reads clearly no matter what's behind it. */
+.hero-ctas .btn-ghost-dark{
+  background:rgba(6,10,20,.3);border-color:rgba(255,255,255,.75);color:#fff;
+  text-shadow:0 1px 6px rgba(0,0,0,.4);box-shadow:0 8px 22px -12px rgba(0,0,0,.55);
 }
+.hero-ctas .btn-ghost-dark:hover,.hero-ctas .btn-ghost-dark:focus-visible{
+  background:rgba(6,10,20,.42);border-color:#fff;
+  box-shadow:0 0 0 1px rgba(255,255,255,.7),0 10px 26px -10px rgba(0,0,0,.6);
+}
+/* secondary's arrow badge stays outlined/transparent, matching its own border-only style --
+   the shared .ar-badge default (solid indigo fill) is only right for the primary button. */
+.hero-ctas .btn-ghost-dark .ar-badge{background:transparent;border:1px solid rgba(255,255,255,.75);color:#fff;}
+.hero-ctas .btn-ghost-dark:hover .ar-badge,.hero-ctas .btn-ghost-dark:focus-visible .ar-badge{border-color:#fff;background:rgba(255,255,255,.12);}
+
+/* the only two UI details in the frame -- tiny, uppercase, low-contrast, no cards, no large
+   arrows. The sequence number/bars reflect whichever clip the crossfade script currently
+   has active (see the hero-video script). */
+.hero-scroll{position:absolute;left:0;bottom:0;z-index:4;padding:0 var(--pad) clamp(26px,4.5vh,42px);
+  display:flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);text-shadow:0 1px 6px rgba(0,0,0,.4);
+  pointer-events:none;}
+.hero-scroll svg{width:11px;height:11px;}
+.hero-seq{position:absolute;right:0;bottom:0;z-index:4;padding:0 var(--pad) clamp(26px,4.5vh,42px);
+  display:flex;flex-direction:column;align-items:flex-end;gap:9px;pointer-events:none;}
+.hero-seq-track{display:flex;gap:6px;}
+.hero-seq-bar{width:22px;height:2px;border-radius:1px;background:rgba(255,255,255,.28);transition:background .4s ease;}
+.hero-seq-bar.is-active{background:rgba(255,255,255,.92);}
+.hero-seq-label{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:.08em;color:rgba(255,255,255,.5);text-shadow:0 1px 6px rgba(0,0,0,.4);}
+.hero-seq-active{color:rgba(255,255,255,.9);}
+.hero-seq-sep{opacity:.5;}
+/* re-declared here (after .hero-seq's own definition) so it actually wins the cascade --
+   the earlier copy of this rule, up near the video/reduced-motion block, was being overridden
+   right back to display:flex by this file's later, unconditional .hero-seq rule. */
+@media(prefers-reduced-motion:reduce){.hero-seq{display:none;}}
+
+/* stats + clients strip, relocated out of the hero into its own solid-navy section
+   directly below (content/markup unchanged — see .hero-band inside it) so the hero
+   itself can stay a lean, near-full-viewport cinematic frame. */
+.hero-stats{background:var(--navy);padding:64px 0;position:relative;}
+.hero-band{position:relative;}
 .hero-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));}
 .hero-fact{padding:0 40px;border-left:1px solid var(--line-d);}
 .hero-fact:first-child{padding-left:0;border-left:none;}
@@ -329,24 +386,27 @@ ul{margin:0;padding:0;list-style:none;}
    text for visual consistency. */
 .hero-client{font-size:15px;color:var(--on-d-2);}
 
-@media(max-width:1100px){.hero-col{max-width:62%;}}
 @media(max-width:860px){
-  /* tall hero doesn't work below 860px (mostly empty sky on a phone) — revert to natural
-     height: text block, then the image as a normal in-flow block below it, then the band
-     stacked below that on solid navy, hero ends naturally. */
-  .hero{min-height:auto;padding:0;}
-  .hero-stage{height:auto;}
-  .hero-media{position:relative;inset:auto;width:112%;margin:48px 0 0 -6%;z-index:1;}
-  .hero-media img{width:100%;height:auto;object-fit:contain;object-position:center;}
-  .hero-arc{display:none;}
-  .hero-veil{display:none;}
-  .hero-glow{display:none;}
-  .hero-col{max-width:100%;}
-  /* band sits on solid navy below the image now, not over it -- the sky gradient's light
-     lower stop still stretches across the whole (now auto-height) .hero, so give the band
-     its own opaque navy background rather than relying on what's behind it. */
-  .hero-band{position:relative;left:auto;right:auto;bottom:auto;padding:40px 0 32px;background:var(--navy);}
-  .hero-band::before{display:none;}
+  /* video stays the dominant visual on mobile too -- the hero takes the media's own aspect
+     ratio instead of a viewport height, and the composition stays centred (per the brief),
+     just against a taller crop with its own object-position so the factory reads clearly. */
+  .hero{height:auto;aspect-ratio:3/4;min-height:520px;}
+  #heroVideo1,#heroVideo1 ~ .hero-media-fallback{object-position:center 40%;}
+  #heroVideo2{object-position:center 30%;}
+  /* same very light neutral wash, just a touch stronger -- mobile text sits closer to the
+     footage's busier upper area on this taller crop, so it needs slightly more contrast,
+     while staying well inside "subtle," not a heavy overlay. */
+  .hero-scrim{
+    background:
+      radial-gradient(ellipse 70% 26% at 50% 40%,rgba(6,10,20,.22) 0%,rgba(6,10,20,.08) 58%,rgba(6,10,20,0) 85%),
+      rgba(6,10,20,.12);
+  }
+  .hero-title{font-size:clamp(28px,8vw,44px);}
+  .hero-ctas{margin-top:26px;gap:14px;}
+  .hero-ctas .btn{padding:13px 24px;font-size:13px;}
+  .hero-seq{padding:0 var(--pad) 14px;}
+  .hero-scroll{padding:0 var(--pad) 14px;}
+  .hero-stats{padding:44px 0;}
   .hero-facts{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:28px;}
   .hero-fact{padding:0 16px;}
   .hero-fact:first-child{padding-left:0;}
@@ -355,26 +415,8 @@ ul{margin:0;padding:0;list-style:none;}
   .hero-clients-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 16px;}
 }
 @media(max-width:480px){
-  /* at this width "Explore Radiators" + "Let's Connect" no longer fit on one line (224px +
-     24px gap + 129px > available column width), so flex-wrap was dropping the second button
-     onto its own line with no real alignment to the first -- stack them deliberately instead
-     with a clean, consistent gap, rather than leaving the wrap to fall wherever it lands. */
-  .hero-ctas{flex-direction:column;align-items:flex-start;gap:16px;}
+  .hero{aspect-ratio:3/4.4;}
 }
-
-/* -- TARGET COMPOSITION (uncomment/adapt once a real cutout asset exists) --
-.hero-media{display:none;}
-.hero-unit{
-  position:absolute;right:-3%;bottom:0;z-index:2;
-  width:min(74%,1180px);height:auto;
-  object-fit:contain;object-position:bottom right;
-  pointer-events:none;
-}
-@media(max-width:1100px){.hero-unit{width:64%;}}
-@media(max-width:860px){
-  .hero-unit{position:relative;right:auto;bottom:auto;width:112%;margin:48px 0 0 -6%;}
-}
--- */
 
 /* ==========================================================
    REVEAL
@@ -910,32 +952,42 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
 </nav>
 
 <!-- ===================== HERO ===================== -->
-<!-- Client's Excel brief calls for "Drone Shot + Video" here; no drone footage has been supplied
-     yet. Layered composition per spec (sky/arc/unit/content), now ~1.7 viewport heights so the
-     hero takes two scrolls to clear; the "unit" layer is an interim fallback using the approved
-     cinematic stock photo (see the CSS comments above .hero for why a real cutout couldn't be
-     produced here) rather than a true transparent transformer cutout. -->
+<!-- Full-screen cinematic redesign: the two drone clips are the sole visual (near-full-
+     viewport, full-bleed cover, only a subtle uniform darkening + soft centre radial —
+     see .hero-scrim), with the brand headline centred on the frame rather than in a left
+     column. No CTAs in the hero itself; those live one section down in .hero-stats,
+     unchanged, right below. -->
 <section class="hero" id="top">
-  <div class="hero-sky"></div>
-  <div class="hero-media"><img src="assets/hero%20img.png" alt="High-voltage power transformer at dusk" fetchpriority="high"></div>
-  <svg class="hero-arc" viewBox="0 0 400 400" fill="currentColor" aria-hidden="true"><circle cx="320" cy="400" r="3" opacity="1"/><circle cx="323" cy="379" r="3" opacity="1"/><circle cx="331" cy="360" r="3" opacity="1"/><circle cx="343" cy="343" r="3" opacity="1"/><circle cx="360" cy="331" r="3" opacity="1"/><circle cx="379" cy="323" r="3" opacity="1"/><circle cx="400" cy="320" r="3" opacity="1"/><circle cx="260" cy="400" r="2.5" opacity="0.85"/><circle cx="265" cy="364" r="2.5" opacity="0.85"/><circle cx="279" cy="330" r="2.5" opacity="0.85"/><circle cx="301" cy="301" r="2.5" opacity="0.85"/><circle cx="330" cy="279" r="2.5" opacity="0.85"/><circle cx="364" cy="265" r="2.5" opacity="0.85"/><circle cx="400" cy="260" r="2.5" opacity="0.85"/><circle cx="200" cy="400" r="2" opacity="0.65"/><circle cx="207" cy="348" r="2" opacity="0.65"/><circle cx="227" cy="300" r="2" opacity="0.65"/><circle cx="259" cy="259" r="2" opacity="0.65"/><circle cx="300" cy="227" r="2" opacity="0.65"/><circle cx="348" cy="207" r="2" opacity="0.65"/><circle cx="400" cy="200" r="2" opacity="0.65"/><circle cx="140" cy="400" r="1.5" opacity="0.45"/><circle cx="149" cy="333" r="1.5" opacity="0.45"/><circle cx="175" cy="270" r="1.5" opacity="0.45"/><circle cx="216" cy="216" r="1.5" opacity="0.45"/><circle cx="270" cy="175" r="1.5" opacity="0.45"/><circle cx="333" cy="149" r="1.5" opacity="0.45"/><circle cx="400" cy="140" r="1.5" opacity="0.45"/><circle cx="80" cy="400" r="1" opacity="0.28"/><circle cx="91" cy="317" r="1" opacity="0.28"/><circle cx="123" cy="240" r="1" opacity="0.28"/><circle cx="174" cy="174" r="1" opacity="0.28"/><circle cx="240" cy="123" r="1" opacity="0.28"/><circle cx="317" cy="91" r="1" opacity="0.28"/><circle cx="400" cy="80" r="1" opacity="0.28"/></svg>
-  <div class="hero-glow"></div>
-  <div class="hero-veil"></div>
-  <div class="hero-stage">
-    <div class="w">
-      <div class="hero-col">
-        <div class="hero-eyebrow">Est. 2012 · Naini, Prayagraj</div>
-        <h1 class="hero-title">Engineered for the Transformers That <span class="l2">Power Progress.</span></h1>
-        <p class="hero-sub">Pressed-steel radiators for power transformers — approved by POWERGRID to 765 kV and running in Siemens, GE, Hitachi and Toshiba units.</p>
-        <div class="hero-ctas">
-          <a href="#product" class="btn btn-primary btn-p">Explore Radiators <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
-          <a href="#contact" class="hero-secondary">Let's Connect <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
-        </div>
+  <div class="hero-media">
+    <video class="hero-video is-active" id="heroVideo1" muted autoplay playsinline preload="auto" poster="assets/home%20hero%20poster.jpg" fetchpriority="high" aria-hidden="true">
+      <source src="assets/videos/home%20hero%20drone%201.mp4" type="video/mp4">
+    </video>
+    <video class="hero-video" id="heroVideo2" muted playsinline preload="none" aria-hidden="true">
+      <source src="assets/videos/home%20hero%20drone%202.mp4" type="video/mp4">
+    </video>
+    <img class="hero-media-fallback" src="assets/home%20hero%20poster.jpg" alt="Aerial drone view of Triveni's manufacturing facility in Naini, Prayagraj">
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-center">
+      <div class="hero-eyebrow">Triveni Radiators</div>
+      <h1 class="hero-title"><span class="l1">Where power</span><br><em>takes shape.</em></h1>
+      <div class="hero-ctas">
+        <a href="products.html" class="btn btn-primary btn-p">Explore Radiators <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
+        <a href="contact.html" class="btn btn-ghost-dark">Let's Connect <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
       </div>
     </div>
   </div>
-  <div class="hero-band">
-    <div class="w">
+  <div class="hero-scroll" aria-hidden="true">Scroll to explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+  <div class="hero-seq" id="heroSeq" aria-hidden="true">
+    <div class="hero-seq-track"><span class="hero-seq-bar is-active" id="heroSeqBar1"></span><span class="hero-seq-bar" id="heroSeqBar2"></span></div>
+    <div class="hero-seq-label"><span class="hero-seq-active" id="heroSeqActive">01</span><span class="hero-seq-sep">/</span><span>02</span></div>
+  </div>
+</section>
+
+<section class="hero-stats">
+  <div class="w">
+    <div class="hero-band">
       <!-- 2,700+ indirect exports and 9 export markets are on the unverified-claims list --
            confirm with the client before publishing. 2012 and 765kV are already verified
            elsewhere on the page (Milestones, Credential). -->
@@ -1455,6 +1507,73 @@ function updateNav(){
 addEventListener('scroll', function(){
   if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
 }, {passive:true});
+
+/* hero background video — two silent, muted drone clips crossfaded 1→2→1→2… via opacity.
+   Native controls/timeline are never rendered (no `controls` attribute anywhere). Skipped
+   entirely under prefers-reduced-motion — the CSS above swaps in the static poster instead,
+   so this never even touches play(). The second clip is only primed once the first is
+   confirmed playing, so it never competes with page load for bandwidth. */
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var v1 = document.getElementById('heroVideo1');
+  var v2 = document.getElementById('heroVideo2');
+  if (!v1 || !v2) return;
+
+  var CROSSFADE_LEAD = 1.1; // seconds before a clip's natural end to start crossfading
+  var active = v1;
+  var switching = false;
+  var secondVideoPrimed = false;
+  var seqActive = document.getElementById('heroSeqActive');
+  var seqBar1 = document.getElementById('heroSeqBar1');
+  var seqBar2 = document.getElementById('heroSeqBar2');
+
+  function primeSecondVideo(){
+    if (secondVideoPrimed) return;
+    secondVideoPrimed = true;
+    v2.preload = 'auto';
+    v2.load();
+  }
+  v1.addEventListener('playing', function(){ primeSecondVideo(); }, { once: true });
+
+  function swap(){
+    if (switching) return;
+    switching = true;
+    var incoming = active === v1 ? v2 : v1;
+    var outgoing = active;
+    incoming.currentTime = 0;
+    var playPromise = incoming.play();
+    if (playPromise && playPromise.catch) playPromise.catch(function(){});
+    // let the incoming clip paint a couple of frames before crossfading opacity, so it
+    // never fades in on a blank frame
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        outgoing.classList.remove('is-active');
+        incoming.classList.add('is-active');
+        active = incoming;
+        switching = false;
+        if (seqActive) seqActive.textContent = incoming === v1 ? '01' : '02';
+        if (seqBar1 && seqBar2) {
+          seqBar1.classList.toggle('is-active', incoming === v1);
+          seqBar2.classList.toggle('is-active', incoming === v2);
+        }
+      });
+    });
+  }
+
+  function onTimeUpdate(){
+    if (switching || this !== active) return;
+    if (this.duration && this.currentTime >= this.duration - CROSSFADE_LEAD) swap();
+  }
+  v1.addEventListener('timeupdate', onTimeUpdate);
+  v2.addEventListener('timeupdate', onTimeUpdate);
+
+  // safety net in case a clip ends before timeupdate caught it, so it never freezes on a
+  // last frame instead of continuing the loop
+  function onEnded(){ if (this === active) swap(); }
+  v1.addEventListener('ended', onEnded);
+  v2.addEventListener('ended', onEnded);
+})();
 
 /* hero lower-band stat count-up — triggers once via IntersectionObserver, then unobserves
    so re-scrolling past the band never re-runs it. Self-contained (own reduced-motion check)
