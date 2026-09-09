@@ -217,6 +217,11 @@ button{font:inherit;background:none;border:none;cursor:pointer;}
 .enq-upload .txt b{display:block;color:var(--navy-ink);font-weight:600;font-size:.82rem;}
 
 .enq-submit{width:100%;justify-content:center;border:none;cursor:pointer;margin-top:.4rem;}
+.enq-submit:disabled{opacity:.6;cursor:not-allowed;}
+.enq-submit:disabled:hover{background:var(--violet-deep);transform:none;}
+.enq-error{display:none;align-items:flex-start;gap:.65rem;margin-top:1rem;padding:.9rem 1.1rem;border-radius:12px;background:rgba(178,42,34,.06);border:1px solid rgba(178,42,34,.22);color:#8a2a22;font-size:.85rem;line-height:1.55;}
+.enq-error.show{display:flex;}
+.enq-error svg{width:16px;height:16px;flex-shrink:0;margin-top:.16rem;}
 .enq-success{display:none;text-align:center;padding:3rem 1rem;}
 .enq-success .chk{width:58px;height:58px;border-radius:50%;background:var(--violet-deep);display:flex;align-items:center;justify-content:center;margin:0 auto 1.3rem;color:#fff;}
 .enq-success .chk svg{width:24px;height:24px;}
@@ -513,6 +518,10 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
             </div>
 
             <button type="submit" class="btn btn-primary enq-submit">Submit Enquiry <span>&rarr;</span></button>
+            <div class="enq-error" id="enquiryError" role="alert">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+              <span id="enquiryErrorText"></span>
+            </div>
           </form>
 
           <div class="enq-success" id="enquirySuccess">
@@ -662,20 +671,55 @@ document.querySelectorAll('.enq-upload input[type=file]').forEach(inp => {
 });
 
 /* ── enquiry form submit ──
-   Client-side validation + a polished success state now; wire ENQUIRY_ENDPOINT
-   to a real backend/serverless function to actually send the email + WhatsApp
-   notifications server-side (never call those APIs with keys from the browser). */
+   Posts to the /api/enquiry serverless function (email + WhatsApp are sent
+   server-side — no credentials live in this file). The success state only
+   appears once the backend confirms the enquiry was actually processed. */
 const ENQUIRY_ENDPOINT = '/api/enquiry';
 const ef = document.getElementById('enquiryForm');
 if (ef) {
-  ef.addEventListener('submit', e => {
+  const submitBtn = ef.querySelector('.enq-submit');
+  const submitBtnDefaultHTML = submitBtn ? submitBtn.innerHTML : '';
+  const errorBox = document.getElementById('enquiryError');
+  const errorText = document.getElementById('enquiryErrorText');
+  let submitting = false;
+
+  function showEnquiryError(msg) {
+    if (!errorBox || !errorText) return;
+    errorText.textContent = msg;
+    errorBox.classList.add('show');
+  }
+  function hideEnquiryError() {
+    if (errorBox) errorBox.classList.remove('show');
+  }
+
+  ef.addEventListener('submit', async e => {
     e.preventDefault();
+    if (submitting) return;
     if (!ef.checkValidity()) { ef.reportValidity(); return; }
-    const data = new FormData(ef);
-    fetch(ENQUIRY_ENDPOINT, { method: 'POST', body: data }).catch(() => {});
-    ef.style.display = 'none';
-    const ok = document.getElementById('enquirySuccess');
-    if (ok) ok.style.display = 'block';
+
+    hideEnquiryError();
+    submitting = true;
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending enquiry…'; }
+
+    try {
+      const data = new FormData(ef);
+      const res = await fetch(ENQUIRY_ENDPOINT, { method: 'POST', body: data });
+      let payload = null;
+      try { payload = await res.json(); } catch (_) {}
+
+      if (!res.ok || !payload || !payload.success) {
+        throw new Error((payload && payload.message) || 'Something went wrong while sending your enquiry. Please try again or email us directly.');
+      }
+
+      ef.style.display = 'none';
+      const ok = document.getElementById('enquirySuccess');
+      if (ok) ok.style.display = 'block';
+    } catch (err) {
+      showEnquiryError(err.message || 'Something went wrong while sending your enquiry. Please try again or email us directly.');
+    } finally {
+      submitting = false;
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = submitBtnDefaultHTML; }
+    }
   });
 }
 </script>

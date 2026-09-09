@@ -1,0 +1,12 @@
+{
+  "name": "triveni-radiators",
+  "private": true,
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=18.x"
+  },
+  "dependencies": {
+    "busboy": "^1.6.0",
+    "nodemailer": "^10.0.1"
+  }
+}
