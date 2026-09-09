@@ -272,17 +272,16 @@ ul{margin:0;padding:0;list-style:none;}
   .hero-media-fallback{display:block;}
 }
 
-/* very light, angled navy-black wash (~9-12%, well inside the brief's "8-12%") concentrated
-   toward the left where the text sits, fading to fully transparent by mid-frame -- inspired
-   by the Products hero's own angled .p-hero-scrim, just far lower-intensity (that one peaks
-   at 86%; this peaks around 30% right at the edge and is gone within half the frame) so the
-   footage stays natural rather than reading as a colour cast. A soft bottom fade keeps the
-   scroll-cue/sequence row legible too. */
+/* pure near-black (not navy -- no blue channel bias) cinematic pocket feathered behind the
+   text, not a panel: five stops instead of a hard two/three-stop ramp so the falloff reads as
+   a soft vignette with no visible edge, darkest at the far-left edge and fully transparent by
+   just past mid-frame so the right half of the footage stays untouched. A soft bottom fade
+   keeps the scroll-cue/sequence row legible too. */
 .hero-scrim{
   position:absolute;inset:0;z-index:2;pointer-events:none;
   background:
-    linear-gradient(100deg,rgba(6,10,20,.34) 0%,rgba(6,10,20,.13) 24%,rgba(6,10,20,0) 46%),
-    linear-gradient(0deg,rgba(6,10,20,.22) 0%,rgba(6,10,20,0) 20%);
+    linear-gradient(100deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.32) 12%,rgba(0,0,0,.18) 25%,rgba(0,0,0,.07) 40%,rgba(0,0,0,0) 56%),
+    linear-gradient(0deg,rgba(0,0,0,.22) 0%,rgba(0,0,0,0) 20%);
 }
 
 /* editorial composition, anchored at left:6vw / bottom:13% -- bottom-anchored rather than
@@ -446,8 +445,8 @@ ul{margin:0;padding:0;list-style:none;}
      while staying well inside "subtle," not a heavy overlay. */
   .hero-scrim{
     background:
-      radial-gradient(ellipse 70% 26% at 50% 40%,rgba(6,10,20,.22) 0%,rgba(6,10,20,.08) 58%,rgba(6,10,20,0) 85%),
-      rgba(6,10,20,.12);
+      radial-gradient(ellipse 70% 26% at 50% 40%,rgba(0,0,0,.22) 0%,rgba(0,0,0,.08) 58%,rgba(0,0,0,0) 85%),
+      rgba(0,0,0,.12);
   }
   /* the desktop's precise left:6vw/44%-width anchor is a large-viewport composition -- below
      860px it becomes a conventional full-width block using var(--pad) like every other
