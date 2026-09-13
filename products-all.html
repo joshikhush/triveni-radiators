@@ -51,6 +51,46 @@ button{font:inherit;background:none;border:none;cursor:pointer;}
 .reveal.in{opacity:1;transform:none;}
 .d1{transition-delay:.1s}
 
+/* ===================================================
+   MOTION SYSTEM — scroll choreography for the four product chapters.
+   Each entrance variant is a thin wrapper around the same opacity/transform
+   primitive so every product gets a distinct but related reveal:
+     .reveal     up-fade      (Header Type image, Swan Neck text)
+     .reveal-l   in-from-left (Header Type text)
+     .reveal-r   in-from-right(Offset image, Goose Neck text)
+     .reveal-b   soft-below   (Offset text — a lighter version of .reveal)
+     .reveal-scale  scale-in  (Swan Neck image)
+     .reveal-mask   vertical clip-path reveal (Goose Neck image — final chapter,
+                    given the strongest treatment per the brief)
+   All variants + the technical line-draw / table-row stagger are inert under
+   prefers-reduced-motion (see the block at the end of this stylesheet).
+   =================================================== */
+.reveal-l{opacity:0;transform:translateX(-28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+.reveal-l.in{opacity:1;transform:none;}
+.reveal-r{opacity:0;transform:translateX(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+.reveal-r.in{opacity:1;transform:none;}
+.reveal-b{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+.reveal-b.in{opacity:1;transform:none;}
+.reveal-scale{opacity:0;transform:scale(.94);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal-scale.in{opacity:1;transform:none;}
+.reveal-mask{opacity:0;clip-path:inset(42% 0 42% 0);transition:opacity .6s ease,clip-path 1s cubic-bezier(.16,1,.3,1);}
+.reveal-mask.in{opacity:1;clip-path:inset(0 0 0 0);}
+
+/* product-number roll-in: the kicker's text masks itself in on a short delay
+   ahead of the rest of its column, so "01 / 04" reads as its own small beat */
+.feat-kicker-mask{display:inline-block;overflow:hidden;}
+.feat-kicker-inner{display:inline-block;transform:translateY(115%);transition:transform .7s cubic-bezier(.16,1,.3,1);}
+.reveal.in .feat-kicker-inner,.reveal-l.in .feat-kicker-inner,.reveal-b.in .feat-kicker-inner{transform:translateY(0);}
+
+/* technical dimension-line draw-in — thin strokes on the plate's header/footer
+   bars, gated on the surrounding .feat-media entrance */
+.draw-line{transition:stroke-dashoffset 1.05s cubic-bezier(.16,1,.3,1);}
+.feat-media.in .draw-line{stroke-dashoffset:0!important;}
+
+/* image parallax hook — subtle scroll-linked translateY set inline by JS,
+   disabled below 900px and under reduced-motion */
+.feat-plate{will-change:transform;}
+
 .sec{padding:6.5rem 0;}
 .sec--ivory{background:var(--ivory);}
 .sec--lavender{background:var(--lavender);}
@@ -89,40 +129,91 @@ button{font:inherit;background:none;border:none;cursor:pointer;}
 .catalog-back{margin-top:2rem;}
 
 /* ===================================================
-   PRODUCT SECTIONS — reuses the Featured Product UI language from products.html
-   (the client specifically asked for this UI to be repurposed here), applied equally to
-   all four radiator types with no single one presented as the "winner".
+   PRODUCT SECTIONS — Feedback 2 (11 Sep 2026): each radiator type now carries a real,
+   verified technical-specification TABLE (client's explicit request), replacing the
+   bullet list / "pending" placeholders and the "See Full Technical Specifications" link.
+   All four types keep equal visual weight — no single one presented as the "winner".
    =================================================== */
-.feat-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:4rem;align-items:center;}
+.feat-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:4rem;align-items:start;}
 .feat-grid.rev{grid-template-columns:1.05fr 1fr;}
 .feat-grid.rev .feat-media{order:-1;}
 .feat-kicker{font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;}
 .feat-name{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(1.9rem,3vw,2.6rem);color:var(--navy-ink);margin-bottom:.5rem;}
 .feat-tagline{font-family:'Newsreader',serif;font-style:italic;font-size:1.1rem;color:var(--violet);margin-bottom:1.3rem;}
 .feat-desc{font-size:.96rem;line-height:1.75;color:var(--muted);max-width:30rem;margin-bottom:1.8rem;}
-.feat-list{display:flex;flex-direction:column;gap:.85rem;margin-bottom:2.2rem;}
+.feat-list{display:flex;flex-direction:column;gap:.85rem;margin-bottom:2rem;}
 .feat-item{display:flex;gap:.7rem;align-items:flex-start;font-size:.9rem;color:var(--navy-ink);}
 .feat-item svg{width:15px;height:15px;flex-shrink:0;margin-top:.2rem;color:var(--violet);}
-/* honest "not yet supplied" placeholder for the three types without full documentation
-   yet — visually distinct from real content (dashed rule, muted italic), not a bullet list
-   dressed up to look like real specifications. */
-.feat-pending{margin-bottom:2.2rem;padding-top:1.1rem;border-top:1px dashed var(--line-cool);font-size:.85rem;font-style:italic;color:var(--muted-2);max-width:28rem;}
+.feat-apps{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2rem;}
+.feat-apps span{font-family:'Poppins',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--violet-deep);background:rgba(106,69,192,.08);border:1px solid rgba(106,69,192,.18);padding:.4rem .85rem;border-radius:999px;}
 .feat-btns{display:flex;flex-wrap:wrap;gap:1rem;}
 
+/* premium editorial specification table — "engineering spec-sheet", not a spreadsheet.
+   Revealed as a continuation of the product image above it: the wrap fades in first
+   (slightly after the plate), the head follows, then rows step in one by one — the
+   "product → engineering → specification" narrative from the brief. */
+.spec-table-wrap{border:1px solid var(--line-cool);border-radius:16px;overflow:hidden;background:#fff;
+  opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.16,1,.3,1) .22s,transform .7s cubic-bezier(.16,1,.3,1) .22s;}
+.feat-media.in .spec-table-wrap{opacity:1;transform:none;}
+.spec-table-head{padding:1.1rem 1.4rem;background:var(--lavender);border-bottom:1px solid var(--line-cool);
+  opacity:0;transform:translateY(6px);transition:opacity .5s ease .4s,transform .5s ease .4s;}
+.feat-media.in .spec-table-head{opacity:1;transform:none;}
+.spec-table-head span{font-family:'Poppins',sans-serif;font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--navy-ink);}
+.spec-table{width:100%;border-collapse:collapse;}
+.spec-table td{padding:.95rem 1.4rem;font-size:.9rem;border-bottom:1px solid var(--line-cool);vertical-align:top;}
+.spec-table tr:last-child td{border-bottom:none;}
+.spec-table td:first-child{color:var(--muted);width:42%;font-size:.82rem;letter-spacing:.01em;}
+.spec-table td:last-child{color:var(--navy-ink);font-weight:500;}
+.spec-table tr.is-pending td:last-child{font-style:italic;color:var(--muted-2);font-weight:400;}
+.spec-table tr{opacity:0;transform:translateY(10px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
+.feat-media.in .spec-table tr{opacity:1;transform:none;}
+.spec-table tr:nth-child(1){transition-delay:.5s}
+.spec-table tr:nth-child(2){transition-delay:.56s}
+.spec-table tr:nth-child(3){transition-delay:.62s}
+.spec-table tr:nth-child(4){transition-delay:.68s}
+.spec-table tr:nth-child(5){transition-delay:.74s}
+.spec-table tr:nth-child(6){transition-delay:.8s}
+.spec-table tr:nth-child(7){transition-delay:.86s}
+.spec-table tr:nth-child(8){transition-delay:.92s}
+
+/* honest technical line-art plate — graph-paper ground, no fabricated product photography */
 .feat-media{position:relative;}
-.feat-media-main{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;box-shadow:0 40px 80px -36px rgba(20,17,30,.35);}
-.feat-media-main img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.16,1,.3,1);}
-.feat-media:hover .feat-media-main img{transform:scale(1.04);}
-.feat-media-main::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,9,24,.35) 0%,transparent 30%);pointer-events:none;}
-.feat-thumbs{position:absolute;right:-2.2rem;bottom:-1.6rem;display:flex;flex-direction:column;gap:.8rem;}
-.feat-thumb{width:96px;height:96px;border-radius:14px;overflow:hidden;border:3px solid var(--ivory);box-shadow:0 18px 34px -16px rgba(20,17,30,.35);}
-.feat-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
-.feat-thumb:hover img{transform:scale(1.1);}
+.feat-plate{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line-cool);background:#fff;box-shadow:0 30px 70px -40px rgba(20,17,30,.3);}
+.feat-plate-vis{aspect-ratio:5/4;display:flex;align-items:center;justify-content:center;padding:2rem;background-color:var(--ivory);background-image:linear-gradient(var(--line-cool) 1px,transparent 1px),linear-gradient(90deg,var(--line-cool) 1px,transparent 1px);background-size:26px 26px;}
+.feat-plate-vis svg{width:100%;max-width:320px;height:auto;color:var(--violet-deep);transition:transform .45s cubic-bezier(.16,1,.3,1);}
+.feat-media:hover .feat-plate-vis svg{transform:scale(1.03);}
+.feat-plate{transition:border-color .4s ease,box-shadow .4s ease;}
+.feat-media:hover .feat-plate{border-color:rgba(106,69,192,.35);}
+.feat-plate-cap{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1.3rem;border-top:1px solid var(--line-cool);}
+.feat-plate-cap span:first-child{font-family:'Poppins',sans-serif;font-size:.78rem;color:var(--navy-ink);}
+.feat-plate-cap span:last-child{font-family:'Poppins',sans-serif;font-size:.68rem;color:var(--muted-2);letter-spacing:.03em;}
+/* final-chapter emphasis for Goose Neck — a thin accent rule that draws in under
+   the heading once its column has entered, marking it as the closing product */
+.feat-emphasis{position:relative;display:inline-block;}
+.feat-emphasis::after{content:'';position:absolute;left:0;bottom:-.3rem;height:2px;width:0;background:var(--violet);transition:width .8s cubic-bezier(.16,1,.3,1) .5s;}
+.reveal-r.in .feat-emphasis::after,.reveal.in .feat-emphasis::after,.reveal-l.in .feat-emphasis::after{width:3.2rem;}
 @media(max-width:1080px){
   .feat-grid,.feat-grid.rev{grid-template-columns:1fr;gap:3rem;}
-  .feat-media,.feat-grid.rev .feat-media{order:-1;max-width:26rem;margin:0 auto 1rem;}
-  .feat-thumbs{right:-1rem;bottom:-1.2rem;flex-direction:row;}
-  .feat-thumb{width:72px;height:72px;}
+  .feat-media,.feat-grid.rev .feat-media{order:-1;max-width:28rem;margin:0 auto;}
+}
+
+/* ===================================================
+   QUICK-NAV — short horizontal "product journey" strip ahead of the footer;
+   real anchor navigation to the four sections above, not a decorative slideshow.
+   =================================================== */
+.quicknav{display:flex;align-items:center;gap:.4rem;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:.2rem;}
+.quicknav::-webkit-scrollbar{display:none;}
+.quicknav-item{display:flex;align-items:center;gap:.6rem;flex-shrink:0;padding:.9rem 1.2rem;border:1px solid var(--line-cool);border-radius:999px;font-family:'Poppins',sans-serif;font-size:.82rem;font-weight:500;color:var(--navy-ink);transition:border-color .35s ease,background .35s ease,transform .35s cubic-bezier(.16,1,.3,1);opacity:0;transform:translateY(10px);}
+.quicknav.in .quicknav-item{opacity:1;transform:none;transition:border-color .35s ease,background .35s ease,transform .6s cubic-bezier(.16,1,.3,1) var(--qd,0s),opacity .6s ease var(--qd,0s);}
+.quicknav-item:hover{border-color:var(--violet);background:rgba(106,69,192,.05);}
+.quicknav-item:hover .quicknav-num{color:var(--violet);}
+.quicknav-num{font-family:'Newsreader',serif;font-style:italic;color:var(--gold);transition:color .3s ease;}
+.quicknav-arrow{flex-shrink:0;color:var(--muted-2);opacity:0;transition:opacity .5s ease var(--qd,0s);}
+.quicknav.in .quicknav-arrow{opacity:1;}
+.quicknav-arrow svg{width:16px;height:16px;display:block;}
+@media(max-width:640px){
+  .quicknav{gap:.6rem;}
+  .quicknav-item{padding:.75rem 1rem;font-size:.78rem;}
 }
 
 /* ===================================================
@@ -175,7 +266,12 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
   .h2{font-size:clamp(1.8rem,7vw,2.4rem);}
 }
 @media(prefers-reduced-motion:reduce){
-  .reveal{opacity:1;transform:none;transition:none;}
+  .reveal,.reveal-l,.reveal-r,.reveal-b,.reveal-scale,.reveal-mask{opacity:1;transform:none;transition:none;clip-path:none;}
+  .feat-kicker-inner{transform:none!important;transition:none!important;}
+  .draw-line{stroke-dashoffset:0!important;transition:none!important;}
+  .spec-table-wrap,.spec-table-head,.spec-table tr,.quicknav-item,.quicknav-arrow{opacity:1!important;transform:none!important;transition:none!important;}
+  .feat-plate{transform:none!important;}
+  .feat-emphasis::after{width:3.2rem!important;transition:none!important;}
   * { animation-duration:.01ms !important; }
 }
 </style>
@@ -214,31 +310,61 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
 <section class="sec sec--lavender" id="header-type">
   <div class="w">
     <div class="feat-grid">
-      <div class="reveal">
-        <div class="feat-kicker">01 / 04</div>
+      <div class="reveal-l">
+        <div class="feat-kicker"><span class="feat-kicker-mask"><span class="feat-kicker-inner">01 / 04</span></span></div>
         <h2 class="feat-name">Header Type Radiators</h2>
-        <div class="feat-tagline">Engineered for maximum performance.</div>
+        <div class="feat-tagline">Reliable cooling for maximum transformer performance.</div>
         <p class="feat-desc">Header Type Radiators are designed to provide efficient heat dissipation and reliable cooling for power and distribution transformers — the workhorse of the range, available in flanged, non-flanged and offset options, every unit pressure-tested leak-proof.</p>
         <div class="feat-list">
           <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Superior heat dissipation</div>
-          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>100% leak-proof pressure testing</div>
           <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Heavy-duty welded construction</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>100% leak-proof pressure tested</div>
           <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Corrosion-resistant finish</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Flanged, non-flanged &amp; offset options</div>
+        </div>
+        <div class="feat-apps">
+          <span>Power Transformers</span><span>Distribution Transformers</span><span>Industrial Transformers</span><span>Renewable Energy</span>
         </div>
         <div class="feat-btns">
           <a href="contact.html" class="btn btn-primary">Enquire Now <span>&rarr;</span></a>
-          <a href="products.html#specs" class="btn btn-ghost">See Full Technical Specifications <span>&rarr;</span></a>
         </div>
       </div>
 
       <div class="feat-media reveal d1">
-        <div class="feat-media-main">
-          <img src="assets/credentials%20hero.png" alt="Close-up of a Triveni header type radiator, showing header connections and pressed-steel elements" loading="lazy">
+        <div class="feat-plate">
+          <div class="feat-plate-vis">
+            <svg viewBox="0 0 440 300" fill="none" role="img" aria-label="Stylised profile of a header type radiator">
+              <rect class="draw-line" x="70" y="44" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2" stroke-dasharray="640" stroke-dashoffset="640"/>
+              <rect class="draw-line" x="70" y="236" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2" stroke-dasharray="640" stroke-dashoffset="640" style="transition-delay:.15s"/>
+              <rect x="84" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="114" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="144" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="174" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="204" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="234" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="264" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="294" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="324" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <line x1="70" y1="54" x2="42" y2="54" stroke="#4A2E82" stroke-width="2.2"/>
+              <line x1="42" y1="44" x2="42" y2="64" stroke="#B8935A" stroke-width="3"/>
+              <line x1="70" y1="246" x2="42" y2="246" stroke="#4A2E82" stroke-width="2.2"/>
+              <line x1="42" y1="236" x2="42" y2="256" stroke="#B8935A" stroke-width="3"/>
+            </svg>
+          </div>
+          <div class="feat-plate-cap"><span><b>01</b> &middot; Header Type</span><span>Stylised profile</span></div>
         </div>
-        <div class="feat-thumbs">
-          <div class="feat-thumb"><img src="assets/credentials%20hero.png" style="object-position:20% 15%;" alt="Header connection detail"></div>
-          <div class="feat-thumb"><img src="assets/credentials%20hero.png" style="object-position:75% 70%;" alt="Pressed element profile detail"></div>
-          <div class="feat-thumb"><img src="assets/credentials%20hero.png" style="object-position:50% 45%;" alt="Finish and weld detail"></div>
+        <div class="spec-table-wrap">
+          <div class="spec-table-head"><span>Technical Specification</span></div>
+          <table class="spec-table">
+            <tr><td>Standards</td><td>IEEMA 9 &middot; DIN 42559 &middot; BS EN 50216-6</td></tr>
+            <tr><td>Centre Distance</td><td>1,200 – 4,000 mm</td></tr>
+            <tr><td>Elements</td><td>1 – 38</td></tr>
+            <tr><td>Width</td><td>520 mm</td></tr>
+            <tr><td>Pitch</td><td>40 / 45 / 50 mm</td></tr>
+            <tr><td>Pipe Size</td><td>80 NB / 100 NB</td></tr>
+            <tr><td>Sheet Thickness</td><td>1.0 mm / 1.2 mm</td></tr>
+            <tr><td>Application</td><td>PGCIL-approved, up to 765 kV class</td></tr>
+          </table>
         </div>
       </div>
     </div>
@@ -249,20 +375,59 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
 <section class="sec sec--ivory" id="offset">
   <div class="w">
     <div class="feat-grid rev">
-      <div class="reveal">
-        <div class="feat-kicker">02 / 04</div>
+      <div class="reveal-b">
+        <div class="feat-kicker"><span class="feat-kicker-mask"><span class="feat-kicker-inner">02 / 04</span></span></div>
         <h2 class="feat-name">Offset Radiators</h2>
         <div class="feat-tagline">Compact design for space-constrained installations.</div>
-        <div class="feat-pending">Detailed specifications for this product are being finalized and will be added shortly.</div>
+        <p class="feat-desc">Offset Radiators are specially designed for installations where standard radiator mounting is not feasible. Their compact configuration allows efficient cooling while optimising the available installation space.</p>
+        <div class="feat-list">
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Space-saving design</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Flexible mounting options</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom offset dimensions</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Excellent heat dissipation</div>
+        </div>
+        <div class="feat-apps">
+          <span>Power Transformers</span><span>Distribution Transformers</span><span>Industrial Transformers</span><span>Renewable Energy</span>
+        </div>
         <div class="feat-btns">
           <a href="contact.html" class="btn btn-primary">Enquire Now <span>&rarr;</span></a>
-          <a href="products.html#specs" class="btn btn-ghost">See Full Technical Specifications <span>&rarr;</span></a>
         </div>
       </div>
 
-      <div class="feat-media reveal d1">
-        <div class="feat-media-main">
-          <img src="assets/credentials%20hero.png" style="object-position:40% 35%;" alt="Triveni pressed-steel radiator detail — dedicated Offset Radiators photography coming soon" loading="lazy">
+      <div class="feat-media reveal-r d1">
+        <div class="feat-plate">
+          <div class="feat-plate-vis">
+            <svg viewBox="0 0 440 300" fill="none" role="img" aria-label="Stylised profile of an offset radiator">
+              <rect class="draw-line" x="64" y="44" width="240" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2" stroke-dasharray="520" stroke-dashoffset="520" style="transition-delay:.15s"/>
+              <rect class="draw-line" x="64" y="236" width="240" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2" stroke-dasharray="520" stroke-dashoffset="520"/>
+              <rect x="78" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="105" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="132" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="159" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="186" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="213" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="240" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="267" y="72" width="15" height="156" rx="7.5" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <path d="M304 54 H352 V24" stroke="#4A2E82" stroke-width="2.2"/>
+              <line x1="342" y1="24" x2="362" y2="24" stroke="#B8935A" stroke-width="3"/>
+              <path d="M304 246 H352 V276" stroke="#4A2E82" stroke-width="2.2"/>
+              <line x1="342" y1="276" x2="362" y2="276" stroke="#B8935A" stroke-width="3"/>
+            </svg>
+          </div>
+          <div class="feat-plate-cap"><span><b>02</b> &middot; Offset</span><span>Stylised profile</span></div>
+        </div>
+        <div class="spec-table-wrap">
+          <div class="spec-table-head"><span>Technical Specification</span></div>
+          <table class="spec-table">
+            <tr><td>Standards</td><td>IEEMA 9 &middot; DIN 42559 &middot; BS EN 50216-6</td></tr>
+            <tr><td>Centre Distance</td><td>1,200 – 4,000 mm</td></tr>
+            <tr><td>Elements</td><td>1 – 38</td></tr>
+            <tr><td>Width</td><td>520 mm</td></tr>
+            <tr><td>Pitch</td><td>40 / 45 / 50 / 55 mm</td></tr>
+            <tr><td>Pipe Size</td><td>80 NB</td></tr>
+            <tr><td>Sheet Thickness</td><td>1.0 mm / 1.2 mm</td></tr>
+            <tr><td>Application</td><td>PGCIL-approved, up to 765 kV class</td></tr>
+          </table>
         </div>
       </div>
     </div>
@@ -274,19 +439,59 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
   <div class="w">
     <div class="feat-grid">
       <div class="reveal">
-        <div class="feat-kicker">03 / 04</div>
+        <div class="feat-kicker"><span class="feat-kicker-mask"><span class="feat-kicker-inner">03 / 04</span></span></div>
         <h2 class="feat-name">Swan Neck Radiators</h2>
         <div class="feat-tagline">Designed for complex transformer configurations.</div>
-        <div class="feat-pending">Detailed specifications for this product are being finalized and will be added shortly.</div>
+        <p class="feat-desc">Swan Neck Radiators feature curved inlet and outlet connections, making them ideal for transformers with unique mounting arrangements and special piping layouts.</p>
+        <div class="feat-list">
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Curved tube design</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom bend angles</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Suitable for restricted spaces</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>High mechanical strength</div>
+        </div>
+        <div class="feat-apps">
+          <span>Power Transformers</span><span>Industrial Transformers</span>
+        </div>
         <div class="feat-btns">
           <a href="contact.html" class="btn btn-primary">Enquire Now <span>&rarr;</span></a>
-          <a href="products.html#specs" class="btn btn-ghost">See Full Technical Specifications <span>&rarr;</span></a>
         </div>
       </div>
 
-      <div class="feat-media reveal d1">
-        <div class="feat-media-main">
-          <img src="assets/credentials%20hero.png" style="object-position:65% 60%;" alt="Triveni pressed-steel radiator detail — dedicated Swan Neck Radiators photography coming soon" loading="lazy">
+      <div class="feat-media reveal-scale d1">
+        <div class="feat-plate">
+          <div class="feat-plate-vis">
+            <svg viewBox="0 0 440 300" fill="none" role="img" aria-label="Stylised profile of a swan neck radiator">
+              <rect class="draw-line" x="70" y="88" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2" stroke-dasharray="640" stroke-dashoffset="640"/>
+              <rect class="draw-line" x="70" y="236" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2" stroke-dasharray="640" stroke-dashoffset="640" style="transition-delay:.15s"/>
+              <rect x="84" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="114" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="144" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="174" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="204" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="234" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="264" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="294" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="324" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <path d="M100 88 V64 C100 34 130 44 136 18" stroke="#4A2E82" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+              <circle cx="138" cy="13" r="5" stroke="#B8935A" stroke-width="2.5"/>
+              <path d="M340 88 V64 C340 34 310 44 304 18" stroke="#4A2E82" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+              <circle cx="302" cy="13" r="5" stroke="#B8935A" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="feat-plate-cap"><span><b>03</b> &middot; Swan Neck</span><span>Stylised profile</span></div>
+        </div>
+        <div class="spec-table-wrap">
+          <div class="spec-table-head"><span>Technical Specification</span></div>
+          <table class="spec-table">
+            <tr><td>Standards</td><td>IEEMA 9 &middot; DIN 42559 &middot; BS EN 50216-6</td></tr>
+            <tr><td>Centre Distance</td><td>1,200 – 4,000 mm</td></tr>
+            <tr><td>Elements</td><td>1 – 38</td></tr>
+            <tr><td>Width</td><td>520 mm</td></tr>
+            <tr><td>Pitch</td><td>40 / 45 / 50 mm</td></tr>
+            <tr><td>Pipe Size</td><td>80 NB / 100 NB</td></tr>
+            <tr><td>Sheet Thickness</td><td>1.0 mm / 1.2 mm</td></tr>
+            <tr><td>Application</td><td>PGCIL-approved, up to 765 kV class</td></tr>
+          </table>
         </div>
       </div>
     </div>
@@ -297,22 +502,74 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
 <section class="sec sec--ivory" id="goose-neck">
   <div class="w">
     <div class="feat-grid rev">
-      <div class="reveal">
-        <div class="feat-kicker">04 / 04</div>
-        <h2 class="feat-name">Goose Neck Radiators</h2>
+      <div class="reveal-r">
+        <div class="feat-kicker"><span class="feat-kicker-mask"><span class="feat-kicker-inner">04 / 04</span></span></div>
+        <h2 class="feat-name feat-emphasis">Goose Neck Radiators</h2>
         <div class="feat-tagline">Custom engineered for flexible transformer connections.</div>
-        <div class="feat-pending">Detailed specifications for this product are being finalized and will be added shortly.</div>
+        <p class="feat-desc">Goose Neck Radiators are designed for applications requiring special inlet and outlet orientations, while maintaining superior cooling efficiency and structural strength.</p>
+        <div class="feat-list">
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom connection geometry</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Heavy-duty construction</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>High cooling efficiency</div>
+          <div class="feat-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Leak-proof fabrication</div>
+        </div>
         <div class="feat-btns">
           <a href="contact.html" class="btn btn-primary">Enquire Now <span>&rarr;</span></a>
-          <a href="products.html#specs" class="btn btn-ghost">See Full Technical Specifications <span>&rarr;</span></a>
         </div>
       </div>
 
-      <div class="feat-media reveal d1">
-        <div class="feat-media-main">
-          <img src="assets/credentials%20hero.png" style="object-position:30% 70%;" alt="Triveni pressed-steel radiator detail — dedicated Goose Neck Radiators photography coming soon" loading="lazy">
+      <div class="feat-media reveal-mask d1">
+        <div class="feat-plate">
+          <div class="feat-plate-vis">
+            <svg viewBox="0 0 440 300" fill="none" role="img" aria-label="Stylised profile of a goose neck radiator">
+              <rect class="draw-line" x="70" y="88" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2" stroke-dasharray="640" stroke-dashoffset="640"/>
+              <rect class="draw-line" x="70" y="236" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2" stroke-dasharray="640" stroke-dashoffset="640" style="transition-delay:.15s"/>
+              <rect x="84" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="114" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="144" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="174" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="204" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="234" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="264" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="294" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <rect x="324" y="116" width="16" height="112" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
+              <path d="M100 88 V56 C100 30 66 30 62 54 V70" stroke="#4A2E82" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+              <line x1="53" y1="73" x2="71" y2="73" stroke="#B8935A" stroke-width="3"/>
+              <path d="M340 88 V56 C340 30 374 30 378 54 V70" stroke="#4A2E82" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+              <line x1="369" y1="73" x2="387" y2="73" stroke="#B8935A" stroke-width="3"/>
+            </svg>
+          </div>
+          <div class="feat-plate-cap"><span><b>04</b> &middot; Goose Neck</span><span>Stylised profile</span></div>
+        </div>
+        <div class="spec-table-wrap">
+          <div class="spec-table-head"><span>Technical Specification</span></div>
+          <table class="spec-table">
+            <tr><td>Standards</td><td>IEEMA 9 &middot; DIN 42559 &middot; BS EN 50216-6</td></tr>
+            <tr><td>Centre Distance</td><td>1,200 – 4,000 mm</td></tr>
+            <tr><td>Elements</td><td>1 – 38</td></tr>
+            <tr><td>Width</td><td>520 mm</td></tr>
+            <tr><td>Pitch</td><td>40 / 45 / 50 mm</td></tr>
+            <tr><td>Pipe Size</td><td>80 NB / 100 NB</td></tr>
+            <tr><td>Sheet Thickness</td><td>1.0 mm / 1.2 mm</td></tr>
+            <tr><td>Application</td><td>PGCIL-approved, up to 765 kV class</td></tr>
+          </table>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== QUICK-NAV — short horizontal product-journey moment ===================== -->
+<section class="sec sec--ivory" style="padding-top:0;">
+  <div class="w">
+    <div class="quicknav reveal" aria-label="Jump to a radiator type">
+      <a href="#header-type" class="quicknav-item" style="--qd:0s"><span class="quicknav-num">01</span>Header Type</a>
+      <span class="quicknav-arrow" style="--qd:.08s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <a href="#offset" class="quicknav-item" style="--qd:.12s"><span class="quicknav-num">02</span>Offset</a>
+      <span class="quicknav-arrow" style="--qd:.2s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <a href="#swan-neck" class="quicknav-item" style="--qd:.24s"><span class="quicknav-num">03</span>Swan Neck</a>
+      <span class="quicknav-arrow" style="--qd:.32s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <a href="#goose-neck" class="quicknav-item" style="--qd:.36s"><span class="quicknav-num">04</span>Goose Neck</a>
     </div>
   </div>
 </section>
@@ -428,11 +685,39 @@ addEventListener('scroll', function(){
   if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
 }, { passive: true });
 
-/* ── reveal ── */
+/* ── reveal (all entrance-choreography variants share one observer) ── */
 const io = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.reveal-b,.reveal-scale,.reveal-mask').forEach(el => io.observe(el));
+
+/* ── product-image parallax: subtle, scroll-linked, desktop-only, off under
+   reduced-motion. Clamped to ±15px (≈30px total travel) per the brief. ── */
+(function(){
+  var plates = document.querySelectorAll('.feat-plate');
+  if (!plates.length) return;
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  var ticking = false;
+  function apply(){
+    ticking = false;
+    if (reduced.matches || window.innerWidth < 900) {
+      plates.forEach(function(el){ el.style.transform = ''; });
+      return;
+    }
+    var vh = window.innerHeight;
+    plates.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      var center = r.top + r.height / 2;
+      var offset = (center - vh / 2) * -0.045;
+      offset = Math.max(-15, Math.min(15, offset));
+      el.style.transform = 'translateY(' + offset.toFixed(1) + 'px)';
+    });
+  }
+  function onScroll(){ if (!ticking) { requestAnimationFrame(apply); ticking = true; } }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  apply();
+})();
 </script>
 </body>
 </html>

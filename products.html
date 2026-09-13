@@ -99,9 +99,11 @@ button{font:inherit;background:none;border:none;cursor:pointer;}
 /* crossfade on opacity (independent of the Ken Burns transform) + a slow one-way scale
    that restarts cleanly each time a slide regains .is-active, since removing the class
    also removes the animation declaration entirely. */
-.p-hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.6s ease;will-change:opacity,transform;}
-.p-hero-slide.is-active{opacity:1;animation:pKenBurns 7s linear forwards;}
-@keyframes pKenBurns{from{transform:scale(1);}to{transform:scale(1.08);}}
+/* unified grade across the six source photos (mixed cameras/lighting) so the sequence
+   reads as one consistent, cinematic treatment rather than six different exposures */
+.p-hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;filter:saturate(.93) contrast(1.07) brightness(1.03);transition:opacity 1.8s ease;will-change:opacity,transform;}
+.p-hero-slide.is-active{opacity:1;animation:pKenBurns 8.5s linear forwards;}
+@keyframes pKenBurns{from{transform:scale(1);}to{transform:scale(1.05);}}
 .p-hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
   /* two localized washes (left, for the headline; right, for the metrics column) rather
      than a full-frame overlay. The right wash is a plain horizontal (90deg) ramp -- not
@@ -216,10 +218,11 @@ button{font:inherit;background:none;border:none;cursor:pointer;}
 .mfg-tile{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:3/4;}
 .mfg-tile img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1);}
 .mfg-tile:hover img{transform:scale(1.07);}
-.mfg-tile::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,9,24,.72) 0%,rgba(5,9,24,.15) 45%,transparent 70%);}
-.mfg-tile-label{position:absolute;left:1.2rem;bottom:1.1rem;right:1.2rem;z-index:2;}
+.mfg-tile::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,9,24,.86) 0%,rgba(5,9,24,.55) 42%,rgba(5,9,24,.1) 68%,transparent 82%);}
+.mfg-tile-label{position:absolute;left:1.3rem;bottom:1.3rem;right:1.3rem;z-index:2;}
 .mfg-num{font-family:'Newsreader',serif;font-style:italic;font-size:.85rem;color:var(--gold-2);}
-.mfg-name{font-family:'Poppins',sans-serif;font-weight:500;font-size:.92rem;color:#fff;margin-top:.25rem;}
+.mfg-name{font-family:'Poppins',sans-serif;font-weight:500;font-size:.92rem;color:#fff;margin-top:.3rem;line-height:1.3;}
+.mfg-desc{font-size:.78rem;line-height:1.55;color:rgba(255,255,255,.7);margin-top:.55rem;}
 @media(max-width:900px){ .mfg-grid{grid-template-columns:1fr 1fr;} }
 @media(max-width:520px){ .mfg-grid{grid-template-columns:1fr;} }
 
@@ -343,12 +346,12 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
      the product in its "mightiest form" per client feedback, not a factory/machining shot. -->
 <header class="p-hero" id="pHero">
   <div class="p-hero-slides" id="pHeroSlides" aria-hidden="true">
-    <img class="p-hero-slide is-active" src="assets/installations/siemens-site-1.jpg" alt="">
-    <img class="p-hero-slide" src="assets/installations/ge-site-4.jpg" alt="">
-    <img class="p-hero-slide" src="assets/installations/siemens-site-2.jpg" alt="">
-    <img class="p-hero-slide" src="assets/installations/ge-site-1.jpg" alt="">
-    <img class="p-hero-slide" src="assets/installations/ge-site-2.jpg" alt="">
-    <img class="p-hero-slide" src="assets/installations/ge-site-3.jpg" alt="">
+    <img class="p-hero-slide is-active" src="assets/installations/ge-site-4.jpg" style="object-position:50% 62%;" alt="" loading="eager">
+    <img class="p-hero-slide" src="assets/installations/ge-site-3.jpg" style="object-position:50% 58%;" alt="">
+    <img class="p-hero-slide" src="assets/installations/siemens-site-1.jpg" style="object-position:50% 42%;" alt="">
+    <img class="p-hero-slide" src="assets/installations/ge-site-1.jpg" style="object-position:50% 65%;" alt="">
+    <img class="p-hero-slide" src="assets/installations/siemens-site-2.jpg" style="object-position:50% 38%;" alt="">
+    <img class="p-hero-slide" src="assets/installations/ge-site-2.jpg" style="object-position:45% 55%;" alt="">
   </div>
   <div class="p-hero-scrim" aria-hidden="true"></div>
 
@@ -487,25 +490,26 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
   <div class="w">
     <div class="sec-head reveal">
       <div class="eyebrow"><i></i>Manufacturing</div>
-      <h2 class="h2">Precision<br><em>in every process.</em></h2>
-      <p class="lede" style="margin-top:1.1rem;">From raw material to final testing, every radiator is manufactured at our Naini, Prayagraj works with a focus on quality, consistency and long-term reliability.</p>
+      <h2 class="h2">Scale, technology<br><em>and consistency.</em></h2>
     </div>
+    <!-- Content verbatim from the client's Feedback 2 (11 Sep 2026) — the four
+         manufacturing differentiators, no additional claims added. -->
     <div class="mfg-grid">
       <div class="mfg-tile reveal">
-        <img src="assets/credentials%20hero.png" style="object-position:15% 25%;" alt="Pressed-steel sheet used for radiator elements" loading="lazy">
-        <div class="mfg-tile-label"><div class="mfg-num">i</div><div class="mfg-name">Raw Material</div></div>
+        <img src="assets/credentials%20hero.png" style="object-position:15% 25%;" alt="Triveni's manufacturing facility" loading="lazy">
+        <div class="mfg-tile-label"><div class="mfg-num">01</div><div class="mfg-name">State-of-the-Art Manufacturing Facility</div><div class="mfg-desc">India's fastest growing radiator manufacturer with a state-of-the-art manufacturing facility spanning 6,320 sq metres.</div></div>
       </div>
       <div class="mfg-tile reveal d1">
-        <img src="assets/engineering%20card.png" alt="Precision forming of radiator elements on the Naini production line" loading="lazy">
-        <div class="mfg-tile-label"><div class="mfg-num">ii</div><div class="mfg-name">Precision Forming</div></div>
+        <img src="assets/quality%20card.png" alt="Finishing and corrosion-protection process at Triveni" loading="lazy">
+        <div class="mfg-tile-label"><div class="mfg-num">02</div><div class="mfg-name">Conveyorized Paint Shop</div><div class="mfg-desc">Conveyorized, state-of-the-art paint shop for best-in-class corrosion protection and final finish.</div></div>
       </div>
       <div class="mfg-tile reveal d2">
-        <img src="assets/commercial%20card.png" style="object-position:15% 35%;" alt="Fusion welding of radiator header and elements" loading="lazy">
-        <div class="mfg-tile-label"><div class="mfg-num">iii</div><div class="mfg-name">Fusion Welding</div></div>
+        <img src="assets/engineering%20card.png" alt="Fabrication of radiator child parts at Triveni" loading="lazy">
+        <div class="mfg-tile-label"><div class="mfg-num">03</div><div class="mfg-name">Plasma Machines</div><div class="mfg-desc">Cutting of child parts performed with Plasma machines.</div></div>
       </div>
       <div class="mfg-tile reveal d3">
-        <img src="assets/quality%20card.png" alt="Pressure testing a finished radiator for leak-proof quality" loading="lazy">
-        <div class="mfg-tile-label"><div class="mfg-num">iv</div><div class="mfg-name">Pressure Testing</div></div>
+        <img src="assets/commercial%20card.png" style="object-position:15% 35%;" alt="Quality process review at Triveni" loading="lazy">
+        <div class="mfg-tile-label"><div class="mfg-num">04</div><div class="mfg-name">Automated Critical Welding</div><div class="mfg-desc">Automated critical welding processes maintain consistent quality.</div></div>
       </div>
     </div>
   </div>
@@ -683,7 +687,7 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
     slides[i].classList.remove('is-active');
     i = (i + 1) % slides.length;
     slides[i].classList.add('is-active');
-  }, 6000);
+  }, 7500);
 })();
 
 /* ── nav toggle + scroll pin/hide ── */
