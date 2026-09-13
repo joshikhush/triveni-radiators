@@ -149,30 +149,64 @@ button{font:inherit;background:none;border:none;cursor:pointer;}
 }
 
 /* ===================================================
-   RANGE — 4 product cards
+   RANGE — overlapping editorial panel composition (2026-09-15 redesign v2).
+   Four tall, image-led panels layered with alternating vertical offset and
+   z-index — a physical catalogue unfolding, not a card grid. Per direct
+   instruction: no background ghost numerals, no per-card technical tags —
+   the only decoration is one faint guide-line + crosshair behind the whole
+   composition. Header Type gets a lavender tint and sits front-most; the
+   other three stay quieter ivory/cream.
    =================================================== */
-.range-top{display:flex;justify-content:space-between;align-items:flex-end;gap:3rem;margin-bottom:3.6rem;flex-wrap:wrap;}
-.range-top .lede{margin-top:1rem;}
-.range-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;}
-.range-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;padding:1.6rem 1.6rem 1.8rem;transition:border-color .3s,box-shadow .3s,transform .3s,background .3s;}
-.range-card:hover{transform:translateY(-4px);box-shadow:0 26px 50px -30px rgba(74,46,130,.25);border-color:rgba(106,69,192,.25);}
-.range-card.active{background:var(--lavender-2);border-color:rgba(106,69,192,.3);}
-.range-card-vis{background:var(--ivory);border-radius:12px;padding:1.4rem 1rem;margin-bottom:1.3rem;display:flex;justify-content:center;}
-.range-card.active .range-card-vis{background:#fff;}
-.range-card-vis svg{width:100%;max-width:130px;height:auto;color:var(--violet-deep);}
-.range-num{font-family:'Newsreader',serif;font-style:italic;font-size:.95rem;color:var(--gold);margin-bottom:.4rem;}
-.range-name{font-family:'Poppins',sans-serif;font-weight:500;font-size:1rem;color:var(--navy-ink);margin-bottom:.5rem;}
-.range-tag{font-size:.8rem;line-height:1.5;color:var(--muted);margin-bottom:1.1rem;min-height:2.4em;}
-.range-arrow{width:34px;height:34px;border-radius:50%;border:1px solid var(--line-cool);display:flex;align-items:center;justify-content:center;color:var(--navy-ink);transition:border-color .25s,color .25s,background .25s;}
-.range-card:hover .range-arrow,.range-card.active .range-arrow{border-color:var(--violet);color:var(--violet);background:rgba(106,69,192,.06);}
-.range-arrow svg{width:14px;height:14px;transition:transform .25s;}
-.range-card:hover .range-arrow svg{transform:translateX(2px);}
-.range-foot{margin-top:2.6rem;text-align:center;}
+.range-top{display:flex;justify-content:space-between;align-items:flex-end;gap:3rem;margin-bottom:2.6rem;flex-wrap:wrap;}
+.range-top .lede{margin-top:.9rem;font-size:.92rem;max-width:26rem;color:var(--muted-2);}
+.range-cta{position:relative;padding-bottom:.3rem;flex-shrink:0;}
+.range-cta::after{content:'';position:absolute;left:0;bottom:0;height:1px;width:100%;background:currentColor;transform-origin:left;transform:scaleX(.5);transition:transform .5s cubic-bezier(.16,1,.3,1);}
+.range-cta:hover::after{transform:scaleX(1);}
+
+.range-deck{position:relative;z-index:1;display:flex;align-items:flex-start;gap:1.6rem;}
+.range-item{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;background:var(--cream);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-height:520px;box-shadow:0 0 0 rgba(20,17,30,0);transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s cubic-bezier(.16,1,.3,1),border-color .4s ease,background .4s ease;}
+.range-item--01{z-index:4;}
+.range-item--02{z-index:3;margin-top:38px;}
+.range-item--03{z-index:2;}
+.range-item--04{z-index:1;margin-top:38px;}
+.range-item:hover{background:var(--lavender);transform:translateY(-6px);box-shadow:0 30px 60px -34px rgba(20,17,30,.28);border-color:rgba(106,69,192,.3);z-index:5!important;}
+
+.range-visual{position:relative;flex:1;display:flex;align-items:center;justify-content:center;padding:2.2rem 1.6rem;min-height:0;}
+.range-img{position:relative;width:88%;max-width:340px;transition:transform .7s cubic-bezier(.16,1,.3,1);}
+.range-img svg{width:100%;height:auto;color:var(--violet-deep);display:block;}
+.range-item:hover .range-img{transform:scale(1.045);}
+
+.range-body{position:relative;z-index:2;padding:1.3rem 1.5rem 1.6rem;border-top:1px solid var(--line);display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;background:rgba(255,255,255,.4);}
+.range-num{font-family:'Newsreader',serif;font-style:italic;font-size:.82rem;color:var(--gold);margin-bottom:.4rem;}
+.range-name{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.12rem;color:var(--navy-ink);margin-bottom:.4rem;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.range-item:hover .range-name{transform:translateX(5px);}
+.range-desc{font-size:.82rem;line-height:1.5;color:var(--muted);max-width:16rem;}
+.range-arrow{flex-shrink:0;width:34px;height:34px;border-radius:50%;border:1px solid var(--line-cool);display:flex;align-items:center;justify-content:center;color:var(--navy-ink);transition:border-color .3s,color .3s,background .3s;}
+.range-item:hover .range-arrow{border-color:var(--violet);color:var(--violet);background:rgba(106,69,192,.08);}
+.range-arrow svg{width:14px;height:14px;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.range-item:hover .range-arrow svg{transform:translateX(3px);}
+
+/* four distinct entrance choreographies (30–80px travel, staggered so the
+   catalogue reads as progressively unfolding rather than fading in at once) */
+.rr-up-scale{opacity:0;transform:translateY(48px) scale(.97);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.rr-up-scale.in{opacity:1;transform:none;}
+.rr-r{opacity:0;transform:translateX(64px);transition:opacity .9s cubic-bezier(.16,1,.3,1) .12s,transform .9s cubic-bezier(.16,1,.3,1) .12s;}
+.rr-r.in{opacity:1;transform:none;}
+.rr-up-scale2{opacity:0;transform:translateY(40px) scale(.96);transition:opacity .9s cubic-bezier(.16,1,.3,1) .24s,transform .9s cubic-bezier(.16,1,.3,1) .24s;}
+.rr-up-scale2.in{opacity:1;transform:none;}
+.rr-r-up{opacity:0;transform:translate(64px,20px);transition:opacity .9s cubic-bezier(.16,1,.3,1) .36s,transform .9s cubic-bezier(.16,1,.3,1) .36s;}
+.rr-r-up.in{opacity:1;transform:none;}
+
 @media(max-width:1080px){
-  .range-grid{grid-template-columns:1fr 1fr;}
+  .range-deck{flex-wrap:wrap;row-gap:1.4rem;}
+  .range-item{flex:1 1 46%;min-height:440px;}
+  .range-item--02,.range-item--04{margin-top:0;}
 }
 @media(max-width:640px){
-  .range-grid{grid-template-columns:1fr;}
+  .range-deck{flex-direction:column;gap:1.6rem;}
+  .range-item{flex:1 1 auto;width:100%;min-height:420px;margin:0!important;}
+  .range-item:hover{transform:none;}
+  .range-img{width:80%;}
 }
 
 /* ===================================================
@@ -319,6 +353,8 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
 }
 @media(prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none;}
+  .rr-up-scale,.rr-r,.rr-up-scale2,.rr-r-up{opacity:1!important;transform:none!important;transition:none!important;}
+  .range-item:hover{transform:none!important;}
   * { animation-duration:.01ms !important; }
 }
 </style>
@@ -377,48 +413,77 @@ footer.site-footer{display:block;padding:0;border-top:none;text-align:left;backg
 </header>
 
 <!-- ===================== OUR RANGE ===================== -->
-<section class="sec sec--ivory" id="range">
+<!-- Overlapping editorial panels, not a card grid — see redesign brief 2026-09-15 (v2):
+     no ghost numerals, no per-card technical tags. The illustration fills most of each
+     panel; text is a name, one existing descriptor sentence, and an arrow. -->
+<section class="sec sec--ivory" id="range" style="position:relative;overflow:hidden;">
   <div class="w">
     <div class="range-top reveal">
       <div>
         <div class="eyebrow"><i></i>Our Range</div>
         <h2 class="h2">Four types,<br><em>one standard.</em></h2>
+        <p class="lede">Engineered for diverse transformer requirements, consistent performance across power, distribution, industrial and renewable-energy applications.</p>
       </div>
-      <p class="lede">Engineered for diverse transformer requirements, our radiators deliver consistent performance across power, distribution, industrial and renewable-energy applications.</p>
+      <a href="products-all.html" class="range-cta btn-text">Explore All Products <span>&rarr;</span></a>
     </div>
 
-    <div class="range-grid">
-      <a href="products-all.html#header-type" class="range-card active reveal">
-        <div class="range-card-vis"><svg viewBox="0 0 200 140" fill="none"><rect x="30" y="20" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="30" y="110" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="40" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="56" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="72" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="88" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="104" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="120" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="136" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="152" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/></svg></div>
-        <div class="range-num">i</div>
-        <div class="range-name">Header Type</div>
-        <div class="range-tag">Reliable cooling for maximum transformer performance.</div>
-        <div class="range-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+    <div class="range-deck">
+      <a href="products-all.html#header-type" class="range-item range-item--01 rr-up-scale">
+        <div class="range-visual">
+          <div class="range-img"><svg viewBox="0 0 200 140" fill="none"><rect x="30" y="20" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="30" y="110" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="40" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="56" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="72" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="88" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="104" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="120" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="136" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="152" y="34" width="8" height="72" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/></svg></div>
+        </div>
+        <div class="range-body">
+          <div>
+            <div class="range-num">01</div>
+            <div class="range-name">Header Type</div>
+            <p class="range-desc">Reliable cooling for maximum transformer performance.</p>
+          </div>
+          <div class="range-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+        </div>
       </a>
-      <a href="products-all.html#offset" class="range-card reveal d1">
-        <div class="range-card-vis"><svg viewBox="0 0 200 140" fill="none"><rect x="24" y="20" width="112" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="24" y="110" width="112" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="34" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="49" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="64" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="79" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="94" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="109" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><path d="M136 26h34v-14" stroke="currentColor" stroke-width="1.4"/><path d="M136 116h34v14" stroke="currentColor" stroke-width="1.4"/></svg></div>
-        <div class="range-num">ii</div>
-        <div class="range-name">Offset Radiators</div>
-        <div class="range-tag">Compact design for space-constrained installations.</div>
-        <div class="range-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+
+      <a href="products-all.html#offset" class="range-item range-item--02 rr-r">
+        <div class="range-visual">
+          <div class="range-img"><svg viewBox="0 0 200 140" fill="none"><rect x="24" y="20" width="112" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="24" y="110" width="112" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="34" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="49" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="64" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="79" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="94" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="109" y="34" width="7" height="72" rx="3.5" stroke="currentColor" stroke-width="1" opacity=".6"/><path d="M136 26h34v-14" stroke="currentColor" stroke-width="1.4"/><path d="M136 116h34v14" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        </div>
+        <div class="range-body">
+          <div>
+            <div class="range-num">02</div>
+            <div class="range-name">Offset Radiators</div>
+            <p class="range-desc">Compact design for space-constrained installations.</p>
+          </div>
+          <div class="range-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+        </div>
       </a>
-      <a href="products-all.html#swan-neck" class="range-card reveal d2">
-        <div class="range-card-vis"><svg viewBox="0 0 200 140" fill="none"><rect x="30" y="40" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="30" y="110" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="40" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="56" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="72" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="88" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="104" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="120" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="136" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="152" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><path d="M46 40V28C46 14 62 20 66 8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path d="M154 40V28C154 14 138 20 134 8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" opacity=".85"/></svg></div>
-        <div class="range-num">iii</div>
-        <div class="range-name">Swan Neck</div>
-        <div class="range-tag">Designed for complex transformer configurations.</div>
-        <div class="range-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+
+      <a href="products-all.html#swan-neck" class="range-item range-item--03 rr-up-scale2">
+        <div class="range-visual">
+          <div class="range-img"><svg viewBox="0 0 200 140" fill="none"><rect x="30" y="40" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="30" y="110" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="40" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="56" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="72" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="88" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="104" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="120" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="136" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="152" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><path d="M46 40V28C46 14 62 20 66 8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path d="M154 40V28C154 14 138 20 134 8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" opacity=".85"/></svg></div>
+        </div>
+        <div class="range-body">
+          <div>
+            <div class="range-num">03</div>
+            <div class="range-name">Swan Neck</div>
+            <p class="range-desc">Designed for complex transformer configurations.</p>
+          </div>
+          <div class="range-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+        </div>
       </a>
-      <a href="products-all.html#goose-neck" class="range-card reveal d3">
-        <div class="range-card-vis"><svg viewBox="0 0 200 140" fill="none"><rect x="30" y="40" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="30" y="110" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="40" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="56" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="72" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="88" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="104" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="120" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="136" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="152" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><path d="M46 40V26C46 12 26 12 22 24V32" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path d="M154 40V26C154 12 174 12 178 24V32" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" opacity=".85"/></svg></div>
-        <div class="range-num">iv</div>
-        <div class="range-name">Goose Neck</div>
-        <div class="range-tag">Custom engineered for flexible transformer connections.</div>
-        <div class="range-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+
+      <a href="products-all.html#goose-neck" class="range-item range-item--04 rr-r-up">
+        <div class="range-visual">
+          <div class="range-img"><svg viewBox="0 0 200 140" fill="none"><rect x="30" y="40" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="30" y="110" width="140" height="10" rx="5" stroke="currentColor" stroke-width="1.4"/><rect x="40" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="56" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="72" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="88" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="104" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="120" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="136" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><rect x="152" y="54" width="8" height="52" rx="4" stroke="currentColor" stroke-width="1" opacity=".6"/><path d="M46 40V26C46 12 26 12 22 24V32" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path d="M154 40V26C154 12 174 12 178 24V32" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" opacity=".85"/></svg></div>
+        </div>
+        <div class="range-body">
+          <div>
+            <div class="range-num">04</div>
+            <div class="range-name">Goose Neck</div>
+            <p class="range-desc">Custom engineered for flexible transformer connections.</p>
+          </div>
+          <div class="range-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+        </div>
       </a>
     </div>
-
-    <div class="range-foot reveal d4"><a href="products-all.html" class="btn-text">Explore All Products <span>&rarr;</span></a></div>
   </div>
 </section>
 
@@ -723,7 +788,37 @@ addEventListener('scroll', function(){
 const io = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+document.querySelectorAll('.reveal,.rr-up-scale,.rr-r,.rr-up-scale2,.rr-r-up').forEach(el => io.observe(el));
+
+/* ── Our Range: subtle image floating parallax, desktop-only, off under reduced-motion.
+   Targets .range-visual (the frame), not .range-img — .range-img's own transform is
+   reserved for the CSS hover-scale rule, so an inline parallax transform there would
+   permanently win over it (inline style beats a class selector). ── */
+(function(){
+  var imgs = document.querySelectorAll('#range .range-visual');
+  if (!imgs.length) return;
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  var ticking = false;
+  function apply(){
+    ticking = false;
+    if (reduced.matches || window.innerWidth < 900) {
+      imgs.forEach(function(el){ el.style.transform = ''; });
+      return;
+    }
+    var vh = window.innerHeight;
+    imgs.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      var center = r.top + r.height / 2;
+      var offset = (center - vh / 2) * -0.035;
+      offset = Math.max(-10, Math.min(10, offset));
+      el.style.transform = 'translateY(' + offset.toFixed(1) + 'px)';
+    });
+  }
+  function onScroll(){ if (!ticking) { requestAnimationFrame(apply); ticking = true; } }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  apply();
+})();
 </script>
 </body>
 </html>
