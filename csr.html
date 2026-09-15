@@ -3,48 +3,714 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CSR — Triveni Radiators</title>
-<meta name="description" content="Corporate Social Responsibility at Triveni Radiators — giving back to our community and environment.">
-<link rel="stylesheet" href="styles.css?v=5">
+<title>Sustainability | Triveni Radiators</title>
+<meta name="description" content="Sustainability at Triveni Radiators: responsible growth, environmental care, community development and people-first safety, from our Naini, Prayagraj facility.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Schibsted+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+/* ===================================================
+   TOKENS  (identical to Careers / Clients / Milestones / Triveni Group,
+   plus a couple of page-local additions for the lavender tint section)
+   =================================================== */
+:root {
+  --navy:        #101B4D;
+  --navy-2:      #111A45;
+  --navy-deep:   #0C1233;
+
+  --ivory:       #F5F0E8;
+  --stone:       #EFEAE1;
+  --sand:        #F0E6D2;
+  --cream:       #FAF6EC;
+  --lav-tint:    #F4F2FB;
+
+  --ink:         #1E1828;
+  --navy-ink:    #14204A;
+  --muted:       #63607A;
+  --muted-2:     #928DA3;
+
+  --violet:      #6A45C0;
+  --violet-deep: #4A2E82;
+  --lav-hi:      #8B8CF0;
+  --gold:        #B8935A;
+  --gold-2:      #CBA76C;
+
+  --line:        #E7E2D9;
+  --line-cool:   #E0DEF0;
+  --line-beige:  #E9E1D2;
+
+  --beige:       #EEE7DC;
+}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Schibsted Grotesk',sans-serif;
+  background:var(--ivory); color:var(--ink); line-height:1.6;
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+a { color:inherit; text-decoration:none; }
+img { display:block; max-width:100%; }
+button { font:inherit; }
+
+/* ===================================================
+   NAV  (verbatim — identical to Careers / Clients / Milestones / Triveni Group.
+   Do not modify: logo, links, order, CTA, colours, spacing or scroll behaviour.)
+   =================================================== */
+#nav {
+  position:relative; z-index:300;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 56px;
+  background:#050B22; border-bottom:1px solid rgba(255,255,255,.1);
+  transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .25s cubic-bezier(.22,1,.36,1);
+  will-change:transform;
+}
+#nav.nav-pinned { position:fixed; top:0; left:0; right:0; }
+#nav.nav-hidden { transform:translateY(-100%); }
+#nav.nav-shadow { box-shadow:0 4px 16px -4px rgba(5,11,34,.35); }
+.nav-logo img { height:34px; width:auto; display:block; border-radius:3px; }
+.nav-links { display:flex; align-items:center; gap:36px; list-style:none; }
+.nav-links a {
+  position:relative; font-size:15px; font-weight:400;
+  color:rgba(255,255,255,.85); padding:6px 0;
+  transition:color .25s cubic-bezier(.22,1,.36,1);
+}
+.nav-links a::after {
+  content:''; position:absolute; left:0; right:100%; bottom:0; height:1.5px;
+  background:currentColor; transition:right .32s cubic-bezier(.22,1,.36,1);
+}
+.nav-links a:hover, .nav-links a:focus-visible { color:#fff; }
+.nav-links a:hover::after, .nav-links a:focus-visible::after { right:0; }
+.nav-links a.on { color:#fff; }
+.nav-links a.on::after { right:0; background:#8B8CF0; }
+.nav-cta {
+  font-size:15px; font-weight:500; color:#fff;
+  background:#4F46E5; padding:12px 24px; border-radius:999px;
+  transition:background .25s cubic-bezier(.22,1,.36,1);
+}
+.nav-cta:hover, .nav-cta:focus-visible { background:#4038CC; }
+.nav-toggle { display:none; background:none; border:none; cursor:pointer; flex-direction:column; gap:5px; padding:6px; }
+.nav-toggle span { display:block; width:22px; height:2px; background:#fff; }
+@media(max-width:1080px){
+  #nav { padding:18px 28px; }
+  .nav-links { display:none; }
+  .nav-toggle { display:flex; }
+  .nav-links.open {
+    position:absolute; top:100%; left:0; right:0;
+    display:flex; flex-direction:column; gap:18px;
+    background:#050B22; padding:24px 28px 30px; z-index:50;
+  }
+}
+
+/* ===================================================
+   REVEAL  (verbatim)
+   =================================================== */
+.reveal { opacity:0; transform:translateY(26px); transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+.reveal.in { opacity:1; transform:none; }
+.reveal-d1 { transition-delay:.1s; }
+.reveal-d2 { transition-delay:.2s; }
+.reveal-d3 { transition-delay:.3s; }
+.reveal-d4 { transition-delay:.4s; }
+@media(prefers-reduced-motion:reduce){ .reveal{opacity:1!important;transform:none!important;transition:none!important;} }
+
+/* ===================================================
+   SHARED — eyebrow / heading / lead / buttons / arrows
+   (page-local "sus-" prefix, same construction as the rest of the site)
+   =================================================== */
+.sus-eyebrow {
+  font-family:'Poppins',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.26em;
+  text-transform:uppercase; color:var(--violet); margin-bottom:1.1rem;
+}
+.sus-eyebrow.on-dark { color:var(--lav-hi); }
+.sus-h2 {
+  font-family:'Newsreader',serif; font-weight:400; letter-spacing:-.02em;
+  font-size:clamp(2.1rem,3.6vw,3.15rem); line-height:1.12; color:var(--navy-ink);
+}
+.sus-h2 em { font-style:italic; font-weight:400; color:var(--violet); }
+.sus-h2.on-dark { color:#fff; }
+.sus-h2.on-dark em { color:#EFDDB8; }
+.sus-lead { font-size:1rem; line-height:1.8; color:var(--muted); max-width:36rem; }
+.sus-lead.on-dark { color:rgba(255,255,255,.62); }
+
+.btn {
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-family:'Poppins',sans-serif; font-size:.9rem; font-weight:500; letter-spacing:.01em;
+  border-radius:999px; padding:1rem 2.1rem; transition:background .2s, color .2s, transform .2s, border-color .2s, box-shadow .2s;
+  white-space:nowrap;
+}
+.btn span { transition:transform .2s; display:inline-block; }
+.btn:hover span { transform:translateX(4px); }
+.btn-primary { color:#fff; background:var(--violet-deep); box-shadow:0 16px 34px -16px rgba(74,46,130,.5); }
+.btn-primary:hover { background:var(--violet); transform:translateY(-2px); }
+.btn-ghost-dark { color:rgba(255,255,255,.82); border:1px solid rgba(255,255,255,.22); background:transparent; }
+.btn-ghost-dark:hover { border-color:rgba(255,255,255,.5); color:#fff; background:rgba(255,255,255,.05); }
+.link-arrow {
+  font-family:'Poppins',sans-serif; font-size:.86rem; font-weight:500; color:var(--violet-deep);
+  display:inline-flex; align-items:center; gap:.55rem;
+}
+.link-arrow span { transition:transform .25s cubic-bezier(.22,1,.36,1); display:inline-flex; }
+.link-arrow:hover span { transform:translateX(5px); }
+.link-arrow.on-dark { color:#fff; }
+
+/* ===================================================
+   SECTION SHELL
+   =================================================== */
+.sec { padding:6.5rem 4rem; scroll-margin-top:5rem; }
+.sec-inner { max-width:1240px; margin:0 auto; }
+.sec--ivory   { background:var(--ivory); }
+.sec--stone   { background:var(--stone); }
+.sec--lav     { background:var(--lav-tint); }
+.sec-head { max-width:38rem; margin-bottom:3.6rem; }
+.sec-head.center { margin-left:auto; margin-right:auto; text-align:center; }
+@media(max-width:1080px){ .sec{ padding:5rem 2.2rem; } }
+@media(max-width:640px){ .sec{ padding:4rem 1.4rem; } }
+
+/* ===================================================
+   PLACEHOLDER PHOTOGRAPHY
+   (clearly labelled, never stock/AI — same convention used sitewide.
+   Swap the <div class="ph-media">…</div> for an <img> once the client's
+   own sustainability photographs are supplied, keeping the same class
+   on a wrapping element if you want to preserve the aspect ratio.)
+   =================================================== */
+.ph-media {
+  position:relative; width:100%; height:100%; min-height:220px;
+  border:1px dashed var(--line-cool); border-radius:14px;
+  background:
+    repeating-linear-gradient(135deg,rgba(106,69,192,.05) 0 1px,transparent 1px 22px),
+    var(--stone);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.7rem; text-align:center; padding:1.6rem; overflow:hidden;
+}
+.ph-media svg { width:26px; height:26px; color:var(--violet); opacity:.55; }
+.ph-tag { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--violet); }
+.ph-txt { font-size:.8rem; line-height:1.55; color:var(--muted-2); max-width:15rem; }
+.ph-media.dark { border-color:rgba(255,255,255,.16); background:rgba(255,255,255,.03); }
+.ph-media.dark svg { color:var(--lav-hi); opacity:.7; }
+.ph-media.dark .ph-tag { color:var(--lav-hi); }
+.ph-media.dark .ph-txt { color:rgba(255,255,255,.45); }
+
+/* ===================================================
+   1 — HERO
+   =================================================== */
+.sus-hero {
+  position:relative; overflow:hidden; background:var(--navy-deep);
+  /* height tied to the actual hero photograph's aspect ratio (2125×740 ≈ 2.87:1)
+     so it displays near-uncropped on wide/desktop screens; the mobile media query
+     below switches back to a viewport-height hero since a 2.87:1 box is too short
+     for the heading to sit in on a narrow screen. */
+  height:clamp(480px,35vw,860px);
+  display:flex; flex-direction:column; justify-content:flex-end;
+}
+.sus-hero-bg { position:absolute; inset:0; z-index:0; }
+.sus-hero-bg img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:66% 44%; }
+.sus-hero-bg .ph-media { border-radius:0; border:none; min-height:100%; }
+.sus-hero-overlay {
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  /* darkest on the left, where the text sits; fades out toward the right so the
+     photograph (tree/sun side) reads clearly */
+  background:
+    linear-gradient(90deg, rgba(6,10,28,.9) 0%, rgba(7,11,31,.8) 22%, rgba(9,14,36,.52) 44%, rgba(10,15,40,.22) 66%, rgba(10,15,40,0) 88%),
+    linear-gradient(180deg, rgba(5,9,26,.4) 0%, rgba(5,9,26,0) 24%, rgba(5,9,26,0) 52%, rgba(5,9,26,.45) 82%, rgba(4,7,22,.85) 100%);
+}
+.sus-hero-inner { position:relative; z-index:2; flex:1; display:flex; align-items:center; justify-content:flex-start; padding:6.5rem 4rem 3.5rem; }
+.sus-hero-text { max-width:34rem; }
+.sus-hero-title {
+  font-family:'Newsreader',serif; font-weight:400; letter-spacing:-.02em;
+  font-size:clamp(2.5rem,5.4vw,4.8rem); line-height:1.05; color:#fff; margin-bottom:1.5rem;
+}
+.sus-hero-title em { font-style:italic; color:#EFDDB8; }
+.sus-hero-sub { font-family:'Newsreader',serif; font-style:italic; font-size:1.2rem; color:rgba(240,238,250,.82); margin-bottom:1.6rem; }
+.sus-hero-intro { font-size:1rem; line-height:1.8; color:rgba(240,238,250,.68); max-width:30rem; margin-bottom:0; }
+@media(max-width:1080px){ .sus-hero{ height:64vh; min-height:440px; } .sus-hero-bg img{ object-position:72% 40%; } .sus-hero-inner{ padding:5.5rem 2.2rem 3rem; } }
+@media(max-width:640px){ .sus-hero{ height:78vh; min-height:460px; } .sus-hero-bg img{ object-position:78% 38%; } .sus-hero-inner{ padding:4.5rem 1.4rem 2.6rem; justify-content:flex-start; align-items:flex-end; } }
+
+/* ===================================================
+   2 — OUR APPROACH
+   =================================================== */
+.sec--approach { background:#F7F5F0; }
+.approach-inner { max-width:1440px; margin:0 auto; }
+.sus-approach-grid { display:grid; grid-template-columns:2fr 3fr; gap:4.5rem; align-items:start; }
+.sus-approach-copy { max-width:22rem; }
+.sus-approach-link { margin-top:1.9rem; }
+
+/* four independent cards — no connecting panel, no divider lines */
+.approach-cards { display:grid; grid-template-columns:repeat(2,1fr); gap:1.4rem; }
+.approach-card {
+  background:#F0F0F1; border:1px solid rgba(20,32,74,.08); border-radius:12px;
+  padding:1.9rem; display:flex; flex-direction:column; align-items:flex-start;
+  transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, border-color .3s ease;
+}
+.approach-card:hover { transform:translateY(-4px); box-shadow:0 16px 32px -20px rgba(20,32,74,.2); border-color:rgba(106,69,192,.35); }
+.approach-card svg { width:28px; height:28px; color:var(--violet); margin-bottom:1.2rem; transition:transform .3s cubic-bezier(.22,1,.36,1); }
+.approach-card:hover svg { transform:translateY(-2px); }
+.approach-card h3 { font-family:'Newsreader',serif; font-weight:400; font-size:1.45rem; color:var(--navy-ink); letter-spacing:-.01em; margin-bottom:.7rem; }
+.approach-card p { font-size:.95rem; line-height:1.65; color:var(--muted); }
+
+@media(min-width:1400px){ .approach-cards{ grid-template-columns:repeat(4,1fr); } }
+@media(max-width:1080px){
+  .sus-approach-grid{ grid-template-columns:1fr 1.5fr; gap:2.8rem; }
+  .sus-approach-copy{ max-width:none; }
+}
+@media(max-width:768px){
+  .sus-approach-grid{ grid-template-columns:1fr; gap:3rem; }
+}
+@media(max-width:480px){ .approach-cards{ grid-template-columns:1fr; } }
+
+/* ===================================================
+   3 — OUR INITIATIVES  (shared card typography — see 3b below
+   for the overview layout itself)
+   =================================================== */
+.init-cat { font-family:'Poppins',sans-serif; font-size:.64rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:.6rem; }
+.init-title { font-family:'Newsreader',serif; font-weight:400; font-style:italic; font-size:1.5rem; color:var(--navy-ink); margin-bottom:.55rem; }
+.init-desc { font-size:.88rem; line-height:1.65; color:var(--muted); }
+
+/* ===================================================
+   3b — OUR INITIATIVES: overview (one featured tile + compact list,
+   each initiative gets ONE line here — the deeper story lives in its
+   own section below, so nothing is explained twice)
+   =================================================== */
+.init-overview { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:stretch; }
+.init-feature { border-radius:16px; overflow:hidden; background:#fff; border:1px solid var(--line-cool); display:flex; flex-direction:column; transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s; }
+.init-feature:hover { transform:translateY(-4px); box-shadow:0 30px 60px -34px rgba(20,17,30,.25); }
+.init-feature-media { aspect-ratio:4/3; overflow:hidden; }
+.init-feature-media img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.init-feature:hover .init-feature-media img { transform:scale(1.04); }
+.init-feature-body { padding:1.8rem 2rem 2rem; }
+.init-feature .init-title { font-size:1.7rem; }
+.init-list { display:flex; flex-direction:column; }
+.init-row { display:grid; grid-template-columns:84px 1fr; gap:1.2rem; align-items:center; padding:1.25rem 0; border-top:1px solid var(--line-cool); }
+.init-list .init-row:last-child { border-bottom:1px solid var(--line-cool); }
+.init-row-media { width:84px; height:84px; border-radius:10px; overflow:hidden; flex-shrink:0; }
+.init-row-media img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s cubic-bezier(.22,1,.36,1); }
+.init-row:hover .init-row-media img { transform:scale(1.08); }
+.init-row-body .init-title { font-size:1.05rem; margin-bottom:.2rem; }
+.init-row-body .init-desc { font-size:.82rem; }
+@media(max-width:1080px){ .init-overview{ grid-template-columns:1fr; gap:2.2rem; } }
+@media(max-width:480px){ .init-row{ grid-template-columns:60px 1fr; gap:.9rem; } .init-row-media{ width:60px; height:60px; } }
+
+/* ===================================================
+   5 — IMPACT  (dark, full-bleed, textured — no fabricated figures)
+   =================================================== */
+.sus-impact { position:relative; background:var(--navy-deep); overflow:hidden; padding:7rem 4rem; }
+.sus-impact-bg { position:absolute; inset:0; z-index:0; }
+.sus-impact-bg img { width:100%; height:100%; object-fit:cover; display:block; }
+.sus-impact-scrim { position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(6,10,28,.93) 0%,rgba(8,13,33,.9) 45%,rgba(6,10,28,.95) 100%); pointer-events:none; }
+.sus-impact::after {
+  content:''; position:absolute; top:-20%; right:-10%; width:56vw; height:56vw; max-width:640px; max-height:640px; z-index:1;
+  background:radial-gradient(circle,rgba(139,140,240,.14),transparent 65%); pointer-events:none;
+}
+.sus-impact-inner { position:relative; z-index:2; max-width:1240px; margin:0 auto; }
+.sus-impact-head { max-width:38rem; margin-bottom:4rem; }
+.sus-stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem; }
+.sus-stat { border-top:1px solid rgba(255,255,255,.16); padding-top:1.6rem; }
+.sus-stat-num { font-family:'Newsreader',serif; font-weight:400; font-style:italic; font-size:clamp(2.2rem,3.4vw,3rem); color:#EFDDB8; line-height:1; margin-bottom:.7rem; }
+.sus-stat-label { font-size:.86rem; line-height:1.5; color:rgba(255,255,255,.6); }
+.sus-impact-note { margin-top:3rem; font-size:.8rem; color:rgba(255,255,255,.4); max-width:30rem; }
+@media(max-width:1080px){ .sus-impact{ padding:5.5rem 2.2rem; } .sus-stat-grid{ grid-template-columns:repeat(2,1fr); gap:2.4rem 2rem; } }
+@media(max-width:640px){ .sus-impact{ padding:4.5rem 1.4rem; } .sus-stat-grid{ grid-template-columns:1fr 1fr; gap:2rem 1.4rem; } }
+
+/* ===================================================
+   4 — ENVIRONMENT: one narrative (featured story + supporting story,
+   instead of separate independent sections per initiative)
+   =================================================== */
+.story-kicker { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; }
+.story-block { display:grid; grid-template-columns:1.1fr 1fr; gap:3.5rem; align-items:center; }
+.story-block.rev { grid-template-columns:1fr 1.1fr; }
+.story-block.rev .story-media-wrap { order:2; }
+.story-divider { border:none; border-top:1px solid rgba(20,32,74,.1); margin:4.5rem 0; }
+.story-body h3 { font-family:'Newsreader',serif; font-weight:400; font-size:clamp(1.5rem,2.2vw,1.9rem); color:var(--navy-ink); margin-bottom:.85rem; letter-spacing:-.01em; }
+.story-body p { font-size:.94rem; line-height:1.75; color:var(--muted); }
+
+.media-pair { display:flex; flex-direction:column; gap:.8rem; }
+.media-pair .mp-main { aspect-ratio:4/3; border-radius:16px; overflow:hidden; }
+.media-pair .mp-sub { aspect-ratio:21/8; border-radius:12px; overflow:hidden; }
+.media-pair img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.media-pair:hover img { transform:scale(1.03); }
+
+.media-duo { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+.media-duo figure { position:relative; aspect-ratio:4/5; border-radius:14px; overflow:hidden; margin:0; }
+.media-duo img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.media-duo figure:hover img { transform:scale(1.04); }
+.media-duo figcaption, .ps-thumbs figcaption { position:absolute; left:.6rem; bottom:.6rem; font-family:'Poppins',sans-serif; font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:rgba(16,24,45,.55); padding:.28rem .65rem; border-radius:999px; }
+@media(max-width:1080px){
+  .story-block, .story-block.rev { grid-template-columns:1fr; gap:2rem; }
+  .story-block.rev .story-media-wrap { order:-1; }
+  .story-divider { margin:3rem 0; }
+}
+
+/* ===================================================
+   5 — PEOPLE & COMMUNITY: one composition (large Dental story +
+   Financial Literacy / Food Donation as a secondary stack)
+   =================================================== */
+.pc-grid { display:grid; grid-template-columns:1.35fr 1fr; gap:3rem; align-items:start; }
+.pc-feature-body { margin-top:1.5rem; }
+.pc-secondary-stack { display:flex; flex-direction:column; gap:2.4rem; }
+.pc-secondary-item .media-single { aspect-ratio:16/10; border-radius:14px; overflow:hidden; margin-bottom:1.1rem; }
+.pc-secondary-item .media-single img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.pc-secondary-item .media-single:hover img { transform:scale(1.04); }
+.pc-secondary-item h4 { font-family:'Newsreader',serif; font-weight:400; font-size:1.2rem; color:var(--navy-ink); margin-bottom:.5rem; }
+.pc-secondary-item p { font-size:.86rem; line-height:1.6; color:var(--muted); }
+@media(max-width:1080px){ .pc-grid{ grid-template-columns:1fr; gap:2.6rem; } }
+
+/* ===================================================
+   6 — PEOPLE & SAFETY: one focused, visually lighter section
+   =================================================== */
+.sec--ps { background:var(--stone); padding-top:5rem; padding-bottom:5rem; }
+.ps-thumbs { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:.8rem; }
+.ps-thumbs figure { position:relative; aspect-ratio:16/11; border-radius:12px; overflow:hidden; margin:0; }
+.ps-thumbs img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.ps-thumbs figure:hover img { transform:scale(1.05); }
+
+/* ===================================================
+   9 — CLOSING STATEMENT
+   =================================================== */
+.sus-closing { position:relative; min-height:62vh; display:flex; align-items:center; overflow:hidden; background:var(--navy-deep); }
+.sus-closing-bg { position:absolute; inset:0; z-index:0; }
+.sus-closing-bg .ph-media { border-radius:0; border:none; min-height:100%; }
+.sus-closing-bg img { width:100%; height:100%; object-fit:cover; object-position:50% 35%; display:block; }
+.sus-closing-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(5,9,26,.55) 0%,rgba(5,9,26,.72) 60%,rgba(4,7,22,.88) 100%); pointer-events:none; }
+.sus-closing-inner { position:relative; z-index:2; max-width:44rem; margin:0 auto; text-align:center; padding:5rem 4rem; }
+.sus-closing-title { font-family:'Newsreader',serif; font-weight:400; letter-spacing:-.02em; font-size:clamp(2rem,4.2vw,3.2rem); line-height:1.18; color:#fff; margin-bottom:1.5rem; }
+.sus-closing-title em { font-style:italic; color:#EFDDB8; }
+.sus-closing-sub { font-size:1rem; line-height:1.75; color:rgba(255,255,255,.62); max-width:34rem; margin:0 auto 2.2rem; }
+@media(max-width:640px){ .sus-closing-inner{ padding:4rem 1.4rem; } }
+
+/* ===================================================
+   FOOTER  (verbatim — identical to every other page)
+   =================================================== */
+footer.site-footer { display:block; padding:0; border-top:none; text-align:left; background:#0F0A1E; position:relative; overflow:hidden; }
+.site-footer::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(106,69,192,.6),rgba(184,147,90,.4),transparent); }
+.site-footer::after { content:''; position:absolute; top:-40%; left:20%; width:60%; height:80%; background:radial-gradient(ellipse,rgba(74,46,130,.12),transparent 65%); pointer-events:none; }
+.footer-main { position:relative; z-index:2; max-width:1280px; margin:0 auto; padding:5rem 4rem 4rem; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:5rem; }
+.footer-logo { font-family:'Newsreader',serif; font-size:1.8rem; font-weight:400; color:rgba(252,251,249,.95); letter-spacing:-.01em; margin-bottom:1rem; display:block; }
+.footer-logo img { height:42px; width:auto; display:block; border-radius:5px; }
+.footer-tagline { font-family:'Newsreader',serif; font-size:1rem; color:rgba(255,255,255,.35); margin-bottom:1.6rem; }
+.footer-desc { font-size:.82rem; line-height:1.75; color:rgba(255,255,255,.38); max-width:300px; margin-bottom:2rem; }
+.footer-certs { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:2.5rem; }
+.footer-cert { font-size:.6rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(184,147,90,.7); border:1px solid rgba(184,147,90,.2); padding:.25rem .7rem; border-radius:999px; }
+.footer-socials { display:flex; gap:.8rem; }
+.footer-social { width:38px; height:38px; border-radius:10px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.45); transition:background .25s,border-color .25s,color .25s,transform .2s; }
+.footer-social:hover { background:rgba(106,69,192,.25); border-color:rgba(106,69,192,.4); color:#fff; transform:translateY(-2px); }
+.footer-social svg { width:15px; height:15px; }
+.footer-col-title { font-size:.65rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:1.5rem; padding-bottom:.75rem; border-bottom:1px solid rgba(255,255,255,.07); }
+.footer-col-links { display:flex; flex-direction:column; gap:.75rem; }
+.footer-col-link { font-size:.84rem; color:rgba(255,255,255,.45); position:relative; transition:color .2s,padding-left .2s; }
+.footer-col-link::before { content:''; position:absolute; left:0; top:50%; width:0; height:1px; background:#D4A96A; transform:translateY(-50%); transition:width .25s; }
+.footer-col-link:hover { color:rgba(255,255,255,.85); padding-left:.9rem; }
+.footer-col-link:hover::before { width:.55rem; }
+.footer-contact-item { display:flex; gap:.7rem; align-items:flex-start; font-size:.82rem; color:rgba(255,255,255,.4); margin-bottom:.9rem; line-height:1.5; transition:color .2s; }
+.footer-contact-item:hover { color:rgba(255,255,255,.7); }
+.footer-contact-item svg { width:13px; height:13px; flex-shrink:0; margin-top:.22rem; color:#B8935A; opacity:.7; }
+.footer-divider { position:relative; z-index:2; max-width:1280px; margin:0 auto; padding:0 4rem; }
+.footer-divider-line { height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.08) 20%,rgba(255,255,255,.08) 80%,transparent); }
+.footer-bottom { position:relative; z-index:2; max-width:1280px; margin:0 auto; padding:2rem 4rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+.footer-copy { font-size:.75rem; color:rgba(255,255,255,.22); letter-spacing:.03em; }
+.footer-bottom-links { display:flex; gap:2rem; }
+.footer-bottom-link { font-size:.73rem; color:rgba(255,255,255,.25); transition:color .2s; letter-spacing:.02em; }
+.footer-bottom-link:hover { color:rgba(255,255,255,.55); }
+.footer-made { font-size:.72rem; color:rgba(255,255,255,.18); font-family:'Newsreader',serif; }
+@media(max-width:1024px) {
+  .footer-main { grid-template-columns:1fr 1fr; gap:3.5rem; padding:4rem 2.5rem 3rem; }
+  .footer-brand { grid-column:1 / -1; }
+  .footer-bottom { padding:1.8rem 2.5rem; flex-direction:row; text-align:left; }
+  .footer-divider { padding:0 2.5rem; }
+}
+@media(max-width:640px) {
+  .footer-main { grid-template-columns:1fr; gap:2.5rem; padding:3rem 1.5rem 2.5rem; }
+  .footer-brand { grid-column:1; }
+  .footer-desc { max-width:100%; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; padding:1.5rem; gap:.6rem; }
+  .footer-bottom-links { gap:1.2rem; }
+  .footer-divider { padding:0 1.5rem; }
+}
+</style>
 </head>
 <body>
 
-<nav id="navbar">
-  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators" style="height:38px;width:auto;display:block;border-radius:5px;"></a>
-  <ul class="nav-links">
+<!-- ===================== NAV (unchanged) ===================== -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
+  <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="products.html">Product</a></li>
     <li><a href="credentials.html">Credential</a></li>
     <li><a href="milestones.html">Milestones</a></li>
     <li><a href="triveni-group.html">Triveni Group</a></li>
-    <li><a href="clientele.html">Clientele</a></li>
+    <li><a href="clientele.html">Clients</a></li>
     <li><a href="careers.html">Careers</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Contact Us</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
-<header class="page-hero">
-  <div class="hero-orb" data-depth="0.18"></div>
-  <div class="page-eyebrow">CSR</div>
-  <h1 class="page-title">Values, <em>beyond the factory.</em></h1>
-  <p class="page-sub">"We Value Values" isn't only how we run the business — it's how we engage with our community, our people and the environment.</p>
+<!-- ===================== 1 — HERO ===================== -->
+<header class="sus-hero">
+  <div class="sus-hero-bg">
+    <img src="assets/sustainabilty/sustainabilty hero img.png" alt="Triveni's Naini facility framed by trees and a river at sunrise, reflecting industry alongside the environment" loading="eager" fetchpriority="high">
+  </div>
+  <div class="sus-hero-overlay"></div>
+  <div class="sus-hero-inner">
+    <div class="sus-hero-text">
+      <div class="sus-eyebrow on-dark">Sustainability</div>
+      <h1 class="sus-hero-title">Building a <em>Sustainable</em> Future</h1>
+      <p class="sus-hero-sub">For people, for progress, for generations.</p>
+      <p class="sus-hero-intro">At Triveni Radiators, responsible growth is inseparable from how we manufacture. From our Naini, Prayagraj facility outward, we work to build with care for the environment we share, the communities around us, and the people who make our work possible.</p>
+    </div>
+  </div>
 </header>
 
-<section class="sec sec-tight">
-  <div class="cards reveal">
-    <div class="card"><div class="card-kicker">Community</div><h3>Local Community</h3><p>Supporting the community around our Naini, Prayagraj facility through local employment and engagement.</p></div>
-    <div class="card"><div class="card-kicker">People</div><h3>Skilling &amp; Safety</h3><p>Training, welding skill development and a strong safety culture across our automated lines.</p></div>
-    <div class="card"><div class="card-kicker">Environment</div><h3>Sustainability</h3><p>Responsible manufacturing, including controlled paint and hot-dip galvanising processes.</p></div>
+<!-- ===================== 2 — OUR APPROACH ===================== -->
+<section class="sec sec--approach" id="approach">
+  <div class="approach-inner sus-approach-grid">
+    <div class="reveal">
+      <div class="sus-eyebrow">Our Approach</div>
+      <h2 class="sus-h2">Responsibility<br>in <em>Everything</em> We Do</h2>
+      <p class="sus-lead sus-approach-copy" style="margin-top:1.4rem;">Sustainability at Triveni is built into how we grow, spanning responsible business practices, environmental care, community development and the wellbeing of our people.</p>
+      <a href="#" class="link-arrow sus-approach-link" onclick="return false;">Our Sustainability Vision <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
+    </div>
+    <div class="approach-cards">
+      <div class="approach-card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M12 12C12 7 9 4 4 3c-1 5 1 9 6 9.5"/><path d="M12 12c0-4 2.5-7 8-8 1 4.5-.5 8.5-6 9"/></svg>
+        <h3>Environment</h3>
+        <p>Minimising our environmental footprint</p>
+      </div>
+      <div class="approach-card reveal reveal-d1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="9" r="3"/><circle cx="16" cy="10.5" r="2.3"/><path d="M3 20c0-3 2.5-5 5.5-5S14 17 14 20"/><path d="M14.5 15.3c2.3.2 4 1.9 4 4.7"/></svg>
+        <h3>Communities</h3>
+        <p>Creating positive social impact</p>
+      </div>
+      <div class="approach-card reveal reveal-d2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.2 8.4-7 10-3.8-1.6-7-5-7-10V6l7-3Z"/><path d="m9.2 12 1.9 1.9 3.7-3.9"/></svg>
+        <h3>People &amp; Safety</h3>
+        <p>Empowering and protecting our people</p>
+      </div>
+      <div class="approach-card reveal reveal-d3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 13a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V19a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H4a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H10a1.65 1.65 0 0 0 1-1.51V4a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V10a1.65 1.65 0 0 0 1.51 1H20a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        <h3>Ethics &amp; Governance</h3>
+        <p>Building a stronger, more transparent future</p>
+      </div>
+    </div>
   </div>
-  <div class="wip reveal"><span><b>Placeholder.</b> Share your actual CSR initiatives, programmes, partners and any photos/impact numbers, and we'll build this into a proper CSR story.</span></div>
 </section>
 
+<!-- ===================== 3 — OUR INITIATIVES (concise overview) ===================== -->
+<section class="sec sec--stone" id="initiatives">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <div class="sus-eyebrow">Our Initiatives</div>
+      <h2 class="sus-h2">A Look at <em>What We Do</em></h2>
+      <p class="sus-lead" style="margin-top:1.2rem;">A brief overview of the initiatives Triveni undertakes across the environment, our community and our people. Each is explored further below.</p>
+    </div>
+
+    <div class="init-overview">
+      <div class="init-feature reveal">
+        <div class="init-feature-media"><img src="assets/sustainabilty/environment day/7X0A9361.JPG" alt="Team members planting a sapling together during Triveni's Environment Day plantation drive" loading="lazy"></div>
+        <div class="init-feature-body">
+          <div class="init-cat">Environment</div>
+          <div class="init-title">Growing Greener</div>
+          <p class="init-desc">Tree plantation marking Environment Day at our Naini facility.</p>
+        </div>
+      </div>
+
+      <div class="init-list reveal reveal-d1">
+        <div class="init-row">
+          <div class="init-row-media"><img src="assets/sustainabilty/dental camp/PHOTO-2025-04-23-19-29-40.jpg" alt="A dentist examining a patient during Triveni's community dental health camp" loading="lazy"></div>
+          <div class="init-row-body">
+            <div class="init-cat">Community</div>
+            <div class="init-title">Dental Health Camp</div>
+            <p class="init-desc">Free dental check-ups organised for the community.</p>
+          </div>
+        </div>
+        <div class="init-row">
+          <div class="init-row-media"><img src="assets/sustainabilty/sbi litracy trainings/PHOTO-2025-09-06-18-23-44 3.jpg" alt="Employees attending an SBI financial literacy training session at Triveni" loading="lazy"></div>
+          <div class="init-row-body">
+            <div class="init-cat">Community Development</div>
+            <div class="init-title">Financial Literacy Training</div>
+            <p class="init-desc">Practical financial-awareness sessions held with SBI.</p>
+          </div>
+        </div>
+        <div class="init-row">
+          <div class="init-row-media"><img src="assets/sustainabilty/food distribution/PHOTO-2025-02-03-18-44-48 copy 3.jpg" alt="Volunteers handing food packets to a passer-by during the Kumbh food donation drive" loading="lazy"></div>
+          <div class="init-row-body">
+            <div class="init-cat">Community</div>
+            <div class="init-title">Food Donation Drive</div>
+            <p class="init-desc">Food distributed to people during Kumbh.</p>
+          </div>
+        </div>
+        <div class="init-row">
+          <div class="init-row-media"><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22 7.jpg" alt="Employees practising CPR on training mannequins during a first-aid session at Triveni" loading="lazy"></div>
+          <div class="init-row-body">
+            <div class="init-cat">People &amp; Safety</div>
+            <div class="init-title">First Aid Training</div>
+            <p class="init-desc">Emergency-response training for our employees.</p>
+          </div>
+        </div>
+        <div class="init-row">
+          <div class="init-row-media"><img src="assets/sustainabilty/relocating plants/PHOTO-2025-04-28-10-26-28.jpg" alt="A palm tree being carefully dug up and relocated during construction at Triveni's facility" loading="lazy"></div>
+          <div class="init-row-body">
+            <div class="init-cat">Environment</div>
+            <div class="init-title">Plant Relocation</div>
+            <p class="init-desc">Relocating existing plants during construction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4 — ENVIRONMENT (one narrative) ===================== -->
+<section class="sec sec--lav" id="environment">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <div class="sus-eyebrow">Environment</div>
+      <h2 class="sus-h2">Protecting the <em>Environment</em> Around Us</h2>
+      <p class="sus-lead" style="margin-top:1.2rem;">Manufacturing at scale carries an environmental footprint. We work to keep ours in check, starting with the ground our facility stands on.</p>
+    </div>
+
+    <div class="story-block reveal">
+      <div class="story-media-wrap">
+        <div class="media-pair">
+          <div class="mp-main"><img src="assets/sustainabilty/environment day/1 img.jpg" alt="Triveni team members planting a sapling together on Environment Day" loading="lazy"></div>
+          <div class="mp-sub"><img src="assets/sustainabilty/environment day/7X0A9370.JPG" alt="Triveni leadership and guests marking a tree planted on Environment Day" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="story-body">
+        <div class="story-kicker">Featured Story</div>
+        <h3>Environment Day: Tree Plantation</h3>
+        <p>Each Environment Day, teams at our Naini facility come together to plant trees on and around the site, a recurring, deliberate contribution rather than a one-time gesture.</p>
+      </div>
+    </div>
+
+    <hr class="story-divider">
+
+    <div class="story-block rev reveal">
+      <div class="story-media-wrap">
+        <div class="media-duo">
+          <figure><img src="assets/sustainabilty/relocating plants/PHOTO-2025-04-28-10-26-28 copy 2.jpg" alt="A hole prepared to relocate an existing plant during construction" loading="lazy"><figcaption>Relocating</figcaption></figure>
+          <figure><img src="assets/sustainabilty/environment day/Plant relocation.jpg" alt="A relocated palm tree staked and replanted at Triveni's facility after construction work" loading="lazy"><figcaption>Replanted</figcaption></figure>
+        </div>
+      </div>
+      <div class="story-body">
+        <div class="story-kicker">Supporting Story</div>
+        <h3>Relocating, Not Removing</h3>
+        <p>When construction on site requires clearing space, existing plants are relocated rather than discarded wherever possible, minimising disruption to the environment already established around the facility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5 — PEOPLE & COMMUNITY (one composition) ===================== -->
+<section class="sec sec--ivory" id="people">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <div class="sus-eyebrow">People &amp; Community</div>
+      <h2 class="sus-h2">People at the <em>Heart</em> of Progress</h2>
+      <p class="sus-lead" style="margin-top:1.2rem;">Our responsibility doesn't end at the factory gate. It extends to the people and communities around our Naini facility.</p>
+    </div>
+
+    <div class="pc-grid">
+      <div class="pc-feature reveal">
+        <div class="media-pair">
+          <div class="mp-main"><img src="assets/sustainabilty/dental camp/PHOTO-2025-04-23-19-29-40 copy.jpg" alt="A dentist attending to a patient at Triveni's community dental health camp" loading="lazy"></div>
+          <div class="mp-sub"><img src="assets/sustainabilty/dental camp/PHOTO-2025-04-23-19-29-40 copy 2.jpg" alt="A dentist consulting a patient at Triveni's community dental health camp" loading="lazy"></div>
+        </div>
+        <div class="pc-feature-body">
+          <div class="story-kicker">Community / CSR</div>
+          <h3>Care That Reaches Beyond Our Gates</h3>
+          <p>A dental camp organised for the community offered basic dental care access to those nearby, one part of a broader effort to invest in the wellbeing of the people around our facility.</p>
+        </div>
+      </div>
+
+      <div class="pc-secondary-stack">
+        <div class="pc-secondary-item reveal reveal-d1">
+          <div class="media-single"><img src="assets/sustainabilty/sbi litracy trainings/PHOTO-2025-09-06-18-23-44 2.jpg" alt="A trainer leading an SBI financial literacy session for Triveni employees" loading="lazy"></div>
+          <div class="story-kicker">Community Development</div>
+          <h4>Financial Literacy Training</h4>
+          <p>Practical financial-awareness sessions conducted in collaboration with SBI, building financial confidence within the community.</p>
+        </div>
+        <div class="pc-secondary-item reveal reveal-d2">
+          <div class="media-single"><img src="assets/sustainabilty/food distribution/PHOTO-2025-02-03-18-44-48 copy 4.jpg" alt="Triveni team members with food packets prepared for the Kumbh food donation drive" loading="lazy"></div>
+          <div class="story-kicker">Community / CSR</div>
+          <h4>Food Donation Drive</h4>
+          <p>During Kumbh, our team took part in distributing food to the large gathering of people passing through the region.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6 — PEOPLE & SAFETY (focused, lighter) ===================== -->
+<section class="sec sec--ps" id="safety">
+  <div class="sec-inner">
+    <div class="story-block reveal">
+      <div class="story-media-wrap">
+        <div class="media-pair">
+          <div class="mp-main"><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22.jpg" alt="Employees practising CPR on training mannequins during a first-aid session at Triveni" loading="lazy"></div>
+          <div class="ps-thumbs">
+            <figure><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22 4.jpg" alt="A trainer presenting stroke-recognition guidance during the first-aid session" loading="lazy"><figcaption>Recognising a Stroke</figcaption></figure>
+            <figure><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22 6.jpg" alt="A trainer presenting electrical-shock response guidance during the first-aid session" loading="lazy"><figcaption>Electrical Shock</figcaption></figure>
+          </div>
+        </div>
+      </div>
+      <div class="story-body">
+        <div class="sus-eyebrow">People &amp; Safety</div>
+        <h2 class="sus-h2" style="font-size:clamp(1.9rem,3vw,2.6rem);margin-bottom:1rem;">Safety Starts With <em>Preparedness</em></h2>
+        <p>First-aid training helps our people respond confidently and effectively during emergencies, covering practical response alongside hazards relevant to a manufacturing environment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 7 — IMPACT ===================== -->
+<section class="sus-impact" id="impact">
+  <div class="sus-impact-bg"><img src="assets/sustainabilty/impact img.jpg" alt="Close-up of green foliage" loading="lazy"></div>
+  <div class="sus-impact-scrim"></div>
+  <div class="sus-impact-inner">
+    <div class="sus-impact-head reveal">
+      <div class="sus-eyebrow on-dark">Impact</div>
+      <h2 class="sus-h2 on-dark">Creating <em>Meaningful</em> Impact</h2>
+    </div>
+    <div class="sus-stat-grid">
+      <div class="sus-stat reveal">
+        <div class="sus-stat-num">[XX]+</div>
+        <div class="sus-stat-label">Trees planted</div>
+      </div>
+      <div class="sus-stat reveal reveal-d1">
+        <div class="sus-stat-num">[XX]+</div>
+        <div class="sus-stat-label">Community members supported</div>
+      </div>
+      <div class="sus-stat reveal reveal-d2">
+        <div class="sus-stat-num">[XX]+</div>
+        <div class="sus-stat-label">People trained</div>
+      </div>
+      <div class="sus-stat reveal reveal-d3">
+        <div class="sus-stat-num">[XX]</div>
+        <div class="sus-stat-label">Environmental initiatives</div>
+      </div>
+    </div>
+    <p class="sus-impact-note reveal reveal-d3">Figures to be confirmed and updated with verified data from each initiative.</p>
+  </div>
+</section>
+
+<!-- ===================== 9 — CLOSING STATEMENT ===================== -->
+<section class="sus-closing">
+  <div class="sus-closing-bg">
+    <img src="assets/sustainabilty/better tmrw img.png" alt="Triveni's facility framed by trees and a river at sunrise" loading="lazy">
+  </div>
+  <div class="sus-closing-overlay"></div>
+  <div class="sus-closing-inner">
+    <div class="reveal">
+      <h2 class="sus-closing-title">A Better Tomorrow Starts With <em>What We Do Today.</em></h2>
+      <p class="sus-closing-sub">Responsible growth, at Triveni, is not a separate initiative; it's built into how we manufacture, how we treat the land around us, and how we show up for our people and community.</p>
+      <a href="#initiatives" class="btn btn-ghost-dark">Explore Our Initiatives <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER (unchanged) ===================== -->
 <footer class="site-footer">
-
   <div class="footer-main">
-
     <div class="footer-brand">
-      <a href="index.html" class="footer-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators" style="height:42px;width:auto;display:block;border-radius:5px;"></a>
+      <a href="index.html" class="footer-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
       <div class="footer-tagline">"We Value Values"</div>
       <p class="footer-desc">
         Manufacturers of pressed-steel transformer radiators up to 765 kV class — trusted by Siemens Energy, GE, ABB, TBEA, CG Power and Shirdi Sai Electricals. Made in Naini, Prayagraj.
@@ -106,12 +772,9 @@
         B-2, UPSIDC Industrial Area,<br>P.O. T.S.L., Naini, Prayagraj — 211010<br>Uttar Pradesh, India
       </div>
     </div>
-
   </div>
 
-  <div class="footer-divider">
-    <div class="footer-divider-line"></div>
-  </div>
+  <div class="footer-divider"><div class="footer-divider-line"></div></div>
 
   <div class="footer-bottom">
     <div class="footer-copy">&copy; 2026 Triveni Electroplast Pvt Ltd — Triveni Radiators. All rights reserved.</div>
@@ -122,9 +785,43 @@
     </div>
     <div class="footer-made">Naini, Prayagraj, India</div>
   </div>
-
 </footer>
 
-<script src="script.js?v=5"></script>
+<script>
+/* ── nav toggle + scroll pin/hide (identical to every other inner page) ── */
+var nav = document.getElementById('nav');
+var navToggle = document.getElementById('navToggle'), navLinksEl = document.getElementById('navLinks');
+navToggle.addEventListener('click', function(){
+  var open = navLinksEl.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', open);
+});
+navLinksEl.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navLinksEl.classList.remove('open'); }); });
+
+var navLastY = window.scrollY, navTicking = false;
+var NAV_DIR_THRESHOLD = 6, NAV_HIDE_AFTER = 120;
+var navHeightCache = nav.offsetHeight;
+addEventListener('resize', function(){ navHeightCache = nav.offsetHeight; });
+function updateNav(){
+  var y = Math.max(0, window.scrollY);
+  var delta = y - navLastY;
+  if (Math.abs(delta) <= NAV_DIR_THRESHOLD) return;
+  var goingDown = delta > 0;
+  navLastY = y;
+  if (y <= navHeightCache) { nav.classList.remove('nav-pinned', 'nav-hidden', 'nav-shadow'); return; }
+  nav.classList.add('nav-pinned', 'nav-shadow');
+  var menuOpen = navLinksEl.classList.contains('open');
+  if (goingDown && y > NAV_HIDE_AFTER && !menuOpen) nav.classList.add('nav-hidden');
+  else if (!goingDown || menuOpen) nav.classList.remove('nav-hidden');
+}
+addEventListener('scroll', function(){
+  if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
+}, { passive: true });
+
+/* ---- reveal on scroll ---- */
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold:.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
 </body>
 </html>
