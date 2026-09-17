@@ -16,22 +16,24 @@ html{scroll-behavior:smooth;}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6;}
 a{color:inherit;}
 
-/* NAV */
+/* NAV — recolored to match the dark navy #nav used on the rest of the site
+   (#050B22); this component's own structure/classnames are unchanged, only
+   its colors, and link/logo text is flipped light-on-dark for contrast. */
 #navbar{position:sticky;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
-  padding:1.7rem 4rem;background:#FCFBF9;transition:padding 0.3s,box-shadow 0.3s;}
-#navbar.scrolled{padding:1.15rem 4rem;box-shadow:0 1px 0 var(--line);}
-.nav-logo{font-family:'Poppins',sans-serif;font-size:1.5rem;font-weight:500;color:var(--ink);text-decoration:none;white-space:nowrap;}
-.nav-logo em{font-style:italic;color:var(--purple2);}
+  padding:1.7rem 4rem;background:#050B22;border-bottom:1px solid rgba(255,255,255,.1);transition:padding 0.3s,box-shadow 0.3s;}
+#navbar.scrolled{padding:1.15rem 4rem;box-shadow:0 4px 16px -4px rgba(5,11,34,.35);}
+.nav-logo{font-family:'Poppins',sans-serif;font-size:1.5rem;font-weight:500;color:#fff;text-decoration:none;white-space:nowrap;}
+.nav-logo em{font-style:italic;color:#8B8CF0;}
 .nav-links{display:flex;gap:2.6rem;list-style:none;align-items:center;}
-.nav-links a{font-size:0.92rem;font-weight:500;color:var(--muted);text-decoration:none;position:relative;transition:color 0.2s;}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--purple2);transition:width 0.25s;}
-.nav-links a:hover,.nav-links a.active{color:var(--ink);}
+.nav-links a{font-size:0.92rem;font-weight:500;color:rgba(255,255,255,.75);text-decoration:none;position:relative;transition:color 0.2s;}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:#8B8CF0;transition:width 0.25s;}
+.nav-links a:hover,.nav-links a.active{color:#fff;}
 .nav-links a.active::after,.nav-links a:hover::after{width:100%;}
 .nav-cta{font-size:0.86rem;font-weight:500;color:#fff;background:var(--purple);padding:0.72rem 1.7rem;border-radius:999px;text-decoration:none;transition:background 0.2s,transform 0.2s;white-space:nowrap;}
 .nav-cta:hover{background:var(--purple2);transform:translateY(-1px);}
 .nav-right{display:flex;align-items:center;gap:0.6rem;}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px;margin-left:0.4rem;}
-.nav-toggle span{display:block;width:24px;height:2px;background:var(--ink);transition:0.3s;}
+.nav-toggle span{display:block;width:24px;height:2px;background:#fff;transition:0.3s;}
 
 /* HERO (home) */
 .hero{position:relative;padding:12rem 4rem 6rem;text-align:center;overflow:hidden;}
@@ -253,8 +255,8 @@ footer{padding:2.4rem 4rem;background:#241640;display:flex;justify-content:space
 }
 
 
-nav .nav-logo{color:#241F2E!important;}
-nav .nav-links a{color:#6B6577!important;}
+nav .nav-logo{color:#fff!important;}
+nav .nav-links a{color:rgba(255,255,255,.75)!important;}
 
 
 
