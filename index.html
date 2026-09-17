@@ -368,39 +368,39 @@ ul{margin:0;padding:0;list-style:none;}
    than restructured. A barely-there tonal gradient (not the hero's own scrim/overlay) keeps
    the flat navy from feeling completely static. */
 .hero-stats{
-  background:linear-gradient(90deg,var(--color-dark) 0%,#122448 50%,var(--color-dark) 100%);
+  background:var(--color-bg);
   padding:64px 0 60px;position:relative;
 }
 .hero-band{position:relative;}
 .hero-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));}
-.hero-fact{position:relative;padding:0 32px;border-left:1px solid rgba(196,192,255,.14);transition:border-color .3s var(--ez);}
+.hero-fact{position:relative;padding:0 32px;border-left:1px solid var(--color-border);transition:border-color .3s var(--ez);}
 .hero-fact:first-child{padding-left:0;border-left:none;}
-.hero-fact:hover{border-color:rgba(196,192,255,.3);}
+.hero-fact:hover{border-color:rgba(var(--color-accent-rgb),.3);}
 
 /* the design system's own sans (Schibsted Grotesk), not the serif -- medium weight, large,
    deliberately lighter than a heavy display numeral. */
 .hero-fact-val{
   font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:42px;line-height:1;
-  color:var(--color-bg);letter-spacing:-.02em;
+  color:var(--color-ink);letter-spacing:-.02em;
   transition:transform .3s var(--ez);
 }
 .hero-fact:hover .hero-fact-val{transform:translateY(-3px);}
 /* colour-coded per figure, not per-number-differently: "+" is the one muted-violet accent,
-   "kV" is the one muted-gold accent, "9" and "2,012" stay plain warm ivory. Both accents
-   brighten slightly on hover, in step with the rest of the micro-interaction. */
+   "kV" is the one muted-gold accent, "9" and "2,012" stay plain ink. Both accents
+   darken slightly on hover, in step with the rest of the micro-interaction. */
 .hero-fact-suffix{transition:color .3s var(--ez);}
-.hero-fact-suffix-plus{color:var(--color-accent-light);}
-.hero-fact:hover .hero-fact-suffix-plus{color:#A9AAFF;}
-.hero-fact-suffix-gold{color:var(--color-gold-light);}
-.hero-fact:hover .hero-fact-suffix-gold{color:#DFC493;}
+.hero-fact-suffix-plus{color:var(--color-accent);}
+.hero-fact:hover .hero-fact-suffix-plus{color:var(--color-accent-dark);}
+.hero-fact-suffix-gold{color:var(--color-gold);}
+.hero-fact:hover .hero-fact-suffix-gold{color:var(--color-gold-light);}
 .hero-fact-suffix-end{opacity:0;transition:opacity .25s var(--ez);}
 .hero-fact-suffix-end.show{opacity:1;}
 .hero-fact-label{
   font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;
-  text-transform:uppercase;color:rgba(var(--color-bg-muted-rgb),.62);margin-top:18px;
+  text-transform:uppercase;color:var(--color-text-muted);margin-top:18px;
   transition:color .3s var(--ez);
 }
-.hero-fact:hover .hero-fact-label{color:#C7CCE6;}
+.hero-fact:hover .hero-fact-label{color:var(--color-ink);}
 
 
 @media(max-width:860px){
@@ -467,7 +467,7 @@ ul{margin:0;padding:0;list-style:none;}
    list — confirm with the client before publishing. */
 @property --reveal{syntax:'<percentage>';inherits:false;initial-value:-3%;}
 
-#who-we-are{background:var(--color-bg);--wwa-on:#141A2A;--wwa-shot:#EFE4CF;padding-top:40px;}
+#who-we-are{background:var(--color-dark);--wwa-on:var(--color-bg-muted);--wwa-shot:#EFE4CF;padding-top:40px;}
 
 /* Shorter track + top-anchored (not vertically centred) stage so the copy is already
    entering view as the hero leaves — the reveal is mapped to the section's viewport
@@ -492,13 +492,13 @@ ul{margin:0;padding:0;list-style:none;}
 }
 .wwa-eyebrow{
   font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:.28em;
-  text-transform:uppercase;color:var(--color-accent);margin:0 0 18px;
+  text-transform:uppercase;color:var(--color-accent-light);margin:0 0 18px;
 }
 .wwa-heading{
   font-family:'Newsreader',serif;font-weight:400;letter-spacing:-.02em;
   font-size:clamp(30px,3.9vw,56px);line-height:1.12;color:var(--wwa-on);margin:0;
 }
-.wwa-heading em{font-style:italic;color:var(--color-gold);}
+.wwa-heading em{font-style:italic;color:var(--color-gold-light);}
 .wwa-divider{
   display:block;width:130px;height:1px;margin:26px 0 30px;
   background:linear-gradient(90deg,rgba(var(--color-accent-rgb),.55),rgba(var(--color-accent-rgb),.06));
