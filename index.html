@@ -600,32 +600,95 @@ ul{margin:0;padding:0;list-style:none;}
 }
 
 /* ==========================================================
-   02 — PRODUCT
+   02 — PRODUCT — "Treatment F · Gold frame draw": cream section ground, a
+   quiet faint-gold resting border on every card (normalised — all four used
+   to differ), and on hover/focus-within two gold rules draw themselves in
+   from the top-left corner. Indigo stays confined to "View All Products";
+   gold is this section's only accent on the cards themselves.
    ========================================================== */
+#product{background:#FAF6EC;}
 .prod-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:40px;}
-.prod-sub{font-size:clamp(18px,1.6vw,24px);font-weight:400;line-height:1.5;letter-spacing:-.01em;color:var(--color-text-muted);margin-top:4px;}
+#product .secnum{color:#B8935A;}
+#product .h2{color:#1E1828;font-weight:300;}
+.prod-sub{font-size:clamp(18px,1.6vw,24px);font-weight:400;line-height:1.5;letter-spacing:-.01em;color:#63607A;margin-top:4px;}
 .prod-viewall{white-space:nowrap;}
-
-.prod-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap-md);}
-.prod-card{
-  display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:24px;align-items:start;
-  padding:32px 28px 28px;border-radius:var(--radius-md);border:1px solid transparent;
-  overflow:visible;position:relative;
-  transition:transform 280ms var(--ez),border-color 280ms var(--ez),box-shadow 280ms var(--ez);
+.prod-viewall .ar-badge{width:32px;height:32px;}
+.prod-viewall .ar-badge svg{transition:transform .3s var(--ez);}
+.prod-viewall:hover .ar-badge svg,.prod-viewall:focus-visible .ar-badge svg{transform:rotate(45deg) translateX(3px);}
+@media(prefers-reduced-motion:reduce){
+  .prod-viewall .ar-badge svg{transition:none;}
+  .prod-viewall:hover .ar-badge svg,.prod-viewall:focus-visible .ar-badge svg{transform:none;}
 }
-.prod-card:nth-child(odd){background:var(--color-bg-muted);}
-.prod-card:nth-child(even){background:var(--color-bg-muted);}
-.prod-card:hover{transform:translateY(-3px);border-color:var(--color-accent);box-shadow:0 16px 32px -18px rgba(16,24,40,.18);}
+
+.prod-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap-md);align-items:center;}
+.prod-card{
+  display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:24px;align-items:center;
+  padding:32px 28px 28px;background:#FFFFFF;border:1px solid #F0E6D2;border-radius:6px;
+  overflow:hidden;position:relative;
+  transition:transform .55s cubic-bezier(.35,0,.15,1),border-color .55s cubic-bezier(.35,0,.15,1),box-shadow .55s cubic-bezier(.35,0,.15,1);
+}
+/* the frame draw: top rule scales in first, the left rule follows .12s later
+   from the corner they share — that stagger is the whole effect. */
+.prod-card::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:2px;background:#B8935A;
+  transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.35,0,.15,1);z-index:2;
+}
+.prod-card::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:#B8935A;
+  transform:scaleY(0);transform-origin:top;transition:transform .5s cubic-bezier(.35,0,.15,1) .12s;z-index:2;
+}
+.prod-card:hover,.prod-card:focus-within{
+  transform:translateY(-5px);border-color:#CBA76C;
+  box-shadow:0 26px 58px -32px rgba(184,147,90,.5);
+}
+.prod-card:hover::before,.prod-card:focus-within::before{transform:scaleX(1);}
+.prod-card:hover::after,.prod-card:focus-within::after{transform:scaleY(1);}
+
 .prod-text{display:flex;flex-direction:column;height:100%;}
-.prod-num{font-size:12px;font-weight:500;color:var(--color-accent);margin-bottom:8px;}
-.prod-card h3{font-size:20px;font-weight:500;line-height:1.3;letter-spacing:-.015em;color:var(--color-ink);margin-bottom:6px;}
-.prod-card p{font-size:14px;line-height:1.7;color:var(--color-text-muted);}
-.prod-cta{margin-top:auto;padding-top:14px;font-size:11.5px;font-weight:500;}
-.prod-img{margin-top:-26px;}
-.prod-img.ph{min-height:220px;padding:14px;}
-@media(max-width:768px){.prod-grid{grid-template-columns:1fr;}}
-@media(max-width:520px){
-  .prod-img{margin-top:-16px;}
+.prod-num{font-size:12px;font-weight:500;color:#B8935A;margin-bottom:8px;}
+.prod-card h3{font-family:'Newsreader',serif;font-weight:400;font-size:20px;line-height:1.3;letter-spacing:-.015em;color:#1E1828;margin-bottom:6px;}
+.prod-card p{font-size:14px;line-height:1.7;color:#63607A;}
+
+.prod-cta{margin-top:auto;padding-top:14px;font-size:11.5px;font-weight:500;color:#1E1828;transition:color .4s var(--ez);}
+.prod-cta .ar-badge{width:29px;height:29px;background:#1E1828;}
+.prod-card:hover .prod-cta,.prod-card:focus-within .prod-cta{color:#B8935A;}
+.prod-card:hover .prod-cta .ar-badge,.prod-card:focus-within .prod-cta .ar-badge{
+  background:#B8935A;color:#fff;transform:translate(4px,-4px);box-shadow:none;
+}
+
+/* photo panel — fixed 4/4.5 ratio so every card in a row is the same height
+   regardless of copy length, and a quiet cream ground for the placeholder
+   art (or the real photo once it lands, same slot/ratio/object-fit). */
+.prod-img{
+  position:relative;aspect-ratio:4/4.5;border-radius:4px;overflow:hidden;
+  background:#F5F0E8;border:1px solid transparent;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .55s cubic-bezier(.35,0,.15,1),border-color .55s cubic-bezier(.35,0,.15,1);
+}
+.prod-card:hover .prod-img,.prod-card:focus-within .prod-img{background:#FFFFFF;border-color:#E7E2D9;}
+.prod-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .8s cubic-bezier(.35,0,.15,1);}
+.prod-card:hover .prod-img img,.prod-card:focus-within .prod-img img{transform:scale(1.05);}
+.prod-img-art{width:62%;height:auto;color:#B8935A;opacity:.45;}
+.prod-img-tag{
+  position:absolute;left:50%;bottom:16px;transform:translateX(-50%);
+  font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;
+  color:#63607A;background:rgba(250,246,236,.85);padding:6px 12px;border-radius:999px;
+}
+
+.prod-cta:focus-visible,.prod-viewall:focus-visible{outline:2px solid #4A2E82;outline-offset:4px;}
+
+@media(prefers-reduced-motion:reduce){
+  .prod-card,.prod-card::before,.prod-card::after,.prod-img,.prod-img img,.prod-cta,.prod-cta .ar-badge{transition:none;}
+  .prod-card:hover,.prod-card:focus-within{transform:none;}
+  .prod-card:hover .prod-img img,.prod-card:focus-within .prod-img img{transform:none;}
+  .prod-card:hover .prod-cta .ar-badge,.prod-card:focus-within .prod-cta .ar-badge{transform:none;}
+}
+
+@media(max-width:1080px){
+  .prod-grid{grid-template-columns:1fr;}
+}
+@media(max-width:620px){
+  .prod-card{grid-template-columns:1fr;padding:24px 20px;}
 }
 
 /* ==========================================================
@@ -1207,8 +1270,8 @@ footer.foot{background:var(--color-dark);padding:96px 0 32px;}
           <p>Reliable cooling for maximum transformer performance — the core range, available in flanged, non-flanged and offset options.</p>
           <a href="products-all.html#header-type" class="link-ind prod-cta">View Details <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
         </div>
-        <div class="prod-img ph" role="img" aria-label="Header Type radiator — product photograph pending from client">
-          <span class="ph-tag">Photo pending</span>
+        <div class="prod-img">
+          <img src="assets/products/enginnerig%20para%20img.png" alt="Header Type radiator" loading="lazy">
         </div>
       </div>
       <div class="prod-card rv" data-d="1">
@@ -1218,8 +1281,8 @@ footer.foot{background:var(--color-dark);padding:96px 0 32px;}
           <p>Compact design for space-constrained installations — flexible mounting where a standard radiator won't fit.</p>
           <a href="products-all.html#offset" class="link-ind prod-cta">View Details <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
         </div>
-        <div class="prod-img ph" role="img" aria-label="Offset radiator — product photograph pending from client">
-          <span class="ph-tag">Photo pending</span>
+        <div class="prod-img">
+          <img src="assets/products/enginnerig%20para%20img.png" alt="Offset radiator" loading="lazy">
         </div>
       </div>
       <div class="prod-card rv" data-d="2">
@@ -1229,8 +1292,8 @@ footer.foot{background:var(--color-dark);padding:96px 0 32px;}
           <p>Designed for complex transformer configurations — curved inlet &amp; outlet connections for unique mounting arrangements.</p>
           <a href="products-all.html#swan-neck" class="link-ind prod-cta">View Details <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
         </div>
-        <div class="prod-img ph" role="img" aria-label="Swan Neck radiator — product photograph pending from client">
-          <span class="ph-tag">Photo pending</span>
+        <div class="prod-img">
+          <img src="assets/products/enginnerig%20para%20img.png" alt="Swan Neck radiator" loading="lazy">
         </div>
       </div>
       <div class="prod-card rv" data-d="3">
@@ -1240,8 +1303,8 @@ footer.foot{background:var(--color-dark);padding:96px 0 32px;}
           <p>Custom engineered for flexible transformer connections — special inlet &amp; outlet orientations, superior cooling efficiency.</p>
           <a href="products-all.html#goose-neck" class="link-ind prod-cta">View Details <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
         </div>
-        <div class="prod-img ph" role="img" aria-label="Goose Neck radiator — product photograph pending from client">
-          <span class="ph-tag">Photo pending</span>
+        <div class="prod-img">
+          <img src="assets/products/enginnerig%20para%20img.png" alt="Goose Neck radiator" loading="lazy">
         </div>
       </div>
     </div>
