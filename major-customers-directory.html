@@ -13,8 +13,8 @@
   --navy:#101B4D; --navy-2:#111A45; --navy-deep:#0C1233;
   --ivory:#F7F4EC; --ivory-2:#FCFBF8; --stone:#F2EEE4;
   --ink:#1E1828; --navy-ink:#14204A; --muted:#5C6982; --muted-2:#8C93A6;
-  --violet:#3E7C99; --violet-deep:#2E5F76; --violet-strong:#24506A;
-  --lav-hi:#6FA8C2; --hero-sub:#9AA6C0; --gold:#9B99D4;
+  --violet:#6A45C0; --violet-deep:#4A2E82; --violet-strong:#4C1D95;
+  --lav-hi:#8B8CF0; --hero-sub:#9AA6C0; --gold:#B8935A;
   --line:#E7E2D9; --line-cool:#E5E2F0;
 }
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
@@ -24,16 +24,16 @@ a { color:inherit; text-decoration:none; }
 img { display:block; max-width:100%; }
 
 /* NAV — dark, matches Clients page */
-#nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:20px 4rem; background:#101114; transition:padding .3s, box-shadow .3s; }
+#nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:20px 4rem; background:#050B22; transition:padding .3s, box-shadow .3s; }
 #nav.nav-shadow { box-shadow:0 1px 0 rgba(255,255,255,.06); padding:14px 4rem; }
 .nav-logo img { height:36px; width:auto; display:block; border-radius:5px; }
 .nav-links { display:flex; gap:2.4rem; list-style:none; align-items:center; }
 .nav-links a { font-size:.86rem; font-weight:400; color:rgba(255,255,255,.62); position:relative; transition:color .2s; }
 .nav-links a:hover, .nav-links a.on { color:#fff; }
-.nav-links a.on::after { content:''; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:#6FA8C2; }
+.nav-links a.on::after { content:''; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:var(--lav-hi); }
 .nav-right { display:flex; align-items:center; gap:1rem; }
-.nav-cta { font-size:.82rem; font-weight:500; color:#fff; background:#3E7C99; padding:.68rem 1.5rem; border-radius:999px; transition:background .2s, transform .2s; }
-.nav-cta:hover { background:#fff; color:#3E7C99; transform:translateY(-1px); }
+.nav-cta { font-size:.82rem; font-weight:500; color:#fff; background:var(--violet-deep); padding:.68rem 1.5rem; border-radius:999px; transition:background .2s, transform .2s; }
+.nav-cta:hover { background:var(--violet); transform:translateY(-1px); }
 .nav-toggle { display:none; background:none; border:none; cursor:pointer; flex-direction:column; gap:5px; padding:6px; }
 .nav-toggle span { display:block; width:24px; height:2px; background:#fff; transition:.3s; }
 
@@ -59,7 +59,7 @@ img { display:block; max-width:100%; }
   outline:none; transition:border-color .2s, box-shadow .2s;
 }
 .search input::placeholder { color:var(--muted-2); }
-.search input:focus { border-color:var(--violet); box-shadow:0 0 0 3px rgba(62,124,153,.1); }
+.search input:focus { border-color:var(--violet); box-shadow:0 0 0 3px rgba(106,69,192,.1); }
 .count { font-size:.76rem; color:var(--muted-2); font-weight:500; white-space:nowrap; letter-spacing:.02em; }
 
 /* REGISTER LIST */
@@ -92,7 +92,7 @@ img { display:block; max-width:100%; }
 @media (max-width:760px){
   .nav-toggle { display:flex; }
   .nav-links { display:none; }
-  .nav-links.open { display:flex; flex-direction:column; align-items:flex-start; position:absolute; top:100%; left:0; right:0; background:#101114; padding:1.3rem 2rem; gap:1.1rem; }
+  .nav-links.open { display:flex; flex-direction:column; align-items:flex-start; position:absolute; top:100%; left:0; right:0; background:#050B22; padding:1.3rem 2rem; gap:1.1rem; }
   #nav, #nav.nav-shadow { padding:14px 1.3rem; }
   .dh { padding:6.4rem 1.4rem 2.6rem; }
   .wrap { padding:2rem 1.3rem 4rem; }
@@ -102,23 +102,23 @@ img { display:block; max-width:100%; }
 }
 
 /* FOOTER */
-footer.site-footer { display:block; padding:0; background:#101114; position:relative; overflow:hidden; }
-.site-footer::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(62,124,153,.6),rgba(155,153,212,.4),transparent); }
+footer.site-footer { display:block; padding:0; background:#0F0A1E; position:relative; overflow:hidden; }
+.site-footer::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(106,69,192,.6),rgba(184,147,90,.4),transparent); }
 .footer-main { position:relative; z-index:2; max-width:1280px; margin:0 auto; padding:4.2rem 4rem 3rem; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:4.5rem; }
 .footer-logo img { height:40px; width:auto; display:block; border-radius:5px; }
-.footer-tagline { font-family:'Newsreader',serif; font-size:1rem; color:rgba(255,255,255,.65); margin:1rem 0 1.4rem; }
-.footer-desc { font-size:.8rem; line-height:1.75; color:rgba(255,255,255,.65); max-width:300px; }
-.footer-col-title { font-size:.62rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.95); margin-bottom:1.4rem; padding-bottom:.7rem; border-bottom:1px solid rgba(255,255,255,.07); }
+.footer-tagline { font-family:'Newsreader',serif; font-size:1rem; color:rgba(255,255,255,.35); margin:1rem 0 1.4rem; }
+.footer-desc { font-size:.8rem; line-height:1.75; color:rgba(255,255,255,.38); max-width:300px; }
+.footer-col-title { font-size:.62rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:1.4rem; padding-bottom:.7rem; border-bottom:1px solid rgba(255,255,255,.07); }
 .footer-col-links { display:flex; flex-direction:column; gap:.7rem; }
-.footer-col-link { font-size:.82rem; color:rgba(255,255,255,.72); transition:color .2s,padding-left .2s; }
-.footer-col-link:hover { color:rgba(255,255,255,.95); padding-left:.4rem; }
-.footer-contact-item { display:flex; gap:.7rem; align-items:flex-start; font-size:.8rem; color:rgba(255,255,255,.68); margin-bottom:.85rem; line-height:1.5; }
-.footer-contact-item svg { width:13px; height:13px; flex-shrink:0; margin-top:.22rem; color:#9B99D4; opacity:.7; }
+.footer-col-link { font-size:.82rem; color:rgba(255,255,255,.45); transition:color .2s,padding-left .2s; }
+.footer-col-link:hover { color:rgba(255,255,255,.85); padding-left:.4rem; }
+.footer-contact-item { display:flex; gap:.7rem; align-items:flex-start; font-size:.8rem; color:rgba(255,255,255,.4); margin-bottom:.85rem; line-height:1.5; }
+.footer-contact-item svg { width:13px; height:13px; flex-shrink:0; margin-top:.22rem; color:#B8935A; opacity:.7; }
 .footer-bottom { position:relative; z-index:2; max-width:1280px; margin:0 auto; padding:1.8rem 4rem; border-top:1px solid rgba(255,255,255,.06); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
-.footer-copy { font-size:.74rem; color:rgba(255,255,255,.58); }
+.footer-copy { font-size:.74rem; color:rgba(255,255,255,.22); }
 .footer-bottom-links { display:flex; gap:1.8rem; }
-.footer-bottom-link { font-size:.72rem; color:rgba(255,255,255,.62); transition:color .2s; }
-.footer-bottom-link:hover { color:rgba(255,255,255,.88); }
+.footer-bottom-link { font-size:.72rem; color:rgba(255,255,255,.25); transition:color .2s; }
+.footer-bottom-link:hover { color:rgba(255,255,255,.55); }
 @media(max-width:1024px){ .footer-main { grid-template-columns:1fr 1fr; gap:3rem; padding:3.6rem 2.5rem 2.6rem; } .footer-brand { grid-column:1 / -1; } .footer-bottom { padding-left:2.5rem; padding-right:2.5rem; } }
 @media(max-width:640px){ .footer-main { grid-template-columns:1fr; gap:2.4rem; padding:2.8rem 1.5rem 2.2rem; } .footer-bottom { flex-direction:column; align-items:flex-start; } }
 </style>
@@ -218,6 +218,7 @@ footer.site-footer { display:block; padding:0; background:#101114; position:rela
     <div class="footer-copy">&copy; 2026 Triveni Electroplast Pvt Ltd — Triveni Radiators. All rights reserved.</div>
     <div class="footer-bottom-links">
       <a href="privacy.html" class="footer-bottom-link">Privacy Policy</a>
+      <a href="terms.html" class="footer-bottom-link">Terms of Use</a>
       <a href="sitemap.html" class="footer-bottom-link">Sitemap</a>
     </div>
   </div>
