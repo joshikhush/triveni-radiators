@@ -1192,20 +1192,76 @@ ul{margin:0;padding:0;list-style:none;}
 }
 
 /* ==========================================================
-   CHAIRMAN / MD NOTE (navy)
+   05 — LEADERSHIP — "Finish 1 · White quote cards, gold block": four
+   overlapping planes per leader (gold frame, gold block, portrait, quote
+   card) on a navy wash — the overlap is the design, not a stack. New,
+   section-scoped tokens only.
    ========================================================== */
-.leaders-band{background:var(--color-dark);padding:120px 0;}
-.leaders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap-lg);}
-.leader-card{display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px;align-items:start;}
-.leader-portrait{aspect-ratio:4/5;object-fit:cover;border-radius:var(--radius-sm);border:1px solid rgba(var(--color-bg-muted-rgb),.14);width:100%;overflow:hidden;}
-.leader-head{display:flex;align-items:baseline;gap:8px;}
-.leader-qmark{font-size:19px;line-height:1;color:var(--color-accent-light);font-family:Georgia,'Times New Roman',serif;}
-.leader-role{font-size:19px;font-weight:500;color:var(--color-bg-muted);}
-.leader-body{font-size:17px;color:rgba(var(--color-bg-muted-rgb),.62);line-height:1.85;margin-top:11px;}
-.leader-sig{margin-top:14px;width:104px;height:26px;object-fit:contain;display:block;}
-@media(max-width:860px){
-  .leaders{grid-template-columns:1fr;gap:40px;}
-  .leader-card{grid-template-columns:150px minmax(0,1fr);}
+.ldr-sec{position:relative;overflow:hidden;background:#0C1830;padding:140px 0 120px;}
+.ldr-wash{
+  position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(54% 62% at 84% 8%,rgba(106,69,192,.40),transparent 64%),
+    radial-gradient(44% 54% at 4% 96%,rgba(184,147,90,.16),transparent 66%);
+}
+.ldr-sec .w{position:relative;z-index:1;}
+
+.ldr-head{margin-bottom:76px;}
+.ldr-sec .secnum{color:#CBA76C;font-size:11px;letter-spacing:.24em;position:relative;padding-bottom:18px;}
+.ldr-sec .secnum::after{content:'';position:absolute;left:0;bottom:0;width:52px;height:1px;background:rgba(203,167,108,.45);}
+.ldr-title{
+  font-family:'Newsreader',serif;font-weight:300;
+  font-size:clamp(32px,3.7vw,46px);line-height:1.07;color:#FFFFFF;
+}
+.ldr-title .l2{color:rgba(255,255,255,.40);}
+
+.ldr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:52px;}
+.ldr-unit{position:relative;padding:26px 0 0 26px;}
+
+.ldr-frame{
+  position:absolute;left:0;top:0;width:62%;height:78%;z-index:0;
+  border:1px solid #B8935A;border-radius:4px;
+  transition:transform .55s cubic-bezier(.35,0,.15,1),border-color .55s cubic-bezier(.35,0,.15,1);
+}
+.ldr-block{
+  position:absolute;right:8%;bottom:26%;width:118px;height:118px;z-index:1;
+  background:#B8935A;border-radius:4px;
+  transition:transform .55s cubic-bezier(.35,0,.15,1);
+}
+.ldr-portrait{
+  position:relative;z-index:2;aspect-ratio:4/3.3;border-radius:4px;overflow:hidden;
+  box-shadow:0 34px 74px -40px rgba(0,0,0,.8);
+  background:linear-gradient(135deg,#FFFFFF,#EFECF9,#E2DDF3);
+  transition:transform .55s cubic-bezier(.35,0,.15,1);
+}
+.ldr-portrait img{width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;}
+
+.ldr-quote{
+  position:relative;z-index:3;margin:-34px 0 0 34px;width:76%;
+  background:#FFFFFF;border-radius:5px;padding:26px 28px 24px;
+  box-shadow:0 30px 66px -40px rgba(0,0,0,.8);
+}
+.ldr-qmark{display:block;font-family:'Newsreader',serif;font-size:38px;line-height:1;color:#6A45C0;margin-bottom:6px;}
+.ldr-quote-text{font-family:'Newsreader',serif;font-weight:300;font-size:18.5px;line-height:1.42;color:#101828;margin:0;}
+.ldr-sig-rule{display:block;width:32px;height:1px;background:#B8935A;margin:18px 0 12px;}
+.ldr-name{font-size:14px;font-weight:600;color:#101828;}
+.ldr-role{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#667085;margin-top:2px;}
+
+.ldr-unit:hover .ldr-frame{transform:translate(-6px,-6px);border-color:#CBA76C;}
+.ldr-unit:hover .ldr-block{transform:translate(6px,6px);}
+.ldr-unit:hover .ldr-portrait{transform:translateY(-4px);}
+@media(prefers-reduced-motion:reduce){
+  .ldr-frame,.ldr-block,.ldr-portrait{transition:none;}
+}
+
+.ldr-footer{margin-top:56px;color:rgba(255,255,255,.40);font-size:11.5px;}
+
+@media(max-width:1080px){
+  .ldr-grid{grid-template-columns:1fr;gap:46px;}
+  .ldr-block{right:4%;}
+}
+@media(max-width:620px){
+  .ldr-quote{margin:-24px 0 0 16px;}
 }
 
 /* ==========================================================
@@ -1767,27 +1823,54 @@ footer.foot{background:var(--color-dark);padding:96px 0 32px;}
   </div>
 </section>
 
-<!-- ===================== CHAIRMAN'S / MD'S NOTE ===================== -->
-<!-- Unattributed per the reference (no name/designation shown) — open question for the
-     client: should the Chairman's and MD's names appear under a leadership statement? -->
-<section class="leaders-band on-dark">
-  <div class="w leaders">
-    <div class="leader-card rv">
-      <div class="leader-portrait ph ph-dark" style="min-height:0;" role="img" aria-label="Chairman portrait — photograph pending from client"><span class="ph-tag">Portrait pending</span></div>
-      <div>
-        <div class="leader-head"><span class="leader-qmark" aria-hidden="true">&#8220;</span><span class="leader-role">Chairman's Note</span></div>
-        <p class="leader-body">Content pending. The Chairman's note has not yet been supplied — no quote is published here until the client confirms the wording in writing.</p>
-        <div class="leader-sig ph ph-dark" style="min-height:0;padding:0;" title="Signature pending — must be supplied as a transparent PNG scan"></div>
+<!-- ===================== 05 — LEADERSHIP ===================== -->
+<!-- Rebuilt per client reference brief, "Finish 1 · White quote cards, gold block".
+     Quotes and names are still pending from the client — the explanation lives in
+     the small footer line, not the quote slot itself, per the brief's own note that
+     stuffing the pending explanation into the quote slot reads as three lines about
+     content that doesn't exist. No quote is published here until the client
+     confirms real wording in writing. -->
+<section class="ldr-sec">
+  <div class="ldr-wash" aria-hidden="true"></div>
+  <div class="w">
+    <div class="ldr-head rv">
+      <div class="secnum">05 &middot; Leadership</div>
+      <h2 class="ldr-title">A word from<span class="l2">the people who built it</span></h2>
+    </div>
+
+    <div class="ldr-grid">
+      <div class="ldr-unit rv">
+        <div class="ldr-frame" aria-hidden="true"></div>
+        <div class="ldr-block" aria-hidden="true"></div>
+        <div class="ldr-portrait">
+          <img src="assets/CEO_MD_CRED2.JPG" alt="Chairman of Triveni Radiators">
+        </div>
+        <div class="ldr-quote">
+          <span class="ldr-qmark" aria-hidden="true">&#8220;</span>
+          <p class="ldr-quote-text">Quote pending &mdash; the Chairman&rsquo;s note has not been supplied yet.</p>
+          <span class="ldr-sig-rule" aria-hidden="true"></span>
+          <div class="ldr-name">[Name pending]</div>
+          <div class="ldr-role">Chairman</div>
+        </div>
+      </div>
+
+      <div class="ldr-unit rv" data-d="1">
+        <div class="ldr-frame" aria-hidden="true"></div>
+        <div class="ldr-block" aria-hidden="true"></div>
+        <div class="ldr-portrait">
+          <img src="assets/CEO_MD_CRED3.JPG" alt="Managing Director of Triveni Radiators">
+        </div>
+        <div class="ldr-quote">
+          <span class="ldr-qmark" aria-hidden="true">&#8220;</span>
+          <p class="ldr-quote-text">Quote pending &mdash; the Managing Director&rsquo;s note has not been supplied yet.</p>
+          <span class="ldr-sig-rule" aria-hidden="true"></span>
+          <div class="ldr-name">[Name pending]</div>
+          <div class="ldr-role">Managing Director</div>
+        </div>
       </div>
     </div>
-    <div class="leader-card rv" data-d="1">
-      <div class="leader-portrait ph ph-dark" style="min-height:0;" role="img" aria-label="Managing Director portrait — photograph pending from client"><span class="ph-tag">Portrait pending</span></div>
-      <div>
-        <div class="leader-head"><span class="leader-qmark" aria-hidden="true">&#8220;</span><span class="leader-role">MD's Note</span></div>
-        <p class="leader-body">Content pending. The Managing Director's note has not yet been supplied — no quote is published here until the client confirms the wording in writing.</p>
-        <div class="leader-sig ph ph-dark" style="min-height:0;padding:0;" title="Signature pending — must be supplied as a transparent PNG scan"></div>
-      </div>
-    </div>
+
+    <p class="ldr-footer">Both notes are awaiting written confirmation from the client.</p>
   </div>
 </section>
 
