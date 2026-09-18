@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="footer.css">
 <style>
 /* ==========================================================
    TOKENS — same values as the redesigned Credentials page
@@ -416,39 +417,15 @@ ul{margin:0;padding:0;list-style:none;}
 /* ==========================================================
    FOOTER — identical to the Credentials page
    ========================================================== */
-footer.foot{background:var(--navy);padding:96px 0 32px;}
-.foot-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,.8fr) minmax(0,.9fr) minmax(0,1.5fr);gap:40px;padding-bottom:40px;}
-.foot-logo img{height:32px;width:auto;border-radius:3px;margin-bottom:14px;}
-.foot-desc{font-size:11.5px;line-height:1.8;color:var(--on-d-2);max-width:30ch;margin-bottom:20px;}
-.foot-socials{display:flex;gap:10px;}
-.foot-social{width:26px;height:26px;border-radius:50%;border:1px solid var(--line-d);background:transparent;
-  display:flex;align-items:center;justify-content:center;color:var(--on-d-2);
-  transition:border-color .2s var(--ez),color .2s var(--ez);}
-.foot-social:hover{border-color:#fff;color:#fff;}
-.foot-social svg{width:13px;height:13px;}
-.foot-col-title{font-size:15px;font-weight:500;color:#fff;margin-bottom:14px;}
-.foot-col a{display:block;font-size:14px;color:var(--on-d-2);padding:4px 0;transition:color .2s var(--ez);overflow-wrap:anywhere;}
-.foot-col a:hover{color:#fff;}
-.foot-touch-item{display:flex;align-items:flex-start;gap:10px;padding:4px 0;}
-.foot-touch-item svg{width:13px;height:13px;color:var(--on-d-2);flex-shrink:0;margin-top:2px;}
-.foot-touch-item span{font-size:14px;color:var(--on-d-2);line-height:1.6;}
-.foot-toprow{display:flex;justify-content:flex-end;padding-bottom:16px;}
-.to-top{width:32px;height:32px;border-radius:50%;background:var(--off-white);color:var(--ink);border:none;
-  display:flex;align-items:center;justify-content:center;cursor:pointer;
-  transition:background .25s var(--ez),color .25s var(--ez),transform .25s var(--ez);}
-.to-top:hover,.to-top:focus-visible{background:var(--ind);color:#fff;transform:translateY(-2px);}
-.foot-bottom{border-top:1px solid var(--line-d);padding:16px 0;text-align:center;}
-.foot-copy{font-size:11px;color:var(--on-d-2);}
-@media(max-width:900px){.foot-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media(max-width:600px){.foot-grid{grid-template-columns:1fr;}}
-@media(max-width:860px){.foot-toprow{display:none;}}
+/* FOOTER — now a shared component; see footer.css and footer.js. Nothing
+   footer-related should be styled here. */
 
 @media(max-width:1150px){:root{--pad:36px;--sec:96px;}}
 @media(max-width:860px){:root{--pad:20px;--sec:64px;}}
 
 </style>
 </head>
-<body>
+<body id="top">
 
 <!-- ===================== NAV ===================== -->
 <nav id="nav">
@@ -573,36 +550,8 @@ footer.foot{background:var(--navy);padding:96px 0 32px;}
 </section>
 
 <!-- ===================== FOOTER ===================== -->
-<footer class="foot on-dark">
-  <div class="w foot-grid">
-    <div>
-      <a href="index.html" class="foot-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
-      <p class="foot-desc">Precision built radiators for power transformers — trusted by India's leading OEMs and utilities.</p>
-      <div class="foot-socials">
-        <a href="https://www.linkedin.com/company/triveni-electroplast-pvt-ltd" class="foot-social" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 9.5H5.67V18h2.67V9.5zM7 5.9a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1zM18.33 18v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.07.79-2.43 1.34V9.5h-2.67V18h2.67v-4.5c0-1.18.83-1.5 1.4-1.5.55 0 1.47.32 1.47 1.5V18h2.67z"/></svg></a>
-      </div>
-    </div>
-    <div class="foot-col">
-      <div class="foot-col-title">Quick Links</div>
-      <a href="index.html">Home</a><a href="products.html">Product</a><a href="credentials.html">Credential</a><a href="milestones.html">Milestones</a><a href="triveni-group.html">Triveni Group</a><a href="clientele.html">Clients</a><a href="careers.html">Careers</a>
-    </div>
-    <div class="foot-col">
-      <div class="foot-col-title">Support</div>
-      <a href="contact.html">Contact Us</a><a href="contact.html">Enquiry</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a>
-    </div>
-    <div class="foot-col">
-      <div class="foot-col-title">Get in Touch</div>
-      <div class="foot-touch-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg><span>B-2, UPSIDC Industrial Area, Naini, Prayagraj – 211010, Uttar Pradesh, India</span></div>
-      <div class="foot-touch-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span><a href="mailto:info@triveniradiators.com" style="color:inherit;">info@triveniradiators.com</a></span></div>
-    </div>
-  </div>
-  <div class="w foot-toprow">
-    <button class="to-top" id="toTop" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
-  </div>
-  <div class="w foot-bottom">
-    <div class="foot-copy">© 2026 Triveni Electroplast Pvt Ltd — Triveni Radiators. All rights reserved.</div>
-  </div>
-</footer>
+<footer id="site-footer"></footer>
+<script src="footer.js" defer></script>
 
 <script>
 /* ── hero: staged load-once entrance ── */
@@ -947,11 +896,6 @@ function updateNav(){
 addEventListener('scroll', function(){
   if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
 }, { passive: true });
-
-/* ── back to top ── */
-document.getElementById('toTop').addEventListener('click', function(){
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
 
 /* ── reveal on scroll ── */
 var io = new IntersectionObserver(function(entries){

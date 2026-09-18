@@ -1,0 +1,72 @@
+/* ==========================================================
+   SHARED SITE FOOTER — "Version A · Plain"
+   One component, one file, included on every page via this stylesheet +
+   footer.js + a single empty `<footer id="site-footer"></footer>` mount
+   point. Edit THIS file (and footer.js's link arrays) to change the footer
+   everywhere at once — never copy this markup/CSS into a page directly.
+
+   Deliberately plain by design: no CTA headline/button, no gold uppercase
+   headings, no icon chips, no glow, no floating back-to-top circle — just
+   readable text links. Self-contained (its own .fx-container instead of
+   reusing any page's own .w) since every page on the site defines a
+   DIFFERENT --max/--pad for its own container.
+   ========================================================== */
+#site-footer{
+  background:#0C1830;font-family:'Schibsted Grotesk','Inter',sans-serif;
+}
+.fx-container{max-width:1200px;margin:0 auto;padding:0 32px;}
+
+/* --- columns --- */
+.fx-cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:48px;padding:56px 0 46px;}
+.fx-logo{display:inline-block;}
+.fx-logo img{height:42px;width:auto;display:block;}
+.fx-desc{font-size:14.5px;line-height:1.7;color:rgba(255,255,255,.75);max-width:32ch;margin:16px 0 14px;}
+.fx-brand-links{display:flex;flex-direction:column;}
+.fx-brand-links a{
+  display:block;width:fit-content;font-size:15px;color:rgba(255,255,255,.75);
+  text-decoration:none;padding:6px 0;transition:color .25s ease;
+}
+.fx-brand-links a:hover,.fx-brand-links a:focus-visible{color:#FFFFFF;text-decoration:underline;text-underline-offset:3px;}
+.fx-brand-links a:focus-visible{outline:2px solid #8B8CF0;outline-offset:3px;}
+
+.fx-col-title{font-size:12.5px;font-weight:600;color:#FFFFFF;margin:0 0 14px;}
+.fx-col a{
+  display:block;width:fit-content;font-size:15px;color:rgba(255,255,255,.75);
+  text-decoration:none;padding:6px 0;transition:color .25s ease;
+}
+.fx-col a:hover,.fx-col a:focus-visible{color:#FFFFFF;text-decoration:underline;text-underline-offset:3px;}
+.fx-col a:focus-visible{outline:2px solid #8B8CF0;outline-offset:3px;}
+.fx-col a.current{color:#FFFFFF;}
+
+.fx-address{font-style:normal;}
+.fx-touch{padding:6px 0;}
+.fx-touch-label{display:block;font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:3px;}
+.fx-touch-value{display:block;font-size:15px;color:rgba(255,255,255,.75);line-height:1.55;}
+.fx-touch-value a{color:inherit;text-decoration:none;transition:color .25s ease;}
+.fx-touch-value a:hover,.fx-touch-value a:focus-visible{color:#FFFFFF;text-decoration:underline;text-underline-offset:3px;}
+.fx-touch-value a:focus-visible{outline:2px solid #8B8CF0;outline-offset:3px;}
+
+/* --- bottom bar (back to top lives here as a plain link, not a floating
+   circle) --- */
+.fx-bottom{
+  border-top:1px solid rgba(255,255,255,.12);padding:20px 0 26px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.fx-copy{font-size:13.5px;color:rgba(255,255,255,.55);margin:0;}
+.fx-legal{display:flex;gap:24px;flex-wrap:wrap;}
+.fx-legal a{
+  font-size:13.5px;color:rgba(255,255,255,.55);text-decoration:none;
+  padding:2px 0;background:none;border:none;cursor:pointer;font-family:inherit;
+  transition:color .25s ease;
+}
+.fx-legal a:hover,.fx-legal a:focus-visible{color:#FFFFFF;text-decoration:underline;text-underline-offset:3px;}
+.fx-legal a:focus-visible{outline:2px solid #8B8CF0;outline-offset:3px;}
+
+@media(max-width:900px){
+  .fx-cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px;}
+}
+@media(max-width:600px){
+  .fx-container{padding:0 22px;}
+  .fx-cols{grid-template-columns:1fr;gap:32px;}
+  .fx-bottom{flex-direction:column;align-items:flex-start;gap:12px;}
+}

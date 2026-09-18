@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="footer.css">
 <style>
 :root {
   --navy:#101B4D; --navy-2:#111A45; --navy-deep:#0C1233;
@@ -101,29 +102,11 @@ img { display:block; max-width:100%; }
   .reg-logo img { max-width:88px; }
 }
 
-/* FOOTER */
-footer.site-footer { display:block; padding:0; background:#0F0A1E; position:relative; overflow:hidden; }
-.site-footer::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(106,69,192,.6),rgba(184,147,90,.4),transparent); }
-.footer-main { position:relative; z-index:2; max-width:1280px; margin:0 auto; padding:4.2rem 4rem 3rem; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:4.5rem; }
-.footer-logo img { height:40px; width:auto; display:block; border-radius:5px; }
-.footer-tagline { font-family:'Newsreader',serif; font-size:1rem; color:rgba(255,255,255,.35); margin:1rem 0 1.4rem; }
-.footer-desc { font-size:.8rem; line-height:1.75; color:rgba(255,255,255,.38); max-width:300px; }
-.footer-col-title { font-size:.62rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:1.4rem; padding-bottom:.7rem; border-bottom:1px solid rgba(255,255,255,.07); }
-.footer-col-links { display:flex; flex-direction:column; gap:.7rem; }
-.footer-col-link { font-size:.82rem; color:rgba(255,255,255,.45); transition:color .2s,padding-left .2s; }
-.footer-col-link:hover { color:rgba(255,255,255,.85); padding-left:.4rem; }
-.footer-contact-item { display:flex; gap:.7rem; align-items:flex-start; font-size:.8rem; color:rgba(255,255,255,.4); margin-bottom:.85rem; line-height:1.5; }
-.footer-contact-item svg { width:13px; height:13px; flex-shrink:0; margin-top:.22rem; color:#B8935A; opacity:.7; }
-.footer-bottom { position:relative; z-index:2; max-width:1280px; margin:0 auto; padding:1.8rem 4rem; border-top:1px solid rgba(255,255,255,.06); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
-.footer-copy { font-size:.74rem; color:rgba(255,255,255,.22); }
-.footer-bottom-links { display:flex; gap:1.8rem; }
-.footer-bottom-link { font-size:.72rem; color:rgba(255,255,255,.25); transition:color .2s; }
-.footer-bottom-link:hover { color:rgba(255,255,255,.55); }
-@media(max-width:1024px){ .footer-main { grid-template-columns:1fr 1fr; gap:3rem; padding:3.6rem 2.5rem 2.6rem; } .footer-brand { grid-column:1 / -1; } .footer-bottom { padding-left:2.5rem; padding-right:2.5rem; } }
-@media(max-width:640px){ .footer-main { grid-template-columns:1fr; gap:2.4rem; padding:2.8rem 1.5rem 2.2rem; } .footer-bottom { flex-direction:column; align-items:flex-start; } }
+/* FOOTER — now a shared component; see footer.css and footer.js. Nothing
+   footer-related should be styled here. */
 </style>
 </head>
-<body>
+<body id="top">
 
 <!-- NAV -->
 <nav id="nav">
@@ -175,54 +158,8 @@ footer.site-footer { display:block; padding:0; background:#0F0A1E; position:rela
 </div>
 
 <!-- FOOTER -->
-<footer class="site-footer">
-  <div class="footer-main">
-    <div class="footer-brand">
-      <a href="index.html" class="footer-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
-      <div class="footer-tagline">"We Value Values"</div>
-      <p class="footer-desc">Manufacturers of pressed-steel transformer radiators up to 765 kV class — trusted by Siemens Energy, GE, ABB, TBEA, CG Power and Shirdi Sai Electricals. Made in Naini, Prayagraj.</p>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Company</div>
-      <div class="footer-col-links">
-        <a href="index.html" class="footer-col-link">Home</a>
-        <a href="clientele.html" class="footer-col-link">Clients</a>
-        <a href="credentials.html" class="footer-col-link">Credentials</a>
-        <a href="milestones.html" class="footer-col-link">Our Journey</a>
-        <a href="careers.html" class="footer-col-link">Careers</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Products</div>
-      <div class="footer-col-links">
-        <a href="products.html" class="footer-col-link">All Products</a>
-        <a href="products-all.html#header-type" class="footer-col-link">Header Type Radiators</a>
-        <a href="products-all.html#offset" class="footer-col-link">Offset Radiators</a>
-        <a href="products-all.html#swan-neck" class="footer-col-link">Swan Neck Radiators</a>
-        <a href="products-all.html#goose-neck" class="footer-col-link">Goose Neck Radiators</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Get in Touch</div>
-      <a href="mailto:sales@triveniradiators.com" class="footer-contact-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
-        sales@triveniradiators.com
-      </a>
-      <div class="footer-contact-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        B-2, UPSIDC Industrial Area,<br>P.O. T.S.L., Naini, Prayagraj — 211010
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">&copy; 2026 Triveni Electroplast Pvt Ltd — Triveni Radiators. All rights reserved.</div>
-    <div class="footer-bottom-links">
-      <a href="privacy.html" class="footer-bottom-link">Privacy Policy</a>
-      <a href="terms.html" class="footer-bottom-link">Terms of Use</a>
-      <a href="sitemap.html" class="footer-bottom-link">Sitemap</a>
-    </div>
-  </div>
-</footer>
+<footer id="site-footer"></footer>
+<script src="footer.js" defer></script>
 
 <script>
 /* nav */
