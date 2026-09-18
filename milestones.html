@@ -46,6 +46,10 @@ ul{margin:0;padding:0;list-style:none;}
 .bg-off{background:var(--off-white);}
 .bg-navy{background:var(--navy);}
 .on-dark{color:var(--on-d-2);}
+/* this page's own --navy (#050B22) is darker than the shared footer's #0C1830 --
+   fine for sections in the middle of the page, but it creates a visible seam on the
+   one section that sits flush against the footer. Match the footer exactly here. */
+.ftr-match{background:#0C1830;}
 
 .secnum{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ind);margin-bottom:14px;}
 .on-dark .secnum{color:var(--ind-lt);}
@@ -538,7 +542,7 @@ ul{margin:0;padding:0;list-style:none;}
 </section>
 
 <!-- ===================== 05 — FINAL CTA ===================== -->
-<section class="sec bg-navy on-dark">
+<section class="sec bg-navy on-dark ftr-match">
   <div class="w ms-cta rv">
     <h2 class="h2">More than milestones.<br><span class="ac">A legacy built to last.</span></h2>
     <p class="lede">Thirty-six years of manufacturing experience, decades of customer trust and a continuing programme of expansion — the same engineering discipline behind every unit the Group has built.</p>

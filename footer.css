@@ -21,13 +21,16 @@
 .fx-logo{display:inline-block;}
 .fx-logo img{height:42px;width:auto;display:block;}
 .fx-desc{font-size:14.5px;line-height:1.7;color:rgba(255,255,255,.75);max-width:32ch;margin:16px 0 14px;}
-.fx-brand-links{display:flex;flex-direction:column;}
-.fx-brand-links a{
-  display:block;width:fit-content;font-size:15px;color:rgba(255,255,255,.75);
-  text-decoration:none;padding:6px 0;transition:color .25s ease;
+.fx-brand-links{display:flex;flex-direction:row;align-items:center;gap:18px;}
+.fx-icon-link{
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.1);color:#FFFFFF;
+  transition:background .25s ease,transform .25s ease;
 }
-.fx-brand-links a:hover,.fx-brand-links a:focus-visible{color:#FFFFFF;text-decoration:underline;text-underline-offset:3px;}
-.fx-brand-links a:focus-visible{outline:2px solid #8B8CF0;outline-offset:3px;}
+.fx-icon-link svg{width:18px;height:18px;display:block;}
+.fx-icon-link:hover,.fx-icon-link:focus-visible{background:#CBA76C;color:#0C1830;transform:translateY(-2px);}
+.fx-icon-link:focus-visible{outline:2px solid #8B8CF0;outline-offset:3px;}
 
 .fx-col-title{font-size:12.5px;font-weight:600;color:#FFFFFF;margin:0 0 14px;}
 .fx-col a{
