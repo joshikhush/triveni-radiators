@@ -1085,48 +1085,110 @@ ul{margin:0;padding:0;list-style:none;}
 }
 
 /* ==========================================================
-   07 — CONTACT
+   07 — CONTACT — "Option D · Lavender half": a full-bleed lavender/white
+   split, cool lavender scale only (no warm cream, gold or --color-border
+   anywhere in this section). New, section-scoped tokens only.
    ========================================================== */
-.ct-band{padding:96px 0;}
-.contact-row1{margin-bottom:92px;}
-.contact-row2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);align-items:start;}
-.ct-head .secnum{margin-bottom:8px;}
-.ct-col-info{display:flex;flex-direction:column;gap:28px;}
-
-.ct-item{display:flex;align-items:flex-start;gap:12px;}
-.ct-icon{width:30px;height:30px;border-radius:50%;background:rgba(var(--color-accent-rgb),.12);color:var(--color-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.ct-icon svg{width:14px;height:14px;}
-.ct-item h3{font-size:16px;font-weight:500;letter-spacing:-.015em;color:var(--color-ink);margin-bottom:4px;}
-.ct-item p{font-size:14px;color:var(--color-text-muted);line-height:1.7;}
-
-.ct-form-label{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-ink);margin-bottom:10px;}
-.ct-row1{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-.ct-field input,.ct-field textarea{
-  width:100%;font-size:15px;padding:14px 12px;border:1px solid var(--color-border);border-radius:var(--radius);
-  background:var(--color-bg-muted);color:var(--color-ink);font-family:inherit;
-  transition:border-color var(--fast) var(--ez),background var(--fast) var(--ez);
+.ctb-sec{display:grid;grid-template-columns:.95fr 1.05fr;min-height:640px;}
+.ctb-left{position:relative;overflow:hidden;background:#EFECF9;padding:88px 56px 88px 0;display:flex;align-items:center;}
+.ctb-glow{
+  position:absolute;left:-24%;bottom:-38%;width:520px;height:520px;z-index:0;
+  background:radial-gradient(circle,rgba(139,140,240,.30),transparent 66%);pointer-events:none;
 }
-.ct-field textarea{resize:vertical;min-height:52px;display:block;}
-.ct-field input:focus,.ct-field textarea:focus{outline:none;border-color:var(--color-accent);background:var(--color-bg-muted);}
-.ct-form-foot{display:flex;justify-content:flex-end;margin-top:12px;}
-.form-msg{font-size:12px;color:var(--color-accent);display:none;margin-top:8px;text-align:right;}
-.form-msg.show{display:block;}
+.ctb-left-inner{position:relative;z-index:2;max-width:calc(1280px / 2);margin-left:auto;padding-left:40px;width:100%;}
+.ctb-left .secnum{color:#6A45C0;font-size:13px;letter-spacing:.14em;font-weight:500;margin-bottom:14px;}
+.ctb-title{
+  font-family:'Newsreader',serif;font-weight:300;
+  font-size:clamp(34px,4vw,50px);line-height:1.05;letter-spacing:-.02em;
+  max-width:20ch;color:#101828;
+}
+.ctb-title .l2{color:#98A2B3;}
+.ctb-lede{color:#667085;font-size:15.5px;line-height:1.7;max-width:44ch;margin-top:18px;}
 
-.ct-connect-label{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-ink);margin-bottom:12px;}
-.ct-social{display:flex;flex-direction:column;gap:14px;}
-.ct-social a,.ct-social .pending{display:flex;align-items:center;gap:10px;}
-.ct-social .pending{opacity:.5;}
-.ct-social-icon{width:28px;height:28px;border-radius:var(--radius-md);background:rgba(var(--color-accent-rgb),.12);color:var(--color-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.ct-social-icon svg{width:14px;height:14px;}
-.ct-social-label{font-size:12.5px;color:var(--color-text-muted);}
+.ctb-list-group{color:#6A45C0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin:40px 0 4px;}
+.ctb-list{display:flex;flex-direction:column;}
+.ctb-row{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:1px solid #E2DDF3;}
+.ctb-row:last-child{border-bottom:none;}
+.ctb-chip{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#FFFFFF;border:1px solid #E2DDF3;color:#6A45C0;display:flex;align-items:center;justify-content:center;}
+.ctb-chip svg{width:15px;height:15px;}
+.ctb-row-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#98A2B3;margin-bottom:4px;}
+.ctb-row-value{font-size:14.5px;color:#101828;line-height:1.6;}
+.ctb-row-value a{color:#101828;text-decoration:underline;text-decoration-color:#E2DDF3;text-underline-offset:2px;transition:color .25s var(--ez),text-decoration-color .25s var(--ez);}
+.ctb-row-value a:hover,.ctb-row-value a:focus-visible{color:#6A45C0;text-decoration-color:#6A45C0;}
+.ctb-row-value a:focus-visible{outline:2px solid #4A2E82;outline-offset:3px;}
+
+.ctb-right{background:#FFFFFF;padding:88px 0 88px 56px;display:flex;align-items:center;}
+.ctb-right-inner{max-width:calc(1280px / 2);margin-right:auto;padding-right:40px;width:100%;}
+
+.ctb-row2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.ctb-field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
+.ctb-field label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#667085;}
+.ctb-field label .req{color:#6A45C0;}
+.ctb-field input,.ctb-field textarea{
+  width:100%;font-family:inherit;font-size:14.5px;color:#101828;
+  background:#FFFFFF;border:1px solid #E2DDF3;border-radius:5px;padding:14px 16px;
+  transition:border-color .25s var(--ez),box-shadow .25s var(--ez);
+}
+.ctb-field input::placeholder,.ctb-field textarea::placeholder{color:#A8ABB8;}
+.ctb-field input:hover,.ctb-field textarea:hover{border-color:#CFC7EA;}
+.ctb-field input:focus,.ctb-field textarea:focus{outline:none;border-color:#6A45C0;box-shadow:0 0 0 3px rgba(106,69,192,.14);}
+.ctb-field textarea{min-height:118px;resize:vertical;}
+.ctb-field.has-error input,.ctb-field.has-error textarea{border-color:#6A45C0;}
+.ctb-err{font-size:12px;color:#6A45C0;display:none;}
+.ctb-err.show{display:block;}
+
+.ctb-drop{
+  position:relative;display:flex;align-items:center;gap:10px;
+  border:1px dashed #CFC7EA;background:#F6F4FC;border-radius:5px;padding:16px;
+  transition:border-color .25s var(--ez),background .25s var(--ez);
+}
+.ctb-drop:hover,.ctb-drop:focus-within{border-color:#6A45C0;background:#EFECF9;}
+.ctb-drop:hover .ctb-drop-text,.ctb-drop:focus-within .ctb-drop-text{color:#4A2E82;}
+.ctb-drop input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.ctb-drop.has-file input[type="file"]{pointer-events:none;}
+.ctb-drop-text{font-size:13.5px;color:#667085;pointer-events:none;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ctb-drop-remove{
+  position:relative;z-index:3;flex-shrink:0;margin-left:auto;width:22px;height:22px;border-radius:50%;
+  border:none;background:#E2DDF3;color:#4A2E82;font-size:14px;line-height:1;cursor:pointer;
+}
+.ctb-drop-remove:focus-visible{outline:2px solid #4A2E82;outline-offset:3px;}
+.ctb-hint{font-size:11.5px;color:#98A2B3;margin-top:6px;}
+
+.ctb-foot{margin-top:8px;}
+.ctb-submit{
+  display:inline-flex;align-items:center;gap:14px;
+  background:#6A45C0;color:#fff;font-size:15px;font-weight:600;font-family:inherit;
+  padding:16px 20px 16px 26px;border-radius:6px;border:none;cursor:pointer;
+  transition:background .3s var(--ez),transform .3s var(--ez),box-shadow .3s var(--ez);
+}
+.ctb-submit .ar-badge{width:28px;height:28px;background:rgba(255,255,255,.2);color:#fff;}
+.ctb-submit:hover,.ctb-submit:focus-visible{background:#4A2E82;transform:translateY(-2px);box-shadow:0 20px 44px -22px rgba(74,46,130,.6);}
+.ctb-submit:hover .ar-badge,.ctb-submit:focus-visible .ar-badge{background:rgba(255,255,255,.34);transform:translate(3px,-3px);}
+.ctb-submit:focus-visible{outline:2px solid #4A2E82;outline-offset:3px;}
+.ctb-note{font-size:12px;color:#667085;margin-top:12px;}
+
+.ctb-success{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:24px 0;}
+.ctb-success[hidden]{display:none;}
+.ctb-success svg{width:40px;height:40px;color:#6A45C0;}
+.ctb-success h3{font-family:'Newsreader',serif;font-weight:400;font-size:22px;color:#101828;margin:0;}
+.ctb-success p{font-size:14.5px;color:#667085;margin:0;}
+
+@media(prefers-reduced-motion:reduce){
+  .ctb-submit,.ctb-submit .ar-badge,.ctb-drop{transition:none;}
+  .ctb-submit:hover,.ctb-submit:focus-visible{transform:none;}
+  .ctb-submit:hover .ar-badge,.ctb-submit:focus-visible .ar-badge{transform:none;}
+}
+
 @media(max-width:1080px){
-  .contact-row2{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;}
-  .ct-col-info{grid-column:1/-1;flex-direction:row;gap:var(--gap-md);}
+  .ctb-sec{grid-template-columns:1fr;min-height:0;}
+  .ctb-left{padding:56px 22px;}
+  .ctb-right{padding:56px 22px;}
+  .ctb-left-inner,.ctb-right-inner{max-width:none;margin:0;padding:0;}
+  .ctb-glow{left:auto;right:-20%;bottom:auto;top:-30%;}
 }
-@media(max-width:860px){
-  .contact-row1{margin-bottom:48px;}
-  .contact-row2{grid-template-columns:1fr;gap:32px;}
-  .ct-col-info{flex-direction:column;gap:28px;}
+@media(max-width:620px){
+  .ctb-row2{grid-template-columns:1fr;}
+  .ctb-submit{width:100%;justify-content:space-between;}
 }
 
 /* ==========================================================
@@ -1605,60 +1667,102 @@ footer.foot{background:var(--color-dark);padding:96px 0 32px;}
 </section>
 
 <!-- ===================== 07 — CONTACT US ===================== -->
-<section class="ct-band bg-white" id="contact">
-  <div class="w">
-    <div class="contact-row1">
-      <div class="ct-head rv">
-        <div class="secnum">07</div>
-        <h2>Send Us a Drawing<span class="l2">We'll Come Back with a Quote</span></h2>
+<!-- Rebuilt per client reference brief, "Option D · Lavender half". Email uses the
+     site's own verified address (info@triveniradiators.com, already used in the
+     footer) rather than the brief's example "sales@..." — same "don't guess, use
+     the verified value" call already made for the street address elsewhere on this
+     page. Phone/WhatsApp dropped entirely (no verified number yet) rather than
+     shown as a placeholder, per the brief's own instruction. This form is still
+     client-side only, same as the version it replaces — no backend exists yet to
+     actually deliver an emailed enquiry or an uploaded file; that (and which
+     delivery mechanism to use) needs a decision before going live, exactly as the
+     brief itself flags. -->
+<section class="ctb-sec" id="contact">
+  <div class="ctb-left">
+    <div class="ctb-glow" aria-hidden="true"></div>
+    <div class="ctb-left-inner rv">
+      <div class="secnum">07</div>
+      <h2 class="ctb-title">Send us a drawing.<span class="l2">We&rsquo;ll come back with a quote.</span></h2>
+      <p class="ctb-lede">Send a drawing, a spec or just the kV class and quantity &mdash; we quote from either.</p>
+
+      <div class="ctb-list-group">Where We Are</div>
+      <div class="ctb-list">
+        <div class="ctb-row">
+          <span class="ctb-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div>
+            <div class="ctb-row-label">Works</div>
+            <div class="ctb-row-value">B-2, UPSIDC Industrial Area, Naini, Prayagraj &ndash; 211010, UP</div>
+          </div>
+        </div>
+        <div class="ctb-row">
+          <span class="ctb-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <div>
+            <div class="ctb-row-label">Email</div>
+            <div class="ctb-row-value"><a href="mailto:info@triveniradiators.com">info@triveniradiators.com</a></div>
+          </div>
+        </div>
+        <div class="ctb-row">
+          <span class="ctb-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 9.5H5.67V18h2.67V9.5zM7 5.9a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1zM18.33 18v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.07.79-2.43 1.34V9.5h-2.67V18h2.67v-4.5c0-1.18.83-1.5 1.4-1.5.55 0 1.47.32 1.47 1.5V18h2.67z"/></svg></span>
+          <div>
+            <div class="ctb-row-label">LinkedIn</div>
+            <div class="ctb-row-value"><a href="https://www.linkedin.com/company/triveni-electroplast-pvt-ltd" target="_blank" rel="noopener">Triveni Electroplast Pvt. Ltd.</a></div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="contact-row2">
-      <div class="ct-col-info">
-        <div class="ct-item rv" data-d="1">
-          <span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-          <div><h3>Triveni Location</h3><p>Naini, Prayagraj, Uttar Pradesh, India</p></div>
-        </div>
-
-        <!-- Address: reference shows "Plot No. 4"; the site's verified address everywhere else
-             (footer, credentials facts strip, contact.html) is "B-2, UPSIDC Industrial Area".
-             Kept the verified one per the spec's own "do not guess" instruction — confirm with
-             the client which is current before switching to "Plot No. 4". -->
-        <div class="ct-item rv" data-d="2">
-          <span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span>
-          <div><h3>Address</h3><p>B-2, UPSIDC Industrial Area, Naini, Prayagraj – 211010, Uttar Pradesh</p></div>
-        </div>
-      </div>
-
-      <div class="rv" data-d="3">
-        <div class="ct-form-label">Enquiry Form</div>
-        <form id="enquiryForm">
-          <div class="ct-row1">
-            <div class="ct-field"><label for="f-name" class="sr-only">Your Name</label><input id="f-name" type="text" placeholder="Your Name" required></div>
-            <div class="ct-field"><label for="f-email" class="sr-only">Your Email</label><input id="f-email" type="email" placeholder="Your Email" required></div>
+  <div class="ctb-right">
+    <div class="ctb-right-inner rv">
+      <form id="enquiryForm" novalidate>
+        <div id="ctbFieldset">
+          <div class="ctb-row2">
+            <div class="ctb-field">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" required aria-required="true" aria-describedby="f-name-err">
+              <span class="ctb-err" id="f-name-err" role="alert"></span>
+            </div>
+            <div class="ctb-field">
+              <label for="f-company">Company</label>
+              <input id="f-company" name="company" type="text">
+            </div>
           </div>
-          <div class="ct-field"><label for="f-msg" class="sr-only">Your Message</label><textarea id="f-msg" placeholder="Your Message" required></textarea></div>
-          <div class="ct-form-foot">
-            <button type="submit" class="btn btn-primary btn-p ct-send">Send Message <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></button>
+          <div class="ctb-row2">
+            <div class="ctb-field">
+              <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-email" name="email" type="email" required aria-required="true" aria-describedby="f-email-err">
+              <span class="ctb-err" id="f-email-err" role="alert"></span>
+            </div>
+            <div class="ctb-field">
+              <label for="f-phone">Phone</label>
+              <input id="f-phone" name="phone" type="tel">
+            </div>
           </div>
-          <div class="form-msg" id="formMsg">Thank you — we'll reply within one business day.</div>
-        </form>
-      </div>
-
-      <div class="rv" data-d="4">
-        <div class="ct-connect-label">Connect With Us</div>
-        <div class="ct-social">
-          <a href="https://www.linkedin.com/company/triveni-electroplast-pvt-ltd" target="_blank" rel="noopener">
-            <span class="ct-social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 9.5H5.67V18h2.67V9.5zM7 5.9a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1zM18.33 18v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.07.79-2.43 1.34V9.5h-2.67V18h2.67v-4.5c0-1.18.83-1.5 1.4-1.5.55 0 1.47.32 1.47 1.5V18h2.67z"/></svg></span>
-            <span class="ct-social-label">LinkedIn</span>
-          </a>
-          <span class="pending" title="Business WhatsApp number not yet supplied">
-            <span class="ct-social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.62 15.03L2 22l5.1-1.34A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.08-1.11l-.29-.17-3.03.8.81-2.95-.19-.3A8 8 0 1 1 12 20zm4.4-5.99c-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.46-.39-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.4 1.37.51.58.18 1.1.16 1.51.1.46-.07 1.43-.58 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28z"/></svg></span>
-            <span class="ct-social-label">WhatsApp — number pending</span>
-          </span>
+          <div class="ctb-field ctb-field-full">
+            <label for="f-req">Requirement</label>
+            <textarea id="f-req" name="requirement" placeholder="Radiator type, kV class, quantity, delivery location"></textarea>
+          </div>
+          <div class="ctb-field ctb-field-full">
+            <label for="f-file">Drawing or spec sheet</label>
+            <div class="ctb-drop" id="ctbDrop">
+              <input id="f-file" name="file" type="file" accept=".pdf,.dwg,.dxf,.png,.jpg" aria-describedby="f-file-hint f-file-err">
+              <span class="ctb-drop-text" id="ctbDropText">Attach a PDF or DWG &mdash; up to 10 MB</span>
+              <button type="button" class="ctb-drop-remove" id="ctbDropRemove" hidden aria-label="Remove attached file">&times;</button>
+            </div>
+            <span class="ctb-hint" id="f-file-hint">PDF, DWG, DXF, PNG or JPG. 10 MB max.</span>
+            <span class="ctb-err" id="f-file-err" role="alert"></span>
+          </div>
+          <div class="ctb-foot">
+            <button type="submit" class="ctb-submit">Send enquiry <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></button>
+            <p class="ctb-note">We reply to drawings within two working days.</p>
+          </div>
         </div>
-      </div>
+        <div class="ctb-success" id="ctbSuccess" hidden role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5L16 9.5"/></svg>
+          <h3>Enquiry received</h3>
+          <p>Thank you &mdash; we&rsquo;ll reply within two working days.</p>
+        </div>
+      </form>
     </div>
   </div>
 </section>
@@ -2314,12 +2418,92 @@ if (reduced) {
   if (firstTab) selectTab(firstTab.key);
 })();
 
-/* enquiry form — client-side only, no backend */
-document.getElementById('enquiryForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  document.getElementById('formMsg').classList.add('show');
-  this.reset();
-});
+/* enquiry form — client-side validation + drop-zone file handling only; there is
+   still no backend behind this (same as the version it replaces), so nothing is
+   actually emailed or uploaded yet. How the file should reach us (email
+   attachment via a form handler vs. a storage upload) needs a decision before
+   this is wired to a real endpoint. */
+(function(){
+  var form = document.getElementById('enquiryForm');
+  if (!form) return;
+  var fieldset = document.getElementById('ctbFieldset');
+  var success = document.getElementById('ctbSuccess');
+  var nameEl = document.getElementById('f-name');
+  var emailEl = document.getElementById('f-email');
+  var nameErr = document.getElementById('f-name-err');
+  var emailErr = document.getElementById('f-email-err');
+  var fileInput = document.getElementById('f-file');
+  var dropEl = document.getElementById('ctbDrop');
+  var dropText = document.getElementById('ctbDropText');
+  var dropRemove = document.getElementById('ctbDropRemove');
+  var fileErr = document.getElementById('f-file-err');
+
+  var ALLOWED_EXT = ['pdf', 'dwg', 'dxf', 'png', 'jpg'];
+  var MAX_BYTES = 10 * 1024 * 1024;
+  var DEFAULT_DROP_TEXT = dropText ? dropText.textContent : '';
+
+  function extOf(name){
+    var i = name.lastIndexOf('.');
+    return i === -1 ? '' : name.slice(i + 1).toLowerCase();
+  }
+  function setFieldError(input, errEl, msg){
+    var field = input.closest('.ctb-field');
+    if (field) field.classList.toggle('has-error', !!msg);
+    if (errEl) { errEl.textContent = msg || ''; errEl.classList.toggle('show', !!msg); }
+  }
+  function clearFile(keepError){
+    if (fileInput) fileInput.value = '';
+    if (dropEl) dropEl.classList.remove('has-file');
+    if (dropText) dropText.textContent = DEFAULT_DROP_TEXT;
+    if (dropRemove) dropRemove.hidden = true;
+    if (fileInput && !keepError) setFieldError(fileInput, fileErr, '');
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener('change', function(){
+      var file = fileInput.files && fileInput.files[0];
+      if (!file) { clearFile(); return; }
+      var ext = extOf(file.name);
+      if (ALLOWED_EXT.indexOf(ext) === -1) {
+        setFieldError(fileInput, fileErr, 'Use a PDF, DWG, DXF, PNG or JPG file.');
+        clearFile(true);
+        return;
+      }
+      if (file.size > MAX_BYTES) {
+        setFieldError(fileInput, fileErr, 'That file is over 10 MB — please attach a smaller one.');
+        clearFile(true);
+        return;
+      }
+      setFieldError(fileInput, fileErr, '');
+      if (dropEl) dropEl.classList.add('has-file');
+      if (dropText) dropText.textContent = file.name;
+      if (dropRemove) dropRemove.hidden = false;
+    });
+  }
+  if (dropRemove) {
+    dropRemove.addEventListener('click', function(e){
+      e.preventDefault();
+      clearFile();
+    });
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var ok = true;
+    if (!nameEl.value.trim()) { setFieldError(nameEl, nameErr, 'Please enter your name.'); ok = false; }
+    else setFieldError(nameEl, nameErr, '');
+    var emailVal = emailEl.value.trim();
+    if (!emailVal) { setFieldError(emailEl, emailErr, 'Please enter your email.'); ok = false; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { setFieldError(emailEl, emailErr, 'That email address doesn’t look right.'); ok = false; }
+    else setFieldError(emailEl, emailErr, '');
+    if (!ok) return;
+
+    fieldset.hidden = true;
+    success.hidden = false;
+    form.reset();
+    clearFile();
+  });
+})();
 
 /* back to top */
 document.getElementById('toTop').addEventListener('click', function(){
