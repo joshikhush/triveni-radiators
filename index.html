@@ -704,25 +704,6 @@ ul{margin:0;padding:0;list-style:none;}
 .cred-sec .secnum{color:#B8935A;font-size:10.5px;letter-spacing:.26em;}
 .cred-sec h2{color:#101828;}
 .cred-sec h2 .l2{color:#98A2B3;}
-.cred-viewall-btn{
-  flex-shrink:0;display:inline-flex;align-items:center;gap:10px;
-  font-size:13.5px;font-weight:500;text-decoration:none;
-}
-.cred-viewall-text{color:#6A45C0;transition:color .25s var(--ez);}
-.cred-viewall-btn:hover .cred-viewall-text,.cred-viewall-btn:focus-visible .cred-viewall-text{color:#4A2E82;}
-.cred-viewall-circle{
-  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
-  width:32px;height:32px;border-radius:50%;border:1px solid #6A45C0;color:#6A45C0;
-  transition:background .25s var(--ez),color .25s var(--ez);
-}
-.cred-viewall-circle svg{width:14px;height:14px;transition:transform .25s var(--ez);}
-.cred-viewall-btn:hover .cred-viewall-circle,.cred-viewall-btn:focus-visible .cred-viewall-circle{background:#6A45C0;color:#fff;}
-.cred-viewall-btn:hover .cred-viewall-circle svg,.cred-viewall-btn:focus-visible .cred-viewall-circle svg{transform:translateX(3px);}
-@media(prefers-reduced-motion:reduce){
-  .cred-viewall-circle svg{transition:none;}
-  .cred-viewall-btn:hover .cred-viewall-circle svg,.cred-viewall-btn:focus-visible .cred-viewall-circle svg{transform:none;}
-}
-.cred-viewall-btn:focus-visible{outline:2px solid #4A2E82;outline-offset:4px;}
 
 /* --- pill tabs --- */
 .cred-tabs{display:flex;gap:12px;flex-wrap:wrap;margin:40px 0 32px;}
@@ -807,6 +788,24 @@ ul{margin:0;padding:0;list-style:none;}
   .cred-strip{overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:4px;}
   .cred-strip::-webkit-scrollbar{display:none;}
   .cred-thumb2{flex:0 0 84px;scroll-snap-align:start;}
+}
+
+/* --- footer CTA: centred "View All Credentials" button below the stage --- */
+.cred-footer-cta{display:flex;justify-content:center;margin-top:48px;}
+.cred-footer-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:999px;border:1px solid #6A45C0;
+  color:#6A45C0;font-size:14px;font-weight:500;text-decoration:none;
+  transition:background .25s var(--ez),color .25s var(--ez),transform .25s var(--ez),box-shadow .25s var(--ez);
+}
+.cred-footer-btn:hover,.cred-footer-btn:focus-visible{
+  background:#6A45C0;color:#fff;transform:translateY(-2px);
+  box-shadow:0 14px 30px -14px rgba(106,69,192,.5);
+}
+.cred-footer-btn:focus-visible{outline:2px solid #4A2E82;outline-offset:4px;}
+@media(prefers-reduced-motion:reduce){
+  .cred-footer-btn{transition:background .25s var(--ez),color .25s var(--ez);}
+  .cred-footer-btn:hover,.cred-footer-btn:focus-visible{transform:none;}
 }
 
 /* ==========================================================
@@ -990,29 +989,75 @@ ul{margin:0;padding:0;list-style:none;}
 }
 
 /* ==========================================================
-   06 — CAREERS (full-bleed photo band)
+   06 — CAREERS — "Finish A · White panel": header sits on the page
+   background (no photo behind it), a full-bleed photo band carries a single
+   light navy tint (no white wash — the people are the point), and a white
+   panel floats up over the band's bottom edge holding the value points +
+   CTA. New, section-scoped tokens only.
    ========================================================== */
-.cr-band{position:relative;min-height:520px;display:flex;align-items:center;overflow:hidden;background:var(--color-bg-muted);}
-.cr-band>.w{width:100%;}
-.cr-media{position:absolute;inset:0;z-index:0;}
-.cr-media img{width:100%;height:100%;object-fit:cover;object-position:right center;filter:saturate(.88) contrast(1.06);}
-.cr-media::after{content:'';position:absolute;inset:0;background:var(--color-dark);opacity:.14;}
-.cr-veil{
-  position:absolute;inset:0;z-index:1;
-  background:linear-gradient(90deg,var(--color-bg-muted) 0%,var(--color-bg-muted) 20%,
-    rgba(var(--color-bg-muted-rgb),.92) 32%,rgba(var(--color-bg-muted-rgb),.45) 52%,rgba(var(--color-bg-muted-rgb),0) 70%);
+.cr-sec{background:#FBFAF8;padding:var(--sec) 0 96px;}
+.cr-header{max-width:640px;}
+.cr-header .secnum{color:#6A45C0;font-size:13px;letter-spacing:.14em;font-weight:500;}
+.cr-title{
+  font-family:'Newsreader',serif;font-weight:300;
+  font-size:clamp(40px,5.2vw,62px);line-height:1.03;letter-spacing:-.022em;
+  max-width:18ch;color:#1E1828;
 }
-.cr-content{position:relative;z-index:2;max-width:520px;}
-.cr-title{margin-top:2px;}
-.cr-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin:24px 0;}
-.cr-values .v svg{width:20px;height:20px;color:var(--color-accent);}
-.cr-values .v h3{font-size:17px;font-weight:500;line-height:1.3;letter-spacing:-.015em;color:var(--color-ink);margin:8px 0 4px;}
-.cr-values .v p{font-size:14px;color:var(--color-text-muted);line-height:1.7;}
-@media(max-width:860px){
-  .cr-band{min-height:300px;}
-  .cr-veil{background:linear-gradient(180deg,rgba(var(--color-bg-muted-rgb),.96),rgba(var(--color-bg-muted-rgb),.84));}
-  .cr-content{max-width:none;}
+.cr-title .l2{color:#8C8799;}
+.cr-lede{color:#63607A;font-size:15.5px;line-height:1.75;max-width:52ch;margin-top:20px;}
+
+.cr-photoband{position:relative;height:460px;overflow:hidden;margin-top:48px;}
+.cr-photoband img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;}
+.cr-tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,24,48,.08),rgba(12,24,48,.26));}
+
+.cr-panel{
+  position:relative;z-index:2;margin-top:-104px;
+  background:#FFFFFF;border:1px solid #E7E2D9;border-radius:6px;padding:40px 42px;
+  box-shadow:0 34px 76px -42px rgba(30,24,40,.4);
+  display:flex;justify-content:space-between;align-items:center;gap:48px;flex-wrap:wrap;
+}
+.cr-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:1;min-width:0;}
+.cr-values .v{padding:0 28px;border-right:1px solid #E7E2D9;}
+.cr-values .v:first-child{padding-left:0;}
+.cr-values .v:last-child{border-right:none;padding-right:0;}
+.cr-values .v svg{width:26px;height:26px;color:#6A45C0;margin-bottom:14px;display:block;}
+.cr-values .v h3{font-size:16px;font-weight:600;line-height:1.3;letter-spacing:-.01em;color:#1E1828;margin:0 0 4px;}
+.cr-values .v p{font-size:13.4px;line-height:1.65;color:#63607A;margin:0;}
+
+.cr-panel-side{display:flex;flex-shrink:0;}
+.cr-cta{
+  display:inline-flex;align-items:center;gap:14px;
+  background:#6A45C0;color:#fff;font-size:15px;font-weight:600;
+  padding:17px 20px 17px 28px;border-radius:6px;text-decoration:none;
+  transition:background .3s var(--ez),transform .3s var(--ez),box-shadow .3s var(--ez);
+}
+.cr-cta .ar-badge{width:30px;height:30px;background:rgba(255,255,255,.18);color:#fff;}
+.cr-cta:hover,.cr-cta:focus-visible{
+  background:#4A2E82;transform:translateY(-2px);
+  box-shadow:0 20px 44px -22px rgba(74,46,130,.6);
+}
+.cr-cta:hover .ar-badge,.cr-cta:focus-visible .ar-badge{
+  background:rgba(255,255,255,.32);transform:translate(3px,-3px);
+}
+.cr-cta:focus-visible{outline:2px solid #4A2E82;outline-offset:4px;}
+@media(prefers-reduced-motion:reduce){
+  .cr-cta,.cr-cta .ar-badge{transition:none;}
+  .cr-cta:hover,.cr-cta:focus-visible{transform:none;}
+  .cr-cta:hover .ar-badge,.cr-cta:focus-visible .ar-badge{transform:none;}
+}
+
+@media(max-width:1080px){
+  .cr-photoband{height:340px;}
+  .cr-panel{margin-top:-70px;padding:28px 24px;gap:28px;}
   .cr-values{grid-template-columns:1fr;}
+  .cr-values .v{border-right:none;border-bottom:1px solid #E7E2D9;padding:20px 0;}
+  .cr-values .v:first-child{padding-top:0;}
+  .cr-values .v:last-child{border-bottom:none;padding-bottom:0;}
+}
+@media(max-width:620px){
+  .cr-panel{flex-direction:column;align-items:stretch;}
+  .cr-panel-side{width:100%;}
+  .cr-cta{width:100%;justify-content:space-between;}
 }
 
 /* ==========================================================
@@ -1325,12 +1370,6 @@ footer.foot{background:var(--color-dark);padding:96px 0 32px;}
         <div class="secnum">Credentials</div>
         <h2>Approved and Verified<span class="l2">by India's Toughest Clients</span></h2>
       </div>
-      <a href="credentials.html" class="cred-viewall-btn rv" data-d="1">
-        <span class="cred-viewall-text">View All Credentials</span>
-        <span class="cred-viewall-circle" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-        </span>
-      </a>
     </div>
 
     <div class="cred-tabs rv" id="credTabs" data-d="1" role="tablist" aria-label="Credential categories"></div>
@@ -1350,6 +1389,10 @@ footer.foot{background:var(--color-dark);padding:96px 0 32px;}
           <div class="cred-strip" id="credStrip" role="tablist" aria-label="Certificates"></div>
         </div>
       </div>
+    </div>
+
+    <div class="cred-footer-cta rv" data-d="3">
+      <a href="credentials.html" class="cred-footer-btn">View All Credentials <span aria-hidden="true">&#8599;</span></a>
     </div>
   </div>
 </section>
@@ -1516,14 +1559,27 @@ footer.foot{background:var(--color-dark);padding:96px 0 32px;}
 </section>
 
 <!-- ===================== 06 — CAREERS ===================== -->
-<section class="cr-band" id="careers">
-  <div class="cr-media"><img src="assets/careers%20bg.png" alt="Triveni engineers reviewing work on the shop floor" loading="lazy"></div>
-  <div class="cr-veil"></div>
+<!-- Rebuilt per client reference brief, "Finish A · White panel". Copy, value
+     points and icons unchanged. "3 roles open now" is dropped rather than
+     shown as a placeholder number — careers.html has no live job listing to
+     back a real count (see brief section 5: drop the line if there's no
+     listing yet). Swap in a real count/line once one exists. -->
+<section class="cr-sec" id="careers">
   <div class="w">
-    <div class="cr-content rv">
+    <div class="cr-header rv">
       <div class="secnum">06</div>
       <h2 class="cr-title">Build Your Future<span class="l2">with Triveni Radiators</span></h2>
-      <!-- pending client confirmation — see chat note -->
+      <p class="cr-lede">Welders, line engineers and quality inspectors &mdash; building pressed-steel radiators for transformers that run at 765&nbsp;kV, from Naini, Prayagraj.</p>
+    </div>
+  </div>
+
+  <div class="cr-photoband">
+    <img src="assets/home%20page%20careers.png" alt="Triveni engineers reviewing work on the shop floor" loading="lazy">
+    <div class="cr-tint" aria-hidden="true"></div>
+  </div>
+
+  <div class="w">
+    <div class="cr-panel rv">
       <div class="cr-values">
         <div class="v">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -1541,7 +1597,9 @@ footer.foot{background:var(--color-dark);padding:96px 0 32px;}
           <p>Teams that have been here since 2012</p>
         </div>
       </div>
-      <a href="careers.html" class="btn btn-primary btn-p">Explore Opportunities <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
+      <div class="cr-panel-side">
+        <a href="careers.html" class="cr-cta">Explore Opportunities <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
+      </div>
     </div>
   </div>
 </section>
