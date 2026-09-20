@@ -106,20 +106,27 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
    =================================================== */
 .p-hero{position:relative;overflow:hidden;background:var(--navy-deep);min-height:88vh;min-height:88svh;display:flex;flex-direction:column;}
 .p-hero-slides{position:absolute;inset:0;z-index:0;background:var(--navy-deep);}
-.p-hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos-d,50% 50%);opacity:0;filter:saturate(.93) contrast(1.07) brightness(1.03);transition:opacity 1.8s ease;will-change:opacity,transform;}
-.p-hero-slide.is-active{opacity:1;animation:pKenBurns 8.5s linear forwards;}
+.p-hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos-d,50% 50%);opacity:0;z-index:0;filter:saturate(.93) contrast(1.07) brightness(1.03);transition:opacity 1.8s ease-in-out;will-change:opacity,transform;}
+/* crossfade: the incoming slide (.active) fades in ON TOP of the outgoing one (.leaving), which
+   stays fully opaque underneath until the fade completes -- so there is never a dip or a cut.
+   The slow zoom lives on both classes so it keeps running while a slide leaves (no snap-back). */
+.p-hero-slide.active{opacity:1;z-index:2;}
+.p-hero-slide.leaving{opacity:1;z-index:1;}
+.p-hero-slide.active,.p-hero-slide.leaving{animation:pKenBurns 8.5s linear forwards;}
 @keyframes pKenBurns{from{transform:scale(1);}to{transform:scale(1.05);}}
 .p-hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(0deg,rgba(14,23,48,.94) 0%,rgba(21,33,59,.8) 30%,rgba(21,33,59,.52) 58%,rgba(21,33,59,.14) 80%,rgba(21,33,59,0) 92%);}
+  background:
+    linear-gradient(180deg,rgba(10,14,22,.5) 0%,rgba(10,14,22,.1) 30%,rgba(10,14,22,.1) 70%,rgba(10,14,22,.6) 100%),
+    linear-gradient(90deg,rgba(10,14,22,.88) 0%,rgba(10,14,22,.65) 40%,rgba(10,14,22,.25) 65%,rgba(10,14,22,.05) 100%);}
 .p-hero-inner{position:relative;z-index:2;flex:1;display:flex;align-items:flex-end;padding:7rem 56px 4rem;}
 .p-hero-grid{width:100%;max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:3rem;align-items:end;}
 .p-hero-text{max-width:36rem;}
 .p-hero-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;opacity:0;transform:translateY(10px);animation:pFadeUp .7s .3s forwards;}
 .p-hero-eyebrow span{font-family:var(--sans);font-size:.74rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--copper-lt);text-shadow:0 1px 10px rgba(14,23,48,.75);}
 .p-hero-eyebrow i{display:block;width:48px;height:1px;background:linear-gradient(90deg,var(--copper-lt),transparent);}
-.p-hero-title{font-family:var(--serif-hero);font-weight:400;letter-spacing:-.033em;font-size:clamp(39px,5.7vw,85px);line-height:1.03;color:#fff;margin-bottom:1.4rem;opacity:0;transform:translateY(16px);animation:pFadeUp .8s .42s forwards;}
+.p-hero-title{font-family:var(--serif-hero);font-weight:400;letter-spacing:-.033em;font-size:clamp(39px,5.7vw,85px);line-height:1.03;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.4);margin-bottom:1.4rem;opacity:0;transform:translateY(16px);animation:pFadeUp .8s .42s forwards;}
 .p-hero-title em{font-style:italic;font-weight:300;color:var(--copper-lt);}
-.p-hero-sub{font-size:1.04rem;line-height:1.65;color:rgba(255,255,255,.78);max-width:31rem;margin-bottom:2.1rem;opacity:0;transform:translateY(14px);animation:pFadeUp .8s .56s forwards;}
+.p-hero-sub{font-size:1.04rem;line-height:1.65;color:rgba(255,255,255,.78);text-shadow:0 2px 12px rgba(0,0,0,.4);max-width:31rem;margin-bottom:2.1rem;opacity:0;transform:translateY(14px);animation:pFadeUp .8s .56s forwards;}
 .p-hero-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:1.4rem 1.8rem;opacity:0;transform:translateY(14px);animation:pFadeUp .8s .7s forwards;}
 .p-hero-ctas .btn{padding:15px 30px;font-size:14px;border-radius:6px;}
 .p-hero-ctas .btn-p{background:#fff;color:var(--navy);}
@@ -128,7 +135,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
 .p-hero-ctas .btn-p:focus-visible{outline:2px solid #fff;outline-offset:3px;}
 
 /* three metrics in one compact row, bottom-right, level with the headline */
-.p-hero-metrics{display:flex;flex-direction:row;justify-content:flex-end;gap:2.4rem;padding-bottom:.35rem;opacity:0;transform:translateY(14px);animation:pFadeUp .8s .84s forwards;}
+.p-hero-metrics{display:flex;flex-direction:row;justify-content:flex-end;gap:2.4rem;justify-self:end;width:fit-content;background:rgba(10,14,22,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:8px;padding:20px 24px;opacity:0;transform:translateY(14px);animation:pFadeUp .8s .84s forwards;}
 .p-metric{border-top:1px solid rgba(255,255,255,.28);padding-top:1rem;min-width:0;}
 .p-metric-num{font-family:var(--serif);font-weight:400;font-size:2rem;color:#fff;line-height:1;white-space:nowrap;}
 .p-metric-label{font-family:var(--sans);font-size:.66rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.66);margin-top:.5rem;}
@@ -136,7 +143,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
 @keyframes pFadeUp{to{opacity:1;transform:none;}}
 @media(max-width:1080px){
   .p-hero-grid{grid-template-columns:1fr;gap:2.4rem;}
-  .p-hero-metrics{justify-content:flex-start;}
+  .p-hero-metrics{justify-content:flex-start;justify-self:start;}
 }
 @media(max-width:767px){
   .p-hero-slide{object-position:var(--pos-m,50% 50%);}
@@ -144,7 +151,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
   .p-hero-title{font-size:clamp(32px,10.5vw,60px);}
   .p-hero-ctas .btn{padding:13px 24px;font-size:13px;}
   .p-hero-scrim{background:linear-gradient(0deg,rgba(14,23,48,.95) 0%,rgba(21,33,59,.88) 46%,rgba(21,33,59,.55) 74%,rgba(21,33,59,.18) 100%);}
-  .p-hero-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;}
+  .p-hero-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;justify-self:stretch;width:auto;padding:16px;}
   .p-metric-num{font-size:1.5rem;}
   .p-metric-label{font-size:.6rem;letter-spacing:.1em;}
 }
@@ -344,7 +351,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
   .reveal{opacity:1;transform:none;transition:none;}
   .p-hero-eyebrow,.p-hero-title,.p-hero-sub,.p-hero-ctas,.p-hero-metrics{animation:none!important;opacity:1!important;transform:none!important;}
   .p-hero-slide{transition:none;}
-  .p-hero-slide.is-active{animation:none;transform:none;}
+  .p-hero-slide.active,.p-hero-slide.leaving{animation:none;transform:none;}
   .range-item:hover,.wt-pillars.in .wt-pillar:hover{transform:none!important;}
   .btn-p,.btn-p:hover,.btn-p:focus-visible,.btn-p:active{transform:none;box-shadow:0 1px 2px rgba(16,24,40,.06);}
   .ar-badge{transition:none;}
@@ -379,7 +386,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
      the product in its "mightiest form" per client feedback, not a factory/machining shot. -->
 <header class="p-hero" id="pHero">
   <div class="p-hero-slides" id="pHeroSlides" aria-hidden="true">
-    <img class="p-hero-slide is-active" src="assets/products/hero%20slide%20show/ge-site-1-i.png" style="--pos-d:50% 72%;--pos-m:78% 50%;" alt="" loading="eager">
+    <img class="p-hero-slide active" src="assets/products/hero%20slide%20show/ge-site-1-i.png" style="--pos-d:50% 72%;--pos-m:78% 50%;" alt="" loading="eager">
     <img class="p-hero-slide" src="assets/products/hero%20slide%20show/simens-site-a.png" style="--pos-d:50% 30%;--pos-m:50% 30%;" alt="">
     <img class="p-hero-slide" src="assets/products/hero%20slide%20show/ge-site-2-b.png" style="--pos-d:50% 62%;--pos-m:30% 50%;" alt="">
     <img class="p-hero-slide" src="assets/products/hero%20slide%20show/simens-site-2-b.png" style="--pos-d:50% 24%;--pos-m:50% 24%;" alt="">
@@ -628,16 +635,36 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
 <script src="footer.js" defer></script>
 
 <script>
-/* ── hero slideshow: crossfade through the installation photos ── */
+/* ── hero slideshow: preloaded crossfade. All slides are decoded first (no blank frame),
+   then every 6s the next slide gets .active (fading in on top) while the current one is held
+   opaque as .leaving until the fade finishes. Paused while the tab is hidden. ── */
 (function(){
-  var slides = document.querySelectorAll('.p-hero-slide');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.p-hero-slide'));
   if (slides.length < 2 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var i = 0;
-  setInterval(function(){
-    slides[i].classList.remove('is-active');
+  var FADE_MS = 1800, EVERY_MS = 6000, i = 0, timer = null;
+
+  function ready(img){
+    if (img.decode) return img.decode().catch(function(){});
+    return new Promise(function(done){ if (img.complete) done(); else { img.onload = done; img.onerror = done; } });
+  }
+  function next(){
+    var cur = slides[i];
     i = (i + 1) % slides.length;
-    slides[i].classList.add('is-active');
-  }, 7500);
+    var nxt = slides[i];
+    nxt.classList.add('active');          // new slide starts fading in first...
+    cur.classList.add('leaving');         // ...while the old one stays fully visible beneath it
+    cur.classList.remove('active');
+    setTimeout(function(){ cur.classList.remove('leaving'); }, FADE_MS + 150);
+  }
+  function start(){ if (!timer) timer = setInterval(next, EVERY_MS); }
+  function stop(){ clearInterval(timer); timer = null; }
+
+  document.addEventListener('visibilitychange', function(){
+    if (document.visibilityState === 'visible') start(); else stop();
+  });
+  Promise.all(slides.map(ready)).then(function(){
+    if (document.visibilityState === 'visible') start();
+  });
 })();
 
 /* ── nav toggle + scroll pin/hide ── */
