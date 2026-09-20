@@ -46,7 +46,8 @@ img { display:block; max-width:100%; }
 .dh-eyebrow { font-size:.68rem; font-weight:600; letter-spacing:.28em; text-transform:uppercase; color:var(--lav-hi); margin-bottom:1.1rem; }
 .dh-title { font-family:'Newsreader',serif; font-weight:400; font-size:clamp(2.1rem,4.4vw,3.4rem); line-height:1.08; letter-spacing:-.02em; }
 .dh-title em { font-style:italic; color:var(--lav-hi); }
-.dh-sub { font-size:.95rem; line-height:1.75; color:var(--hero-sub); max-width:42rem; margin-top:1.2rem; }
+.dh-standfirst { font-size:1.1rem; font-weight:500; line-height:1.5; color:#fff; max-width:38rem; margin-top:1.1rem; }
+.dh-sub { font-size:.95rem; line-height:1.75; color:var(--hero-sub); max-width:42rem; margin-top:.85rem; }
 
 /* BODY */
 .wrap { max-width:1180px; margin:0 auto; padding:2.8rem 4rem 6rem; }
@@ -68,9 +69,11 @@ img { display:block; max-width:100%; }
 .reg-group + .reg-group { border-top:1px solid var(--line-cool); }
 .reg-alpha {
   position:sticky; top:56px; z-index:1;
-  font-family:'Newsreader',serif; font-size:.9rem; font-weight:500; color:var(--violet);
-  padding:.6rem 1.7rem; background:var(--stone); letter-spacing:.06em;
+  display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  font-family:'Newsreader',serif; font-size:1.05rem; font-weight:500; color:var(--violet);
+  padding:.85rem 1.7rem; background:var(--stone); letter-spacing:.01em;
 }
+.reg-alpha .reg-cat-n { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
 .reg-row {
   display:grid; grid-template-columns:140px 1fr; gap:1.6rem; align-items:center;
   padding:1.05rem 1.7rem; border-top:1px solid var(--line-cool); transition:background .15s;
@@ -131,10 +134,11 @@ img { display:block; max-width:100%; }
   <div class="dh-inner">
     <a href="clientele.html#major-customers" class="dh-back">&larr; Back to Clients</a>
     <div class="dh-eyebrow">Major Customers · Complete List</div>
-    <h1 class="dh-title">Major customer <em>directory.</em></h1>
+    <h1 class="dh-title">Industry Leaders <em>We Serve</em></h1>
+    <p class="dh-standfirst">Trusted by leading names across the power and electrical industry.</p>
     <p class="dh-sub">
-      The transformer and electrical-equipment manufacturers that Triveni supplies
-      pressed-steel radiators to directly. Listed alphabetically — search by name.
+      Our products support leading organizations across transformer manufacturing,
+      power transmission &amp; distribution, electrical equipment, and the energy sector.
     </p>
   </div>
 </header>
@@ -173,51 +177,61 @@ var nav = document.getElementById('nav');
 addEventListener('scroll', function () { nav.classList.toggle('nav-shadow', scrollY > 30); }, { passive: true });
 
 /* ---- MAJOR CUSTOMERS ----
-   Verbatim from "Customers List & Logos.xlsx" (Sheet1, 40 rows).
-   [ S.No , Customer name , logo file | null ]
+   Verbatim from "Customers List & Logos.xlsx" (Sheet1, 40 rows), re-grouped
+   into 4 categories per client feedback (18 Sept 2026) — same 40 companies,
+   one legal-entity correction (Crompton Greaves Limited → Crompton Greaves
+   Consumer Electricals Ltd., a different demerged entity from the parent —
+   FLAG: confirm the reused crompton-greaves.png logo still fits that entity).
+   [ S.No , Customer name , category key , logo file | null ]
    Logos extracted from that file → assets/logos/major-customers/  */
 var LP = 'assets/logos/major-customers/';
+var CATS = [
+  { key: 'transformer',   title: 'Transformer Manufacturers & Transformer Solutions' },
+  { key: 'transmission',  title: 'Power Transmission & Distribution' },
+  { key: 'electrical',    title: 'Electrical & Power Equipment' },
+  { key: 'energy',        title: 'Energy, Engineering & Industrial Solutions' }
+];
 var MC = [
-  [1,  "ABB India Limited", "abb.png"],
-  [2,  "ABB Power Products and Systems India Limited", "abb.png"],
-  [3,  "ALSTOM T&D India Limited", "alstom.jpeg"],
-  [4,  "Atlanta Electricals Pvt.Ltd.", "atlanta-electricals.jpeg"],
-  [5,  "AYR ENERGY INC.", "ayr-energy.png"],
-  [6,  "AYR ENERGY INDIA PRIVATE LIMITED", "ayr-energy.png"],
-  [7,  "Bharat Heavy Electricals Ltd.", "bhel.png"],
-  [8,  "BTW Atlanta Transformers India Pvt Ltd", "btw-atlanta.jpeg"],
-  [9,  "CG Power and Industrial Solutions Limited", "cg-power.jpeg"],
-  [10, "Crompton Greaves Limited", "crompton-greaves.png"],
-  [11, "Danish Private Limited", "danish.jpeg"],
-  [12, "ECE Industries Ltd.", "ece-industries.jpeg"],
-  [13, "EMCO Limited.", "emco.jpeg"],
-  [14, "EMT MEGATHERM PVT. LTD.", "emt-megatherm.jpeg"],
-  [15, "GE Power Conversion India Private Limited", "ge.jpeg"],
-  [16, "GE Vernova T&D India Limited", "ge.jpeg"],
-  [17, "Hitachi Energy India Limited", "hitachi-energy.png"],
-  [18, "Hitachi Energy USA Inc.", "hitachi-energy.png"],
-  [19, "Indo Tech Transformers Limited", "indo-tech.jpeg"],
-  [20, "Kanohar Electricals Limited", "kanohar.jpeg"],
-  [21, "Kotsons Pvt. Ltd.", "kotsons.png"],
-  [22, "MARSON’S ELECTRICAL INDUSTRIES", "marsons.png"],
-  [23, "MEIDEN T&D (INDIA) LIMITED", "meiden.png"],
-  [24, "POWER GRID CORPORATION OF INDIA LTD", "powergrid.jpeg"],
-  [25, "RIMA Transformers and Conductors Pvt. Ltd.", null],
-  [26, "Schneider Electric Infrastructure Limited.", "schneider-electric.png"],
-  [27, "SHILCHAR TECHNOLOGIES LIMITED", "shilchar.jpeg"],
-  [28, "SHIRDI SAI ELECTRICALS LTD", "shirdi-sai.jpeg"],
-  [29, "Shree Abirami Enggineering Works", "shree-abirami.png"],
-  [30, "Siemens Energy India Limited", "siemens-energy.png"],
-  [31, "Skipper Electricals (India) Ltd.", null],
-  [32, "SkipperSeil Ltd", "skipperseil.jpeg"],
-  [33, "TBEA (India) Transformer Private Limited", "tbea.png"],
-  [34, "TBEA Energy (India) Pvt Ltd.", "tbea.png"],
-  [35, "TECHNICAL ASSOCIATES LIMITED", "technical-associates.png"],
-  [36, "TOSHIBA TRANSMISSION & DISTRIBUTION SYSTEMS INDIA PVT LTD", "toshiba.jpeg"],
-  [37, "TRANSFORMER & RECTIFIERS (INDIA) LTD.", "transformers-rectifiers-india.png"],
-  [38, "Voltamp Transformers Ltd.", "voltamp.png"],
-  [39, "Western Transformer & Equipment Pvt. Ltd.", "western-transformers.jpeg"],
-  [40, "WILSON POWER SOLUTIONS INDIA PVT. LTD.", "wilson-power.jpeg"]
+  [1,  "ABB India Limited", "transmission", "abb.png"],
+  [2,  "ABB Power Products and Systems India Limited", "transmission", "abb.png"],
+  [3,  "ALSTOM T&D India Limited", "transmission", "alstom.jpeg"],
+  [4,  "Atlanta Electricals Pvt. Ltd.", "transformer", "atlanta-electricals.jpeg"],
+  [5,  "AYR Energy Inc.", "energy", "ayr-energy.png"],
+  [6,  "AYR Energy India Private Limited", "energy", "ayr-energy.png"],
+  [7,  "Bharat Heavy Electricals Ltd.", "electrical", "bhel.png"],
+  [8,  "BTW Atlanta Transformers India Pvt. Ltd.", "transformer", "btw-atlanta.jpeg"],
+  [9,  "CG Power and Industrial Solutions Limited", "transmission", "cg-power.jpeg"],
+  [10, "Crompton Greaves Consumer Electricals Ltd.", "energy", "crompton-greaves.png"],
+  [11, "Danish Private Limited", "energy", "danish.jpeg"],
+  [12, "ECE Industries Ltd.", "electrical", "ece-industries.jpeg"],
+  [13, "EMCO Limited", "electrical", "emco.jpeg"],
+  [14, "EMT Megatherm Pvt. Ltd.", "electrical", "emt-megatherm.jpeg"],
+  [15, "GE Power Conversion India Private Limited", "electrical", "ge.jpeg"],
+  [16, "GE Vernova T&D India Limited", "transmission", "ge.jpeg"],
+  [17, "Hitachi Energy India Limited", "transmission", "hitachi-energy.png"],
+  [18, "Hitachi Energy USA Inc.", "transmission", "hitachi-energy.png"],
+  [19, "Indo Tech Transformers Limited", "transformer", "indo-tech.jpeg"],
+  [20, "Kanohar Electricals Limited", "transformer", "kanohar.jpeg"],
+  [21, "Kotsons Pvt. Ltd.", "transformer", "kotsons.png"],
+  [22, "Marson's Electrical Industries", "electrical", "marsons.png"],
+  [23, "Meiden T&D (India) Limited", "transmission", "meiden.png"],
+  [24, "Power Grid Corporation of India Ltd", "transmission", "powergrid.jpeg"],
+  [25, "RIMA Transformers and Conductors Pvt. Ltd.", "transformer", null],
+  [26, "Schneider Electric Infrastructure Limited", "transmission", "schneider-electric.png"],
+  [27, "Shilchar Technologies Limited", "transformer", "shilchar.jpeg"],
+  [28, "Shirdi Sai Electricals Ltd.", "energy", "shirdi-sai.jpeg"],
+  [29, "Shree Abirami Engineering Works", "energy", "shree-abirami.png"],
+  [30, "Siemens Energy India Limited", "transmission", "siemens-energy.png"],
+  [31, "Skipper Electricals (India) Ltd.", "electrical", null],
+  [32, "SkipperSeil Ltd.", "electrical", "skipperseil.jpeg"],
+  [33, "TBEA (India) Transformer Private Limited", "transformer", "tbea.png"],
+  [34, "TBEA Energy (India) Pvt. Ltd.", "transformer", "tbea.png"],
+  [35, "Technical Associates Limited", "energy", "technical-associates.png"],
+  [36, "Toshiba Transmission & Distribution Systems India Pvt Ltd", "transmission", "toshiba.jpeg"],
+  [37, "Transformer & Rectifiers (India) Ltd.", "transformer", "transformers-rectifiers-india.png"],
+  [38, "Voltamp Transformers Ltd.", "transformer", "voltamp.png"],
+  [39, "Western Transformer & Equipment Pvt. Ltd.", "transformer", "western-transformers.jpeg"],
+  [40, "Wilson Power Solutions India Pvt. Ltd.", "energy", "wilson-power.jpeg"]
 ];
 
 var regEl = document.getElementById('reg');
@@ -226,8 +240,8 @@ var qEl = document.getElementById('q');
 function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
 function rowHTML(r) {
-  var logo = r[2]
-    ? '<img src="' + LP + r[2] + '" alt="' + esc(r[1]) + ' logo">'
+  var logo = r[3]
+    ? '<img src="' + LP + r[3] + '" alt="' + esc(r[1]) + ' logo">'
     : '<span class="reg-logo--none">—</span>';
   return '<div class="reg-row">' +
     '<div class="reg-logo">' + logo + '</div>' +
@@ -242,16 +256,12 @@ function render() {
 
   if (!list.length) { regEl.innerHTML = '<div class="empty">No customers match your search.</div>'; return; }
 
-  var groups = [], cur = null;
-  list.forEach(function (r) {
-    var L0 = (r[1].replace(/[^A-Za-z]/, '').charAt(0) || '#').toUpperCase();
-    if (!cur || cur.letter !== L0) { cur = { letter: L0, rows: [] }; groups.push(cur); }
-    cur.rows.push(r);
-  });
-
-  regEl.innerHTML = groups.map(function (g) {
-    return '<div class="reg-group"><div class="reg-alpha">' + g.letter + '</div>' +
-      g.rows.map(rowHTML).join('') + '</div>';
+  regEl.innerHTML = CATS.map(function (c) {
+    var rows = list.filter(function (r) { return r[2] === c.key; });
+    if (!rows.length) return '';
+    return '<div class="reg-group"><div class="reg-alpha"><span>' + esc(c.title) + '</span>' +
+      '<span class="reg-cat-n">' + rows.length + (rows.length === 1 ? ' company' : ' companies') + '</span></div>' +
+      rows.map(rowHTML).join('') + '</div>';
   }).join('');
 }
 qEl.addEventListener('input', render);

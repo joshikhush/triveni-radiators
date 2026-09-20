@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>End Customer Directory — Triveni Radiators</title>
-<meta name="description" content="The complete list of end-customer organisations whose transformers run on Triveni Radiators — state transmission utilities, central infrastructure, and private power & renewables.">
+<meta name="description" content="The complete list of end-customer organisations whose transformers run on Triveni Radiators — state transmission utilities, central infrastructure, private power & renewables, and EPC/industrial.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
@@ -142,10 +142,10 @@ img { display:block; max-width:100%; }
   <div class="dh-inner">
     <a href="clientele.html#end-customers" class="dh-back">&larr; Back to Clients</a>
     <div class="dh-eyebrow">End Customers · Complete List</div>
-    <h1 class="dh-title">End customer <em>directory.</em></h1>
+    <h1 class="dh-title">Project Owners <em>&amp; End Users</em></h1>
     <p class="dh-sub">
-      Every end-customer organisation whose transformers run on Triveni radiators —
-      grouped as recorded in Triveni's end-customer list. Search by organisation name
+      Serving organisations across power generation, transmission &amp; distribution,
+      renewable energy and major infrastructure projects. Search by organisation name
       or filter by category.
     </p>
   </div>
@@ -162,9 +162,6 @@ img { display:block; max-width:100%; }
 
   <div class="filters" id="filters">
     <button class="filter active" data-f="all">All</button>
-    <button class="filter" data-f="state">State Transmission &amp; Distribution</button>
-    <button class="filter" data-f="central">Central Core Infrastructure</button>
-    <button class="filter" data-f="private">Private Power Utilities &amp; Renewables</button>
   </div>
 
   <div id="groups"></div>
@@ -178,6 +175,7 @@ img { display:block; max-width:100%; }
 <!-- FOOTER -->
 <footer id="site-footer"></footer>
 <script src="footer.js" defer></script>
+<script src="end-customers-data.js"></script>
 
 <script>
 /* nav */
@@ -191,54 +189,13 @@ var nav = document.getElementById('nav');
 addEventListener('scroll', function () { nav.classList.toggle('nav-shadow', scrollY > 30); }, { passive: true });
 
 /* ---- END CUSTOMERS ----
-   Verbatim from "All End Customers list & Logos.docx" (3 categories, 37 orgs).
-   Logos extracted from that file → assets/logos/end-customers/  */
-var LP = 'assets/logos/end-customers/';
-var CATS = [
-  { key:'state',   title:'State Transmission & Distribution Companies',
-    desc:'High-voltage intra-state transmission lines and large power transformers (typically 20 MVA to 500 MVA, 132 kV / 220 kV / 400 kV).' },
-  { key:'central', title:'Central Core Infrastructure', desc:'' },
-  { key:'private', title:'Private Power Utilities & Renewables', desc:'' }
-];
-var EC = [
-  ['state', 'MSETCL / MAHATRANSCO', 'Maharashtra State Electricity Transmission Company Limited', 'msetcl-mahatransco.png'],
-  ['state', 'UPPTCL', 'Uttar Pradesh Power Transmission Corporation Limited', 'upptcl.png'],
-  ['state', 'PSTCL', 'Punjab State Transmission Corporation Limited', 'pstcl.png'],
-  ['state', 'TANTRANSCO', 'Tamil Nadu Transmission Corporation Limited', 'tantransco.png'],
-  ['state', 'KPTCL', 'Karnataka Power Transmission Corporation Limited', 'kptcl.jpeg'],
-  ['state', 'TSTRANSCO', 'Telangana State Transmission Corporation Limited', 'tstransco.jpeg'],
-  ['state', 'GETCO', 'Gujarat Energy Transmission Corporation Limited', 'getco.png'],
-  ['state', 'RRVPNL', 'Rajasthan Rajya Vidyut Prasaran Nigam Limited', 'rrvpnl.jpeg'],
-  ['state', 'CSPTCL', 'Chhattisgarh State Power Transmission Company Limited', 'csptcl.gif'],
-  ['central', 'PGCIL', 'Power Grid Corporation of India Limited', 'pgcil.png'],
-  ['central', 'NTPC Limited', 'National Thermal Power Corporation', 'ntpc.png'],
-  ['central', 'Indian Railways / RDSO', '', 'indian-railways-rdso.jpeg'],
-  ['private', 'Reliance Industries Limited', '', 'reliance.png'],
-  ['private', 'Tata Power Company Limited', '', 'tata-power.png'],
-  ['private', 'Adani Energy Solutions Limited', '', 'adani-energy-solutions.png'],
-  ['private', 'Adani Power Limited', '', 'adani-power.png'],
-  ['private', 'Adani Green Energy Limited', '', 'adani-green-energy.png'],
-  ['private', 'Torrent Power Limited', '', 'torrent-power.png'],
-  ['private', 'JSW Energy Limited', '', 'jsw-energy.jpeg'],
-  ['private', 'RENEW Energy', '', 'renew-energy.png'],
-  ['private', 'Acme Solar Holdings', '', 'acme-solar.png'],
-  ['private', 'Hero Future Energies', '', 'hero-future-energies.jpeg'],
-  ['private', 'Tata Projects Limited', '', 'tata-projects.png'],
-  ['private', 'Tata Steel', '', 'tata-steel.png'],
-  ['private', 'Kalpataru Projects International Limited (KPIL)', '', 'kalpataru-kpil.png'],
-  ['private', 'MEIL', '', 'meil.png'],
-  ['private', 'GSECL', '', 'gsecl.png'],
-  ['private', 'AP GENCO', '', 'ap-genco.png'],
-  ['private', 'Sterlite', '', 'sterlite.jpeg'],
-  ['private', 'Indigrid', '', 'indigrid.png'],
-  ['private', 'APARAVA', '', 'aparava.png'],
-  ['private', 'GR infra', '', 'gr-infra.jpeg'],
-  ['private', 'RS INFRA', '', 'rs-infra.png'],
-  ['private', 'AEGCL', '', 'aegcl.jpeg'],
-  ['private', 'Godrej', '', 'godrej.jpeg'],
-  ['private', 'POWERICA', '', 'powerica.jpeg'],
-  ['private', 'L&T', '', null]
-];
+   Data + category labels come from end-customers-data.js — the single
+   shared source with clientele.html's homepage preview, so the two can't
+   word categories differently again. Full legal names render here (the
+   directory) only; the homepage preview stays short-name. */
+var LP = window.END_CUSTOMER_LOGO_PATH;
+var CATS = window.END_CUSTOMER_CATS;
+var EC = window.END_CUSTOMERS;
 
 var groupsEl = document.getElementById('groups');
 var countEl = document.getElementById('count');
@@ -246,6 +203,10 @@ var qEl = document.getElementById('q');
 var filtersEl = document.getElementById('filters');
 var activeCat = 'all';
 function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+/* filter buttons are generated from CATS, not hardcoded */
+filtersEl.innerHTML = '<button class="filter active" data-f="all">All</button>' +
+  CATS.map(function (c) { return '<button class="filter" data-f="' + c.key + '">' + esc(c.title) + '</button>'; }).join('');
 
 function tileHTML(r) {
   var mark = r[3]
@@ -273,7 +234,6 @@ function render() {
     return '<section class="grp">' +
       '<div class="grp-head"><span class="grp-title">' + esc(c.title) + '</span>' +
       '<span class="grp-n">' + gr.length + (gr.length === 1 ? ' organisation' : ' organisations') + '</span></div>' +
-      (c.desc ? '<p class="grp-desc">' + esc(c.desc) + '</p>' : '') +
       '<div class="tiles">' + gr.map(tileHTML).join('') + '</div>' +
       '</section>';
   }).join('');

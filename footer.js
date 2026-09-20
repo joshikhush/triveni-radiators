@@ -20,7 +20,7 @@
   ];
   var FOOT_LINKEDIN = 'https://www.linkedin.com/company/triveni-electroplast-pvt-ltd';
   var FOOT_ADDRESS = 'B-2, UPSIDC Industrial Area, Naini, Prayagraj – 211010, Uttar Pradesh, India';
-  var FOOT_EMAIL = 'info@triveniradiators.com';
+  var FOOT_EMAIL = 'sales@triveniradiators.com';
   // No phone row: there is no confirmed number yet, and the brief is explicit
   // that this footer should not ship a placeholder like "+91 00000 00000".
   // Add a FOOT_PHONE constant + a matching .fx-touch block once one exists.
