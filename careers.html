@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Careers — Triveni Radiators</title>
-<meta name="description" content="Build a career with Triveni Radiators — one of India's largest transformer radiator manufacturers. We hire for integrity first.">
+<title>Careers | Triveni Radiators</title>
+<meta name="description" content="Build a career with Triveni Radiators, one of India's largest transformer radiator manufacturers. We hire for integrity first.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Schibsted+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
@@ -230,18 +230,6 @@ button { font:inherit; }
   display:flex; flex-wrap:wrap; gap:1.4rem 1.7rem; align-items:center;
   opacity:0; transform:translateY(14px); animation:crFadeUp .8s 1.35s forwards;
 }
-.cr-play {
-  display:flex; align-items:center; gap:.9rem; background:none; border:none; cursor:pointer;
-  color:rgba(255,255,255,.85); text-align:left;
-}
-.cr-play .ring {
-  width:44px; height:44px; border-radius:50%; border:1.3px solid rgba(203,167,108,.55);
-  display:flex; align-items:center; justify-content:center; flex-shrink:0;
-  transition:transform .3s cubic-bezier(.16,1,.3,1), border-color .3s, background .3s;
-}
-.cr-play .ring svg { width:13px; height:13px; margin-left:2px; color:var(--gold-2); }
-.cr-play:hover .ring { transform:scale(1.12); border-color:var(--gold-2); background:rgba(203,167,108,.08); }
-.cr-play .txt { font-family:'Poppins',sans-serif; font-size:.86rem; font-weight:500; line-height:1.4; }
 
 @keyframes crImgIn { to { opacity:1; } }
 @keyframes crFadeIn { to { opacity:1; } }
@@ -282,7 +270,6 @@ button { font:inherit; }
 .val-heading .hi { font-style:italic; color:var(--violet); }
 
 .val-top-right { display:flex; flex-direction:column; align-items:flex-end; gap:1.1rem; max-width:340px; margin-left:auto; }
-.val-copy { font-size:1.05rem; line-height:1.55; color:var(--muted); text-align:left; }
 .val-arrows { display:flex; gap:.6rem; }
 
 /* ---- track ---- */
@@ -352,9 +339,6 @@ button { font:inherit; }
 .area-heading .cr-eyebrow { color:var(--gold); }
 .area-heading .cr-h2 { font-size:clamp(2.4rem,4.6vw,4.4rem); }
 .area-heading .cr-h2 .hi { font-style:normal; color:var(--violet); }
-.area-top-right { display:flex; flex-direction:column; align-items:flex-end; gap:1.3rem; max-width:280px; margin-left:auto; }
-.area-copy { font-size:.82rem; line-height:1.5; color:var(--muted); text-align:left; }
-.area-arrows { display:flex; gap:.6rem; }
 .val-arrow {
   width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
   border:1px solid rgba(106,69,192,.32); background:transparent; color:var(--violet); cursor:pointer;
@@ -406,7 +390,6 @@ button { font:inherit; }
 
 @media(max-width:1080px){
   .area-top { align-items:flex-start; }
-  .area-top-right { max-width:100%; align-items:flex-start; margin-left:0; }
 }
 @media(max-width:900px){
   .sec--areas { padding-top:3.6rem; }
@@ -599,7 +582,7 @@ button { font:inherit; }
 
 <!-- ===== HERO ===== -->
 <header class="cr-hero" id="heroSec">
-  <div class="cr-hero-bg"><img id="heroImg" src="assets/careers%20hero.jpeg" alt="Triveni engineers — a woman technician, a central engineer in a white helmet and a colleague — at work on the assembly bench in Naini, with the Indian flag behind them" loading="eager"></div>
+  <div class="cr-hero-bg"><img id="heroImg" src="assets/careers%20hero.jpeg" alt="Triveni engineers (a woman technician, a central engineer in a white helmet and a colleague) at work on the assembly bench in Naini, with the Indian flag behind them" loading="eager"></div>
   <div class="cr-hero-overlay"></div>
   <div class="cr-hero-deco" aria-hidden="true">
     <svg viewBox="0 0 340 220" fill="none"><path d="M-10 200C60 205 120 150 130 90" stroke="#8B8CF0" stroke-width="1" opacity=".35"/></svg>
@@ -618,10 +601,6 @@ button { font:inherit; }
       <p class="cr-hero-sub">We hire for integrity first. If you want to build products the entire Indian transformer industry depends on, we'd like to hear from you.</p>
       <div class="cr-hero-ctas">
         <a href="#profile" class="btn btn-primary">Submit your profile <span>&rarr;</span></a>
-        <a href="#naini" class="cr-play" aria-label="See what it's like to work at Triveni">
-          <span class="ring"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-          <span class="txt">See what it's like<br>to work at Triveni</span>
-        </a>
       </div>
     </div>
   </div>
@@ -644,7 +623,6 @@ button { font:inherit; }
           <button class="val-arrow prev" id="valuesPrev" aria-label="Previous value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
           <button class="val-arrow next" id="valuesNext" aria-label="Next value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
-        <p class="val-copy">The same values that go into our products drive the way we build our team.</p>
       </div>
     </div>
 
@@ -653,14 +631,14 @@ button { font:inherit; }
         <div class="val-card-face val-card-face--light">
           <div class="val-card-top"><span class="val-card-num">i</span><span class="val-card-rule"></span></div>
           <h3>Integrity</h3>
-          <p>Honest dealings, every time. Non-negotiable — and the first thing we look for in people, too.</p>
+          <p>Honest dealings, every time. Non-negotiable, and the first thing we look for in people, too.</p>
           <span class="val-card-cta">Learn more <span class="arrow">&rarr;</span></span>
         </div>
         <div class="val-card-shutter">
           <div class="val-card-face val-card-face--dark">
             <div class="val-card-top"><span class="val-card-num">i</span><span class="val-card-rule"></span></div>
             <h3>Integrity</h3>
-            <p>Honest dealings, every time. Non-negotiable — and the first thing we look for in people, too.</p>
+            <p>Honest dealings, every time. Non-negotiable, and the first thing we look for in people, too.</p>
             <span class="val-card-cta">Learn more <span class="arrow">&rarr;</span></span>
           </div>
         </div>
@@ -729,13 +707,6 @@ button { font:inherit; }
       <div class="area-heading reveal">
         <div class="cr-eyebrow">Where You Can Make An Impact</div>
         <h2 class="cr-h2">Three ways <span class="hi">in.</span></h2>
-      </div>
-      <div class="area-top-right reveal reveal-d1">
-        <div class="area-arrows">
-          <button class="val-arrow prev" id="areasPrev" aria-label="Scroll career areas left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-          <button class="val-arrow next" id="areasNext" aria-label="Scroll career areas right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-        </div>
-        <p class="area-copy">Different roles. A shared purpose. Explore the areas where you can grow, contribute and do your best work.</p>
       </div>
     </div>
 
@@ -840,9 +811,9 @@ button { font:inherit; }
               <label>Area of Interest</label>
               <select name="area">
                 <option value="">Select an area</option>
-                <option>Engineering — Design &amp; Production</option>
-                <option>Quality — QA &amp; Testing</option>
-                <option>Commercial — Sales &amp; Exports</option>
+                <option>Engineering: Design &amp; Production</option>
+                <option>Quality: QA &amp; Testing</option>
+                <option>Commercial: Sales &amp; Exports</option>
                 <option>Other</option>
               </select>
             </div>
@@ -873,7 +844,7 @@ button { font:inherit; }
       <div class="cr-form-success" id="profileSuccess">
         <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
         <h3>Thank you.</h3>
-        <p>Your profile has been added to our talent pool. Our team will reach out if there's a match — now, or down the road.</p>
+        <p>Your profile has been added to our talent pool. Our team will reach out if there's a match, now or down the road.</p>
       </div>
     </div>
   </div>
@@ -886,16 +857,15 @@ button { font:inherit; }
     <div class="cr-naini-copy reveal">
       <div class="cr-eyebrow on-dark">The Works</div>
       <h2 class="cr-h2 on-dark">Made in Naini, Prayagraj.</h2>
-      <p class="cr-lead on-dark">You'd be joining the plant that runs India's first fully automatic panel radiator line — B-2, UPSIDC Industrial Area, Naini.</p>
-      <a href="triveni-group.html" class="btn-text" style="color:#fff;">Take a virtual tour <span>&rarr;</span></a>
+      <p class="cr-lead on-dark">You'd be joining the plant that runs India's first fully automatic panel radiator line: B-2, UPSIDC Industrial Area, Naini.</p>
     </div>
   </div>
   <div class="cr-naini-stats reveal reveal-d1">
     <div class="cr-naini-stats-inner">
       <div class="cr-nstat"><div class="cr-nstat-num" data-count="8300" data-suffix=" m&sup2;">0</div><div class="cr-nstat-label">Works Area</div></div>
-      <div class="cr-nstat"><div class="cr-nstat-num" data-count="4000" data-suffix=" MT">0</div><div class="cr-nstat-label">Annual Capacity</div></div>
+      <div class="cr-nstat"><div class="cr-nstat-num" data-count="7200" data-suffix=" MT">0</div><div class="cr-nstat-label">Annual Capacity</div></div>
       <div class="cr-nstat"><div class="cr-nstat-num" data-count="1" data-plain="1" data-suffix="st">0</div><div class="cr-nstat-label">Fully Automatic Line in India</div></div>
-      <div class="cr-nstat"><div class="cr-nstat-num" data-count="15" data-suffix="+">0</div><div class="cr-nstat-label">States Supplied</div></div>
+      <div class="cr-nstat"><div class="cr-nstat-num" data-count="20" data-suffix="+">0</div><div class="cr-nstat-label">States Supplied</div></div>
     </div>
   </div>
 </section>
@@ -912,7 +882,7 @@ button { font:inherit; }
     </div>
     <div class="cr-final-divider" aria-hidden="true"></div>
     <div class="cr-final-right reveal reveal-d1">
-      <p class="cr-final-text">Send us your profile — we'll be in touch when the right opportunity comes along.</p>
+      <p class="cr-final-text">Send us your profile, and we'll be in touch when the right opportunity comes along.</p>
       <a href="#profile" class="cr-final-cta">Submit your profile <span>&rarr;</span></a>
     </div>
   </div>
@@ -1090,15 +1060,6 @@ if (reduceMotion) {
     resizeTimer = setTimeout(() => { measure(); updateSpeed(); track.scrollLeft = setWidth; }, 200);
   });
 })();
-
-/* ---- career areas row arrow scroll (mobile / tablet) ---- */
-const areasRow = document.getElementById('areasRow');
-const aPrev = document.getElementById('areasPrev'), aNext = document.getElementById('areasNext');
-if (areasRow && aPrev && aNext) {
-  const astep = () => areasRow.clientWidth * 0.9;
-  aPrev.addEventListener('click', () => areasRow.parentElement.scrollBy({ left: -astep(), behavior:'smooth' }));
-  aNext.addEventListener('click', () => areasRow.parentElement.scrollBy({ left: astep(), behavior:'smooth' }));
-}
 
 /* ---- profile form submit (client-side placeholder until backend/ATS is wired up) ---- */
 const pf = document.getElementById('profileForm');
