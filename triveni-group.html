@@ -109,8 +109,10 @@ ul{margin:0;padding:0;list-style:none;}
 .nav-links a:hover::after,.nav-links a:focus-visible::after{right:0;}
 .nav-links a.on{color:#fff;}
 .nav-links a.on::after{right:0;background:var(--ind-lt);}
-.nav-cta{font-size:15px;font-weight:500;color:#fff;background:var(--ind);padding:12px 24px;border-radius:999px;}
-.nav-cta:hover,.nav-cta:focus-visible{background:var(--ind-2);}
+/* hardcoded, not var(--ind)/var(--ind-2) -- those are this page's own accent used
+   elsewhere; the nav CTA specifically must match home's #6A45C0/#4A2E82 exactly */
+.nav-cta{font-size:15px;font-weight:500;color:#fff;background:#6A45C0;padding:12px 24px;border-radius:999px;}
+.nav-cta:hover,.nav-cta:focus-visible{background:#4A2E82;}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px;}
 .nav-toggle span{display:block;width:22px;height:2px;background:#fff;}
 @media(max-width:1024px){

@@ -24,22 +24,28 @@ body { font-family:'Poppins',sans-serif; background:var(--ivory); color:var(--in
 a { color:inherit; text-decoration:none; }
 img { display:block; max-width:100%; }
 
-/* NAV — dark, matches Clients page */
-#nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:20px 4rem; background:#050B22; transition:padding .3s, box-shadow .3s; }
-#nav.nav-shadow { box-shadow:0 1px 0 rgba(255,255,255,.06); padding:14px 4rem; }
-.nav-logo img { height:36px; width:auto; display:block; border-radius:5px; }
-.nav-links { display:flex; gap:2.4rem; list-style:none; align-items:center; }
-.nav-links a { font-size:.86rem; font-weight:400; color:rgba(255,255,255,.62); position:relative; transition:color .2s; }
-.nav-links a:hover, .nav-links a.on { color:#fff; }
-.nav-links a.on::after { content:''; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:var(--lav-hi); }
-.nav-right { display:flex; align-items:center; gap:1rem; }
-.nav-cta { font-size:.82rem; font-weight:500; color:#fff; background:var(--violet-deep); padding:.68rem 1.5rem; border-radius:999px; transition:background .2s, transform .2s; }
-.nav-cta:hover { background:var(--violet); transform:translateY(-1px); }
+/* NAV — same markup/behavior/colors as the home page's #nav: sits in normal flow
+   (not permanently fixed) and pins + hides/reveals on scroll direction; see the
+   nav-scroll script near the closing body tag. */
+#nav { position:relative; z-index:300; display:flex; align-items:center; justify-content:space-between; padding:18px 4rem; background:#050B22; border-bottom:1px solid rgba(255,255,255,.1); transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .25s cubic-bezier(.22,1,.36,1); will-change:transform; }
+#nav.nav-pinned { position:fixed; top:0; left:0; right:0; }
+#nav.nav-hidden { transform:translateY(-100%); }
+#nav.nav-shadow { box-shadow:0 4px 16px -4px rgba(12,24,48,.35); }
+.nav-logo img { height:34px; width:auto; display:block; border-radius:3px; }
+.nav-links { display:flex; align-items:center; gap:36px; }
+.nav-links a { position:relative; font-size:15px; font-weight:400; color:rgba(255,255,255,.85); padding:6px 0; transition:color .25s; }
+.nav-links a::after { content:''; position:absolute; left:0; right:100%; bottom:0; height:1.5px; background:currentColor; transition:right .32s; }
+.nav-links a:hover, .nav-links a:focus-visible { color:#fff; }
+.nav-links a:hover::after, .nav-links a:focus-visible::after { right:0; }
+.nav-links a.on { color:#fff; }
+.nav-links a.on::after { right:0; background:var(--lav-hi); }
+.nav-cta { font-size:15px; font-weight:500; color:#fff; background:#6A45C0; padding:12px 24px; border-radius:999px; transition:background .25s; }
+.nav-cta:hover, .nav-cta:focus-visible { background:#4A2E82; }
 .nav-toggle { display:none; background:none; border:none; cursor:pointer; flex-direction:column; gap:5px; padding:6px; }
-.nav-toggle span { display:block; width:24px; height:2px; background:#fff; transition:.3s; }
+.nav-toggle span { display:block; width:22px; height:2px; background:#fff; }
 
 /* HEADER */
-.dh { background:linear-gradient(160deg,var(--navy) 0%,var(--navy-2) 55%,var(--navy-deep) 100%); color:#fff; padding:8rem 4rem 3.4rem; position:relative; overflow:hidden; }
+.dh { background:linear-gradient(160deg,var(--navy) 0%,var(--navy-2) 55%,var(--navy-deep) 100%); color:#fff; padding:3.2rem 4rem 3.4rem; position:relative; overflow:hidden; }
 .dh-inner { position:relative; z-index:2; max-width:1180px; margin:0 auto; }
 .dh-back { display:inline-flex; align-items:center; gap:.5rem; font-size:.76rem; font-weight:500; letter-spacing:.04em; color:rgba(255,255,255,.6); margin-bottom:1.5rem; transition:color .2s; }
 .dh-back:hover { color:#fff; }
@@ -89,16 +95,16 @@ img { display:block; max-width:100%; }
 .note { margin-top:1.5rem; font-size:.76rem; line-height:1.65; color:var(--muted-2); max-width:46rem; }
 
 @media (max-width:1080px){
-  #nav, #nav.nav-shadow { padding:16px 2rem; }
-  .dh { padding:7rem 2rem 3rem; }
+  #nav { padding:18px 2rem; }
+  .dh { padding:5rem 2rem 3rem; }
   .wrap { padding:2.4rem 2rem 4.5rem; }
 }
 @media (max-width:760px){
   .nav-toggle { display:flex; }
   .nav-links { display:none; }
   .nav-links.open { display:flex; flex-direction:column; align-items:flex-start; position:absolute; top:100%; left:0; right:0; background:#050B22; padding:1.3rem 2rem; gap:1.1rem; }
-  #nav, #nav.nav-shadow { padding:14px 1.3rem; }
-  .dh { padding:6.4rem 1.4rem 2.6rem; }
+  #nav { padding:18px 1.3rem; }
+  .dh { padding:4.6rem 1.4rem 2.6rem; }
   .wrap { padding:2rem 1.3rem 4rem; }
   .reg-row { grid-template-columns:96px 1fr; gap:1rem; padding:1rem 1.2rem; }
   .reg-alpha { padding-left:1.2rem; }
@@ -114,7 +120,7 @@ img { display:block; max-width:100%; }
 <!-- NAV -->
 <nav id="nav">
   <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="products.html">Product</a></li>
     <li><a href="credentials.html">Credential</a></li>
@@ -123,10 +129,8 @@ img { display:block; max-width:100%; }
     <li><a href="clientele.html" class="on">Clients</a></li>
     <li><a href="careers.html">Careers</a></li>
   </ul>
-  <div class="nav-right">
-    <a href="contact.html" class="nav-cta">Contact Us</a>
-    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-  </div>
+  <a href="contact.html" class="nav-cta btn-p">Contact Us</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- HEADER -->
@@ -166,15 +170,48 @@ img { display:block; max-width:100%; }
 <script src="footer.js" defer></script>
 
 <script>
-/* nav */
-var toggle = document.querySelector('.nav-toggle');
-var navLinks = document.querySelector('.nav-links');
-if (toggle && navLinks) {
-  toggle.addEventListener('click', function () { navLinks.classList.toggle('open'); });
-  navLinks.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { navLinks.classList.remove('open'); }); });
-}
+/* nav — hides on scroll down (past 120px), reappears and pins to position:fixed on
+   scroll up, same behavior as the home page's nav. See index.html for the fuller
+   comment explaining the thresholds. */
 var nav = document.getElementById('nav');
-addEventListener('scroll', function () { nav.classList.toggle('nav-shadow', scrollY > 30); }, { passive: true });
+var navMenuEl = document.getElementById('navLinks');
+var navLastY = window.scrollY;
+var navTicking = false;
+var NAV_DIR_THRESHOLD = 6;
+var NAV_HIDE_AFTER = 120;
+var navHeightCache = nav.offsetHeight;
+addEventListener('resize', function(){ navHeightCache = nav.offsetHeight; });
+
+function updateNav(){
+  var y = Math.max(0, window.scrollY);
+  var delta = y - navLastY;
+  if (Math.abs(delta) <= NAV_DIR_THRESHOLD) return;
+  var goingDown = delta > 0;
+  navLastY = y;
+
+  if (y <= navHeightCache) {
+    nav.classList.remove('nav-pinned', 'nav-hidden', 'nav-shadow');
+    return;
+  }
+  nav.classList.add('nav-pinned', 'nav-shadow');
+
+  var menuOpen = navMenuEl.classList.contains('open');
+  if (goingDown && y > NAV_HIDE_AFTER && !menuOpen) {
+    nav.classList.add('nav-hidden');
+  } else if (!goingDown || menuOpen) {
+    nav.classList.remove('nav-hidden');
+  }
+}
+addEventListener('scroll', function(){
+  if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
+}, {passive:true});
+
+var navToggle = document.getElementById('navToggle');
+navToggle.addEventListener('click', function(){
+  var open = navMenuEl.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', open);
+});
+navMenuEl.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navMenuEl.classList.remove('open'); }); });
 
 /* ---- MAJOR CUSTOMERS ----
    Verbatim from "Customers List & Logos.xlsx" (Sheet1, 40 rows), re-grouped

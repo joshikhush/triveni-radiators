@@ -22,22 +22,55 @@
 .smap-note { max-width: 980px; margin: 3.5rem auto 0; font-size: .82rem; color: var(--muted-2); }
 .smap-note a { color: var(--purple2); text-decoration: none; }
 @media(max-width: 768px) { .smap { grid-template-columns: 1fr; gap: 2.2rem; } }
+
+/* NAV — same markup/behavior/colors as the home page's #nav, overriding styles.css's
+   older shared #navbar rules (which no longer match anything on this page — the id
+   is renamed to #nav below). Sits in normal flow and pins + hides/reveals on scroll
+   direction; see the nav-scroll script near the closing body tag. */
+#nav{position:relative;z-index:300;display:flex;align-items:center;justify-content:space-between;
+  padding:18px 4rem;background:#050B22;border-bottom:1px solid rgba(255,255,255,.1);
+  transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .25s cubic-bezier(.22,1,.36,1);
+  will-change:transform;}
+#nav.nav-pinned{position:fixed;top:0;left:0;right:0;}
+#nav.nav-hidden{transform:translateY(-100%);}
+#nav.nav-shadow{box-shadow:0 4px 16px -4px rgba(12,24,48,.35);}
+.nav-logo img{height:34px;width:auto;display:block;border-radius:3px;}
+.nav-links{display:flex;align-items:center;gap:36px;}
+.nav-links a{position:relative;font-size:15px;font-weight:400;color:rgba(255,255,255,.85);
+  padding:6px 0;transition:color .25s;}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:0;height:1.5px;
+  background:currentColor;transition:right .32s;}
+.nav-links a:hover,.nav-links a:focus-visible{color:#fff;}
+.nav-links a:hover::after,.nav-links a:focus-visible::after{right:0;}
+.nav-links a.on{color:#fff;}
+.nav-links a.on::after{right:0;background:#8B8CF0;}
+.nav-cta{font-size:15px;font-weight:500;color:#fff;background:#6A45C0;padding:12px 24px;border-radius:999px;transition:background .25s;}
+.nav-cta:hover,.nav-cta:focus-visible{background:#4A2E82;}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px;}
+.nav-toggle span{display:block;width:22px;height:2px;background:#fff;}
+@media(max-width:1024px){
+  .nav-links{display:none;}
+  .nav-toggle{display:flex;}
+  .nav-links.open{position:absolute;top:100%;left:0;right:0;display:flex;flex-direction:column;
+    gap:18px;background:#050B22;padding:24px 28px 30px;}
+}
 </style>
 </head>
 <body id="top">
 
-<nav id="navbar">
-  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators" style="height:38px;width:auto;display:block;border-radius:5px;"></a>
-  <ul class="nav-links">
+<nav id="nav">
+  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
+  <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="products.html">Product</a></li>
     <li><a href="credentials.html">Credential</a></li>
     <li><a href="milestones.html">Milestones</a></li>
     <li><a href="triveni-group.html">Triveni Group</a></li>
-    <li><a href="clientele.html">Clientele</a></li>
+    <li><a href="clientele.html">Clients</a></li>
     <li><a href="careers.html">Careers</a></li>
   </ul>
-  <a href="contact.html" class="nav-cta">Contact Us</a>
+  <a href="contact.html" class="nav-cta btn-p">Contact Us</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <header class="page-hero">
@@ -80,11 +113,6 @@
         <a href="credentials.html" class="smap-link">Credentials <span class="smap-sub">— certificates, approvals &amp; letters</span></a>
         <a href="clientele.html" class="smap-link">Clientele <span class="smap-sub">— OEM &amp; end customers</span></a>
       </div>
-      <div class="smap-group-title" style="margin-top:2.4rem;">Legal</div>
-      <div class="smap-links">
-        <a href="privacy.html" class="smap-link">Privacy Policy</a>
-        <a href="terms.html" class="smap-link">Terms of Use</a>
-      </div>
     </div>
 
   </div>
@@ -98,5 +126,48 @@
 <script src="footer.js" defer></script>
 
 <script src="script.js?v=5"></script>
+<script>
+/* nav — hides on scroll down (past 120px), reappears and pins to position:fixed on
+   scroll up, same behavior as the home page's nav. */
+var nav = document.getElementById('nav');
+var navMenuEl = document.getElementById('navLinks');
+var navLastY = window.scrollY;
+var navTicking = false;
+var NAV_DIR_THRESHOLD = 6;
+var NAV_HIDE_AFTER = 120;
+var navHeightCache = nav.offsetHeight;
+addEventListener('resize', function(){ navHeightCache = nav.offsetHeight; });
+
+function updateNav(){
+  var y = Math.max(0, window.scrollY);
+  var delta = y - navLastY;
+  if (Math.abs(delta) <= NAV_DIR_THRESHOLD) return;
+  var goingDown = delta > 0;
+  navLastY = y;
+
+  if (y <= navHeightCache) {
+    nav.classList.remove('nav-pinned', 'nav-hidden', 'nav-shadow');
+    return;
+  }
+  nav.classList.add('nav-pinned', 'nav-shadow');
+
+  var menuOpen = navMenuEl.classList.contains('open');
+  if (goingDown && y > NAV_HIDE_AFTER && !menuOpen) {
+    nav.classList.add('nav-hidden');
+  } else if (!goingDown || menuOpen) {
+    nav.classList.remove('nav-hidden');
+  }
+}
+addEventListener('scroll', function(){
+  if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
+}, {passive:true});
+
+var navToggle = document.getElementById('navToggle');
+navToggle.addEventListener('click', function(){
+  var open = navMenuEl.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', open);
+});
+navMenuEl.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navMenuEl.classList.remove('open'); }); });
+</script>
 </body>
 </html>

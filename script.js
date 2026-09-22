@@ -1,12 +1,7 @@
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* Mobile nav toggle */
-const navToggle = document.querySelector('.nav-toggle');
-const navLinks = document.querySelector('.nav-links');
-if (navToggle && navLinks) {
-  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
-}
+/* Nav (#nav pin/hide/toggle) is handled per-page by its own inline script now,
+   matching the rest of the site -- nothing nav-related belongs here anymore. */
 
 /* Reveal on scroll */
 const io = new IntersectionObserver(es => {
@@ -46,16 +41,14 @@ if (counters.length) {
   else { const co = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { animateCount(e.target); co.unobserve(e.target); } }); }, { threshold: 0.6 }); counters.forEach(el => co.observe(el)); }
 }
 
-/* Scroll: nav shadow + parallax orbs + timeline fill */
+/* Scroll: parallax orbs + timeline fill */
 const orbs = [...document.querySelectorAll('[data-depth]')];
-const navbar = document.getElementById('navbar');
 const rows = () => [...document.querySelectorAll('.tl-row')];
 let ticking = false;
 function onScroll() {
   if (ticking) return; ticking = true;
   requestAnimationFrame(() => {
     const y = scrollY;
-    if (navbar) navbar.classList.toggle('scrolled', y > 40);
     if (!reduce) orbs.forEach(o => { const d = +o.dataset.depth; o.style.transform = `translate3d(0,${y * d}px,0)`; });
     if (tl && tlfill) {
       const rect = tl.getBoundingClientRect(); const vh = innerHeight * 0.55;

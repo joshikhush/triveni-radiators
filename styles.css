@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&family=Sora:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&family=Sora:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap');
 
 :root{
   --bg:#FCFBF9;
@@ -69,8 +69,10 @@ a{color:inherit;}
 /* PAGE HERO (inner pages) */
 .page-hero{position:relative;padding:1.75rem 4rem 4rem;overflow:hidden;}
 .page-hero .hero-orb{display:none;}
-.page-eyebrow{font-size:0.74rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--purple2);margin-bottom:1.2rem;position:relative;}
-.page-title{font-family:'Poppins',sans-serif;font-weight:300;font-size:clamp(2.6rem,6vw,5rem);line-height:1.02;letter-spacing:-0.02em;position:relative;}
+.page-eyebrow{font-family:'Poppins',sans-serif;font-size:0.74rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--purple2);margin-bottom:1.2rem;position:relative;}
+/* Newsreader/400, matching the home page's heading system (its h2 and every other
+   page's own hero title) -- was Poppins/300, the one page family that didn't match. */
+.page-title{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(2.6rem,6vw,5rem);line-height:1.04;letter-spacing:-0.02em;position:relative;}
 .page-title em{font-style:italic;color:var(--purple2);font-weight:400;}
 .page-sub{font-size:1.08rem;line-height:1.7;color:var(--muted);max-width:620px;margin-top:1.4rem;position:relative;}
 

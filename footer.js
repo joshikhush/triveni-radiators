@@ -93,8 +93,6 @@
       + '<div class="fx-container fx-bottom">'
       +   '<p class="fx-copy">&copy; ' + year + ' Triveni Electroplast Pvt Ltd</p>'
       +   '<nav class="fx-legal" aria-label="Legal">'
-      +     '<a href="privacy.html">Privacy policy</a>'
-      +     '<a href="terms.html">Terms &amp; conditions</a>'
       +     '<a href="#top" data-totop>Back to top</a>'
       +   '</nav>'
       + '</div>';
