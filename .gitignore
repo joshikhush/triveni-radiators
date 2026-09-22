@@ -5,3 +5,4 @@ triveni_template*
 *.docx
 node_modules
 assets/videos/*.mov
+*audit*.txt
