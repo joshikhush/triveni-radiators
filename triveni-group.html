@@ -348,6 +348,14 @@ ul{margin:0;padding:0;list-style:none;}
   overflow:hidden;background:#e9e9f0;}
 .tg-ms-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s var(--ez);}
 .tg-ms:hover .tg-ms-img img{transform:scale(1.03);}
+/* empty, clearly-marked slot standing in for a milestone photo not yet
+   supplied -- same box/reveal treatment as a real .tg-ms-img, dashed instead
+   of solid so it never reads as a broken image */
+.tg-ms-img.is-placeholder{display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:8px;background:var(--off-white);
+  border:1px dashed var(--line);text-align:center;padding:12px;}
+.tg-ms-placeholder-icon{width:22px;height:22px;color:var(--muted);opacity:.55;}
+.tg-ms-placeholder-label{font-size:11px;font-weight:500;color:var(--muted);line-height:1.4;}
 
 /* ---- section chapter marker — dark navy oval that HANGS BELOW the spine
    (node on the spine · short stem · oval), placed before the era's first
@@ -626,124 +634,108 @@ var TL_MILESTONES = [
 
   { ei:1, year:'2004', title:'Unit II Established, Noida', img:'assets/timeline/2004.png',
     body:['Observing rising market demand and growing client satisfaction, Triveni establishes Unit II at Noida, Uttar Pradesh, with a focus on serving OEMs for consumer electronics — specifically home appliances.'] },
-  { ei:1, year:'2004', title:'First LG Partnership',
-    body:['Registered as a vendor with LG Electronics India Ltd. (LGEIL), Washing Machine OBU. Begins supply with a 10% share of business for buzzers in semi-automatic washing machines — the start of what would become a two-decade partnership.'] },
-  { ei:1, year:'2004', title:'Product Expansion',
-    body:['Develops the Lid Switch for semi-automatic washing machines, expanding the product range for LGEIL.'] },
-  { ei:1, year:'2005', title:'Harness Assembly Developed',
-    body:['Develops Harness Assembly for Refrigerator and Washing Machine OBU lines.'] },
+  { ei:1, year:'2004', title:'First LG Partnership', img:'assets/timeline/electronic-buzzer-product.jpg',
+    body:['Registers as a vendor with LG Electronics India Ltd. (LGEIL) for its Washing Machine OBU, initially supplying buzzers for semi-automatic models with a 10% share of business — marking the inception of a two-decade strategic partnership.'],
+    /* image is the buzzer product photo from trivenielectroplast.com's own product
+       listing (small, 200x200 -- no larger version available) -- covers the
+       "product image" half of the request. TODO: still no matching asset for the
+       separate "partnership image with Triveni and LG logos" the client also asked
+       for; not found on trivenielectroplast.com or in the repo. */
+    imageAlt:'Electronic buzzer, the initial LGEIL product supplied by Triveni' },
+  { ei:1, year:'2004', title:'Product Expansion', img:'assets/timeline/washing-machine-lid-switch-product.jpg',
+    body:['Develops the Lid Switch for semi-automatic washing machines, further expanding its product offerings for LGEIL.'],
+    /* trivenielectroplast.com/products.htm lists this as "Washing Machine Door
+       Switch" -- same component as the "Lid Switch" named in the copy, likely just
+       a different name for it; flag if that's actually a different part. */
+    imageAlt:'Washing machine lid/door switch product' },
   { ei:1, year:'2007', title:'Microwave Oven Harness',
-    body:['Develops Harness Assembly for Microwave Oven OBU — extending Triveni’s presence across LG’s major appliance categories.'] },
-  { ei:1, year:'2008', title:'First Major Award',
-    body:['Receives the Excellence Award from LGEIL for Best Performance in Quality, Cost & Delivery (QCD) in the Electrical category — Triveni’s first formal recognition from a global OEM.'] },
+    body:['Develops wiring harness assemblies for Microwave Oven OBUs, expanding Triveni’s portfolio across LG’s key home appliance categories.'] },
+  { ei:1, year:'2007', title:'First Major Award', img:'assets/timeline/lg-qcd-excellence-award-2008.jpg',
+    body:['Receives the Excellence Award from LGEIL for outstanding performance in Quality, Cost &amp; Delivery (QCD) within the Electrical category — marking Triveni’s first formal recognition from a global OEM.'],
+    /* found on trivenielectroplast.com/awards.htm, exactly as the client described --
+       the plaque itself reads "Great Business Partners Q2,08 Meet", i.e. this award
+       was presented in 2008, not 2007. Kept under 2007 to match where the client's
+       paste placed it, but flagging the date conflict for review. */
+    imageAlt:'LGEIL Excellence Award plaque for best performance in QCD' },
 
+  /* NOTE: the client's paste put this paragraph under a "2007" heading with no
+     year of its own, but its content (Unit III / radiator division founding, MOU
+     with a French multinational, first automatic panel line) is the same 2012
+     event described on the Radiator Division timeline, and the very next entry
+     ("...within a year of operations") only makes sense following a 2012 start.
+     Filed under 2012 to match -- flagging in case that year header was meant to
+     be on this paragraph in the source doc. */
   { ei:2, year:'2012', title:'Unit III Established — Transformer Radiators', img:'assets/timeline/2012.jpg',
-    body:[
-      'Eyeing the growth of India’s power sector, Triveni establishes Unit III at Prayagraj (Allahabad) to manufacture radiators for power and distribution transformer manufacturers — entering into an MOU with a French multinational to initiate supplies.',
-      'From day one, Triveni introduces India’s first fully automatic panel production line for pressed steel radiators, eliminating human intervention in the core forming process.'
-    ] },
-  { ei:2, year:'2013', title:'First PGCIL Approval',
-    body:['Secures PGCIL approval for supply of radiators for 400 kV class Transformers & Reactors, initiated by M/s Alstom T&D — validating the new division’s quality within a year of operations.'] },
-  { ei:2, year:'2015', title:'765 kV Approval',
-    body:['PGCIL extends approval to the 765 kV class — the highest voltage level on India’s transmission network — initiated by M/s Siemens T&D.'] },
-  { ei:2, year:'2016', title:'Unit II Extension & Largest Radiator Order', img:'assets/timeline/2016.jpg',
-    body:[
-      'Two milestones in one year. Triveni establishes an additional premises as an extension of Unit II in Noida to enhance wire harness production capacity.',
-      'In parallel, Unit III completes its largest rating order to date, supplying 1,008 radiators for 765 kV, 500 MVA class transformers to PGCIL, delivered to Bhuj for M/s Siemens Ltd.'
-    ] },
+    body:['Capitalizing on expansion across the national energy grid, the company sets up Triveni Radiators / Triveni Electroplast Pvt Ltd (Radiator Division) in Prayagraj (Naini), Allahabad, to supply cooling equipment to power and distribution transformer manufacturers — signing an MOU with a French global entity to start dispatches. Right from inception, the facility deploys the nation’s pioneer fully automatic panel production line designed for pressed steel radiator manufacturing.'] },
+  /* wording matched to the Radiator Division (Milestones page) timeline's 2013 entry */
+  { ei:2, year:'2013', title:'First PGCIL Approval', img:'assets/logos/major-customers/alstom.jpeg',
+    body:['Secures PGCIL approval for supply of radiators for 400 kV class Transformers &amp; Reactors, initiated by M/s Alstom T&amp;D — validating the new division’s quality within a year of operations.'] },
+  /* wording matched to the Radiator Division (Milestones page) timeline's 2015 entry */
+  { ei:2, year:'2015', title:'765 kV Approval', img:'assets/logos/siemens-energy.svg',
+    body:['PGCIL extends approval to the 765 kV class — the highest voltage level on India’s transmission network — initiated by M/s Siemens T&amp;D.'] },
+  { ei:2, year:'2016', title:'Unit II Extension, Noida', img:'assets/timeline/2016.jpg',
+    body:['Achieved two key milestones in a single year: Triveni established an additional facility as an extension of Unit II in Noida to expand wiring harness production capacity.'] },
+  { ei:2, year:'2016', title:'Largest Radiator Order — Siemens, Bhuj', img:'assets/installations/siemens-site-1.jpg',
+    body:['Concurrently, Triveni Electroplast Pvt Ltd (Radiator Division) fulfilled its largest order to date, supplying 1,008 radiators for 765 kV, 500 MVA class transformers to PGCIL, delivered to Bhuj for M/s Siemens Ltd.'] },
 
   { ei:3, year:'2017', title:'Strategic Supplier Status',
-    body:[
-      'Triveni is made a Strategic Supplier for LG Electronics (Q1) and wins the Best of Best Supplier Award for 2017 from LGEIL — 1st Prize.',
-      'In the same year, Unit III completes its first major international project, delivering radiators to Bangladesh for M/s Siemens Ltd.'
-    ] },
+    body:['Earned designation as a Strategic Supplier for LG Electronics (Q1) while securing the Best of Best Supplier Award for 2017 (1st Prize) from LGEIL. Concurrently, Triveni Electroplast Pvt Ltd (Radiator Division) executed its first major international project, supplying radiator units to Bangladesh on behalf of M/s Siemens Ltd.'] },
+  /* reused from the Radiator Division (Milestones page) timeline's 2018 entry */
   { ei:3, year:'2018', title:'Largest Radiator Supplier in India', img:'assets/timeline/2018.JPG',
-    body:[
-      'Unit III becomes one of the largest suppliers to India’s major transformer manufacturers: GE T&D, Toshiba Transmission & Distribution Systems, Hitachi Energy India, Siemens Ltd, and TBEA India.',
-      'Triveni receives the Best Supplier Award by M/s TBEA Energy (India) Pvt. Ltd.'
-    ] },
-  { ei:3, year:'2019', title:'Railways, ISO, and New Production Lines', img:'assets/installations/ge-site-2.jpg',
-    body:[
-      'A landmark year across the group: Unit III becomes one of the largest sources of radiators for RDSO (Research Design & Standards Organisation) transformers, serving Hitachi Energy India and other trackside transformer manufacturers.',
-      'Simultaneously, Triveni sets up a new production line for Wire Harness Assembly for NIDEC India Pvt. Ltd.’s SPMS business, and obtains ISO 14001:2015 and ISO 45001:2018 certifications for environmental and occupational health & safety management.'
-    ] },
-  { ei:3, year:'2020', title:'Resilience Through COVID-19',
-    body:[
-      'Despite the global pandemic, Unit III maintains uninterrupted, consistent radiator supply to every customer.',
-      'The group also earns the CII GreenCo Certification (Silver Rating) from the Confederation of Indian Industry, recognising its environmental sustainability practices.'
-    ] },
+    body:['Triveni Electroplast Pvt Ltd (Radiator Division) grows into a leading vendor for key transformer producers nationwide, including GE T&amp;D, Toshiba Transmission &amp; Distribution Systems, Siemens Ltd, TBEA India, and Hitachi Energy India. The division secures the Best Supplier Award presented by M/s TBEA Energy (India) Pvt Ltd.'] },
+  { ei:3, year:'2019', title:'RDSO, ISO, and New Production Lines',
+    body:['A pivotal milestone for the business: Triveni Electroplast Pvt Ltd (Radiator Division) emerges as a primary supplier of cooling units for RDSO (Research Design &amp; Standards Organisation) equipment, catering to Hitachi Energy India along with various railway transformer builders. In parallel, Triveni establishes a dedicated Wire Harness Assembly manufacturing line dedicated to NIDEC India Pvt. Ltd.’s SPMS segment, while successfully earning ISO 14001:2015 and ISO 45001:2018 accreditations to advance sustainability and workplace safety standards.'] },
+  { ei:3, year:'2020', title:'Resilience Through COVID-19', img:'assets/timeline/2020.jpg',
+    body:['Notwithstanding the worldwide pandemic, Triveni Electroplast Pvt Ltd (Radiator Division) sustained continuous, reliable cooling unit deliveries across all clientele. Additionally, the organisation secured the CII GreenCo Certification (Silver Grade) awarded by the Confederation of Indian Industry in acknowledgement of its eco-friendly operational standards.'],
+    imageAlt:'Radiators packed and dispatched from the factory floor' },
 
-  { ei:4, year:'2021', title:'Sole Strategic Supplier for LG', img:'assets/installations/siemens-site-2.jpg',
-    body:[
-      'Triveni becomes the only Strategic Supplier in the Electrical category for LGEIL, among a total of 10 strategic suppliers group-wide — the culmination of nearly two decades of partnership.',
-      'In parallel, Unit III initiates supplies to Hitachi Energy India’s Power Segment and begins exploring export opportunities.'
-    ] },
+  { ei:4, year:'2021', title:'Sole Strategic Supplier for LG',
+    body:['Achieves distinction as LGEIL’s sole Strategic Supplier in the Electrical category out of ten group-wide partners, capping almost twenty years of collaboration. Concurrently, Triveni Electroplast Pvt Ltd (Radiator Division) starts dispatches to Hitachi Energy India’s Power Division while actively seeking global market expansion.'] },
   { ei:4, year:'2022', title:'Best Quality Performance Award',
-    body:['Triveni receives the Best Quality Performance Award for 2022 — 1st Prize — from LG Electronics.'] },
-  { ei:4, year:'2022–23', title:'PGCIL Grade A & IEEE Certification', img:'assets/installations/ge-site-3.jpg',
-    body:['One of the most significant years in the company’s history. Power Grid Corporation of India awards Triveni its prestigious Grade A certificate and renews approval through 2027.'],
-    lead:'In the same period, Unit III:',
+    body:['Secures the Best Quality Performance Award for 2022 (1st Prize) presented by LG Electronics.'],
+    /* TODO: no matching asset found. Checked both the repo's assets/docs/awards/
+       (6 photos, all Bharti/Beetel or a 2008 LG award -- none 2022) and the live
+       trivenielectroplast.com/awards.htm (7 photos: 1 LG -- the 2008 one already
+       used on the 2007 entry -- plus 6 Bharti/Beetel). No 2022 LG award photo
+       exists at either source; still needs sourcing from the client directly. */
+    imagePlaceholder:'available at trivenielectroplast.com/awards.htm' },
+  { ei:4, year:'2022–23', title:'PGCIL Grade A & IEEE Certification',
+    body:['Marking a momentous period in corporate history, Power Grid Corporation of India bestows its esteemed Grade A rating upon the firm, extending formal endorsement through 2027.'],
+    lead:'During this time frame, Triveni Electroplast Pvt Ltd (Radiator Division):',
     bullets:[
-      'completes IEEE certification for USA markets;',
-      'initiates HDG (Hot Dip Galvanised) service trials for global customers;',
-      'adds offset radiators to its product range, beginning supplies to M/s Toshiba Transmission and Distribution Systems India.'
+      'attains IEEE qualification targeting North American markets;',
+      'launches trial runs for Hot Dip Galvanised offerings internationally;',
+      'expands portfolio options by supplying offset design variants to M/s Toshiba Transmission &amp; Distribution Systems India.'
     ] },
-  { ei:4, year:'2023', title:'New Production Line for NIDEC NTMC',
-    body:['Triveni sets up a new production line for Wire Harness Assembly to serve NIDEC India Pvt. Ltd.’s NTMC business, further expanding Unit II’s manufacturing footprint.'] },
+  { ei:4, year:'2023', title:'New Production Line for NIDEC NTMC', img:'assets/timeline/wiring-harness-product.jpg',
+    body:['Triveni establishes a dedicated Wire Harness Assembly manufacturing line dedicated to NIDEC India Pvt. Ltd.’s NTMC division, broadening the operational scope of Unit II.'],
+    /* generic wire harness product photo from trivenielectroplast.com/products.htm,
+       per the client's "take image from trivenielectroplast.com" instruction -- not
+       NIDEC/NTMC-specific (the site has no such photo), just the closest available
+       product match. */
+    imageAlt:'Wire harness assembly product' },
 
-  { ei:5, year:'2023–24', title:'Productivity and Market Recognition', img:'assets/installations/ge-site-4.jpg',
-    body:[
-      'Unit III addresses plant bottlenecks to increase productivity and introduces automation in welding processes to improve quality. The Indian transformer industry identifies Triveni as a major supplier for their export markets for painted radiators.',
-      'Unit III becomes one of the largest suppliers of radiators for both RDSO and PGCIL transformers, and successfully delivers 1,500+ offset radiators.'
-    ] },
+  { ei:5, year:'2023–24', title:'Productivity and Market Recognition',
+    body:['Triveni Electroplast Pvt Ltd (Radiator Division) resolves manufacturing bottlenecks to enhance operational throughput while integrating automated welding systems for superior precision. Domestic equipment manufacturers establish Triveni as a primary partner for painted radiator exports. The division emerges as a key source of cooling units for power infrastructure under PGCIL and RDSO, dispatching over 1,500 offset radiator variants.'] },
   { ei:5, year:'2024', title:'Best Delivery Performance Award',
-    body:['Triveni receives the Best Delivery Performance Award from LG Electronics in November 2024 — reaffirming its two-decade reliability record with the group’s founding OEM partner.'] },
+    body:['Secures the Best Delivery Performance Award in November 2024 presented by LG Electronics — reinforcing a twenty-year track record of dependable supply alongside the organization’s initial key manufacturing client.'] },
   { ei:5, year:'2024–25', title:'The Export Journey Begins',
-    body:[
-      'Unit III expands its customer base both in India and internationally. Secures a firm order for 190 radiators from Toshiba Transmission & Distribution Systems for GE USA’s solar transformers, with further commitments for 2025–26. Begins direct exports to the United States, reaching 5% of total sales as export revenue.',
-      'A new production line is installed in December 2025, and a new semi-automatic conveyorized paint shop enters installation. ISO 3834 welding-quality training is completed in August 2025.'
-    ] },
+    body:['Triveni Electroplast Pvt Ltd (Radiator Division) broadens its client footprint both domestically and internationally. The division captures a definitive purchase order covering 190 cooling units from Toshiba Transmission &amp; Distribution Systems bound for GE USA solar transformer deployments, alongside additional delivery agreements through 2025–26. Initiates direct shipments into the US market, pushing overseas earnings to 5% of total revenue. Furthermore, the unit sets up an added manufacturing line by December 2025 and commences setup of a semi-automated conveyorized paint facility, following the completion of ISO 3834 welding standards training in August 2025.'] },
   { ei:5, year:'2025–26', title:'What’s Next',
-    body:[
-      'The new paint shop has already been installed.',
-      'Looking ahead — expanding radiator capacity, growing the export footprint, and deepening automation across every unit — the same founding motive that began in 1991 continues to drive the group forward.'
-    ] }
+    body:['Installation of the upgraded painting facility stands successfully completed. Moving into the future — scaling up cooling unit production, broadening global reach, and advancing technological automation across facilities — the core purpose established in 1991 remains the guiding force propelling the organization.'] }
 ];
 
-/* PROVISIONAL: milestones without their own photograph yet fall back to this
-   placeholder. 1991, 2004 (Unit II), 2012, 2016 and 2018 now have real archival
-   photography from assets/timeline/ — swap the rest in as they're supplied. */
-var TL_PLACEHOLDER_IMG = 'assets/milestone%20hero.jpeg';
-TL_MILESTONES.forEach(function(m){ if (!m.img) m.img = TL_PLACEHOLDER_IMG; });
+/* Each milestone now declares its own image state explicitly: m.img (a real
+   photo/logo), m.imagePlaceholder (a clearly-marked empty slot naming what's
+   needed), or neither (no photo for this entry). No blanket fallback photo. */
 
-/* Editorial red accents — exact fragments of the copy above (no wording changes),
-   ~2–3 short phrases per milestone, tinted in the chapter red inside the body. */
-var TL_HL = [
-  ['Triveni Electroplast Pvt. Ltd.', 'Allahabad, Uttar Pradesh', 'telecom industry'],
-  ['Unit II at Noida, Uttar Pradesh', 'consumer electronics', 'home appliances'],
-  ['LG Electronics India Ltd. (LGEIL)', '10% share of business', 'two-decade partnership'],
-  ['Lid Switch', 'product range for LGEIL'],
-  ['Harness Assembly', 'Refrigerator and Washing Machine OBU'],
-  ['Microwave Oven OBU', 'major appliance categories'],
-  ['Excellence Award from LGEIL', 'Quality, Cost & Delivery (QCD)', 'global OEM'],
-  ['Unit III at Prayagraj (Allahabad)', 'power and distribution transformer manufacturers', 'fully automatic panel production line'],
-  ['PGCIL approval', '400 kV class Transformers & Reactors', 'M/s Alstom T&D'],
-  ['765 kV class', 'highest voltage level', 'M/s Siemens T&D'],
-  ['extension of Unit II in Noida', '1,008 radiators for 765 kV, 500 MVA class transformers', 'M/s Siemens Ltd'],
-  ['Strategic Supplier for LG Electronics (Q1)', 'Best of Best Supplier Award for 2017', 'first major international project'],
-  ['one of the largest suppliers', 'GE T&D, Toshiba Transmission & Distribution Systems', 'Best Supplier Award'],
-  ['landmark year across the group', 'RDSO (Research Design & Standards Organisation)', 'ISO 14001:2015 and ISO 45001:2018 certifications'],
-  ['global pandemic', 'uninterrupted, consistent radiator supply', 'CII GreenCo Certification (Silver Rating)'],
-  ['only Strategic Supplier in the Electrical category', 'nearly two decades of partnership', 'export opportunities'],
-  ['Best Quality Performance Award', 'LG Electronics'],
-  ['Power Grid Corporation of India', 'prestigious Grade A certificate', 'IEEE certification for USA markets'],
-  ['new production line for Wire Harness Assembly', 'NTMC business'],
-  ['automation in welding processes', 'export markets for painted radiators', '1,500+ offset radiators'],
-  ['Best Delivery Performance Award from LG Electronics', 'two-decade reliability record'],
-  ['190 radiators from Toshiba Transmission & Distribution Systems', 'direct exports to the United States', '5% of total sales as export revenue'],
-  ['new paint shop', 'expanding radiator capacity', 'the same founding motive that began in 1991']
-];
-TL_MILESTONES.forEach(function(m, i){ m.hl = TL_HL[i] || []; });
+/* Editorial red accents — exact fragments of the copy, tinted in the chapter red
+   inside the body. Was a positional (by-index) array matched to the old copy;
+   reset to empty on this rewrite rather than risk stale phrases from the old
+   wording silently mismatching (or coincidentally partial-matching) the new
+   text. Re-populate per-entry with fragments of the new copy if the highlight
+   treatment is wanted back. */
+TL_MILESTONES.forEach(function(m){ m.hl = []; });
 
 (function(){
   var tl = document.getElementById('tgTl');
@@ -798,6 +790,19 @@ TL_MILESTONES.forEach(function(m, i){ m.hl = TL_HL[i] || []; });
     if (m.lead)    descHtml += '<p class="tg-ms-lead">' + hiLite(esc(m.lead), m.hl) + '</p>';
     if (m.bullets) descHtml += '<ul>' + m.bullets.map(function(b){ return '<li>' + hiLite(esc(b), m.hl) + '</li>'; }).join('') + '</ul>';
 
+    /* image slot: a real photo when m.img is set, a clearly-marked empty
+       placeholder box when m.imagePlaceholder names what should go there once
+       supplied, or nothing at all when the entry has neither (no photo noted). */
+    var imgHtml = '';
+    if (m.img) {
+      imgHtml = '<div class="tg-ms-img"><img src="' + m.img + '" alt="' + esc(m.year + ' — ' + m.title) + '" loading="lazy"></div>';
+    } else if (m.imagePlaceholder) {
+      imgHtml = '<div class="tg-ms-img is-placeholder">' +
+        '<svg class="tg-ms-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10.5" r="1.5"/><path d="m21 15-5-5-9 9"/></svg>' +
+        '<div class="tg-ms-placeholder-label">Photo placeholder<br>' + esc(m.imagePlaceholder) + '</div>' +
+        '</div>';
+    }
+
     var card = document.createElement('div');
     card.className = 'tg-ms ' + side;
     /* editorial panel, top → bottom: year · title · full description · image */
@@ -808,7 +813,7 @@ TL_MILESTONES.forEach(function(m, i){ m.hl = TL_HL[i] || []; });
           '<h3 class="tg-ms-title">' + esc(m.title) + '</h3>' +
           '<div class="tg-ms-desc">' + descHtml + '</div>' +
         '</div>' +
-        '<div class="tg-ms-img"><img src="' + m.img + '" alt="' + esc(m.year + ' — ' + m.title) + '" loading="lazy"></div>' +
+        imgHtml +
       '</div>';
 
     frag.appendChild(card);
