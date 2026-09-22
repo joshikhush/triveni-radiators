@@ -321,6 +321,9 @@ ul{margin:0;padding:0;list-style:none;}
     box-shadow .3s var(--ez),border-color .3s var(--ez);}
 .ms-gtl-row.l .ms-gtl-card-img{transform:translateX(60px);}
 .ms-gtl-row.r .ms-gtl-card-img{transform:translateX(-60px);}
+/* pre-existing gap: .ms-gtl-card had its own .in{opacity:1} rule, this never did --
+   the image slot (real photo or placeholder) was staying opacity:0 permanently */
+.ms-gtl-row.in .ms-gtl-card-img{opacity:1;}
 .ms-gtl-row.l.in .ms-gtl-card-img,
 .ms-gtl-row.r.in .ms-gtl-card-img{transform:none;}
 .ms-gtl-card-img img{display:block;width:100%;height:auto;transition:transform .3s var(--ez);}
@@ -617,45 +620,61 @@ var RADIATORS_MILESTONES = [
   { era:'foundation', year:'2012', cat:'Expansion', icon:'layers', title:'Unit III Established — Transformer Radiators', major:true,
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) is established at Prayagraj (Naini), Allahabad, to manufacture radiators for power and distribution transformer manufacturers — Triveni’s entry into the power sector. The division enters into an MOU with a French multinational to initiate supplies, and introduces India’s first fully automatic panel production line for pressed steel radiators from day one.',
     stats:[{ v:'8,300 sq. m', l:'Unit III facility' },{ v:'1st in India', l:'Automatic panel production line' }],
-    imagePlaceholder:'drone shot of the plant' },
+    image:'assets/timeline/2012.jpg', imageAlt:'Aerial drone view of the Unit III plant, Prayagraj' },
 
   { era:'approvals', year:'2013', cat:'Approval', icon:'award', title:'First PGCIL Approval',
     desc:'Secures PGCIL approval for supply of radiators for 400 kV class Transformers &amp; Reactors, initiated by M/s Alstom T&amp;D — validating the new division’s quality within a year of operations.',
-    imagePlaceholder:'Alstom logo &amp; Power Grid logo' },
+    /* client asked for Alstom logo + PGCIL/Power Grid logo; this design has one image
+       slot per entry. Alstom is used (named first, direct initiator of the approval) --
+       assets/logos/powergrid.svg is also available in the repo as the PGCIL alternative. */
+    image:'assets/logos/major-customers/alstom.jpeg', imageAlt:'Alstom logo' },
   { era:'approvals', year:'2015', cat:'Approval', icon:'award', title:'765 kV Approval',
     desc:'PGCIL extends approval to the 765 kV class — the highest voltage level on India’s transmission network — initiated by M/s Siemens T&amp;D.',
-    imagePlaceholder:'Siemens logo &amp; PGCIL logo' },
+    /* same single-slot constraint as 2013 -- Siemens used (direct initiator);
+       assets/logos/powergrid.svg is also available as the PGCIL alternative. */
+    image:'assets/logos/siemens-energy.svg', imageAlt:'Siemens Energy logo' },
 
   { era:'projects', year:'2016', cat:'Record Order', icon:'trend', title:'Landmark Siemens Radiator Order', major:true,
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) fulfills its largest order to date, supplying 1,008 radiators for PGCIL’s 765 kV, 500 MVA class transformers delivered to Bhuj for M/s Siemens Ltd.',
-    imagePlaceholder:'installation photos from Siemens' },
+    image:'assets/installations/siemens-site-1.jpg', imageAlt:'Triveni radiators installed on a Siemens Energy transformer' },
   { era:'projects', year:'2017', cat:'Export', icon:'trend', title:'First Major International Radiator Project',
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) completes its first major international project, delivering radiators to Bangladesh for M/s Siemens Ltd.' },
   { era:'projects', year:'2018', cat:'Growth', icon:'trend', title:'Major Transformer Industry Supplier',
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) becomes one of the largest suppliers to India’s major transformer manufacturers: GE T&amp;D, Toshiba Transmission &amp; Distribution Systems, Hitachi Energy India, Siemens Ltd, and TBEA India. Triveni receives the Best Supplier Award from M/s TBEA Energy (India) Pvt Ltd.',
-    imagePlaceholder:'award-receiving photo' },
+    image:'assets/timeline/2018.JPG', imageAlt:'Triveni receiving the Best Supplier Award from TBEA Energy (India)' },
 
   { era:'expansion', year:'2019', cat:'Growth', icon:'trend', title:'RDSO / Railway Transformer Radiators',
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) becomes one of the largest sources of radiators for RDSO transformers, serving Hitachi Energy India and other trackside transformer manufacturers. Additionally, the division secures ISO 14001:2015 and ISO 45001:2018 certifications, making its manufacturing practices more sustainable.',
-    imagePlaceholder:'designer’s choice' },
+    image:'assets/logos/rdso-transparent.png', imageAlt:'RDSO (Research Designs and Standards Organisation) logo' },
   { era:'expansion', year:'2020', cat:'Resilience', icon:'award', title:'Resilience During COVID-19',
     desc:'Despite the global pandemic, Triveni Electroplast Pvt Ltd (Radiator Division) maintains uninterrupted, consistent radiator supply to every customer.',
+    /* TODO: no matching asset found in repo for "pandemic / COVID / factory" (designer's
+       choice) -- searched assets/, assets/installations/, assets/timeline/, assets/docs/;
+       still needs sourcing. */
     imagePlaceholder:'designer’s choice' },
   { era:'expansion', year:'2021', cat:'Growth', icon:'trend', title:'Hitachi Energy Power Segment &amp; Export Exploration',
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) commences dispatches to Hitachi Energy India’s Power Division while actively seeking global market expansion.',
-    imagePlaceholder:'Hitachi Energy logo' },
+    /* assets/logos/trusted-by/hitachi-energy.png also exists but is a light/cream mark
+       meant for a dark background -- would be invisible on this card's white background,
+       so the dark-on-white major-customers version is used instead. */
+    image:'assets/logos/major-customers/hitachi-energy.png', imageAlt:'Hitachi Energy logo' },
 
   { era:'global', year:'2022–23', cat:'Certification', icon:'award', title:'Grade A, IEEE &amp; Product Expansion', major:true,
     desc:'Power Grid Corporation of India confers its esteemed Grade A rating upon the company, extending official endorsement until 2027. Triveni Electroplast Pvt Ltd (Radiator Division) secures IEEE qualification targeting North American markets, launches trial runs for Hot Dip Galvanised offerings internationally, and expands portfolio options by supplying offset design variants to M/s Toshiba Transmission &amp; Distribution Systems India.',
-    imagePlaceholder:'PGCIL Grade A certificate / product image' },
+    image:'assets/docs/pgcil-grade-a.jpg', imageAlt:'PGCIL Grade A certificate' },
 
   { era:'automation', year:'2023–24', cat:'Growth', icon:'trend', title:'Automation, Productivity &amp; Offset Radiators', major:true,
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) resolves operational bottlenecks to boost manufacturing output while integrating automated welding technologies to enhance precision. Domestic transformer manufacturers establish Triveni as a primary partner for painted radiator exports. Furthermore, Triveni Electroplast Pvt Ltd (Radiator Division) emerges as a premier supplier for PGCIL and RDSO power projects, successfully dispatching over 1,500 offset radiator units.',
+    /* TODO: no matching asset found in repo for "HDG / Offset radiator product images" --
+       searched assets/products/ (only has a generic engineering diagram, not HDG/offset-
+       specific product photography) and assets/installations/; still needs sourcing. */
     imagePlaceholder:'product images — HDG / Offset' },
   { era:'automation', year:'2024–25', cat:'Exports', icon:'trend', title:'Direct US Export Journey', major:true,
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) expands its customer base domestically and internationally. Secures a firm order for 190 radiators from Toshiba Transmission &amp; Distribution Systems for GE USA’s solar transformers, with further commitments for 2025–26. Initiates direct exports to the United States, with export revenue reaching 5% of total sales.' },
   { era:'automation', year:'2025–26', cat:'Development', icon:'trend', title:'Manufacturing &amp; Quality Development',
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) completes ISO 3834 welding-quality training by August 2025. By December 2025, the division installs a new manufacturing line along with a semi-automatic conveyorized painting facility to streamline operations and enhance quality control.',
+    /* TODO: no matching asset found in repo for "paint conveyor + product photos" --
+       searched the whole assets/ tree for paint/conveyor; still needs sourcing. */
     imagePlaceholder:'paint conveyor + product photos' }
 ];
 
