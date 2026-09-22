@@ -7,7 +7,7 @@
 <meta name="description" content="High-performance transformer radiators by Triveni Radiators: header type, offset, swan neck and goose neck, engineered to IEEMA 9, DIN 42559 & BS EN 50216-6, PGCIL-approved up to 765kV class.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Fraunces:ital,wght@0,400;1,300&family=Work+Sans:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Fraunces:ital,wght@0,400;1,300&family=Schibsted+Grotesk:wght@400;500;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
 <!-- shared site footer — one component/config, included on every page; see footer.css/footer.js -->
 <link rel="stylesheet" href="footer.css">
 <style>
@@ -24,7 +24,7 @@
   --line:rgba(21,33,59,.12); --line-strong:rgba(21,33,59,.2);
   --serif:'Newsreader',Georgia,'Times New Roman',serif;
   --serif-hero:'Fraunces',Georgia,'Times New Roman',serif;
-  --sans:'Work Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --sans:'Schibsted Grotesk',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
   --r-card:16px; --r-cta:24px; --radius:4px; --ez:cubic-bezier(.22,1,.36,1);
   --pad:4rem; --max:1240px; --sec-y:6.75rem; --nav-pad:56px;
 }
@@ -137,8 +137,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
 /* three metrics in one compact row, bottom-right, level with the headline */
 .p-hero-metrics{display:flex;flex-direction:row;justify-content:flex-end;gap:2.4rem;justify-self:end;width:fit-content;background:rgba(10,14,22,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:8px;padding:20px 24px;opacity:0;transform:translateY(14px);animation:pFadeUp .8s .84s forwards;}
 .p-metric{border-top:1px solid rgba(255,255,255,.28);padding-top:1rem;min-width:0;}
-.p-metric-num{font-family:var(--serif);font-weight:400;font-size:2rem;color:#fff;line-height:1;white-space:nowrap;}
-.p-metric-label{font-family:var(--sans);font-size:.66rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.66);margin-top:.5rem;}
+.p-metric-num{font-family:var(--sans);font-weight:500;font-size:42px;color:#fff;line-height:1;letter-spacing:-.02em;white-space:nowrap;}
+.p-metric-label{font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.66);margin-top:18px;}
 
 @keyframes pFadeUp{to{opacity:1;transform:none;}}
 @media(max-width:1080px){
@@ -152,8 +152,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
   .p-hero-ctas .btn{padding:13px 24px;font-size:13px;}
   .p-hero-scrim{background:linear-gradient(0deg,rgba(14,23,48,.95) 0%,rgba(21,33,59,.88) 46%,rgba(21,33,59,.55) 74%,rgba(21,33,59,.18) 100%);}
   .p-hero-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;justify-self:stretch;width:auto;padding:16px;}
-  .p-metric-num{font-size:1.5rem;}
-  .p-metric-label{font-size:.6rem;letter-spacing:.1em;}
+  .p-metric-num{font-size:34px;}
+  .p-metric-label{font-size:11px;letter-spacing:.1em;}
 }
 
 /* ===================================================
@@ -252,10 +252,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
 .app-card-arrow{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;transition:background .25s,border-color .25s;}
 .app-card:hover .app-card-arrow{background:var(--copper);border-color:var(--copper);}
 .app-card-arrow svg{width:13px;height:13px;}
-/* Renewable Energy: a deliberately distinct solid-navy card among the photo cards */
-.app-placeholder{display:flex;align-items:center;justify-content:center;background:var(--navy);}
-.app-placeholder::after{background:none;}
-.app-placeholder svg{width:72px;height:72px;color:rgba(221,166,107,.5);}
 .app-foot{margin-top:2.8rem;text-align:center;}
 @media(max-width:1024px){ .mfg-grid,.app-grid{grid-template-columns:1fr 1fr;} }
 @media(max-width:767px){ .mfg-grid,.app-grid{grid-template-columns:1fr;} .mfg-tile,.app-card{aspect-ratio:4/3.4;} }
@@ -560,15 +556,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
         <div class="app-card-body"><div class="app-card-name">Power<br>Transformers</div><div class="app-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></div></div>
       </a>
       <a href="contact.html" class="app-card reveal d1">
-        <img src="assets/installations/siemens-site-1.jpg" alt="Distribution transformer installation with Triveni cooling radiators" loading="lazy">
+        <img src="assets/installations/AYR.jpg" alt="AYR Energy distribution transformer fitted with Triveni cooling radiators" loading="lazy">
         <div class="app-card-body"><div class="app-card-name">Distribution<br>Transformers</div><div class="app-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></div></div>
       </a>
       <a href="contact.html" class="app-card reveal d2">
         <img src="assets/installations/ge-site-4.jpg" alt="Industrial transformer site fitted with Triveni radiators" loading="lazy">
         <div class="app-card-body"><div class="app-card-name">Industrial<br>Transformers</div><div class="app-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></div></div>
       </a>
-      <a href="contact.html" class="app-card app-placeholder reveal d3">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2v20M4 8l16 8M20 8 4 16"/></svg>
+      <a href="contact.html" class="app-card reveal d3">
+        <img src="assets/installations/toshiba-site.jpg" alt="Toshiba site transformer fitted with Triveni radiators" loading="lazy">
         <div class="app-card-body"><div class="app-card-name">Renewable<br>Energy</div><div class="app-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></div></div>
       </a>
     </div>

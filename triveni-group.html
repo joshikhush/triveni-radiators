@@ -46,8 +46,8 @@ ul{margin:0;padding:0;list-style:none;}
 
 .secnum{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ind);margin-bottom:14px;}
 .on-dark .secnum{color:var(--ind-lt);}
-.h2{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(32px,4.4vw,52px);line-height:1.1;
-  letter-spacing:-.01em;color:var(--ink);text-wrap:balance;}
+.h2{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(34px,4.8vw,68px);line-height:1.06;
+  letter-spacing:-.032em;color:var(--ink);text-wrap:balance;}
 .h2 em{font-style:normal;color:var(--ind);}
 .h2 .ac{color:var(--ind);font-style:normal;}
 .on-dark .h2{color:#fff;}
@@ -621,10 +621,10 @@ var TL_ERAS = [
 ];
 
 var TL_MILESTONES = [
-  { ei:0, year:'1991', title:'The Modest Beginning',
+  { ei:0, year:'1991', title:'The Modest Beginning', img:'assets/timeline/1991.jpeg',
     body:['Triveni Electroplast Pvt. Ltd. is established in Allahabad, Uttar Pradesh, with a singular motive: to serve the telecom industry. This becomes Unit I — the registered office and the company’s founding manufacturing facility.'] },
 
-  { ei:1, year:'2004', title:'Unit II Established, Noida',
+  { ei:1, year:'2004', title:'Unit II Established, Noida', img:'assets/timeline/2004.png',
     body:['Observing rising market demand and growing client satisfaction, Triveni establishes Unit II at Noida, Uttar Pradesh, with a focus on serving OEMs for consumer electronics — specifically home appliances.'] },
   { ei:1, year:'2004', title:'First LG Partnership',
     body:['Registered as a vendor with LG Electronics India Ltd. (LGEIL), Washing Machine OBU. Begins supply with a 10% share of business for buzzers in semi-automatic washing machines — the start of what would become a two-decade partnership.'] },
@@ -637,7 +637,7 @@ var TL_MILESTONES = [
   { ei:1, year:'2008', title:'First Major Award',
     body:['Receives the Excellence Award from LGEIL for Best Performance in Quality, Cost & Delivery (QCD) in the Electrical category — Triveni’s first formal recognition from a global OEM.'] },
 
-  { ei:2, year:'2012', title:'Unit III Established — Transformer Radiators', img:'assets/milestone%20hero.jpeg',
+  { ei:2, year:'2012', title:'Unit III Established — Transformer Radiators', img:'assets/timeline/2012.jpg',
     body:[
       'Eyeing the growth of India’s power sector, Triveni establishes Unit III at Prayagraj (Allahabad) to manufacture radiators for power and distribution transformer manufacturers — entering into an MOU with a French multinational to initiate supplies.',
       'From day one, Triveni introduces India’s first fully automatic panel production line for pressed steel radiators, eliminating human intervention in the core forming process.'
@@ -646,7 +646,7 @@ var TL_MILESTONES = [
     body:['Secures PGCIL approval for supply of radiators for 400 kV class Transformers & Reactors, initiated by M/s Alstom T&D — validating the new division’s quality within a year of operations.'] },
   { ei:2, year:'2015', title:'765 kV Approval',
     body:['PGCIL extends approval to the 765 kV class — the highest voltage level on India’s transmission network — initiated by M/s Siemens T&D.'] },
-  { ei:2, year:'2016', title:'Unit II Extension & Largest Radiator Order', img:'assets/installations/siemens-site-1.jpg',
+  { ei:2, year:'2016', title:'Unit II Extension & Largest Radiator Order', img:'assets/timeline/2016.jpg',
     body:[
       'Two milestones in one year. Triveni establishes an additional premises as an extension of Unit II in Noida to enhance wire harness production capacity.',
       'In parallel, Unit III completes its largest rating order to date, supplying 1,008 radiators for 765 kV, 500 MVA class transformers to PGCIL, delivered to Bhuj for M/s Siemens Ltd.'
@@ -657,7 +657,7 @@ var TL_MILESTONES = [
       'Triveni is made a Strategic Supplier for LG Electronics (Q1) and wins the Best of Best Supplier Award for 2017 from LGEIL — 1st Prize.',
       'In the same year, Unit III completes its first major international project, delivering radiators to Bangladesh for M/s Siemens Ltd.'
     ] },
-  { ei:3, year:'2018', title:'Largest Radiator Supplier in India', img:'assets/installations/ge-site-1.jpg',
+  { ei:3, year:'2018', title:'Largest Radiator Supplier in India', img:'assets/timeline/2018.JPG',
     body:[
       'Unit III becomes one of the largest suppliers to India’s major transformer manufacturers: GE T&D, Toshiba Transmission & Distribution Systems, Hitachi Energy India, Siemens Ltd, and TBEA India.',
       'Triveni receives the Best Supplier Award by M/s TBEA Energy (India) Pvt. Ltd.'
@@ -710,11 +710,11 @@ var TL_MILESTONES = [
     ] }
 ];
 
-/* PROVISIONAL: every milestone uses the same placeholder photograph
-   (the one assigned to 2012) until final per-milestone photography is
-   supplied — swap TL_PLACEHOLDER_IMG for real images then. */
+/* PROVISIONAL: milestones without their own photograph yet fall back to this
+   placeholder. 1991, 2004 (Unit II), 2012, 2016 and 2018 now have real archival
+   photography from assets/timeline/ — swap the rest in as they're supplied. */
 var TL_PLACEHOLDER_IMG = 'assets/milestone%20hero.jpeg';
-TL_MILESTONES.forEach(function(m){ m.img = TL_PLACEHOLDER_IMG; });
+TL_MILESTONES.forEach(function(m){ if (!m.img) m.img = TL_PLACEHOLDER_IMG; });
 
 /* Editorial red accents — exact fragments of the copy above (no wording changes),
    ~2–3 short phrases per milestone, tinted in the chapter red inside the body. */
