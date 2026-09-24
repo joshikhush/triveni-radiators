@@ -115,21 +115,24 @@ button { font:inherit; background:none; border:none; cursor:pointer; }
 /* ===================================================
    1 — HERO
    =================================================== */
-.gh-hero { background:var(--navy); padding:110px 0 96px; }
+/* Compact inner-page banner — height comes from content + padding only,
+   no min-height/100vh anywhere in this section. */
+.gh-hero { background:linear-gradient(135deg, #0C1830 0%, #13234A 100%); padding:88px 0 80px; }
 .gh-pill {
   display:inline-block; border:1px solid var(--gold); color:var(--gold-light);
-  font-size:14px; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
-  padding:10px 20px; border-radius:999px;
+  font-size:13px; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  padding:8px 18px; border-radius:999px;
 }
-.gh-hero h1 { margin-top:28px; font-family:'Fraunces',serif; font-weight:400; font-size:clamp(48px,7vw,100px); line-height:1.02; color:#fff; }
+.gh-hero h1 { margin-top:24px; font-family:'Fraunces',serif; font-weight:400; font-size:clamp(40px,5vw,72px); line-height:1.05; color:#fff; }
 .gh-hero h1 em { font-style:italic; color:var(--gold-light-2); }
-.gh-hero-sub { margin-top:20px; font-size:19px; line-height:1.7; color:var(--on-dark); max-width:640px; }
-.gh-breadcrumb { margin-top:32px; font-size:15px; }
+.gh-hero-sub { margin-top:20px; font-size:18px; line-height:1.65; color:var(--on-dark); max-width:620px; }
+.gh-breadcrumb { margin-top:28px; font-size:15px; }
 .gh-breadcrumb a { color:var(--on-dark-2); transition:color .2s; }
 .gh-breadcrumb a:hover, .gh-breadcrumb a:focus-visible { color:#fff; }
 .gh-breadcrumb .sep { color:var(--on-dark-2); margin:0 .5em; }
 .gh-breadcrumb [aria-current] { color:var(--gold-light); }
-@media(max-width:640px){ .gh-hero{ padding:88px 0 72px; } }
+@media(max-width:1000px){ .gh-hero{ padding:72px 0 64px; } }
+@media(max-width:600px){ .gh-hero{ padding:56px 0 48px; } }
 
 /* ===================================================
    2 — SECTION HEADER

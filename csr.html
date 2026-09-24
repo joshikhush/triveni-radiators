@@ -242,27 +242,38 @@ button { font:inherit; }
    the photos. min-height is a floor for short text/short rows. */
 .chapter-media { height:100%; min-height:460px; display:flex; flex-direction:column; gap:16px; }
 
-/* Chapter 01 — photo grid + relocation sub-card, sharing the media column's
-   height (flex:1.7 / flex:1 split ~ roughly the old 380:280+card proportion) */
-.gc-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1.4fr 1fr; gap:16px; flex:1.7; min-height:0; }
+/* Chapter 01 — plantation photo grid. Fixed row heights, not stretched to
+   fill the media column (unlike Chapters 02/03) — see the #green-cover
+   .chapter-media override below. Row 1: main group photo, full width,
+   420px. Row 2: two photos side by side, 300px each. */
+.gc-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:420px 300px; gap:16px; }
 .gc-grid .gc-main { grid-column:1 / 3; }
-.gc-subcard {
-  flex:1; min-height:0; background:#fff; border:1px solid #E3DAC6; border-radius:20px; padding:24px;
-  display:grid; grid-template-columns:5fr 7fr; gap:24px; align-items:stretch;
+#green-cover .chapter-media { height:auto; min-height:0; }
+
+/* Chapter 01 — relocation story, a full-width row below the chapter's
+   text+photo grid (not inside .chapter-media, not a card) */
+.chapter-relocation {
+  grid-column:1 / -1; margin-top:64px; padding-top:56px; border-top:1px solid #E3DAC6;
+  display:grid; grid-template-columns:4fr 8fr; gap:56px;
 }
-.gc-subcard > div:first-child { align-self:center; }
-.gc-subcard-label { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-label); margin-bottom:.7rem; }
-.gc-subcard h3 { font-family:'Fraunces',serif; font-weight:400; font-size:28px; color:var(--ink); margin-bottom:.5rem; letter-spacing:-.01em; }
-.gc-subcard h3 em { font-style:italic; color:var(--violet); }
-.gc-subcard p { font-size:16px; line-height:1.65; color:var(--muted); }
-.gc-subcard-imgs { display:flex; gap:12px; height:100%; }
-.gc-subcard-imgs figure { position:relative; flex:1; height:100%; border-radius:14px; overflow:hidden; margin:0; }
-.gc-subcard-imgs img { width:100%; height:100%; object-fit:cover; display:block; }
-.gc-badge {
-  position:absolute; left:12px; bottom:12px; background:var(--navy-bento); color:#fff;
-  font-family:'Poppins',sans-serif; font-size:11px; font-weight:600; letter-spacing:.15em;
-  text-transform:uppercase; padding:7px 13px; border-radius:999px;
+.chapter-relocation-text h3 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(26px,2.4vw,34px); line-height:1.2; color:var(--ink); letter-spacing:-.01em; }
+.chapter-relocation-text h3 em { font-style:italic; color:var(--violet); }
+.chapter-relocation-text p { font-size:17px; line-height:1.7; color:var(--muted); margin-top:12px; }
+
+.chapter-relocation-media { display:flex; flex-direction:column; }
+.chapter-relocation-photos { position:relative; display:flex; gap:16px; }
+.chapter-relocation-photos figure { flex:1; margin:0; aspect-ratio:4/3; border-radius:20px; overflow:hidden; }
+.chapter-relocation-photos img { width:100%; height:100%; object-fit:cover; display:block; }
+.chapter-relocation-arrow {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2;
+  width:44px; height:44px; border-radius:50%; background:var(--navy-bento); color:var(--gold-light);
+  display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(12,24,48,.25);
 }
+.chapter-relocation-arrow svg { width:20px; height:20px; }
+.chapter-relocation-captions { display:flex; gap:16px; margin-top:14px; }
+.chapter-relocation-cap { flex:1; display:flex; flex-direction:column; gap:3px; }
+.chapter-relocation-cap-label { font-family:'Poppins',sans-serif; font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--gold-label); }
+.chapter-relocation-cap-text { font-size:15px; color:var(--muted); }
 
 /* Chapter 02 — ETP media grid, fills the full media-column height. Currently
    3 images: "team at ETP" (main) fills the full left column; the other two
@@ -292,23 +303,26 @@ button { font:inherit; }
   .chapter-num { font-size:64px; }
   /* Stacked layout — fixed heights, no stretch/fill logic needed */
   .chapter-media { height:auto; min-height:0; }
-  .gc-grid { grid-template-rows:320px 220px; flex:none; }
-  .gc-subcard { grid-template-columns:1fr; flex:none; }
+  .gc-grid { grid-template-rows:300px 220px; }
   .etp-grid { grid-template-columns:1fr 1fr; grid-template-rows:320px 220px; height:auto; flex:none; }
   .etp-main { grid-column:1 / 3; grid-row:1; }
   .etp-side-top { grid-column:1; grid-row:2; }
   .etp-side-bottom { grid-column:2; grid-row:2; }
   .cw-grid { grid-auto-rows:320px; height:auto; flex:none; }
+  /* Relocation story stacks: text first, then images */
+  .chapter-relocation { grid-template-columns:1fr; gap:24px; }
 }
 @media(max-width:600px){
   .gc-grid { grid-template-columns:1fr; grid-template-rows:none; }
   .gc-grid > div { grid-column:1 / 2 !important; height:240px; }
-  .gc-subcard-imgs { flex-direction:column; }
-  .gc-subcard-imgs figure { height:240px; }
   .etp-grid { grid-template-columns:1fr; grid-template-rows:none; }
   .etp-main, .etp-side-top, .etp-side-bottom { grid-column:1; height:240px; }
   .cw-grid { grid-template-columns:1fr; grid-auto-rows:240px; }
   .cw-grid .cw-span2 { grid-column:1; }
+  /* Before/after images stack, arrow rotates to point down */
+  .chapter-relocation-photos { flex-direction:column; }
+  .chapter-relocation-arrow { transform:translate(-50%,-50%) rotate(90deg); }
+  .chapter-relocation-captions { flex-direction:column; gap:20px; }
 }
 
 /* ===================================================
@@ -324,11 +338,9 @@ button { font:inherit; }
 
 .csr-tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; align-items:stretch; }
 
-/* Photo-on-top, text-below card — same shell for all three tiles. Tiles 2 & 3
-   have more than one photo, so they're <button>s (class csr-tile-clickable)
-   that open the shared lightbox below and show a photo-count pill top-right.
-   Tile 1 (Food Donation) has only one photo and stays a plain, non-interactive
-   div — but uses the exact same card markup/styling. */
+/* Photo-on-top, text-below card — same shell for all three tiles. All three
+   have more than one photo now, so they're <button>s (class csr-tile-clickable)
+   that open the shared lightbox below. */
 .csr-tile {
   position:relative; height:100%; display:flex; flex-direction:column;
   background:#14224A; border:1px solid #243259; border-radius:24px; overflow:hidden;
@@ -350,14 +362,6 @@ button { font:inherit; }
 
 .csr-tile-clickable { appearance:none; -webkit-appearance:none; cursor:pointer; text-align:left; }
 .csr-tile-clickable:focus-visible { outline:2px solid #E2CBA0; outline-offset:3px; }
-.csr-tile-count {
-  position:absolute; top:12px; right:12px; z-index:2;
-  display:inline-flex; align-items:center; gap:5px;
-  background:rgba(5,11,34,.75); color:#E2CBA0;
-  font-family:'Poppins',sans-serif; font-size:12px; font-weight:600;
-  padding:6px 12px; border-radius:999px;
-}
-.csr-tile-count svg { width:14px; height:14px; flex-shrink:0; }
 
 @media(max-width:1100px){
   .csr-inner { padding:72px 24px; }
@@ -378,40 +382,90 @@ button { font:inherit; }
 }
 
 /* ===================================================
-   4b — CSR TILE LIGHTBOX (Old Age Home + Girl Child Education tiles only —
-   same visual language as the Gallery page's lightbox, scoped to this page)
+   4b — CSR TILE PHOTO VIEWER — full-screen horizontal-scroll gallery, opens
+   when a CSR card is clicked. Header (label/title/counter/controls) and
+   footer (progress dashes/caption) never overlap the photos — the track is
+   a flex-1 region between them. Scoped to this page.
    =================================================== */
-.csr-lb { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:24px; }
+.csr-lb {
+  position:fixed; inset:0; z-index:1000;
+  background:rgba(5,11,34,.96);
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  display:flex; flex-direction:column;
+  opacity:0; transition:opacity .2s ease;
+}
+.csr-lb.is-open { opacity:1; }
 .csr-lb[hidden] { display:none; }
-.csr-lb-backdrop { position:absolute; inset:0; background:rgba(5,11,34,.94); }
-.csr-lb-inner {
-  position:relative; z-index:1; width:min(1000px,100%); max-height:88vh;
-  background:#14224A; border-radius:20px; overflow:hidden;
+@media(prefers-reduced-motion:reduce){ .csr-lb{ transition:none; } }
+
+.csr-lb-header, .csr-lb-foot, .csr-lb-track-wrap { pointer-events:none; }
+.csr-lb-header-inner, .csr-lb-track, .csr-lb-dashes, .csr-lb-caption { pointer-events:auto; }
+
+.csr-lb-header { flex-shrink:0; }
+.csr-lb-header-inner {
+  max-width:1440px; margin:0 auto; padding:24px 48px;
+  display:flex; align-items:flex-start; justify-content:space-between; gap:24px;
+}
+.csr-lb-label { font-family:'Poppins',sans-serif; font-size:12px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:#E2CBA0; margin-bottom:.4rem; }
+.csr-lb-title { font-family:'Fraunces',serif; font-weight:400; font-size:28px; color:#fff; line-height:1.15; }
+.csr-lb-controls { display:flex; align-items:center; gap:14px; flex-shrink:0; }
+.csr-lb-counter { font-family:'Fraunces',serif; font-weight:400; font-size:20px; color:#E2CBA0; min-width:2.6em; text-align:center; }
+.csr-lb-ctrl-btn {
+  width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,.2);
+  background:transparent; color:#fff; display:flex; align-items:center; justify-content:center;
+  transition:background .2s, opacity .2s; flex-shrink:0;
+}
+.csr-lb-ctrl-btn:hover, .csr-lb-ctrl-btn:focus-visible { background:rgba(255,255,255,.08); }
+.csr-lb-ctrl-btn svg { width:18px; height:18px; }
+.csr-lb-ctrl-btn[disabled] { opacity:.3; pointer-events:none; }
+
+.csr-lb-track-wrap { position:relative; flex:1; min-height:0; display:flex; align-items:center; }
+.csr-lb-track {
+  width:100%; height:100%; display:flex; align-items:center; gap:24px;
+  overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  overscroll-behavior:contain; scrollbar-width:none;
+  /* first/last slide need room on either side to reach true center; slide
+     width is auto (varies by photo), so this is a deliberate approximation
+     sized for the min(64vh,640px) height cap at typical landscape ratios */
+  padding-inline:max(24px, calc(50vw - 340px));
+  mask-image:linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+.csr-lb-track::-webkit-scrollbar { display:none; }
+/* Brightness/scale/opacity are driven live by --focus (0–1, set on every
+   scroll frame by JS — see the script below), not by CSS transitions, so
+   they stay exactly in sync with the scroll position instead of lagging
+   behind it or jumping on click. */
+.csr-lb-slide {
+  flex:0 0 auto; scroll-snap-align:center; cursor:pointer;
+  height:min(64vh, 640px); width:auto;
   display:flex; align-items:center; justify-content:center;
+  --focus:0;
+  opacity:calc(.35 + .65 * var(--focus));
+  transform:scale(calc(.94 + .06 * var(--focus)));
+  filter:brightness(calc(.7 + .3 * var(--focus)));
 }
-.csr-lb-img-wrap { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
-.csr-lb-img-wrap img { max-width:100%; max-height:88vh; display:block; }
-.csr-lb-arrow {
-  position:absolute; top:50%; transform:translateY(-50%); z-index:2;
-  width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
-  color:#fff; display:flex; align-items:center; justify-content:center;
+.csr-lb-slide.is-active { cursor:default; }
+.csr-lb-slide img {
+  height:100%; width:auto; max-width:80vw; display:block;
+  object-fit:contain; border-radius:16px; box-shadow:0 30px 80px rgba(0,0,0,.45);
 }
-.csr-lb-arrow:hover, .csr-lb-arrow:focus-visible { background:rgba(255,255,255,.22); }
-.csr-lb-arrow svg { width:18px; height:18px; }
-.csr-lb-prev { left:16px; } .csr-lb-next { right:16px; }
-.csr-lb-close {
-  position:absolute; top:16px; right:16px; z-index:3;
-  width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
-  color:#fff; display:flex; align-items:center; justify-content:center;
+@media(prefers-reduced-motion:reduce){ .csr-lb-slide{ transform:none; } }
+
+.csr-lb-foot { flex-shrink:0; padding:0 24px 28px; margin-top:24px; text-align:center; }
+.csr-lb-dashes { display:inline-flex; align-items:center; justify-content:center; gap:8px; }
+.csr-lb-dash { width:24px; height:3px; border-radius:2px; background:rgba(255,255,255,.25); border:none; padding:0; cursor:pointer; transition:width .25s ease, background .25s ease; }
+.csr-lb-dash.is-active { width:40px; background:#E2CBA0; }
+.csr-lb-caption { margin-top:14px; font-size:15px; color:#C8CAD8; }
+.csr-lb-caption[hidden] { display:none; }
+
+@media(max-width:600px){
+  .csr-lb-header-inner { padding:16px 20px; }
+  .csr-lb-title { font-size:22px; }
+  .csr-lb-track { padding-inline:7vw; gap:16px; }
+  .csr-lb-slide { width:86vw; height:auto; max-height:60vh; }
+  .csr-lb-slide img { height:auto; width:100%; max-width:none; max-height:60vh; }
 }
-.csr-lb-close:hover, .csr-lb-close:focus-visible { background:rgba(255,255,255,.22); }
-.csr-lb-close svg { width:18px; height:18px; }
-.csr-lb-count {
-  position:absolute; bottom:16px; left:50%; transform:translateX(-50%); z-index:2;
-  background:rgba(255,255,255,.12); color:#fff; font-family:'Poppins',sans-serif; font-size:13px;
-  padding:6px 14px; border-radius:999px;
-}
-@media(max-width:700px){ .csr-lb{ padding:0; } .csr-lb-inner{ border-radius:0; max-height:100vh; } }
 
 /* ===================================================
    5 — CTA PANEL (inside the CSR section, dark, matching the band)
@@ -523,19 +577,36 @@ button { font:inherit; }
       </div></div>
       <div class="chapter-media">
         <div class="gc-grid">
-          <div class="gc-main"><img src="assets/sustainabilty/environment day/7X0A9361.JPG" alt="Team members planting a sapling together during Triveni's Environment Day plantation drive" loading="lazy"></div>
-          <div><img src="assets/sustainabilty/environment day/1 img.jpg" alt="Close-up of Triveni team members planting a sapling on Environment Day" loading="lazy"></div>
-          <div><img src="assets/sustainabilty/environment day/7X0A9370.JPG" alt="Triveni leadership and guests beside the Rudraksha tree planted on Environment Day" loading="lazy"></div>
+          <div class="gc-main"><img src="assets/sustainabilty/environment day/7X0A9361.JPG" alt="Team members planting a sapling together during Triveni's Environment Day plantation drive" loading="lazy" style="object-position:center 35%;"></div>
+          <div><img src="assets/sustainabilty/environment day/1 img.jpg" alt="Close-up of Triveni team members planting a sapling on Environment Day" loading="lazy" style="object-position:center 30%;"></div>
+          <div><img src="assets/sustainabilty/environment day/7X0A9370.JPG" alt="Triveni leadership and guests beside the Rudraksha tree planted on Environment Day" loading="lazy" style="object-position:center 25%;"></div>
         </div>
-        <div class="gc-subcard">
-          <div>
-            <div class="gc-subcard-label">Also Under Green Cover</div>
-            <h3>Relocating, <em>not removing</em></h3>
-            <p>When construction needs space, existing plants are relocated rather than discarded wherever possible.</p>
+      </div>
+
+      <!-- Relocation story — moved out of the media column into its own full-width
+           row so it can never overlap the plantation photos above. -->
+      <div class="chapter-relocation">
+        <div class="chapter-relocation-text">
+          <h3>Relocating, <em>not removing</em></h3>
+          <p>When construction needs space, existing plants are carefully lifted and replanted elsewhere on site instead of being cut down.</p>
+        </div>
+        <div class="chapter-relocation-media">
+          <div class="chapter-relocation-photos">
+            <figure><img src="assets/sustainabilty/relocating plants/PHOTO-2025-04-28-10-26-28 copy 2.jpg" alt="A hole prepared to relocate an existing plant during construction at Triveni's facility" loading="lazy" style="object-position:center 65%;"></figure>
+            <span class="chapter-relocation-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </span>
+            <figure><img src="assets/sustainabilty/environment day/Plant relocation.jpg" alt="A relocated palm tree staked and replanted at Triveni's facility after construction work" loading="lazy" style="object-position:center 40%;"></figure>
           </div>
-          <div class="gc-subcard-imgs">
-            <figure><img src="assets/sustainabilty/relocating plants/PHOTO-2025-04-28-10-26-28 copy 2.jpg" alt="A hole prepared to relocate an existing plant during construction at Triveni's facility" loading="lazy"><span class="gc-badge">Before</span></figure>
-            <figure><img src="assets/sustainabilty/environment day/Plant relocation.jpg" alt="A relocated palm tree staked and replanted at Triveni's facility after construction work" loading="lazy"><span class="gc-badge">After</span></figure>
+          <div class="chapter-relocation-captions">
+            <div class="chapter-relocation-cap">
+              <span class="chapter-relocation-cap-label">Before</span>
+              <span class="chapter-relocation-cap-text">Plant lifted from the construction area</span>
+            </div>
+            <div class="chapter-relocation-cap">
+              <span class="chapter-relocation-cap-label">After</span>
+              <span class="chapter-relocation-cap-text">Replanted and growing on site</span>
+            </div>
           </div>
         </div>
       </div>
@@ -617,7 +688,16 @@ button { font:inherit; }
     </div>
 
     <div class="csr-tiles">
-      <div class="csr-tile reveal reveal-d1">
+      <!-- Food distribution has 6 photos in assets/sustainabilty/food distribution/:
+           4 JPGs ("2", "copy 2", "copy 3", "copy 4") plus 2 HEIC originals
+           (IMG_8475, IMG_8482). IMG_8475 (converted to IMG_8475-web.jpg — the
+           HEIC originals aren't broadly web-supported) is a distinct packing/
+           preparation shot and was added. IMG_8482 was skipped: it's essentially
+           a duplicate of "copy 3" (same moment, same people). The base "2.jpg"
+           was also skipped as a near-duplicate of "copy 2.jpg" (same
+           loading/departure scene) to avoid two near-identical photos in the
+           lightbox. -->
+      <button type="button" class="csr-tile csr-tile-clickable reveal reveal-d1" data-tile="food" aria-label="View 4 photos: Food Donation Drive at Kumbh">
         <div class="csr-tile-media">
           <img src="assets/sustainabilty/food distribution/PHOTO-2025-02-03-18-44-48 copy 4.jpg" alt="Triveni team members with food packets prepared for the Kumbh food donation drive" loading="lazy" style="object-position:50% 40%;">
         </div>
@@ -626,7 +706,7 @@ button { font:inherit; }
           <h3>Food Donation Drive at Kumbh</h3>
           <p>Our team distributed food to people passing through the region during Kumbh.</p>
         </div>
-      </div>
+      </button>
 
       <!-- Old age home — 2 photos in assets/sustainabilty/csr/. The dining/activity
            shot (b4ea4cf3) is used as the main card image over the posed sofa photo
@@ -635,19 +715,20 @@ button { font:inherit; }
            highlights). Since the activity shot still read as slightly hazy, its
            -web.jpg copy was corrected: autocontrast (0.5% clip), +12% saturation,
            +12% sharpness, a slight warm shift (R x1.03 / B x0.97). Original file
-           left untouched. Home name is visible on a banner in the 2nd photo but is
-           partly cropped/illegible — not transcribed into the copy below; do not
-           name the home until the client confirms it. -->
+           left untouched. The 2nd photo's banner reads "…Sansthan – Udaipur
+           (Raj.)" (top of the banner is cropped, so the home's full name is
+           still not legible/confirmed) — this places the home in Udaipur,
+           Rajasthan, so the city/state is now named in the copy below, but the
+           home's specific name is still withheld pending client confirmation. -->
       <!-- TODO: confirm activity details with client; update if donations or other support were involved -->
       <button type="button" class="csr-tile csr-tile-clickable reveal reveal-d2" data-tile="elder" aria-label="View 2 photos: Time With Our Elders">
         <div class="csr-tile-media">
           <img src="assets/sustainabilty/csr/b4ea4cf3-0aa5-4f3d-996c-fc17b6717b0b-web.jpg" alt="Triveni team members sharing a meal with residents at an old age home" loading="lazy" style="object-position:50% 42%;">
-          <span class="csr-tile-count"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>2 photos</span>
         </div>
         <div class="csr-tile-body">
           <div class="csr-tile-label">Elder Care</div>
           <h3>Time With Our Elders</h3>
-          <p>Our team spent time with residents at a local old age home, sharing a meal and conversation.</p>
+          <p>Our team spent time with residents at an old age home in Udaipur, Rajasthan, sharing a meal and conversation.</p>
         </div>
       </button>
 
@@ -663,7 +744,6 @@ button { font:inherit; }
       <button type="button" class="csr-tile csr-tile-clickable reveal reveal-d3" data-tile="girlchild" aria-label="View 3 photos: Supporting Girl Child Education">
         <div class="csr-tile-media">
           <img src="assets/sustainabilty/csr/girl child edu 1-web.jpg" alt="Triveni team members with schoolgirls supported through the girl child education programme" loading="lazy" style="object-position:50% 62%;">
-          <span class="csr-tile-count"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>3 photos</span>
         </div>
         <div class="csr-tile-body">
           <div class="csr-tile-label">Education</div>
@@ -675,19 +755,32 @@ button { font:inherit; }
 
     <!-- Shared lightbox for the Old Age Home + Girl Child Education tiles -->
     <div class="csr-lb" id="csrLightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
-      <div class="csr-lb-backdrop" id="csrLbBackdrop"></div>
-      <div class="csr-lb-inner">
-        <button class="csr-lb-close" id="csrLbClose" type="button" aria-label="Close">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-        </button>
-        <button class="csr-lb-arrow csr-lb-prev" id="csrLbPrev" type="button" aria-label="Previous photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg>
-        </button>
-        <div class="csr-lb-img-wrap" id="csrLbImgWrap"></div>
-        <button class="csr-lb-arrow csr-lb-next" id="csrLbNext" type="button" aria-label="Next photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-        </button>
-        <span class="csr-lb-count" id="csrLbCount"></span>
+      <header class="csr-lb-header">
+        <div class="csr-lb-header-inner">
+          <div class="csr-lb-heading">
+            <div class="csr-lb-label" id="csrLbLabel"></div>
+            <h2 class="csr-lb-title" id="csrLbTitle"></h2>
+          </div>
+          <div class="csr-lb-controls">
+            <span class="csr-lb-counter" id="csrLbCounter" aria-live="polite"></span>
+            <button class="csr-lb-ctrl-btn" id="csrLbPrev" type="button" aria-label="Previous photo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg>
+            </button>
+            <button class="csr-lb-ctrl-btn" id="csrLbNext" type="button" aria-label="Next photo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+            <button class="csr-lb-ctrl-btn" id="csrLbClose" type="button" aria-label="Close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+      <div class="csr-lb-track-wrap">
+        <div class="csr-lb-track" id="csrLbTrack"></div>
+      </div>
+      <div class="csr-lb-foot">
+        <div class="csr-lb-dashes" id="csrLbDashes"></div>
+        <p class="csr-lb-caption" id="csrLbCaption" hidden></p>
       </div>
     </div>
 
@@ -742,77 +835,177 @@ const io = new IntersectionObserver(es => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* ==========================================================
-   CSR TILE LIGHTBOX — Old Age Home + Girl Child Education tiles only
-   (Food Donation has a single photo and isn't clickable). Same UX as the
-   Gallery page's lightbox: Esc to close, ←/→ to navigate, backdrop click,
-   focus trap, focus returns to the tile that opened it, body scroll lock.
+   CSR TILE PHOTO VIEWER — all three tiles. Full-screen horizontal-scroll
+   gallery showing every photo for the clicked card. Esc to close, ←/→ to
+   move one photo, background click closes, focus trap, focus returns to
+   the tile that opened it, body scroll lock. Each image may optionally
+   carry a "caption" field, shown below the progress dashes when present.
    ========================================================== */
 var CSR_TILE_IMAGES = {
-  elder: [
-    { src: 'assets/sustainabilty/csr/b4ea4cf3-0aa5-4f3d-996c-fc17b6717b0b-web.jpg', alt: 'Triveni team members sharing a meal with residents at an old age home' },
-    { src: 'assets/sustainabilty/csr/e4f25e8a-eff2-48e9-b24a-20c69004f55e-web.jpg', alt: 'Triveni team members visiting an old age home' }
-  ],
-  girlchild: [
-    { src: 'assets/sustainabilty/csr/girl child edu 1-web.jpg', alt: 'Triveni team members with schoolgirls supported through the girl child education programme' },
-    { src: 'assets/sustainabilty/csr/girl child edu 2-web.jpg', alt: 'Triveni team members with schoolgirls supported through the girl child education programme' },
-    { src: 'assets/sustainabilty/csr/girl child edu 3-web.jpg', alt: 'Triveni team members with young schoolchildren supported through the girl child education programme' }
-  ]
+  food: {
+    label: 'Food Donation', title: 'Food Donation Drive at Kumbh',
+    images: [
+      { src: 'assets/sustainabilty/food distribution/PHOTO-2025-02-03-18-44-48 copy 4.jpg', alt: 'Triveni team members with food packets prepared for the Kumbh food donation drive' },
+      { src: 'assets/sustainabilty/food distribution/IMG_8475-web.jpg', alt: 'Volunteers packing food trays for the Kumbh food donation drive' },
+      { src: 'assets/sustainabilty/food distribution/PHOTO-2025-02-03-18-44-48 copy 3.jpg', alt: 'A Triveni team member handing a food packet to a recipient at Kumbh' },
+      { src: 'assets/sustainabilty/food distribution/PHOTO-2025-02-03-18-44-48 copy 2.jpg', alt: 'Triveni team members loading food packets for distribution at Kumbh' }
+    ]
+  },
+  elder: {
+    label: 'Elder Care', title: 'Time With Our Elders',
+    images: [
+      { src: 'assets/sustainabilty/csr/b4ea4cf3-0aa5-4f3d-996c-fc17b6717b0b-web.jpg', alt: 'Triveni team members sharing a meal with residents at an old age home' },
+      { src: 'assets/sustainabilty/csr/e4f25e8a-eff2-48e9-b24a-20c69004f55e-web.jpg', alt: 'Triveni team members visiting an old age home in Udaipur, Rajasthan' }
+    ]
+  },
+  girlchild: {
+    label: 'Education', title: 'Supporting Girl Child Education',
+    images: [
+      { src: 'assets/sustainabilty/csr/girl child edu 1-web.jpg', alt: 'Triveni team members with schoolgirls supported through the girl child education programme' },
+      { src: 'assets/sustainabilty/csr/girl child edu 2-web.jpg', alt: 'Triveni team members with schoolgirls supported through the girl child education programme' },
+      { src: 'assets/sustainabilty/csr/girl child edu 3-web.jpg', alt: 'Triveni team members with young schoolchildren supported through the girl child education programme' }
+    ]
+  }
 };
 
 (function(){
   var csrLb = document.getElementById('csrLightbox');
-  var csrLbBackdrop = document.getElementById('csrLbBackdrop');
   var csrLbClose = document.getElementById('csrLbClose');
   var csrLbPrev = document.getElementById('csrLbPrev');
   var csrLbNext = document.getElementById('csrLbNext');
-  var csrLbImgWrap = document.getElementById('csrLbImgWrap');
-  var csrLbCount = document.getElementById('csrLbCount');
+  var csrLbTrack = document.getElementById('csrLbTrack');
+  var csrLbLabel = document.getElementById('csrLbLabel');
+  var csrLbTitle = document.getElementById('csrLbTitle');
+  var csrLbCounter = document.getElementById('csrLbCounter');
+  var csrLbDashes = document.getElementById('csrLbDashes');
+  var csrLbCaption = document.getElementById('csrLbCaption');
   if (!csrLb) return;
 
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var csrLbImages = [];
+  var csrLbSlides = [];
   var csrLbPos = 0;
   var csrLbReturnFocus = null;
+  var csrLbCloseTimer = null;
+  var csrLbFocusRAF = null;
 
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function csrLbFocusable(){
     return Array.prototype.slice.call(csrLb.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])'))
       .filter(function(el){ return el.offsetParent !== null; });
   }
-  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-  function openCsrLightbox(images, startIndex, returnEl){
-    csrLbImages = images;
-    csrLbPos = startIndex || 0;
+  function openCsrLightbox(tileKey, returnEl){
+    var data = CSR_TILE_IMAGES[tileKey];
+    if (!data) return;
+    csrLbImages = data.images;
     csrLbReturnFocus = returnEl || document.activeElement;
-    paintCsrLightbox();
+
+    csrLbLabel.textContent = data.label;
+    csrLbTitle.textContent = data.title;
+    csrLb.setAttribute('aria-label', data.title + ' — photo viewer');
+
+    csrLbTrack.innerHTML = csrLbImages.map(function(img, i){
+      var eager = i <= 1; // active photo + its immediate neighbour load eagerly
+      return '<div class="csr-lb-slide" data-index="' + i + '">' +
+        '<img src="' + esc(img.src) + '" alt="' + esc(img.alt) + '"' + (eager ? '' : ' loading="lazy"') + '>' +
+      '</div>';
+    }).join('');
+    csrLbDashes.innerHTML = csrLbImages.map(function(_, i){
+      return '<button type="button" class="csr-lb-dash" data-index="' + i + '" aria-label="Go to photo ' + (i + 1) + '"></button>';
+    }).join('');
+
+    csrLbSlides = Array.prototype.slice.call(csrLbTrack.querySelectorAll('.csr-lb-slide'));
+    csrLbSlides.forEach(function(slide){
+      slide.addEventListener('click', function(){ goToSlide(parseInt(slide.getAttribute('data-index'), 10)); });
+    });
+    Array.prototype.forEach.call(csrLbDashes.querySelectorAll('.csr-lb-dash'), function(dash){
+      dash.addEventListener('click', function(){ goToSlide(parseInt(dash.getAttribute('data-index'), 10)); });
+    });
+
+    var firstSlide = csrLbTrack.children[0];
+    if (firstSlide) firstSlide.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+    requestAnimationFrame(updateFocus);
+
+    clearTimeout(csrLbCloseTimer);
     csrLb.hidden = false;
     document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function(){ csrLb.classList.add('is-open'); });
     csrLbClose.focus();
     document.addEventListener('keydown', onCsrLbKeydown);
   }
-  function paintCsrLightbox(){
-    var img = csrLbImages[csrLbPos];
-    csrLbImgWrap.innerHTML = '<img src="' + esc(img.src) + '" alt="' + esc(img.alt) + '">';
-    var multi = csrLbImages.length > 1;
-    csrLbPrev.style.display = multi ? '' : 'none';
-    csrLbNext.style.display = multi ? '' : 'none';
-    csrLbCount.style.display = multi ? '' : 'none';
-    csrLbCount.textContent = (csrLbPos + 1) + ' / ' + csrLbImages.length;
+
+  /* Live centre detection — runs on every scroll frame (rAF-throttled), on
+     open and on resize. Finds the slide closest to the track's centre,
+     writes a 0–1 --focus value onto every slide (driving opacity/scale/
+     brightness purely via CSS, no transition, so it tracks the scroll
+     exactly), and keeps the counter/dashes/prev-next state in sync — this
+     is the single source of truth for "active", used by every input method
+     (wheel, touch, drag, arrows, keyboard, dash clicks). */
+  function updateFocus(){
+    if (!csrLbSlides.length) return;
+    var trackRect = csrLbTrack.getBoundingClientRect();
+    var trackCenter = trackRect.left + trackRect.width / 2;
+    var closestIndex = 0;
+    var closestDist = Infinity;
+    csrLbSlides.forEach(function(slide, i){
+      var r = slide.getBoundingClientRect();
+      var slideCenter = r.left + r.width / 2;
+      var slideWidth = r.width || 1;
+      var dist = Math.abs(slideCenter - trackCenter);
+      var norm = Math.min(1, dist / slideWidth); // 0 = centred, 1 = one slide-width away or more
+      slide.style.setProperty('--focus', String(1 - norm));
+      if (dist < closestDist) { closestDist = dist; closestIndex = i; }
+    });
+    if (closestIndex !== csrLbPos) syncActive(closestIndex);
   }
-  function csrLbStep(dir){
-    if (csrLbImages.length < 2) return;
-    csrLbPos = (csrLbPos + dir + csrLbImages.length) % csrLbImages.length;
-    paintCsrLightbox();
+  function scheduleUpdateFocus(){
+    if (csrLbFocusRAF) return;
+    csrLbFocusRAF = requestAnimationFrame(function(){
+      csrLbFocusRAF = null;
+      updateFocus();
+    });
   }
+
+  function syncActive(i){
+    csrLbPos = i;
+    csrLbSlides.forEach(function(slide, si){ slide.classList.toggle('is-active', si === i); });
+    Array.prototype.forEach.call(csrLbDashes.querySelectorAll('.csr-lb-dash'), function(dash, di){
+      dash.classList.toggle('is-active', di === i);
+    });
+    csrLbCounter.textContent = (i + 1) + ' / ' + csrLbImages.length;
+    var cap = csrLbImages[i] && csrLbImages[i].caption;
+    if (cap) { csrLbCaption.textContent = cap; csrLbCaption.hidden = false; }
+    else { csrLbCaption.textContent = ''; csrLbCaption.hidden = true; }
+    csrLbPrev.disabled = i <= 0;
+    csrLbNext.disabled = i >= csrLbImages.length - 1;
+  }
+
+  function goToSlide(i){
+    i = Math.max(0, Math.min(csrLbImages.length - 1, i));
+    var slide = csrLbTrack.children[i];
+    if (!slide) return;
+    /* just scroll — the scroll listener drives --focus and syncActive() on
+       every frame of the animation, so the counter/dashes/brightening stay
+       in sync throughout the motion, not only once it settles */
+    slide.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
+  }
+
   function closeCsrLightbox(){
-    csrLb.hidden = true;
-    document.body.style.overflow = '';
+    csrLb.classList.remove('is-open');
     document.removeEventListener('keydown', onCsrLbKeydown);
+    var delay = reduceMotion ? 0 : 200;
+    csrLbCloseTimer = setTimeout(function(){
+      csrLb.hidden = true;
+      document.body.style.overflow = '';
+    }, delay);
     if (csrLbReturnFocus && typeof csrLbReturnFocus.focus === 'function') csrLbReturnFocus.focus();
   }
+
   function onCsrLbKeydown(e){
     if (e.key === 'Escape') { closeCsrLightbox(); return; }
-    if (e.key === 'ArrowRight') { csrLbStep(1); return; }
-    if (e.key === 'ArrowLeft') { csrLbStep(-1); return; }
+    if (e.key === 'ArrowRight') { goToSlide(csrLbPos + 1); return; }
+    if (e.key === 'ArrowLeft') { goToSlide(csrLbPos - 1); return; }
     if (e.key === 'Tab') {
       var f = csrLbFocusable();
       if (!f.length) return;
@@ -821,16 +1014,26 @@ var CSR_TILE_IMAGES = {
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   }
+
+  /* clicking the dark background — anywhere that isn't a photo, a slide, or
+     a control — closes the viewer. Header/footer are pointer-events:none
+     except their interactive content, and the track only intercepts clicks
+     that land on itself directly (its own empty padding), not on a slide. */
+  csrLb.addEventListener('click', function(e){ if (e.target === csrLb) closeCsrLightbox(); });
+  csrLbTrack.addEventListener('click', function(e){ if (e.target === csrLbTrack) closeCsrLightbox(); });
+
   csrLbClose.addEventListener('click', closeCsrLightbox);
-  csrLbBackdrop.addEventListener('click', closeCsrLightbox);
-  csrLbPrev.addEventListener('click', function(){ csrLbStep(-1); });
-  csrLbNext.addEventListener('click', function(){ csrLbStep(1); });
+  csrLbPrev.addEventListener('click', function(){ goToSlide(csrLbPos - 1); });
+  csrLbNext.addEventListener('click', function(){ goToSlide(csrLbPos + 1); });
+
+  /* live centre detection for every scroll input: wheel/trackpad, touch
+     swipe, dragging, and the programmatic scrolls from arrows/dashes/keys */
+  csrLbTrack.addEventListener('scroll', scheduleUpdateFocus, { passive: true });
+  window.addEventListener('resize', scheduleUpdateFocus);
 
   document.querySelectorAll('.csr-tile-clickable').forEach(function(tile){
     tile.addEventListener('click', function(){
-      var images = CSR_TILE_IMAGES[tile.getAttribute('data-tile')];
-      if (!images) return;
-      openCsrLightbox(images, 0, tile);
+      openCsrLightbox(tile.getAttribute('data-tile'), tile);
     });
   });
 })();
