@@ -215,11 +215,17 @@ navToggle.addEventListener('click', function(){
 navMenuEl.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navMenuEl.classList.remove('open'); }); });
 
 /* ---- MAJOR CUSTOMERS ----
-   Verbatim from "Customers List & Logos.xlsx" (Sheet1, 40 rows), re-grouped
-   into 4 categories per client feedback (18 Sept 2026) — same 40 companies,
-   one legal-entity correction (Crompton Greaves Limited → Crompton Greaves
+   Verbatim from "Customers List & Logos.xlsx" (Sheet1, originally 40 rows),
+   re-grouped into 4 categories per client feedback (18 Sept 2026), one
+   legal-entity correction (Crompton Greaves Limited → Crompton Greaves
    Consumer Electricals Ltd., a different demerged entity from the parent —
    FLAG: confirm the reused crompton-greaves.png logo still fits that entity).
+   38 rows as of client feedback (2026-09-25): removed "ABB Power Products
+   and Systems India Limited" and "GE Power Conversion India Private
+   Limited" (both distinct legal entities from ABB India Limited / GE
+   Vernova T&D India Limited, which remain listed) — FLAG: this changes the
+   "40 direct customers" figure referenced elsewhere on the site to 38;
+   confirm with client before that wording is updated anywhere else.
    [ S.No , Customer name , category key , logo file | null ]
    Logos extracted from that file → assets/logos/major-customers/  */
 var LP = 'assets/logos/major-customers/';
@@ -231,45 +237,43 @@ var CATS = [
 ];
 var MC = [
   [1,  "ABB India Limited", "transmission", "abb.png"],
-  [2,  "ABB Power Products and Systems India Limited", "transmission", "abb.png"],
-  [3,  "ALSTOM T&D India Limited", "transmission", "alstom.jpeg"],
-  [4,  "Atlanta Electricals Pvt. Ltd.", "transformer", "atlanta-electricals.jpeg"],
-  [5,  "AYR Energy Inc.", "energy", "ayr-energy.png"],
-  [6,  "AYR Energy India Private Limited", "energy", "ayr-energy.png"],
-  [7,  "Bharat Heavy Electricals Ltd.", "electrical", "bhel.png"],
-  [8,  "BTW Atlanta Transformers India Pvt. Ltd.", "transformer", "btw-atlanta.jpeg"],
-  [9,  "CG Power and Industrial Solutions Limited", "transmission", "cg-power.jpeg"],
-  [10, "Crompton Greaves Consumer Electricals Ltd.", "energy", "crompton-greaves.png"],
-  [11, "Danish Private Limited", "energy", "danish.jpeg"],
-  [12, "ECE Industries Ltd.", "electrical", "ece-industries.jpeg"],
-  [13, "EMCO Limited", "electrical", "emco.jpeg"],
-  [14, "EMT Megatherm Pvt. Ltd.", "electrical", "emt-megatherm.jpeg"],
-  [15, "GE Power Conversion India Private Limited", "electrical", "ge.jpeg"],
-  [16, "GE Vernova T&D India Limited", "transmission", "ge.jpeg"],
-  [17, "Hitachi Energy India Limited", "transmission", "hitachi-energy.png"],
-  [18, "Hitachi Energy USA Inc.", "transmission", "hitachi-energy.png"],
-  [19, "Indo Tech Transformers Limited", "transformer", "indo-tech.jpeg"],
-  [20, "Kanohar Electricals Limited", "transformer", "kanohar.jpeg"],
-  [21, "Kotsons Pvt. Ltd.", "transformer", "kotsons.png"],
-  [22, "Marson's Electrical Industries", "electrical", "marsons.png"],
-  [23, "Meiden T&D (India) Limited", "transmission", "meiden.png"],
-  [24, "Power Grid Corporation of India Ltd", "transmission", "powergrid.jpeg"],
-  [25, "RIMA Transformers and Conductors Pvt. Ltd.", "transformer", null],
-  [26, "Schneider Electric Infrastructure Limited", "transmission", "schneider-electric.png"],
-  [27, "Shilchar Technologies Limited", "transformer", "shilchar.jpeg"],
-  [28, "Shirdi Sai Electricals Ltd.", "energy", "shirdi-sai.jpeg"],
-  [29, "Shree Abirami Engineering Works", "energy", "shree-abirami.png"],
-  [30, "Siemens Energy India Limited", "transmission", "siemens-energy.png"],
-  [31, "Skipper Electricals (India) Ltd.", "electrical", null],
-  [32, "SkipperSeil Ltd.", "electrical", "skipperseil.jpeg"],
-  [33, "TBEA (India) Transformer Private Limited", "transformer", "tbea.png"],
-  [34, "TBEA Energy (India) Pvt. Ltd.", "transformer", "tbea.png"],
-  [35, "Technical Associates Limited", "energy", "technical-associates.png"],
-  [36, "Toshiba Transmission & Distribution Systems India Pvt Ltd", "transmission", "toshiba.jpeg"],
-  [37, "Transformer & Rectifiers (India) Ltd.", "transformer", "transformers-rectifiers-india.png"],
-  [38, "Voltamp Transformers Ltd.", "transformer", "voltamp.png"],
-  [39, "Western Transformer & Equipment Pvt. Ltd.", "transformer", "western-transformers.jpeg"],
-  [40, "Wilson Power Solutions India Pvt. Ltd.", "energy", "wilson-power.jpeg"]
+  [2,  "ALSTOM T&D India Limited", "transmission", "alstom.jpeg"],
+  [3,  "Atlanta Electricals Pvt. Ltd.", "transformer", "atlanta-electricals.jpeg"],
+  [4,  "AYR Energy Inc.", "energy", "ayr-energy.png"],
+  [5,  "AYR Energy India Private Limited", "energy", "ayr-energy.png"],
+  [6,  "Bharat Heavy Electricals Ltd.", "electrical", "bhel.png"],
+  [7,  "BTW Atlanta Transformers India Pvt. Ltd.", "transformer", "btw-atlanta.jpeg"],
+  [8,  "CG Power and Industrial Solutions Limited", "transmission", "cg-power.jpeg"],
+  [9,  "Crompton Greaves Consumer Electricals Ltd.", "energy", "crompton-greaves.png"],
+  [10, "Danish Private Limited", "energy", "danish.jpeg"],
+  [11, "ECE Industries Ltd.", "electrical", "ece-industries.jpeg"],
+  [12, "EMCO Limited", "electrical", "emco.jpeg"],
+  [13, "EMT Megatherm Pvt. Ltd.", "electrical", "emt-megatherm.jpeg"],
+  [14, "GE Vernova T&D India Limited", "transmission", "ge.jpeg"],
+  [15, "Hitachi Energy India Limited", "transmission", "hitachi-energy.png"],
+  [16, "Hitachi Energy USA Inc.", "transmission", "hitachi-energy.png"],
+  [17, "Indo Tech Transformers Limited", "transformer", "indo-tech.jpeg"],
+  [18, "Kanohar Electricals Limited", "transformer", "kanohar.jpeg"],
+  [19, "Kotsons Pvt. Ltd.", "transformer", "kotsons.png"],
+  [20, "Marson's Electrical Industries", "electrical", "marsons.png"],
+  [21, "Meiden T&D (India) Limited", "transmission", "meiden.png"],
+  [22, "Power Grid Corporation of India Ltd", "transmission", "powergrid.jpeg"],
+  [23, "RIMA Transformers and Conductors Pvt. Ltd.", "transformer", null],
+  [24, "Schneider Electric Infrastructure Limited", "transmission", "schneider-electric.png"],
+  [25, "Shilchar Technologies Limited", "transformer", "shilchar.jpeg"],
+  [26, "Shirdi Sai Electricals Ltd.", "energy", "shirdi-sai.jpeg"],
+  [27, "Shree Abirami Engineering Works", "energy", "shree-abirami.png"],
+  [28, "Siemens Energy India Limited", "transmission", "siemens-energy.png"],
+  [29, "Skipper Electricals (India) Ltd.", "electrical", null],
+  [30, "SkipperSeil Ltd.", "electrical", "skipperseil.jpeg"],
+  [31, "TBEA (India) Transformer Private Limited", "transformer", "tbea.png"],
+  [32, "TBEA Energy (India) Pvt. Ltd.", "transformer", "tbea.png"],
+  [33, "Technical Associates Limited", "energy", "technical-associates.png"],
+  [34, "Toshiba Transmission & Distribution Systems India Pvt Ltd", "transmission", "toshiba.jpeg"],
+  [35, "Transformer & Rectifiers (India) Ltd.", "transformer", "transformers-rectifiers-india.png"],
+  [36, "Voltamp Transformers Ltd.", "transformer", "voltamp.png"],
+  [37, "Western Transformer & Equipment Pvt. Ltd.", "transformer", "western-transformers.jpeg"],
+  [38, "Wilson Power Solutions India Pvt. Ltd.", "energy", "wilson-power.jpeg"]
 ];
 
 var regEl = document.getElementById('reg');

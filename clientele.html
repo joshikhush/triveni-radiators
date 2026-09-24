@@ -393,6 +393,7 @@ img { display:block; max-width:100%; }
 .oc-feature-name { font-family:'Fraunces',serif; font-weight:400; font-size:27px; line-height:1.15; color:#101828; }
 .oc-feature-table { margin-top:20px; border-top:1px solid #E7E2D9; }
 .oc-feature-row { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; padding:12px 0; }
+.oc-hidden-pending { display:none !important; }
 .oc-feature-row:not(:last-child) { border-bottom:1px solid #E7E2D9; }
 .oc-feature-row dt { font-size:13px; color:#667085; }
 .oc-feature-row dd { font-size:13px; font-weight:500; color:#101828; text-align:right; }
@@ -540,6 +541,14 @@ img { display:block; max-width:100%; }
 .pp-row-link:hover { text-decoration:underline; }
 .pp-row-link .arw { font-size:.85em; transition:transform .2s; }
 .pp-row-link:hover .arw { transform:translateX(3px); }
+
+/* Grouped supply-record rows (e.g. the two Turkmenistan voltage-class rows)
+   share a gold left border, and a subtotal row directly beneath makes the
+   combined total explicit instead of leaving readers to add two rows. */
+.pp-row-grouped td:first-child { border-left:2px solid rgba(203,167,108,.55); padding-left:14px; }
+.pp-row-subtotal td { border-left:2px solid #CBA76C; padding-left:14px; background:rgba(203,167,108,.06); font-weight:600; }
+.pp-row-subtotal td:first-child { color:#CBA76C; font-size:13px; letter-spacing:.03em; }
+.pp-row-subtotal td:last-child { color:#CBA76C; }
 
 /* ---- spotlight panel ---- */
 .ppsc-list { display:flex; flex-direction:column; gap:1.4rem; }
@@ -843,8 +852,8 @@ img { display:block; max-width:100%; }
     </h1>
     <p class="ch-sub">
       Our radiators cool power transformers and reactors built by Siemens, GE,
-      ABB, TBEA, CG Power and Shirdi Sai Electricals — global OEMs that specify
-      and approve our product to their own international standards. Through
+      ABB, TBEA, CG Power and Toshiba Transmission and Distribution Systems —
+      global OEMs that specify and approve our product to their own international standards. Through
       them our radiators run in India's transmission grid, railways, state
       utilities and renewable projects, and in installations beyond India.
     </p>
@@ -926,7 +935,7 @@ img { display:block; max-width:100%; }
     </div>
 
     <div class="oc-foot reveal">
-      <p class="oc-count">Six of 40 direct customers shown.</p>
+      <p class="oc-count" id="ocCount">Six of 40 direct customers shown.</p>
       <a href="major-customers-directory.html" class="oc-viewall">View all major customers <span>&rarr;</span></a>
     </div>
 
@@ -1119,7 +1128,10 @@ if (reduce) {
 const EXPORTS = [
   // Verified from client sheet "TBEA Turkmenistan – Radiator Supply" (532 radiators, 25 jobs).
   // Previously 654 incl. SEIL — pending client confirmation of any SEIL supply. If confirmed, add SEIL qty to radiators and 'SEIL' back to customers.
-  { country: 'Turkmenistan', lat: 38.9, lon: 59.6,   radiators: 532, jobs: 25, customers: ['TBEA'], period: '2021-22', continent: 'Asia' },
+  // orders:4 restored (2026-09-25) so the sitewide "Export orders" total is correct again —
+  // the map card still shows "Transformer Jobs · 25" (jobs takes priority over orders in the
+  // card template below), so this doesn't reintroduce the old "4 orders" display.
+  { country: 'Turkmenistan', lat: 38.9, lon: 59.6,   radiators: 532, orders: 4, jobs: 25, customers: ['TBEA'], period: '2021-22', continent: 'Asia' },
   { country: 'Bangladesh',   lat: 23.7, lon: 90.4,   radiators: 92,  orders: 3, customers: ['Prolec GE', 'Siemens'], period: '2016-18', continent: 'Asia' },
   { country: 'Bhutan',       lat: 27.5, lon: 90.4,   radiators: 84,  orders: 2, customers: ['GE T&D', 'Hitachi'], period: '2021-23', continent: 'Asia' },
   { country: 'Nepal',        lat: 28.4, lon: 84.1,   radiators: 62,  orders: 3, customers: ['TBEA'], period: '2020-23', continent: 'Asia' },
@@ -1498,20 +1510,120 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
 })();
 
 /* ===================================================
+   DIRECT CUSTOMERS — single source for the "N direct customers" count
+   (Our Customers footer + the India presence panel below) and for the
+   India map's pins/state list. Mirrors major-customers-directory.html's
+   MC array verbatim (that page owns the canonical 40→38-row list; this is
+   a duplicate per this site's existing per-page data convention, not an
+   import) — 38 rows after removing "ABB Power Products and Systems India
+   Limited" and "GE Power Conversion India Private Limited" per client
+   feedback (2026-09-25). FLAG: this changes the "40 direct customers"
+   figure referenced sitewide to 38 — confirmed with the client before
+   changing the wording anywhere; both this count and the map read live
+   from INDIA_CUSTOMERS.length so they can't drift out of sync with each
+   other, but the underlying "40 vs 38" question still needs the client's
+   sign-off.
+
+   Every entry carries locationConfirmed: true/false. true only when a
+   city/state is confirmed elsewhere in this site's own data (the "Our
+   Customers" MAJOR_CUSTOMERS array below, and the Global Reach map's
+   INDIA_LOCATIONS array) — nothing here is invented. This flag is the
+   single gate the map/list/chips below check: setting locationConfirmed:
+   true and filling in location is the only change needed to make a
+   customer appear everywhere automatically — no other code changes.
+   The 8 currently true, and how each was identified:
+     - ABB India Limited              -> "ABB" (Vadodara)
+     - GE Vernova T&D India Limited   -> "GE T&D India" (Vadodara) — GE's T&D
+       business was rebranded "GE Vernova"; treated as the same entity, but
+       flagged here in case the client considers them separate.
+     - TBEA Energy (India) Pvt. Ltd.  -> "TBEA Energy India" (Vadodara) —
+       NOT matched to "TBEA (India) Transformer Private Limited", a
+       distinct legal entity per this file's own earlier note.
+     - CG Power and Industrial Solutions Limited -> "CG Power" (Mandideep)
+     - Shirdi Sai Electricals Ltd.    -> "Shirdi Sai Electricals" (Prayagraj)
+     - Siemens Energy India Limited   -> "Siemens Energy" (Navi Mumbai)
+     - Toshiba Transmission & Distribution Systems India Pvt Ltd -> "Toshiba
+       T&D" (Hyderabad)
+     - Wilson Power Solutions India Pvt. Ltd. -> "Wilson Power Solutions"
+       (Chennai)
+   TODO: pending client location confirmation (list sent to client) — every
+   other entry below is locationConfirmed: false, location: null. These are
+   fully hidden from the map/state groups/chips/tooltips per client
+   instruction (2026-09-25) — no "pending"/"unconfirmed" text is shown
+   anywhere on the live page. They still appear, by name only, in the full
+   customer directory (major-customers-directory.html), which has never
+   shown a location column. */
+var INDIA_CUSTOMERS = [
+  { name: 'ABB India Limited', locationConfirmed: true, location: { city: 'Vadodara', state: 'Gujarat', lat: 22.31, lon: 73.18 } },
+  { name: 'ALSTOM T&D India Limited', locationConfirmed: false, location: null },
+  { name: 'Atlanta Electricals Pvt. Ltd.', locationConfirmed: false, location: null },
+  { name: 'AYR Energy Inc.', locationConfirmed: false, location: null },
+  { name: 'AYR Energy India Private Limited', locationConfirmed: false, location: null },
+  { name: 'Bharat Heavy Electricals Ltd.', locationConfirmed: false, location: null },
+  { name: 'BTW Atlanta Transformers India Pvt. Ltd.', locationConfirmed: false, location: null },
+  { name: 'CG Power and Industrial Solutions Limited', locationConfirmed: true, location: { city: 'Mandideep', state: 'Madhya Pradesh', lat: 23.10, lon: 77.53 } },
+  { name: 'Crompton Greaves Consumer Electricals Ltd.', locationConfirmed: false, location: null },
+  { name: 'Danish Private Limited', locationConfirmed: false, location: null },
+  { name: 'ECE Industries Ltd.', locationConfirmed: false, location: null },
+  { name: 'EMCO Limited', locationConfirmed: false, location: null },
+  { name: 'EMT Megatherm Pvt. Ltd.', locationConfirmed: false, location: null },
+  { name: 'GE Vernova T&D India Limited', locationConfirmed: true, location: { city: 'Vadodara', state: 'Gujarat', lat: 22.31, lon: 73.18 } },
+  { name: 'Hitachi Energy India Limited', locationConfirmed: false, location: null },
+  { name: 'Hitachi Energy USA Inc.', locationConfirmed: false, location: null },
+  { name: 'Indo Tech Transformers Limited', locationConfirmed: false, location: null },
+  { name: 'Kanohar Electricals Limited', locationConfirmed: false, location: null },
+  { name: 'Kotsons Pvt. Ltd.', locationConfirmed: false, location: null },
+  { name: "Marson's Electrical Industries", locationConfirmed: false, location: null },
+  { name: 'Meiden T&D (India) Limited', locationConfirmed: false, location: null },
+  { name: 'Power Grid Corporation of India Ltd', locationConfirmed: false, location: null },
+  { name: 'RIMA Transformers and Conductors Pvt. Ltd.', locationConfirmed: false, location: null },
+  { name: 'Schneider Electric Infrastructure Limited', locationConfirmed: false, location: null },
+  { name: 'Shilchar Technologies Limited', locationConfirmed: false, location: null },
+  { name: 'Shirdi Sai Electricals Ltd.', locationConfirmed: true, location: { city: 'Prayagraj', state: 'Uttar Pradesh', lat: 25.45, lon: 81.85 } },
+  { name: 'Shree Abirami Engineering Works', locationConfirmed: false, location: null },
+  { name: 'Siemens Energy India Limited', locationConfirmed: true, location: { city: 'Navi Mumbai', state: 'Maharashtra', lat: 19.03, lon: 73.02 } },
+  { name: 'Skipper Electricals (India) Ltd.', locationConfirmed: false, location: null },
+  { name: 'SkipperSeil Ltd.', locationConfirmed: false, location: null },
+  { name: 'TBEA (India) Transformer Private Limited', locationConfirmed: false, location: null },
+  { name: 'TBEA Energy (India) Pvt. Ltd.', locationConfirmed: true, location: { city: 'Vadodara', state: 'Gujarat', lat: 22.31, lon: 73.18 } },
+  { name: 'Technical Associates Limited', locationConfirmed: false, location: null },
+  { name: 'Toshiba Transmission & Distribution Systems India Pvt Ltd', locationConfirmed: true, location: { city: 'Hyderabad', state: 'Telangana', lat: 17.39, lon: 78.49 } },
+  { name: 'Transformer & Rectifiers (India) Ltd.', locationConfirmed: false, location: null },
+  { name: 'Voltamp Transformers Ltd.', locationConfirmed: false, location: null },
+  { name: 'Western Transformer & Equipment Pvt. Ltd.', locationConfirmed: false, location: null },
+  { name: 'Wilson Power Solutions India Pvt. Ltd.', locationConfirmed: true, location: { city: 'Chennai', state: 'Tamil Nadu', lat: 13.08, lon: 80.27 } }
+];
+
+/* ===================================================
    02 — OUR CUSTOMERS  ·  feature + list
    One MAJOR_CUSTOMERS array drives both the featured card and
    the list — nothing duplicated in markup. Empty voltageClass /
    partnerSince never render placeholder text: the list shows an
    em dash, the featured card omits that row entirely.
-   =================================================== */
+
+   GE T&D's start year: searched milestones.html, credentials.html and this
+   page's own JS data for the earliest confirmed year of GE T&D supply. The
+   only related record is milestones.html's 2018 entry, which says Triveni
+   "becomes one of the largest suppliers" to GE T&D (among others) — that
+   describes an already-established relationship reaching a new scale, not
+   a confirmed first year of supply, so it isn't used here. Per the brief,
+   GE T&D instead gets a real "Supplier since [YEAR]" line, present in the
+   markup but hidden (.oc-hidden-pending) until the client confirms it —
+   TODO: client to confirm GE T&D start year.
+
+   Toshiba Transmission and Distribution Systems replaces Shirdi Sai
+   Electricals here (and in the hero paragraph above) per client feedback.
+   Shirdi Sai Electricals Ltd. remains in the full 40(38)-customer directory
+   (major-customers-directory.html, #26) — this MAJOR_CUSTOMERS array is
+   only the small featured set at the top of the page, not the full list. */
 (function () {
   var MAJOR_CUSTOMERS = [
     { name: 'Siemens Energy', logo: 'assets/logos/siemens-energy.svg', supplies: 'Power transformers & reactors', voltageClass: 'Up to 765 kV', location: 'Navi Mumbai', partnerSince: '2016' },
-    { name: 'GE T&D India', logo: 'assets/logos/ge.svg', supplies: 'HV large power transformers', voltageClass: '', location: 'Vadodara', partnerSince: '' },
+    { name: 'GE T&D India', logo: 'assets/logos/ge.svg', supplies: 'HV large power transformers', voltageClass: '', location: 'Vadodara', partnerSince: '', partnerSincePending: '[YEAR]' },
     { name: 'ABB', logo: 'assets/logos/abb.svg', supplies: 'RDSO & POWERGRID transformers', voltageClass: '', location: 'Vadodara', partnerSince: '2019' },
     { name: 'TBEA Energy India', logo: 'assets/logos/tbea.png', supplies: 'HV large power transformers', voltageClass: '', location: 'Vadodara', partnerSince: '2015' },
     { name: 'CG Power', logo: 'assets/logos/cgpower.svg', supplies: 'Power transformers', voltageClass: 'To 420 kV', location: 'Mandideep', partnerSince: '2022' },
-    { name: 'Shirdi Sai Electricals', logo: 'assets/logos/shirdisai-lockup.svg', supplies: 'Transformers & reactors', voltageClass: 'To 400 kV', location: 'Prayagraj', partnerSince: '2023' }
+    { name: 'Toshiba T&D', logo: 'assets/logos/major-customers/toshiba.jpeg', supplies: 'Transmission & distribution systems', voltageClass: '', location: 'Hyderabad', partnerSince: '' }
   ];
   var EM_DASH = '—';
 
@@ -1527,6 +1639,8 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     if (c.voltageClass) rows += '<div class="oc-feature-row"><dt>Voltage class</dt><dd>' + esc(c.voltageClass) + '</dd></div>';
     rows += '<div class="oc-feature-row"><dt>Location</dt><dd>' + esc(c.location) + '</dd></div>';
     if (c.partnerSince) rows += '<div class="oc-feature-row"><dt>Partner since</dt><dd>' + esc(c.partnerSince) + '</dd></div>';
+    /* TODO: client to confirm GE T&D start year — hidden until then */
+    else if (c.partnerSincePending) rows += '<div class="oc-feature-row oc-hidden-pending" data-pending="true"><dt>Partner since</dt><dd>Supplier since ' + esc(c.partnerSincePending) + '</dd></div>';
     return '<div class="oc-feature-logo"><img src="' + c.logo + '" alt="' + esc(c.name) + '" loading="lazy"></div>' +
       '<h3 class="oc-feature-name">' + esc(c.name) + '</h3>' +
       '<dl class="oc-feature-table">' + rows + '</dl>';
@@ -1539,6 +1653,15 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       '<span class="oc-row-year">' + (c.partnerSince ? esc(c.partnerSince) : EM_DASH) + '</span>' +
       '</button>';
   }).join('');
+
+  /* count text now reads live from INDIA_CUSTOMERS.length (38, not the old
+     hardcoded 40) so this can't go stale again — see the FLAG comment on
+     INDIA_CUSTOMERS above for why the number changed and what still needs
+     client confirmation */
+  var ocCountEl = document.getElementById('ocCount');
+  if (ocCountEl && typeof INDIA_CUSTOMERS !== 'undefined') {
+    ocCountEl.textContent = MAJOR_CUSTOMERS.length + ' of ' + INDIA_CUSTOMERS.length + ' direct customers shown.';
+  }
 
   var rows = Array.prototype.slice.call(listEl.querySelectorAll('.oc-row'));
   var activeIdx = 0;
@@ -1641,23 +1764,24 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
        Radiator Supply" sheet (2026-09-24). Total across both rows below:
        532 radiators, 25 transformer jobs. Internal job numbers (IM10011/…,
        IM10012/…, IM10013/…) are intentionally not published on the site. */
-    { id: 'turkmenistan-500-220-35', international: true,
+    { id: 'turkmenistan-500-220-35', international: true, group: 'turkmenistan',
       critical: { project: 'International Transmission Projects', region: 'Turkmenistan', rating: '167 MVA', voltage: '500/220/35 & 500/220/10 kV', qty: '340' },
-      featured: { customer: 'TBEA Energy', project: 'International Transmission Project', ratingVoltage: '167 MVA & 125 MVA', scope: '532 Radiators' },
+      featured: { customer: 'TBEA', project: 'International Transmission Project', ratingVoltage: '167 MVA & 125 MVA', scope: '532 Radiators' },
       spotlight: {
         title: 'TBEA · Turkmenistan',
         summary: '532 Radiators · 25 Transformer Jobs',
-        customer: 'TBEA Energy',
+        customer: 'TBEA',
         endCustomer: 'Turkmenistan',
         application: 'Power Transmission',
         rating: '167 MVA & 125 MVA',
         voltage: '500/220/35, 500/220/10 & 220/110/10 kV',
         qty: '532',
-        range: '–33°C to 110°C',
-        line: '17 × 167 MVA transformers (500/220/35 kV — 14 jobs; 500/220/10 kV — 3 jobs) and 8 × 125 MVA transformers (220/110/10 kV) — 532 radiators supplied through TBEA Energy across 25 transformer jobs in Turkmenistan.'
+        range: '-33°C to 110°C',
+        line: '17 × 167 MVA transformers (500/220/35 kV — 14 jobs; 500/220/10 kV — 3 jobs) and 8 × 125 MVA transformers (220/110/10 kV) — 532 radiators supplied through TBEA across 25 transformer jobs in Turkmenistan.'
       } },
 
-    { id: 'turkmenistan-220-110-10', international: true,
+    { id: 'turkmenistan-220-110-10', international: true, group: 'turkmenistan',
+      groupSubtotal: { label: 'Turkmenistan total · TBEA', qty: '532' },
       critical: { project: 'International Transmission Projects', region: 'Turkmenistan', rating: '125 MVA', voltage: '220/110/10 kV', qty: '192' } },
 
     { id: 'powergrid-765', international: false,
@@ -1676,13 +1800,13 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     { value: '765', unit: 'kV', caption: 'Highest voltage class delivered', source: 'POWERGRID transmission' },
     { value: '532', unit: 'units', caption: 'Radiators across 25 transformer jobs', source: 'TBEA · Turkmenistan' },
     { value: '2,200', unit: '+', caption: 'Radiators in a single RDSO order', source: 'Railway electrification' },
-    { value: '–33 / +110', unit: '°C', caption: 'Proven operating range', source: 'International supply' }
+    { value: '-33°C to 110°C', unit: '', caption: 'Proven operating range', source: 'International supply' }
   ];
 
   /* Certificates: no documents yet. Push { title, href } objects here and
-     the tab will appear automatically once this is non-empty — until then
-     the footer's "View project certificates" button still opens the panel
-     directly, it's just not offered as a tab. */
+     the tab will render the real list automatically — until then it still
+     shows (see BUGFIX note below) with an honest "being confirmed" message,
+     rather than a button pointing nowhere. */
   var CERTIFICATES = [];
 
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
@@ -1691,7 +1815,6 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
   var statRailEl = document.getElementById('ppStatRail');
   var tabsEl = document.getElementById('ppTabs');
   var panelEl = document.getElementById('ppPanel');
-  var certBtn = document.getElementById('ppCertBtn');
   if (!statRailEl || !tabsEl || !panelEl) return;
 
   /* ---- stat rail ---- */
@@ -1704,8 +1827,9 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       '</div>';
   }).join('');
 
-  /* ---- tabs — built from the data, not hardcoded; Spotlight/Certificates
-     only appear once there's something to show ---- */
+  /* ---- tabs — built from the data, not hardcoded; Spotlight only appears
+     once there's something to show. Certificates is always offered as a
+     tab (not gated on CERTIFICATES.length) — see BUGFIX note below. ---- */
   var recordRows = PROJECTS.filter(function (p) { return p.critical; });
   var featuredRows = PROJECTS.filter(function (p) { return p.featured; });
   var spotlightRows = PROJECTS.filter(function (p) { return p.spotlight; });
@@ -1715,7 +1839,18 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     { key: 'featured', label: 'Featured projects', count: featuredRows.length }
   ];
   if (spotlightRows.length) TABS.push({ key: 'spotlight', label: 'Spotlight', count: null });
-  if (CERTIFICATES.length) TABS.push({ key: 'certificates', label: 'Certificates', count: null });
+  /* BUGFIX: "View project certifications" previously pointed at a button
+     (#ppCertBtn) that no longer exists in the markup — it was removed in an
+     earlier edit, but this dead getElementById/addEventListener reference
+     was left behind, so the button silently did nothing (no console error,
+     since the `if (certBtn)` guard just skipped it — but no working entry
+     point either). The old code also hid this tab entirely while
+     CERTIFICATES was empty, which is exactly when a visitor most needs an
+     honest "pending" message rather than nothing at all. Fixed by making
+     Certificates a normal, always-visible tab (keyboard/mobile accessible
+     like the others) instead of a separate button; renderCertificates()
+     below already had the correct empty-state message ready to go. */
+  TABS.push({ key: 'certificates', label: 'Certificates', count: null });
 
   tabsEl.innerHTML = TABS.map(function (t, i) {
     return '<button type="button" class="pp-tab' + (i === 0 ? ' is-active' : '') + '" role="tab" aria-selected="' + (i === 0 ? 'true' : 'false') + '" aria-controls="ppPanel" data-tab="' + t.key + '">' +
@@ -1735,13 +1870,27 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       var nameCell = p.spotlight
         ? '<button type="button" class="pp-row-link" data-open-spotlight="' + p.id + '">' + esc(c.project) + ' <span class="arw">&rarr;</span></button>'
         : esc(c.project);
-      return '<tr>' +
+      var rowClass = p.group ? ' class="pp-row-grouped"' : '';
+      var html = '<tr' + rowClass + '>' +
         cell('Project / Application', nameCell) +
         cell('End Customer / Region', regionCellHTML(p)) +
         cell('Rating', esc(c.rating)) +
         cell('Voltage Class', esc(c.voltage)) +
         cell('Qty.', esc(c.qty)) +
         '</tr>';
+      /* subtotal row — a grouped project can carry a groupSubtotal object on
+         its own entry (e.g. the last of the Turkmenistan rows), rendered
+         directly beneath it rather than requiring readers to add rows up */
+      if (p.groupSubtotal) {
+        html += '<tr class="pp-row-subtotal">' +
+          cell('Project / Application', esc(p.groupSubtotal.label)) +
+          cell('End Customer / Region', '') +
+          cell('Rating', '') +
+          cell('Voltage Class', '') +
+          cell('Qty.', esc(p.groupSubtotal.qty)) +
+          '</tr>';
+      }
+      return html;
     }).join('');
     return '<div class="pp-tablewrap"><table class="pp-table pp-table--record">' +
       '<caption class="pp-sr-only">Supply record — projects proven in critical applications</caption>' +
@@ -1831,8 +1980,6 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     if (!link) return;
     setTab('spotlight');
   });
-
-  if (certBtn) certBtn.addEventListener('click', function () { setTab('certificates'); });
 
   paint();
 })();
