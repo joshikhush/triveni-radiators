@@ -4,20 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sustainability | Triveni Radiators</title>
-<meta name="description" content="Sustainability at Triveni Radiators: responsible growth, environmental care, community development and people-first safety, from our Naini, Prayagraj facility.">
+<meta name="description" content="Sustainability at Triveni Radiators: tree plantation, effluent treatment and clean solar energy at our Naini, Prayagraj facility, plus our separate CSR programme for the wider community.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Schibsted+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Schibsted+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Fraunces:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="footer.css">
 <style>
 /* ===================================================
    TOKENS  (identical to Careers / Clients / Milestones / Triveni Group,
-   plus a couple of page-local additions for the lavender tint section)
+   plus page-local additions for the bento redesign)
    =================================================== */
 :root {
   --navy:        #101B4D;
   --navy-2:      #111A45;
   --navy-deep:   #0C1233;
+  --navy-bento:  #0C1830;
 
   --ivory:       #F5F0E8;
   --stone:       #EFEAE1;
@@ -27,18 +28,21 @@
 
   --ink:         #1E1828;
   --navy-ink:    #14204A;
-  --muted:       #63607A;
+  --muted:       #4A4458;
   --muted-2:     #928DA3;
 
   --violet:      #6A45C0;
+  --violet-hover:#4E2F9A;
   --violet-deep: #4A2E82;
   --lav-hi:      #8B8CF0;
   --gold:        #B8935A;
   --gold-2:      #CBA76C;
+  --gold-label:  #8A6A3A;
 
   --line:        #E7E2D9;
   --line-cool:   #E0DEF0;
   --line-beige:  #E9E1D2;
+  --card-border: #E8E0CD;
 
   --beige:       #EEE7DC;
 }
@@ -46,7 +50,7 @@
 html { scroll-behavior:smooth; }
 body {
   font-family:'Schibsted Grotesk',sans-serif;
-  background:var(--ivory); color:var(--ink); line-height:1.6;
+  background:var(--cream); color:var(--ink); line-height:1.6;
   overflow-x:hidden; -webkit-font-smoothing:antialiased;
 }
 a { color:inherit; text-decoration:none; }
@@ -114,54 +118,11 @@ button { font:inherit; }
 @media(prefers-reduced-motion:reduce){ .reveal{opacity:1!important;transform:none!important;transition:none!important;} }
 
 /* ===================================================
-   SHARED — eyebrow / heading / lead / buttons / arrows
-   (page-local "sus-" prefix, same construction as the rest of the site)
-   =================================================== */
-.sus-eyebrow {
-  font-family:'Poppins',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.26em;
-  text-transform:uppercase; color:var(--violet); margin-bottom:1.1rem;
-}
-.sus-eyebrow.on-dark { color:var(--lav-hi); }
-.sus-h2 {
-  font-family:'Newsreader',serif; font-weight:400; letter-spacing:-.02em;
-  font-size:clamp(2.1rem,3.6vw,3.15rem); line-height:1.12; color:var(--navy-ink);
-}
-.sus-h2 em { font-style:italic; font-weight:400; color:var(--violet); }
-.sus-h2.on-dark { color:#fff; }
-.sus-h2.on-dark em { color:#EFDDB8; }
-.sus-lead { font-size:1rem; line-height:1.8; color:var(--muted); max-width:36rem; }
-.sus-lead.on-dark { color:rgba(255,255,255,.62); }
-
-.btn {
-  display:inline-flex; align-items:center; gap:.6rem;
-  font-family:'Poppins',sans-serif; font-size:.9rem; font-weight:500; letter-spacing:.01em;
-  border-radius:999px; padding:1rem 2.1rem; transition:background .2s, color .2s, transform .2s, border-color .2s, box-shadow .2s;
-  white-space:nowrap;
-}
-.btn span { transition:transform .2s; display:inline-block; }
-.btn:hover span { transform:translateX(4px); }
-.btn-primary { color:#fff; background:var(--violet-deep); box-shadow:0 16px 34px -16px rgba(74,46,130,.5); }
-.btn-primary:hover { background:var(--violet); transform:translateY(-2px); }
-.btn-ghost-dark { color:rgba(255,255,255,.82); border:1px solid rgba(255,255,255,.22); background:transparent; }
-.btn-ghost-dark:hover { border-color:rgba(255,255,255,.5); color:#fff; background:rgba(255,255,255,.05); }
-.link-arrow {
-  font-family:'Poppins',sans-serif; font-size:.86rem; font-weight:500; color:var(--violet-deep);
-  display:inline-flex; align-items:center; gap:.55rem;
-}
-.link-arrow span { transition:transform .25s cubic-bezier(.22,1,.36,1); display:inline-flex; }
-.link-arrow:hover span { transform:translateX(5px); }
-.link-arrow.on-dark { color:#fff; }
-
-/* ===================================================
    SECTION SHELL
    =================================================== */
 .sec { padding:6.5rem 4rem; scroll-margin-top:5rem; }
 .sec-inner { max-width:1240px; margin:0 auto; }
-.sec--ivory   { background:var(--ivory); }
-.sec--stone   { background:var(--stone); }
-.sec--lav     { background:var(--lav-tint); }
-.sec-head { max-width:38rem; margin-bottom:3.6rem; }
-.sec-head.center { margin-left:auto; margin-right:auto; text-align:center; }
+.sec--ivory { background:var(--ivory); }
 @media(max-width:1080px){ .sec{ padding:5rem 2.2rem; } }
 @media(max-width:640px){ .sec{ padding:4rem 1.4rem; } }
 
@@ -169,11 +130,11 @@ button { font:inherit; }
    PLACEHOLDER PHOTOGRAPHY
    (clearly labelled, never stock/AI — same convention used sitewide.
    Swap the <div class="ph-media">…</div> for an <img> once the client's
-   own sustainability photographs are supplied, keeping the same class
-   on a wrapping element if you want to preserve the aspect ratio.)
+   own photographs are supplied, keeping the same class on a wrapping
+   element if you want to preserve the aspect ratio.)
    =================================================== */
 .ph-media {
-  position:relative; width:100%; height:100%; min-height:220px;
+  position:relative; width:100%; height:100%; min-height:160px;
   border:1px dashed var(--line-cool); border-radius:14px;
   background:
     repeating-linear-gradient(135deg,rgba(106,69,192,.05) 0 1px,transparent 1px 22px),
@@ -189,8 +150,12 @@ button { font:inherit; }
 .ph-media.dark .ph-tag { color:var(--lav-hi); }
 .ph-media.dark .ph-txt { color:rgba(255,255,255,.45); }
 
+/* content waiting on the client, switched on later by removing this class
+   (and its data-pending="true" marker) from the element */
+.is-pending { display:none !important; }
+
 /* ===================================================
-   1 — HERO
+   1 — HERO  (unchanged — do not modify)
    =================================================== */
 .sus-hero {
   position:relative; overflow:hidden; background:var(--navy-deep);
@@ -221,159 +186,278 @@ button { font:inherit; }
 .sus-hero-title em { font-style:italic; color:#EFDDB8; }
 .sus-hero-sub { font-family:'Newsreader',serif; font-style:italic; font-size:1.2rem; color:rgba(240,238,250,.82); margin-bottom:1.6rem; }
 .sus-hero-intro { font-size:1rem; line-height:1.8; color:rgba(240,238,250,.68); max-width:30rem; margin-bottom:0; }
+.sus-eyebrow { font-family:'Poppins',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.26em; text-transform:uppercase; color:var(--violet); margin-bottom:1.1rem; }
+.sus-eyebrow.on-dark { color:var(--lav-hi); }
 @media(max-width:1080px){ .sus-hero{ height:64vh; min-height:440px; } .sus-hero-bg img{ object-position:72% 40%; } .sus-hero-inner{ padding:5.5rem 2.2rem 3rem; } }
 @media(max-width:640px){ .sus-hero{ height:78vh; min-height:460px; } .sus-hero-bg img{ object-position:78% 38%; } .sus-hero-inner{ padding:4.5rem 1.4rem 2.6rem; justify-content:flex-start; align-items:flex-end; } }
 
 /* ===================================================
-   2 — OUR APPROACH
+   3 — ENVIRONMENT: chapters
    =================================================== */
-.sec--approach { background:#F7F5F0; }
-.approach-inner { max-width:1440px; margin:0 auto; }
-.sus-approach-grid { display:grid; grid-template-columns:2fr 3fr; gap:4.5rem; align-items:start; }
-.sus-approach-copy { max-width:22rem; }
-.sus-approach-link { margin-top:1.9rem; }
+#environment { scroll-margin-top:5rem; }
+.env-inner { max-width:1440px; margin:0 auto; padding:96px 80px; }
+.env-head { margin-bottom:1rem; }
+.env-eyebrow { font-family:'Poppins',sans-serif; font-size:14px; font-weight:600; letter-spacing:.3em; text-transform:uppercase; color:var(--violet); margin-bottom:1rem; }
+.env-head h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(38px,4.4vw,60px); line-height:1.1; color:var(--ink); }
+.env-head h2 em { font-style:italic; color:var(--violet); }
 
-/* four independent cards — no connecting panel, no divider lines */
-.approach-cards { display:grid; grid-template-columns:repeat(2,1fr); gap:1.4rem; }
-.approach-card {
-  background:#F0F0F1; border:1px solid rgba(20,32,74,.08); border-radius:12px;
-  padding:1.9rem; display:flex; flex-direction:column; align-items:flex-start;
-  transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, border-color .3s ease;
-}
-.approach-card:hover { transform:translateY(-4px); box-shadow:0 16px 32px -20px rgba(20,32,74,.2); border-color:rgba(106,69,192,.35); }
-.approach-card svg { width:28px; height:28px; color:var(--violet); margin-bottom:1.2rem; transition:transform .3s cubic-bezier(.22,1,.36,1); }
-.approach-card:hover svg { transform:translateY(-2px); }
-.approach-card h3 { font-family:'Newsreader',serif; font-weight:400; font-size:1.45rem; color:var(--navy-ink); letter-spacing:-.01em; margin-bottom:.7rem; }
-.approach-card p { font-size:.95rem; line-height:1.65; color:var(--muted); }
-
-@media(min-width:1400px){ .approach-cards{ grid-template-columns:repeat(4,1fr); } }
-@media(max-width:1080px){
-  .sus-approach-grid{ grid-template-columns:1fr 1.5fr; gap:2.8rem; }
-  .sus-approach-copy{ max-width:none; }
-}
-@media(max-width:768px){
-  .sus-approach-grid{ grid-template-columns:1fr; gap:3rem; }
-}
-@media(max-width:480px){ .approach-cards{ grid-template-columns:1fr; } }
-
-/* ===================================================
-   3 — OUR INITIATIVES  (shared card typography — see 3b below
-   for the overview layout itself)
-   =================================================== */
-.init-cat { font-family:'Poppins',sans-serif; font-size:.64rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:.6rem; }
-.init-title { font-family:'Newsreader',serif; font-weight:400; font-style:italic; font-size:1.5rem; color:var(--navy-ink); margin-bottom:.55rem; }
-.init-desc { font-size:.88rem; line-height:1.65; color:var(--muted); }
-
-/* ===================================================
-   3b — OUR INITIATIVES: overview (one featured tile + compact list,
-   each initiative gets ONE line here — the deeper story lives in its
-   own section below, so nothing is explained twice)
-   =================================================== */
-.init-overview { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:stretch; }
-.init-feature { border-radius:16px; overflow:hidden; background:#fff; border:1px solid var(--line-cool); display:flex; flex-direction:column; transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s; }
-.init-feature:hover { transform:translateY(-4px); box-shadow:0 30px 60px -34px rgba(20,17,30,.25); }
-.init-feature-media { aspect-ratio:4/3; overflow:hidden; }
-.init-feature-media img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
-.init-feature:hover .init-feature-media img { transform:scale(1.04); }
-.init-feature-body { padding:1.8rem 2rem 2rem; }
-.init-feature .init-title { font-size:1.7rem; }
-.init-list { display:flex; flex-direction:column; }
-.init-row { display:grid; grid-template-columns:84px 1fr; gap:1.2rem; align-items:center; padding:1.25rem 0; border-top:1px solid var(--line-cool); }
-.init-list .init-row:last-child { border-bottom:1px solid var(--line-cool); }
-.init-row-media { width:84px; height:84px; border-radius:10px; overflow:hidden; flex-shrink:0; }
-.init-row-media img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s cubic-bezier(.22,1,.36,1); }
-.init-row:hover .init-row-media img { transform:scale(1.08); }
-.init-row-body .init-title { font-size:1.05rem; margin-bottom:.2rem; }
-.init-row-body .init-desc { font-size:.82rem; }
-@media(max-width:1080px){ .init-overview{ grid-template-columns:1fr; gap:2.2rem; } }
-@media(max-width:480px){ .init-row{ grid-template-columns:60px 1fr; gap:.9rem; } .init-row-media{ width:60px; height:60px; } }
-
-/* ===================================================
-   5 — IMPACT  (dark, full-bleed, textured — no fabricated figures)
-   =================================================== */
-.sus-impact { position:relative; background:var(--navy-deep); overflow:hidden; padding:7rem 4rem; }
-.sus-impact-bg { position:absolute; inset:0; z-index:0; }
-.sus-impact-bg img { width:100%; height:100%; object-fit:cover; display:block; }
-.sus-impact-scrim { position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(6,10,28,.93) 0%,rgba(8,13,33,.9) 45%,rgba(6,10,28,.95) 100%); pointer-events:none; }
-.sus-impact::after {
-  content:''; position:absolute; top:-20%; right:-10%; width:56vw; height:56vw; max-width:640px; max-height:640px; z-index:1;
-  background:radial-gradient(circle,rgba(139,140,240,.14),transparent 65%); pointer-events:none;
-}
-.sus-impact-inner { position:relative; z-index:2; max-width:1240px; margin:0 auto; }
-.sus-impact-head { max-width:38rem; margin-bottom:4rem; }
-.sus-stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem; }
-.sus-stat { border-top:1px solid rgba(255,255,255,.16); padding-top:1.6rem; }
-.sus-stat-num { font-family:'Newsreader',serif; font-weight:400; font-style:italic; font-size:clamp(2.2rem,3.4vw,3rem); color:#EFDDB8; line-height:1; margin-bottom:.7rem; }
-.sus-stat-label { font-size:.86rem; line-height:1.5; color:rgba(255,255,255,.6); }
-.sus-impact-note { margin-top:3rem; font-size:.8rem; color:rgba(255,255,255,.4); max-width:30rem; }
-@media(max-width:1080px){ .sus-impact{ padding:5.5rem 2.2rem; } .sus-stat-grid{ grid-template-columns:repeat(2,1fr); gap:2.4rem 2rem; } }
-@media(max-width:640px){ .sus-impact{ padding:4.5rem 1.4rem; } .sus-stat-grid{ grid-template-columns:1fr 1fr; gap:2rem 1.4rem; } }
-
-/* ===================================================
-   4 — ENVIRONMENT: one narrative (featured story + supporting story,
-   instead of separate independent sections per initiative)
-   =================================================== */
-.story-kicker { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; }
-.story-block { display:grid; grid-template-columns:1.1fr 1fr; gap:3.5rem; align-items:center; }
-.story-block.rev { grid-template-columns:1fr 1.1fr; }
-.story-block.rev .story-media-wrap { order:2; }
-.story-divider { border:none; border-top:1px solid rgba(20,32,74,.1); margin:4.5rem 0; }
-.story-body h3 { font-family:'Newsreader',serif; font-weight:400; font-size:clamp(1.5rem,2.2vw,1.9rem); color:var(--navy-ink); margin-bottom:.85rem; letter-spacing:-.01em; }
-.story-body p { font-size:.94rem; line-height:1.75; color:var(--muted); }
-
-.media-pair { display:flex; flex-direction:column; gap:.8rem; }
-.media-pair .mp-main { aspect-ratio:4/3; border-radius:16px; overflow:hidden; }
-.media-pair .mp-sub { aspect-ratio:21/8; border-radius:12px; overflow:hidden; }
-.media-pair img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
-.media-pair:hover img { transform:scale(1.03); }
-
-.media-duo { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
-.media-duo figure { position:relative; aspect-ratio:4/5; border-radius:14px; overflow:hidden; margin:0; }
-.media-duo img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
-.media-duo figure:hover img { transform:scale(1.04); }
-.media-duo figcaption, .ps-thumbs figcaption { position:absolute; left:.6rem; bottom:.6rem; font-family:'Poppins',sans-serif; font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:rgba(16,24,45,.55); padding:.28rem .65rem; border-radius:999px; }
-@media(max-width:1080px){
-  .story-block, .story-block.rev { grid-template-columns:1fr; gap:2rem; }
-  .story-block.rev .story-media-wrap { order:-1; }
-  .story-divider { margin:3rem 0; }
+.chapter { display:grid; grid-template-columns:4fr 8fr; gap:56px; padding:72px 0; border-top:1px solid #E3DAC6; scroll-margin-top:6rem; align-items:stretch; }
+.chapter:first-of-type { border-top:none; }
+/* .chapter-text is the grid item — it stretches to the row's full height
+   (matching the media column) by default grid stretch. The sticky behaviour
+   lives on the inner .chapter-text-sticky wrapper instead, so it has room to
+   scroll/pin through that full height without shrinking the row itself. */
+.chapter-text-sticky { position:sticky; top:112px; display:flex; flex-direction:column; gap:18px; }
+.chapter-num { font-family:'Fraunces',serif; font-weight:300; font-size:88px; line-height:.8; color:var(--gold); }
+.chapter-tag { display:flex; align-items:center; gap:.6rem; }
+.chapter-tag svg { width:26px; height:26px; color:var(--violet); flex-shrink:0; }
+.chapter-tag span { font-family:'Poppins',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-label); }
+/* "Photos coming soon" pill, sits next to a chapter-tag label — overrides the
+   generic .chapter-tag span rule above (font, case, tracking, colour) */
+.chapter-tag span.chapter-tag-pill {
+  font-family:'Schibsted Grotesk',sans-serif; font-size:12px; font-weight:600; letter-spacing:normal;
+  text-transform:none; color:#7A5A2A; background:#F4ECDB; padding:4px 10px; border-radius:999px;
 }
 
-/* ===================================================
-   5 — PEOPLE & COMMUNITY: one composition (large Dental story +
-   Financial Literacy / Food Donation as a secondary stack)
-   =================================================== */
-.pc-grid { display:grid; grid-template-columns:1.35fr 1fr; gap:3rem; align-items:start; }
-.pc-feature-body { margin-top:1.5rem; }
-.pc-secondary-stack { display:flex; flex-direction:column; gap:2.4rem; }
-.pc-secondary-item .media-single { aspect-ratio:16/10; border-radius:14px; overflow:hidden; margin-bottom:1.1rem; }
-.pc-secondary-item .media-single img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
-.pc-secondary-item .media-single:hover img { transform:scale(1.04); }
-.pc-secondary-item h4 { font-family:'Newsreader',serif; font-weight:400; font-size:1.2rem; color:var(--navy-ink); margin-bottom:.5rem; }
-.pc-secondary-item p { font-size:.86rem; line-height:1.6; color:var(--muted); }
-@media(max-width:1080px){ .pc-grid{ grid-template-columns:1fr; gap:2.6rem; } }
+/* solar media placeholder tiles — data-placeholder="solar" marks them for easy
+   swap to <img> once real photos are supplied */
+.solar-ph {
+  border-radius:20px; background:#F4ECDB; border:2px dashed #D6BE93; box-sizing:border-box;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.7rem; text-align:center; padding:1.5rem;
+}
+.solar-ph svg { width:40px; height:40px; color:#B8935A; }
+.solar-ph span { font-size:15px; color:#7A5A2A; }
+.chapter-text h3 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(28px,2.8vw,40px); line-height:1.15; color:var(--ink); letter-spacing:-.01em; }
+.chapter-text h3 em { font-style:italic; color:var(--violet); }
+.chapter-text p { font-size:17px; line-height:1.7; color:var(--muted); }
+.chapter-stats { display:flex; gap:40px; border-top:1px solid #E3DAC6; padding-top:18px; }
+.chapter-stat-num { font-family:'Fraunces',serif; font-weight:400; font-size:34px; line-height:1; color:var(--ink); display:block; margin-bottom:.35rem; }
+.chapter-stat-label { font-size:14px; color:var(--muted); }
+
+.chapter-media img { object-fit:cover; border-radius:20px; display:block; width:100%; height:100%; }
+
+/* The media column always fills the chapter row's full height (matching the
+   stretched text column) — never shorter, never leaving empty space below
+   the photos. min-height is a floor for short text/short rows. */
+.chapter-media { height:100%; min-height:460px; display:flex; flex-direction:column; gap:16px; }
+
+/* Chapter 01 — photo grid + relocation sub-card, sharing the media column's
+   height (flex:1.7 / flex:1 split ~ roughly the old 380:280+card proportion) */
+.gc-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1.4fr 1fr; gap:16px; flex:1.7; min-height:0; }
+.gc-grid .gc-main { grid-column:1 / 3; }
+.gc-subcard {
+  flex:1; min-height:0; background:#fff; border:1px solid #E3DAC6; border-radius:20px; padding:24px;
+  display:grid; grid-template-columns:5fr 7fr; gap:24px; align-items:stretch;
+}
+.gc-subcard > div:first-child { align-self:center; }
+.gc-subcard-label { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-label); margin-bottom:.7rem; }
+.gc-subcard h3 { font-family:'Fraunces',serif; font-weight:400; font-size:28px; color:var(--ink); margin-bottom:.5rem; letter-spacing:-.01em; }
+.gc-subcard h3 em { font-style:italic; color:var(--violet); }
+.gc-subcard p { font-size:16px; line-height:1.65; color:var(--muted); }
+.gc-subcard-imgs { display:flex; gap:12px; height:100%; }
+.gc-subcard-imgs figure { position:relative; flex:1; height:100%; border-radius:14px; overflow:hidden; margin:0; }
+.gc-subcard-imgs img { width:100%; height:100%; object-fit:cover; display:block; }
+.gc-badge {
+  position:absolute; left:12px; bottom:12px; background:var(--navy-bento); color:#fff;
+  font-family:'Poppins',sans-serif; font-size:11px; font-weight:600; letter-spacing:.15em;
+  text-transform:uppercase; padding:7px 13px; border-radius:999px;
+}
+
+/* Chapter 02 — ETP media grid, fills the full media-column height. Currently
+   3 images: "team at ETP" (main) fills the full left column; the other two
+   stack on the right, each 50% of the height.
+   If the photo count ever changes:
+     - exactly 2 images: add class "is-two" to .etp-grid and drop
+       .etp-side-bottom — main becomes 60% width / full height, the other
+       image 40% width / full height (see .etp-grid.is-two below).
+     - exactly 1 image: skip .etp-grid, put a single <img> directly in
+       .chapter-media (height:100%, object-position:center 35%). */
+.etp-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:16px; height:100%; flex:1; min-height:0; }
+.etp-main { grid-column:1; grid-row:1 / 3; }
+.etp-side-top { grid-column:2; grid-row:1; }
+.etp-side-bottom { grid-column:2; grid-row:2; }
+.etp-grid.is-two { grid-template-columns:3fr 2fr; grid-template-rows:1fr; }
+.etp-grid.is-two .etp-main, .etp-grid.is-two .etp-side-top { grid-row:1; }
+
+/* Chapter 03 — solar placeholder tiles, same "fill the full height" treatment */
+.cw-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:1fr; gap:16px; height:100%; flex:1; min-height:0; }
+.cw-grid .cw-span2 { grid-column:span 2; }
+.cw-grid .cw-row2 { grid-column:1 / 4; }
+
+@media(max-width:1000px){
+  .env-inner { padding:64px 24px; }
+  .chapter { grid-template-columns:1fr; gap:28px; padding:56px 0; }
+  .chapter-text-sticky { position:static; }
+  .chapter-num { font-size:64px; }
+  /* Stacked layout — fixed heights, no stretch/fill logic needed */
+  .chapter-media { height:auto; min-height:0; }
+  .gc-grid { grid-template-rows:320px 220px; flex:none; }
+  .gc-subcard { grid-template-columns:1fr; flex:none; }
+  .etp-grid { grid-template-columns:1fr 1fr; grid-template-rows:320px 220px; height:auto; flex:none; }
+  .etp-main { grid-column:1 / 3; grid-row:1; }
+  .etp-side-top { grid-column:1; grid-row:2; }
+  .etp-side-bottom { grid-column:2; grid-row:2; }
+  .cw-grid { grid-auto-rows:320px; height:auto; flex:none; }
+}
+@media(max-width:600px){
+  .gc-grid { grid-template-columns:1fr; grid-template-rows:none; }
+  .gc-grid > div { grid-column:1 / 2 !important; height:240px; }
+  .gc-subcard-imgs { flex-direction:column; }
+  .gc-subcard-imgs figure { height:240px; }
+  .etp-grid { grid-template-columns:1fr; grid-template-rows:none; }
+  .etp-main, .etp-side-top, .etp-side-bottom { grid-column:1; height:240px; }
+  .cw-grid { grid-template-columns:1fr; grid-auto-rows:240px; }
+  .cw-grid .cw-span2 { grid-column:1; }
+}
 
 /* ===================================================
-   6 — PEOPLE & SAFETY: one focused, visually lighter section
+   4 — CSR: dark navy band, two photo tiles
    =================================================== */
-.sec--ps { background:var(--stone); padding-top:5rem; padding-bottom:5rem; }
-.ps-thumbs { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:.8rem; }
-.ps-thumbs figure { position:relative; aspect-ratio:16/11; border-radius:12px; overflow:hidden; margin:0; }
-.ps-thumbs img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
-.ps-thumbs figure:hover img { transform:scale(1.05); }
+#csr { background:var(--navy-bento); scroll-margin-top:5rem; }
+.csr-inner { max-width:1440px; margin:0 auto; padding:110px 80px; }
+.csr-head { display:flex; justify-content:space-between; align-items:flex-end; gap:2.5rem; flex-wrap:wrap; }
+.csr-eyebrow { font-family:'Poppins',sans-serif; font-size:14px; font-weight:600; letter-spacing:.3em; text-transform:uppercase; color:#C9A876; margin-bottom:1rem; }
+.csr-head h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(40px,4.4vw,62px); line-height:1.05; color:#fff; }
+.csr-head h2 em { font-style:italic; font-weight:400; color:#E2CBA0; }
+.csr-head-copy { max-width:460px; font-size:17px; line-height:1.7; color:#C8CAD8; }
+
+.csr-tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; align-items:stretch; }
+
+/* Photo-on-top, text-below card — same shell for all three tiles. Tiles 2 & 3
+   have more than one photo, so they're <button>s (class csr-tile-clickable)
+   that open the shared lightbox below and show a photo-count pill top-right.
+   Tile 1 (Food Donation) has only one photo and stays a plain, non-interactive
+   div — but uses the exact same card markup/styling. */
+.csr-tile {
+  position:relative; height:100%; display:flex; flex-direction:column;
+  background:#14224A; border:1px solid #243259; border-radius:24px; overflow:hidden;
+  transition:border-color .3s cubic-bezier(.22,1,.36,1);
+}
+.csr-tile-media { position:relative; height:340px; flex-shrink:0; overflow:hidden; }
+.csr-tile-media img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.csr-tile:hover { border-color:#3A4A7A; }
+.csr-tile:hover .csr-tile-media img { transform:scale(1.04); }
+@media(prefers-reduced-motion:reduce){ .csr-tile-media img{ transition:none; } .csr-tile:hover .csr-tile-media img{ transform:none; } }
+
+.csr-tile-body { padding:32px; display:flex; flex-direction:column; gap:12px; }
+.csr-tile-label { font-family:'Poppins',sans-serif; font-size:12px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:#E2CBA0; }
+.csr-tile-body h3 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(22px,1.9vw,28px); line-height:1.2; color:#fff; }
+.csr-tile-body p {
+  font-size:16px; line-height:1.65; color:#C8CAD8;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+}
+
+.csr-tile-clickable { appearance:none; -webkit-appearance:none; cursor:pointer; text-align:left; }
+.csr-tile-clickable:focus-visible { outline:2px solid #E2CBA0; outline-offset:3px; }
+.csr-tile-count {
+  position:absolute; top:12px; right:12px; z-index:2;
+  display:inline-flex; align-items:center; gap:5px;
+  background:rgba(5,11,34,.75); color:#E2CBA0;
+  font-family:'Poppins',sans-serif; font-size:12px; font-weight:600;
+  padding:6px 12px; border-radius:999px;
+}
+.csr-tile-count svg { width:14px; height:14px; flex-shrink:0; }
+
+@media(max-width:1100px){
+  .csr-inner { padding:72px 24px; }
+  .csr-head { flex-direction:column; align-items:flex-start; }
+  .csr-tiles { grid-template-columns:1fr 1fr; }
+  .csr-tile-media { height:300px; }
+  /* Girl Child Education is always the 3rd tile — spans full width below the
+     first two, which sit side by side, laid out as a horizontal card. */
+  .csr-tile:nth-child(3) { grid-column:1 / -1; flex-direction:row; height:280px; }
+  .csr-tile:nth-child(3) .csr-tile-media { width:45%; height:100%; flex-shrink:0; }
+  .csr-tile:nth-child(3) .csr-tile-body { flex:1; min-width:0; justify-content:center; overflow-y:auto; }
+}
+@media(max-width:600px){
+  .csr-tiles { grid-template-columns:1fr; }
+  .csr-tile-media { height:240px; }
+  .csr-tile:nth-child(3) { grid-column:auto; flex-direction:column; height:100%; }
+  .csr-tile:nth-child(3) .csr-tile-media { width:100%; height:240px; }
+}
 
 /* ===================================================
-   9 — CLOSING STATEMENT
+   4b — CSR TILE LIGHTBOX (Old Age Home + Girl Child Education tiles only —
+   same visual language as the Gallery page's lightbox, scoped to this page)
    =================================================== */
-.sus-closing { position:relative; min-height:62vh; display:flex; align-items:center; overflow:hidden; background:var(--navy-deep); }
-.sus-closing-bg { position:absolute; inset:0; z-index:0; }
-.sus-closing-bg .ph-media { border-radius:0; border:none; min-height:100%; }
-.sus-closing-bg img { width:100%; height:100%; object-fit:cover; object-position:50% 35%; display:block; }
-.sus-closing-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(5,9,26,.55) 0%,rgba(5,9,26,.72) 60%,rgba(4,7,22,.88) 100%); pointer-events:none; }
-.sus-closing-inner { position:relative; z-index:2; max-width:44rem; margin:0 auto; text-align:center; padding:5rem 4rem; }
-.sus-closing-title { font-family:'Newsreader',serif; font-weight:400; letter-spacing:-.02em; font-size:clamp(2rem,4.2vw,3.2rem); line-height:1.18; color:#fff; margin-bottom:1.5rem; }
-.sus-closing-title em { font-style:italic; color:#EFDDB8; }
-.sus-closing-sub { font-size:1rem; line-height:1.75; color:rgba(255,255,255,.62); max-width:34rem; margin:0 auto 2.2rem; }
-@media(max-width:640px){ .sus-closing-inner{ padding:4rem 1.4rem; } }
+.csr-lb { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:24px; }
+.csr-lb[hidden] { display:none; }
+.csr-lb-backdrop { position:absolute; inset:0; background:rgba(5,11,34,.94); }
+.csr-lb-inner {
+  position:relative; z-index:1; width:min(1000px,100%); max-height:88vh;
+  background:#14224A; border-radius:20px; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+}
+.csr-lb-img-wrap { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+.csr-lb-img-wrap img { max-width:100%; max-height:88vh; display:block; }
+.csr-lb-arrow {
+  position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+  width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
+  color:#fff; display:flex; align-items:center; justify-content:center;
+}
+.csr-lb-arrow:hover, .csr-lb-arrow:focus-visible { background:rgba(255,255,255,.22); }
+.csr-lb-arrow svg { width:18px; height:18px; }
+.csr-lb-prev { left:16px; } .csr-lb-next { right:16px; }
+.csr-lb-close {
+  position:absolute; top:16px; right:16px; z-index:3;
+  width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
+  color:#fff; display:flex; align-items:center; justify-content:center;
+}
+.csr-lb-close:hover, .csr-lb-close:focus-visible { background:rgba(255,255,255,.22); }
+.csr-lb-close svg { width:18px; height:18px; }
+.csr-lb-count {
+  position:absolute; bottom:16px; left:50%; transform:translateX(-50%); z-index:2;
+  background:rgba(255,255,255,.12); color:#fff; font-family:'Poppins',sans-serif; font-size:13px;
+  padding:6px 14px; border-radius:999px;
+}
+@media(max-width:700px){ .csr-lb{ padding:0; } .csr-lb-inner{ border-radius:0; max-height:100vh; } }
+
+/* ===================================================
+   5 — CTA PANEL (inside the CSR section, dark, matching the band)
+   =================================================== */
+.csr-cta {
+  /* white -> soft lavender, ties to the site's dominant violet accent rather
+     than the gold/yellow, which only ever appears as a secondary accent */
+  margin-top:56px; background:linear-gradient(135deg, #FFFFFF 0%, #EDE6F8 100%);
+  border:1px solid #DCD3EF; border-radius:24px;
+  padding:56px 64px; display:flex; align-items:center; justify-content:space-between; gap:48px;
+}
+.csr-cta-text { display:flex; flex-direction:column; gap:12px; }
+.csr-cta-text h2 {
+  font-family:'Fraunces',serif; font-weight:400; letter-spacing:-.02em;
+  font-size:clamp(32px,3.4vw,48px); line-height:1.1; color:#0C1830;
+}
+.csr-cta-text h2 em { font-style:italic; color:#6A45C0; }
+.csr-cta-text p { font-size:17px; color:rgba(12,24,48,.68); }
+/* white button + border + gold hover — same pattern as the home page hero's
+   primary CTA (white, turns gold #CBA76C on hover), with a border added since
+   the bar itself is now a light fill and a borderless white button would
+   otherwise blend into it */
+.csr-cta-btn {
+  display:inline-flex; align-items:center; gap:.6rem; flex-shrink:0; white-space:nowrap;
+  font-family:'Schibsted Grotesk',sans-serif; font-size:17px; font-weight:600;
+  background:#FFFFFF; border:1px solid rgba(12,24,48,.28); color:#0C1830; padding:18px 32px; border-radius:999px;
+  box-shadow:0 1px 3px rgba(12,24,48,.08);
+  transition:background .2s, border-color .2s;
+}
+.csr-cta-btn span { transition:transform .2s; display:inline-block; }
+.csr-cta-btn:hover { background:#CBA76C; border-color:#CBA76C; }
+.csr-cta-btn:hover span { transform:translateX(4px); }
+.csr-cta-btn:focus-visible { outline:2px solid #0C1830; outline-offset:3px; }
+
+/* navy CSR section sits directly on the navy footer (both #0C1830) — a hairline
+   keeps them from visually merging into one block. Scoped to this page only via
+   #site-footer, not footer.css, since most other pages don't end on a navy section. */
+#site-footer { border-top:1px solid rgba(255,255,255,.08); }
+
+@media(max-width:1000px){
+  .csr-cta { flex-direction:column; align-items:flex-start; gap:28px; padding:40px 32px; }
+}
+@media(max-width:600px){
+  .csr-cta { padding:32px 24px; }
+  .csr-cta-btn { width:100%; justify-content:center; }
+}
 
 /* FOOTER — now a shared component; see footer.css and footer.js. Nothing
    footer-related should be styled here. */
@@ -391,13 +475,14 @@ button { font:inherit; }
     <li><a href="milestones.html">Milestones</a></li>
     <li><a href="triveni-group.html">Triveni Group</a></li>
     <li><a href="clientele.html">Clients</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
     <li><a href="careers.html">Careers</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Contact Us</a>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- ===================== 1 — HERO ===================== -->
+<!-- ===================== 1 — HERO (unchanged — do not modify) ===================== -->
 <header class="sus-hero">
   <div class="sus-hero-bg">
     <img src="assets/sustainabilty/sustainabilty hero img.png" alt="Triveni's Naini facility framed by trees and a river at sunrise, reflecting industry alongside the environment" loading="eager" fetchpriority="high">
@@ -408,255 +493,210 @@ button { font:inherit; }
       <div class="sus-eyebrow on-dark">Sustainability</div>
       <h1 class="sus-hero-title">Building a <em>Sustainable</em> Future</h1>
       <p class="sus-hero-sub">For people, for progress, for generations.</p>
-      <p class="sus-hero-intro">At Triveni Radiators, responsible growth is inseparable from how we manufacture. From our Naini, Prayagraj facility outward, we work to build with care for the environment we share, the communities around us, and the people who make our work possible.</p>
+      <p class="sus-hero-intro">At Triveni Radiators, responsible growth is inseparable from how we manufacture. At our Naini, Prayagraj facility, we work to reduce our footprint through cleaner energy, responsible water treatment, and care for the green cover around us, and we extend support beyond our gates where it matters most.</p>
     </div>
   </div>
 </header>
 
-<!-- ===================== 2 — OUR APPROACH ===================== -->
-<section class="sec sec--approach" id="approach">
-  <div class="approach-inner sus-approach-grid">
-    <div class="reveal">
-      <div class="sus-eyebrow">Our Approach</div>
-      <h2 class="sus-h2">Responsibility<br>in <em>Everything</em> We Do</h2>
-      <p class="sus-lead sus-approach-copy" style="margin-top:1.4rem;">Sustainability at Triveni is built into how we grow, spanning responsible business practices, environmental care, community development and the wellbeing of our people.</p>
-      <a href="#" class="link-arrow sus-approach-link" onclick="return false;">Our Sustainability Vision <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
-    </div>
-    <div class="approach-cards">
-      <div class="approach-card reveal">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M12 12C12 7 9 4 4 3c-1 5 1 9 6 9.5"/><path d="M12 12c0-4 2.5-7 8-8 1 4.5-.5 8.5-6 9"/></svg>
-        <h3>Environment</h3>
-        <p>Minimising our environmental footprint</p>
-      </div>
-      <div class="approach-card reveal reveal-d1">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="9" r="3"/><circle cx="16" cy="10.5" r="2.3"/><path d="M3 20c0-3 2.5-5 5.5-5S14 17 14 20"/><path d="M14.5 15.3c2.3.2 4 1.9 4 4.7"/></svg>
-        <h3>Communities</h3>
-        <p>Creating positive social impact</p>
-      </div>
-      <div class="approach-card reveal reveal-d2">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.2 8.4-7 10-3.8-1.6-7-5-7-10V6l7-3Z"/><path d="m9.2 12 1.9 1.9 3.7-3.9"/></svg>
-        <h3>People &amp; Safety</h3>
-        <p>Empowering and protecting our people</p>
-      </div>
-      <div class="approach-card reveal reveal-d3">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 13a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V19a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H4a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H10a1.65 1.65 0 0 0 1-1.51V4a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V10a1.65 1.65 0 0 0 1.51 1H20a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
-        <h3>Ethics &amp; Governance</h3>
-        <p>Building a stronger, more transparent future</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== 3 — OUR INITIATIVES (concise overview) ===================== -->
-<section class="sec sec--stone" id="initiatives">
-  <div class="sec-inner">
-    <div class="sec-head reveal">
-      <div class="sus-eyebrow">Our Initiatives</div>
-      <h2 class="sus-h2">A Look at <em>What We Do</em></h2>
-      <p class="sus-lead" style="margin-top:1.2rem;">A brief overview of the initiatives Triveni undertakes across the environment, our community and our people. Each is explored further below.</p>
+<!-- ===================== 3 — ENVIRONMENT: chapters ===================== -->
+<section id="environment">
+  <div class="env-inner">
+    <div class="env-head reveal">
+      <div class="env-eyebrow">Environment</div>
+      <h2>Three commitments, <em>one plant</em></h2>
     </div>
 
-    <div class="init-overview">
-      <div class="init-feature reveal">
-        <div class="init-feature-media"><img src="assets/sustainabilty/environment day/7X0A9361.JPG" alt="Team members planting a sapling together during Triveni's Environment Day plantation drive" loading="lazy"></div>
-        <div class="init-feature-body">
-          <div class="init-cat">Environment</div>
-          <div class="init-title">Growing Greener</div>
-          <p class="init-desc">Tree plantation marking Environment Day at our Naini facility.</p>
+    <!-- CHAPTER 01 — GREEN COVER -->
+    <div class="chapter reveal" id="green-cover">
+      <div class="chapter-text"><div class="chapter-text-sticky">
+        <div class="chapter-num">01</div>
+        <div class="chapter-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M12 20v-8.3a4 4 0 0 0-1.17-2.87L7 6"/><path d="M12 20v-8.3a4 4 0 0 1 1.17-2.87L17 6"/><path d="M9 6c-1 1-2.5 1.5-3.5 1.5C4 7.5 3 7 3 7s.5-2.5 2.5-4S9 2 9 2s.5 2.5-1 4"/></svg>
+          <span>Green Cover</span>
         </div>
-      </div>
-
-      <div class="init-list reveal reveal-d1">
-        <div class="init-row">
-          <div class="init-row-media"><img src="assets/sustainabilty/dental camp/PHOTO-2025-04-23-19-29-40.jpg" alt="A dentist examining a patient during Triveni's community dental health camp" loading="lazy"></div>
-          <div class="init-row-body">
-            <div class="init-cat">Community</div>
-            <div class="init-title">Dental Health Camp</div>
-            <p class="init-desc">Free dental check-ups organised for the community.</p>
-          </div>
-        </div>
-        <div class="init-row">
-          <div class="init-row-media"><img src="assets/sustainabilty/sbi litracy trainings/PHOTO-2025-09-06-18-23-44 3.jpg" alt="Employees attending an SBI financial literacy training session at Triveni" loading="lazy"></div>
-          <div class="init-row-body">
-            <div class="init-cat">Community Development</div>
-            <div class="init-title">Financial Literacy Training</div>
-            <p class="init-desc">Practical financial-awareness sessions held with SBI.</p>
-          </div>
-        </div>
-        <div class="init-row">
-          <div class="init-row-media"><img src="assets/sustainabilty/food distribution/PHOTO-2025-02-03-18-44-48 copy 3.jpg" alt="Volunteers handing food packets to a passer-by during the Kumbh food donation drive" loading="lazy"></div>
-          <div class="init-row-body">
-            <div class="init-cat">Community</div>
-            <div class="init-title">Food Donation Drive</div>
-            <p class="init-desc">Food distributed to people during Kumbh.</p>
-          </div>
-        </div>
-        <div class="init-row">
-          <div class="init-row-media"><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22 7.jpg" alt="Employees practising CPR on training mannequins during a first-aid session at Triveni" loading="lazy"></div>
-          <div class="init-row-body">
-            <div class="init-cat">People &amp; Safety</div>
-            <div class="init-title">First Aid Training</div>
-            <p class="init-desc">Emergency-response training for our employees.</p>
-          </div>
-        </div>
-        <div class="init-row">
-          <div class="init-row-media"><img src="assets/sustainabilty/relocating plants/PHOTO-2025-04-28-10-26-28.jpg" alt="A palm tree being carefully dug up and relocated during construction at Triveni's facility" loading="lazy"></div>
-          <div class="init-row-body">
-            <div class="init-cat">Environment</div>
-            <div class="init-title">Plant Relocation</div>
-            <p class="init-desc">Relocating existing plants during construction.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== 4 — ENVIRONMENT (one narrative) ===================== -->
-<section class="sec sec--lav" id="environment">
-  <div class="sec-inner">
-    <div class="sec-head reveal">
-      <div class="sus-eyebrow">Environment</div>
-      <h2 class="sus-h2">Protecting the <em>Environment</em> Around Us</h2>
-      <p class="sus-lead" style="margin-top:1.2rem;">Manufacturing at scale carries an environmental footprint. We work to keep ours in check, starting with the ground our facility stands on.</p>
-    </div>
-
-    <div class="story-block reveal">
-      <div class="story-media-wrap">
-        <div class="media-pair">
-          <div class="mp-main"><img src="assets/sustainabilty/environment day/1 img.jpg" alt="Triveni team members planting a sapling together on Environment Day" loading="lazy"></div>
-          <div class="mp-sub"><img src="assets/sustainabilty/environment day/7X0A9370.JPG" alt="Triveni leadership and guests marking a tree planted on Environment Day" loading="lazy"></div>
-        </div>
-      </div>
-      <div class="story-body">
-        <div class="story-kicker">Featured Story</div>
         <h3>Environment Day: Tree Plantation</h3>
-        <p>Each Environment Day, teams at our Naini facility come together to plant trees on and around the site, a recurring, deliberate contribution rather than a one-time gesture.</p>
-      </div>
-    </div>
-
-    <hr class="story-divider">
-
-    <div class="story-block rev reveal">
-      <div class="story-media-wrap">
-        <div class="media-duo">
-          <figure><img src="assets/sustainabilty/relocating plants/PHOTO-2025-04-28-10-26-28 copy 2.jpg" alt="A hole prepared to relocate an existing plant during construction" loading="lazy"><figcaption>Relocating</figcaption></figure>
-          <figure><img src="assets/sustainabilty/environment day/Plant relocation.jpg" alt="A relocated palm tree staked and replanted at Triveni's facility after construction work" loading="lazy"><figcaption>Replanted</figcaption></figure>
+        <p>Each Environment Day, teams at our Naini facility plant trees on and around the site, a recurring, deliberate contribution rather than a one-time gesture.</p>
+        <!-- TODO: show once client confirms the trees-planted count -->
+        <div class="chapter-stats is-pending">
+          <div><span class="chapter-stat-num">[XX]+</span><span class="chapter-stat-label">Trees planted</span></div>
         </div>
-      </div>
-      <div class="story-body">
-        <div class="story-kicker">Supporting Story</div>
-        <h3>Relocating, Not Removing</h3>
-        <p>When construction on site requires clearing space, existing plants are relocated rather than discarded wherever possible, minimising disruption to the environment already established around the facility.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== 5 — PEOPLE & COMMUNITY (one composition) ===================== -->
-<section class="sec sec--ivory" id="people">
-  <div class="sec-inner">
-    <div class="sec-head reveal">
-      <div class="sus-eyebrow">People &amp; Community</div>
-      <h2 class="sus-h2">People at the <em>Heart</em> of Progress</h2>
-      <p class="sus-lead" style="margin-top:1.2rem;">Our responsibility doesn't end at the factory gate. It extends to the people and communities around our Naini facility.</p>
-    </div>
-
-    <div class="pc-grid">
-      <div class="pc-feature reveal">
-        <div class="media-pair">
-          <div class="mp-main"><img src="assets/sustainabilty/dental camp/PHOTO-2025-04-23-19-29-40 copy.jpg" alt="A dentist attending to a patient at Triveni's community dental health camp" loading="lazy"></div>
-          <div class="mp-sub"><img src="assets/sustainabilty/dental camp/PHOTO-2025-04-23-19-29-40 copy 2.jpg" alt="A dentist consulting a patient at Triveni's community dental health camp" loading="lazy"></div>
+      </div></div>
+      <div class="chapter-media">
+        <div class="gc-grid">
+          <div class="gc-main"><img src="assets/sustainabilty/environment day/7X0A9361.JPG" alt="Team members planting a sapling together during Triveni's Environment Day plantation drive" loading="lazy"></div>
+          <div><img src="assets/sustainabilty/environment day/1 img.jpg" alt="Close-up of Triveni team members planting a sapling on Environment Day" loading="lazy"></div>
+          <div><img src="assets/sustainabilty/environment day/7X0A9370.JPG" alt="Triveni leadership and guests beside the Rudraksha tree planted on Environment Day" loading="lazy"></div>
         </div>
-        <div class="pc-feature-body">
-          <div class="story-kicker">Community / CSR</div>
-          <h3>Care That Reaches Beyond Our Gates</h3>
-          <p>A dental camp organised for the community offered basic dental care access to those nearby, one part of a broader effort to invest in the wellbeing of the people around our facility.</p>
-        </div>
-      </div>
-
-      <div class="pc-secondary-stack">
-        <div class="pc-secondary-item reveal reveal-d1">
-          <div class="media-single"><img src="assets/sustainabilty/sbi litracy trainings/PHOTO-2025-09-06-18-23-44 2.jpg" alt="A trainer leading an SBI financial literacy session for Triveni employees" loading="lazy"></div>
-          <div class="story-kicker">Community Development</div>
-          <h4>Financial Literacy Training</h4>
-          <p>Practical financial-awareness sessions conducted in collaboration with SBI, building financial confidence within the community.</p>
-        </div>
-        <div class="pc-secondary-item reveal reveal-d2">
-          <div class="media-single"><img src="assets/sustainabilty/food distribution/PHOTO-2025-02-03-18-44-48 copy 4.jpg" alt="Triveni team members with food packets prepared for the Kumbh food donation drive" loading="lazy"></div>
-          <div class="story-kicker">Community / CSR</div>
-          <h4>Food Donation Drive</h4>
-          <p>During Kumbh, our team took part in distributing food to the large gathering of people passing through the region.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== 6 — PEOPLE & SAFETY (focused, lighter) ===================== -->
-<section class="sec sec--ps" id="safety">
-  <div class="sec-inner">
-    <div class="story-block reveal">
-      <div class="story-media-wrap">
-        <div class="media-pair">
-          <div class="mp-main"><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22.jpg" alt="Employees practising CPR on training mannequins during a first-aid session at Triveni" loading="lazy"></div>
-          <div class="ps-thumbs">
-            <figure><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22 4.jpg" alt="A trainer presenting stroke-recognition guidance during the first-aid session" loading="lazy"><figcaption>Recognising a Stroke</figcaption></figure>
-            <figure><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22 6.jpg" alt="A trainer presenting electrical-shock response guidance during the first-aid session" loading="lazy"><figcaption>Electrical Shock</figcaption></figure>
+        <div class="gc-subcard">
+          <div>
+            <div class="gc-subcard-label">Also Under Green Cover</div>
+            <h3>Relocating, <em>not removing</em></h3>
+            <p>When construction needs space, existing plants are relocated rather than discarded wherever possible.</p>
+          </div>
+          <div class="gc-subcard-imgs">
+            <figure><img src="assets/sustainabilty/relocating plants/PHOTO-2025-04-28-10-26-28 copy 2.jpg" alt="A hole prepared to relocate an existing plant during construction at Triveni's facility" loading="lazy"><span class="gc-badge">Before</span></figure>
+            <figure><img src="assets/sustainabilty/environment day/Plant relocation.jpg" alt="A relocated palm tree staked and replanted at Triveni's facility after construction work" loading="lazy"><span class="gc-badge">After</span></figure>
           </div>
         </div>
       </div>
-      <div class="story-body">
-        <div class="sus-eyebrow">People &amp; Safety</div>
-        <h2 class="sus-h2" style="font-size:clamp(1.9rem,3vw,2.6rem);margin-bottom:1rem;">Safety Starts With <em>Preparedness</em></h2>
-        <p>First-aid training helps our people respond confidently and effectively during emergencies, covering practical response alongside hazards relevant to a manufacturing environment.</p>
+    </div>
+
+    <!-- CHAPTER 02 — WATER -->
+    <div class="chapter reveal" id="water">
+      <div class="chapter-text"><div class="chapter-text-sticky">
+        <div class="chapter-num">02</div>
+        <div class="chapter-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7 17.7 8.3a8 8 0 1 1-11.3 0Z"/></svg>
+          <span>Water</span>
+        </div>
+        <h3>Every Drop, <em>Treated</em> Responsibly</h3>
+        <p>Our on-site Effluent Treatment Plant treats process water before it leaves the facility.</p>
+        <!-- TODO: show once client confirms ETP capacity (KLD) and treated water reuse -->
+        <div class="chapter-stats is-pending">
+          <div><span class="chapter-stat-num">[XX] KLD</span><span class="chapter-stat-label">Treatment capacity</span></div>
+          <div><span class="chapter-stat-num">[TBC]</span><span class="chapter-stat-label">Treated water reuse</span></div>
+        </div>
+      </div></div>
+      <!-- 4 ETP images exist in assets/sustainabilty/etp/: "etp 1.jpg" (team at the
+           ETP — used as the main image) and 3 "PHOTO-2024-07-31-14-20-25*" files
+           (base + 2 "copy" variants). "copy 3" and "copy 2" are used as the two
+           side images below; the base (no-suffix) file remains unused — swap it in
+           if the client prefers it over one of the copies. -->
+      <div class="chapter-media">
+        <div class="etp-grid">
+          <div class="etp-main"><img src="assets/sustainabilty/etp/etp 1.jpg" alt="Triveni team members inspecting the Effluent Treatment Plant at the Naini facility" loading="lazy" style="object-position:center 35%;"></div>
+          <div class="etp-side-top"><img src="assets/sustainabilty/etp/PHOTO-2024-07-31-14-20-25 copy 3.jpg" alt="Triveni's Effluent Treatment Plant tanks at the Naini facility" loading="lazy"></div>
+          <div class="etp-side-bottom"><img src="assets/sustainabilty/etp/PHOTO-2024-07-31-14-20-25 copy 2.jpg" alt="Wide view of Triveni's Effluent Treatment Plant installation alongside the cooling tower unit" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHAPTER 03 — CLEAN ENERGY -->
+    <!-- TODO: replace placeholders once client provides solar photos + capacity -->
+    <div class="chapter reveal" id="clean-energy">
+      <div class="chapter-text"><div class="chapter-text-sticky">
+        <div class="chapter-num">03</div>
+        <div class="chapter-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <span>Clean Energy</span>
+          <span class="chapter-tag-pill">Photos coming soon</span>
+        </div>
+        <h3>Powered by the <em>Sun</em></h3>
+        <p>Solar panels at our Naini facility generate clean energy for day-to-day operations.</p>
+        <!-- TODO: show once client confirms solar installed capacity (kWp) and % of plant power -->
+        <div class="chapter-stats is-pending">
+          <div><span class="chapter-stat-num">[XX] kWp</span><span class="chapter-stat-label">Installed capacity</span></div>
+          <div><span class="chapter-stat-num">[XX]%</span><span class="chapter-stat-label">Of plant power</span></div>
+        </div>
+      </div></div>
+      <div class="chapter-media">
+        <div class="cw-grid">
+          <div class="cw-span2 solar-ph" data-placeholder="solar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            <span>Solar installation photo coming soon</span>
+          </div>
+          <div class="solar-ph" data-placeholder="solar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            <span>Solar installation photo coming soon</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===================== 7 — IMPACT ===================== -->
-<section class="sus-impact" id="impact">
-  <div class="sus-impact-bg"><img src="assets/sustainabilty/impact img.jpg" alt="Close-up of green foliage" loading="lazy"></div>
-  <div class="sus-impact-scrim"></div>
-  <div class="sus-impact-inner">
-    <div class="sus-impact-head reveal">
-      <div class="sus-eyebrow on-dark">Impact</div>
-      <h2 class="sus-h2 on-dark">Creating <em>Meaningful</em> Impact</h2>
+<!-- ===================== 4 — CSR: dark band, three photo tiles ===================== -->
+<section id="csr">
+  <div class="csr-inner">
+    <div class="csr-head reveal">
+      <div>
+        <div class="csr-eyebrow">CSR</div>
+        <h2><em>Beyond</em> Our Gates</h2>
+      </div>
+      <p class="csr-head-copy">Separate from our plant operations, our CSR programme supports the wider community we are part of.</p>
     </div>
-    <div class="sus-stat-grid">
-      <div class="sus-stat reveal">
-        <div class="sus-stat-num">[XX]+</div>
-        <div class="sus-stat-label">Trees planted</div>
-      </div>
-      <div class="sus-stat reveal reveal-d1">
-        <div class="sus-stat-num">[XX]+</div>
-        <div class="sus-stat-label">Community members supported</div>
-      </div>
-      <div class="sus-stat reveal reveal-d2">
-        <div class="sus-stat-num">[XX]+</div>
-        <div class="sus-stat-label">People trained</div>
-      </div>
-      <div class="sus-stat reveal reveal-d3">
-        <div class="sus-stat-num">[XX]</div>
-        <div class="sus-stat-label">Environmental initiatives</div>
-      </div>
-    </div>
-    <p class="sus-impact-note reveal reveal-d3">Figures to be confirmed and updated with verified data from each initiative.</p>
-  </div>
-</section>
 
-<!-- ===================== 9 — CLOSING STATEMENT ===================== -->
-<section class="sus-closing">
-  <div class="sus-closing-bg">
-    <img src="assets/sustainabilty/better tmrw img.png" alt="Triveni's facility framed by trees and a river at sunrise" loading="lazy">
-  </div>
-  <div class="sus-closing-overlay"></div>
-  <div class="sus-closing-inner">
-    <div class="reveal">
-      <h2 class="sus-closing-title">A Better Tomorrow Starts With <em>What We Do Today.</em></h2>
-      <p class="sus-closing-sub">Responsible growth, at Triveni, is not a separate initiative; it's built into how we manufacture, how we treat the land around us, and how we show up for our people and community.</p>
-      <a href="#initiatives" class="btn btn-ghost-dark">Explore Our Initiatives <span>→</span></a>
+    <div class="csr-tiles">
+      <div class="csr-tile reveal reveal-d1">
+        <div class="csr-tile-media">
+          <img src="assets/sustainabilty/food distribution/PHOTO-2025-02-03-18-44-48 copy 4.jpg" alt="Triveni team members with food packets prepared for the Kumbh food donation drive" loading="lazy" style="object-position:50% 40%;">
+        </div>
+        <div class="csr-tile-body">
+          <div class="csr-tile-label">Food Donation</div>
+          <h3>Food Donation Drive at Kumbh</h3>
+          <p>Our team distributed food to people passing through the region during Kumbh.</p>
+        </div>
+      </div>
+
+      <!-- Old age home — 2 photos in assets/sustainabilty/csr/. The dining/activity
+           shot (b4ea4cf3) is used as the main card image over the posed sofa photo
+           (e4f25e8a), per "prefer group/activity over face close-ups" — even though
+           the sofa photo measured less washed-out (higher saturation, fewer blown
+           highlights). Since the activity shot still read as slightly hazy, its
+           -web.jpg copy was corrected: autocontrast (0.5% clip), +12% saturation,
+           +12% sharpness, a slight warm shift (R x1.03 / B x0.97). Original file
+           left untouched. Home name is visible on a banner in the 2nd photo but is
+           partly cropped/illegible — not transcribed into the copy below; do not
+           name the home until the client confirms it. -->
+      <!-- TODO: confirm activity details with client; update if donations or other support were involved -->
+      <button type="button" class="csr-tile csr-tile-clickable reveal reveal-d2" data-tile="elder" aria-label="View 2 photos: Time With Our Elders">
+        <div class="csr-tile-media">
+          <img src="assets/sustainabilty/csr/b4ea4cf3-0aa5-4f3d-996c-fc17b6717b0b-web.jpg" alt="Triveni team members sharing a meal with residents at an old age home" loading="lazy" style="object-position:50% 42%;">
+          <span class="csr-tile-count"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>2 photos</span>
+        </div>
+        <div class="csr-tile-body">
+          <div class="csr-tile-label">Elder Care</div>
+          <h3>Time With Our Elders</h3>
+          <p>Our team spent time with residents at a local old age home, sharing a meal and conversation.</p>
+        </div>
+      </button>
+
+      <!-- Girl Child Education — 3 photos in assets/sustainabilty/csr/, all from
+           the same school visit. edu 1 (widest, clearest group shot) is the main
+           card image; the mural behind the children stays partly visible since the
+           card's image box is close to the photo's own aspect ratio, but
+           object-position is set low (50% 62%) to favour the children's row over
+           the mural whenever the box does crop vertically (e.g. the tablet
+           horizontal-card layout). edu 3 (a different, smaller classroom) was
+           considered but edu 1/2 better represent "classroom/group" at scale. -->
+      <!-- TODO: confirm type of support (kits/fees/scholarships), number of girls and location with client -->
+      <button type="button" class="csr-tile csr-tile-clickable reveal reveal-d3" data-tile="girlchild" aria-label="View 3 photos: Supporting Girl Child Education">
+        <div class="csr-tile-media">
+          <img src="assets/sustainabilty/csr/girl child edu 1-web.jpg" alt="Triveni team members with schoolgirls supported through the girl child education programme" loading="lazy" style="object-position:50% 62%;">
+          <span class="csr-tile-count"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>3 photos</span>
+        </div>
+        <div class="csr-tile-body">
+          <div class="csr-tile-label">Education</div>
+          <h3>Supporting Girl Child Education</h3>
+          <p>Supporting the education of young girls at a local school, helping them stay in the classroom and build a brighter future.</p>
+        </div>
+      </button>
+    </div>
+
+    <!-- Shared lightbox for the Old Age Home + Girl Child Education tiles -->
+    <div class="csr-lb" id="csrLightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+      <div class="csr-lb-backdrop" id="csrLbBackdrop"></div>
+      <div class="csr-lb-inner">
+        <button class="csr-lb-close" id="csrLbClose" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+        <button class="csr-lb-arrow csr-lb-prev" id="csrLbPrev" type="button" aria-label="Previous photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg>
+        </button>
+        <div class="csr-lb-img-wrap" id="csrLbImgWrap"></div>
+        <button class="csr-lb-arrow csr-lb-next" id="csrLbNext" type="button" aria-label="Next photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <span class="csr-lb-count" id="csrLbCount"></span>
+      </div>
+    </div>
+
+    <div class="csr-cta reveal reveal-d4">
+      <div class="csr-cta-text">
+        <h2>A better tomorrow starts with <em>what we do today.</em></h2>
+        <p>See how we care for the people who build Triveni.</p>
+      </div>
+      <a href="careers.html#life-at-triveni" class="csr-cta-btn">Life @ Triveni <span>→</span></a>
     </div>
   </div>
 </section>
@@ -700,6 +740,100 @@ const io = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold:.12 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ==========================================================
+   CSR TILE LIGHTBOX — Old Age Home + Girl Child Education tiles only
+   (Food Donation has a single photo and isn't clickable). Same UX as the
+   Gallery page's lightbox: Esc to close, ←/→ to navigate, backdrop click,
+   focus trap, focus returns to the tile that opened it, body scroll lock.
+   ========================================================== */
+var CSR_TILE_IMAGES = {
+  elder: [
+    { src: 'assets/sustainabilty/csr/b4ea4cf3-0aa5-4f3d-996c-fc17b6717b0b-web.jpg', alt: 'Triveni team members sharing a meal with residents at an old age home' },
+    { src: 'assets/sustainabilty/csr/e4f25e8a-eff2-48e9-b24a-20c69004f55e-web.jpg', alt: 'Triveni team members visiting an old age home' }
+  ],
+  girlchild: [
+    { src: 'assets/sustainabilty/csr/girl child edu 1-web.jpg', alt: 'Triveni team members with schoolgirls supported through the girl child education programme' },
+    { src: 'assets/sustainabilty/csr/girl child edu 2-web.jpg', alt: 'Triveni team members with schoolgirls supported through the girl child education programme' },
+    { src: 'assets/sustainabilty/csr/girl child edu 3-web.jpg', alt: 'Triveni team members with young schoolchildren supported through the girl child education programme' }
+  ]
+};
+
+(function(){
+  var csrLb = document.getElementById('csrLightbox');
+  var csrLbBackdrop = document.getElementById('csrLbBackdrop');
+  var csrLbClose = document.getElementById('csrLbClose');
+  var csrLbPrev = document.getElementById('csrLbPrev');
+  var csrLbNext = document.getElementById('csrLbNext');
+  var csrLbImgWrap = document.getElementById('csrLbImgWrap');
+  var csrLbCount = document.getElementById('csrLbCount');
+  if (!csrLb) return;
+
+  var csrLbImages = [];
+  var csrLbPos = 0;
+  var csrLbReturnFocus = null;
+
+  function csrLbFocusable(){
+    return Array.prototype.slice.call(csrLb.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])'))
+      .filter(function(el){ return el.offsetParent !== null; });
+  }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function openCsrLightbox(images, startIndex, returnEl){
+    csrLbImages = images;
+    csrLbPos = startIndex || 0;
+    csrLbReturnFocus = returnEl || document.activeElement;
+    paintCsrLightbox();
+    csrLb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    csrLbClose.focus();
+    document.addEventListener('keydown', onCsrLbKeydown);
+  }
+  function paintCsrLightbox(){
+    var img = csrLbImages[csrLbPos];
+    csrLbImgWrap.innerHTML = '<img src="' + esc(img.src) + '" alt="' + esc(img.alt) + '">';
+    var multi = csrLbImages.length > 1;
+    csrLbPrev.style.display = multi ? '' : 'none';
+    csrLbNext.style.display = multi ? '' : 'none';
+    csrLbCount.style.display = multi ? '' : 'none';
+    csrLbCount.textContent = (csrLbPos + 1) + ' / ' + csrLbImages.length;
+  }
+  function csrLbStep(dir){
+    if (csrLbImages.length < 2) return;
+    csrLbPos = (csrLbPos + dir + csrLbImages.length) % csrLbImages.length;
+    paintCsrLightbox();
+  }
+  function closeCsrLightbox(){
+    csrLb.hidden = true;
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', onCsrLbKeydown);
+    if (csrLbReturnFocus && typeof csrLbReturnFocus.focus === 'function') csrLbReturnFocus.focus();
+  }
+  function onCsrLbKeydown(e){
+    if (e.key === 'Escape') { closeCsrLightbox(); return; }
+    if (e.key === 'ArrowRight') { csrLbStep(1); return; }
+    if (e.key === 'ArrowLeft') { csrLbStep(-1); return; }
+    if (e.key === 'Tab') {
+      var f = csrLbFocusable();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+  csrLbClose.addEventListener('click', closeCsrLightbox);
+  csrLbBackdrop.addEventListener('click', closeCsrLightbox);
+  csrLbPrev.addEventListener('click', function(){ csrLbStep(-1); });
+  csrLbNext.addEventListener('click', function(){ csrLbStep(1); });
+
+  document.querySelectorAll('.csr-tile-clickable').forEach(function(tile){
+    tile.addEventListener('click', function(){
+      var images = CSR_TILE_IMAGES[tile.getAttribute('data-tile')];
+      if (!images) return;
+      openCsrLightbox(images, 0, tile);
+    });
+  });
+})();
 </script>
 </body>
 </html>

@@ -553,6 +553,42 @@ button { font:inherit; }
   .cr-final-meta { display:none; }
 }
 
+/* ===================================================
+   LIFE @ TRIVENI  (in-plant employee wellbeing stories — moved over
+   from the Sustainability page, same story-block/media pattern
+   verbatim, since these are not CSR/community activities)
+   =================================================== */
+.sec--life { background:var(--stone); }
+.story-kicker { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; }
+.story-block { display:grid; grid-template-columns:1.1fr 1fr; gap:3.5rem; align-items:center; }
+.story-block.rev { grid-template-columns:1fr 1.1fr; }
+.story-block.rev .story-media-wrap { order:2; }
+.story-divider { border:none; border-top:1px solid rgba(20,32,74,.1); margin:4.5rem 0; }
+.story-body h3 { font-family:'Newsreader',serif; font-weight:400; font-size:clamp(1.5rem,2.2vw,1.9rem); color:var(--navy-ink); margin-bottom:.85rem; letter-spacing:-.01em; }
+.story-body p { font-size:.94rem; line-height:1.75; color:var(--muted); }
+
+.media-pair { display:flex; flex-direction:column; gap:.8rem; }
+.media-pair .mp-main { aspect-ratio:4/3; border-radius:16px; overflow:hidden; }
+.media-pair .mp-sub { aspect-ratio:21/8; border-radius:12px; overflow:hidden; }
+.media-pair img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.media-pair:hover img { transform:scale(1.03); }
+
+.media-single { aspect-ratio:16/10; border-radius:14px; overflow:hidden; }
+.media-single img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.media-single:hover img { transform:scale(1.04); }
+
+.ps-thumbs { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:.8rem; }
+.ps-thumbs figure { position:relative; aspect-ratio:16/11; border-radius:12px; overflow:hidden; margin:0; }
+.ps-thumbs img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.ps-thumbs figure:hover img { transform:scale(1.05); }
+.ps-thumbs figcaption { position:absolute; left:.6rem; bottom:.6rem; font-family:'Poppins',sans-serif; font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:rgba(16,24,45,.55); padding:.28rem .65rem; border-radius:999px; }
+
+@media(max-width:1080px){
+  .story-block, .story-block.rev { grid-template-columns:1fr; gap:2rem; }
+  .story-block.rev .story-media-wrap { order:-1; }
+  .story-divider { margin:3rem 0; }
+}
+
 /* FOOTER — now a shared component; see footer.css and footer.js. Nothing
    footer-related should be styled here. */
 
@@ -574,6 +610,7 @@ button { font:inherit; }
     <li><a href="milestones.html">Milestones</a></li>
     <li><a href="triveni-group.html">Triveni Group</a></li>
     <li><a href="clientele.html">Clients</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
     <li><a href="careers.html" class="on">Careers</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Contact Us</a>
@@ -601,6 +638,7 @@ button { font:inherit; }
       <p class="cr-hero-sub">We hire for integrity first. If you want to build products the entire Indian transformer industry depends on, we'd like to hear from you.</p>
       <div class="cr-hero-ctas">
         <a href="#profile" class="btn btn-primary">Submit your profile <span>&rarr;</span></a>
+        <a href="#life-at-triveni" class="btn btn-ghost-dark">Life @ Triveni <span>&darr;</span></a>
       </div>
     </div>
   </div>
@@ -696,6 +734,65 @@ button { font:inherit; }
       </article>
     </div>
 
+  </div>
+</section>
+
+<!-- ===== LIFE @ TRIVENI — in-plant employee wellbeing (moved from the
+     Sustainability page; these are internal employee activities, not
+     CSR/community work, so they live here rather than on csr.html) ===== -->
+<section class="sec sec--life" id="life-at-triveni">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <div class="cr-eyebrow">Life @ Triveni</div>
+      <h2 class="cr-h2"><span class="hi">Caring</span> for the People Who Build Triveni</h2>
+      <p class="cr-lead" style="margin-top:1.2rem;">Beyond the work itself, we invest in the health, safety and everyday wellbeing of our team.</p>
+    </div>
+
+    <div class="story-block reveal">
+      <div class="story-media-wrap">
+        <div class="media-pair">
+          <div class="mp-main"><img src="assets/sustainabilty/dental camp/PHOTO-2025-04-23-19-29-40 copy.jpg" alt="A dentist attending to a Triveni team member at an in-plant dental camp" loading="lazy"></div>
+          <div class="mp-sub"><img src="assets/sustainabilty/dental camp/PHOTO-2025-04-23-19-29-40 copy 2.jpg" alt="A dentist consulting a Triveni team member at an in-plant dental camp" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="story-body">
+        <div class="story-kicker">Our People</div>
+        <h3>Health &amp; Wellbeing at Work</h3>
+        <p>Regular dental and medical camps held at the plant give our team easy access to basic health check-ups.</p>
+      </div>
+    </div>
+
+    <hr class="story-divider">
+
+    <div class="story-block rev reveal">
+      <div class="story-media-wrap">
+        <div class="media-single"><img src="assets/sustainabilty/sbi litracy trainings/PHOTO-2025-09-06-18-23-44 2.jpg" alt="A trainer leading an SBI financial literacy session for Triveni employees" loading="lazy"></div>
+      </div>
+      <div class="story-body">
+        <div class="story-kicker">Our People</div>
+        <h3>Financial Literacy with SBI</h3>
+        <p>Sessions conducted with SBI help our team build confidence in managing their finances.</p>
+      </div>
+    </div>
+
+    <hr class="story-divider">
+
+    <div class="story-block reveal">
+      <div class="story-media-wrap">
+        <div class="media-pair">
+          <div class="mp-main"><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22.jpg" alt="Triveni employees practising CPR on training mannequins during a first-aid session" loading="lazy"></div>
+          <div class="ps-thumbs">
+            <figure><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22 4.jpg" alt="A trainer presenting stroke-recognition guidance during the first-aid session" loading="lazy"><figcaption>Recognising a Stroke</figcaption></figure>
+            <figure><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22 6.jpg" alt="A trainer presenting electrical-shock response guidance during the first-aid session" loading="lazy"><figcaption>Electrical Shock</figcaption></figure>
+          </div>
+        </div>
+      </div>
+      <div class="story-body">
+        <div class="story-kicker">Safety</div>
+        <h3>Safety Starts With Preparedness</h3>
+        <p>First-aid training helps our people respond confidently and effectively during emergencies, covering practical response alongside hazards relevant to a manufacturing environment.</p>
+      </div>
+    </div>
   </div>
 </section>
 

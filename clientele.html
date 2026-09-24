@@ -821,6 +821,7 @@ img { display:block; max-width:100%; }
     <li><a href="milestones.html">Milestones</a></li>
     <li><a href="triveni-group.html">Triveni Group</a></li>
     <li><a href="clientele.html" class="on">Clients</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
     <li><a href="careers.html">Careers</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Contact Us</a>
@@ -1116,7 +1117,9 @@ if (reduce) {
    coordinates were supplied).
    =================================================== */
 const EXPORTS = [
-  { country: 'Turkmenistan', lat: 38.9, lon: 59.6,   radiators: 654, orders: 4, customers: ['TBEA', 'SEIL'], period: '2021-22', continent: 'Asia' },
+  // Verified from client sheet "TBEA Turkmenistan – Radiator Supply" (532 radiators, 25 jobs).
+  // Previously 654 incl. SEIL — pending client confirmation of any SEIL supply. If confirmed, add SEIL qty to radiators and 'SEIL' back to customers.
+  { country: 'Turkmenistan', lat: 38.9, lon: 59.6,   radiators: 532, jobs: 25, customers: ['TBEA'], period: '2021-22', continent: 'Asia' },
   { country: 'Bangladesh',   lat: 23.7, lon: 90.4,   radiators: 92,  orders: 3, customers: ['Prolec GE', 'Siemens'], period: '2016-18', continent: 'Asia' },
   { country: 'Bhutan',       lat: 27.5, lon: 90.4,   radiators: 84,  orders: 2, customers: ['GE T&D', 'Hitachi'], period: '2021-23', continent: 'Asia' },
   { country: 'Nepal',        lat: 28.4, lon: 84.1,   radiators: 62,  orders: 3, customers: ['TBEA'], period: '2020-23', continent: 'Asia' },
@@ -1157,7 +1160,7 @@ function parsePeriod(str) {
 }
 const documentedExports = EXPORTS.filter(function (e) { return e.radiators !== null; });
 const exportCountryCount = EXPORTS.length;
-const exportOrderCount = documentedExports.reduce(function (s, e) { return s + e.orders; }, 0);
+const exportOrderCount = documentedExports.reduce(function (s, e) { return s + (e.orders || 0); }, 0);
 const exportRadiatorTotal = documentedExports.reduce(function (s, e) { return s + e.radiators; }, 0);
 const exportContinentCount = new Set(EXPORTS.map(function (e) { return e.continent; })).size;
 const exportPeriods = documentedExports.map(function (e) { return parsePeriod(e.period); });
@@ -1238,7 +1241,9 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       '<div class="gr-ic-country">' + esc(e.country) + '</div>' +
       '<div class="gr-ic-qty">' + e.radiators + ' radiators</div>' +
       '<dl class="gr-ic-rows">' +
-        '<div class="gr-ic-row"><dt>Orders</dt><dd>' + e.orders + '</dd></div>' +
+        (e.jobs != null
+          ? '<div class="gr-ic-row"><dt>Transformer Jobs</dt><dd>' + e.jobs + '</dd></div>'
+          : '<div class="gr-ic-row"><dt>Orders</dt><dd>' + e.orders + '</dd></div>') +
         '<div class="gr-ic-row"><dt>Through</dt><dd>' + esc(e.customers.join(', ')) + '</dd></div>' +
         '<div class="gr-ic-row"><dt>Year</dt><dd>' + esc(e.period) + '</dd></div>' +
       '</dl>';
@@ -1257,7 +1262,7 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     const label = pending ? e.country.toUpperCase() : e.country.toUpperCase() + ' · ' + e.radiators;
     const g = makeMarker('export-' + e.country.toLowerCase(), e.country, p.x, p.y, {
       pending: pending, labelText: label,
-      ariaLabel: e.country + (pending ? ', destination confirmed, detail pending' : ', ' + e.radiators + ' radiators on ' + e.orders + ' orders')
+      ariaLabel: e.country + (pending ? ', destination confirmed, detail pending' : ', ' + e.radiators + ' radiators' + (e.jobs != null ? ' across ' + e.jobs + ' transformer jobs' : ' on ' + e.orders + ' orders'))
     });
     ['mouseenter', 'focus', 'click'].forEach(function (evt) {
       g.addEventListener(evt, function () { paintExportInfo(e); setActiveMarker(g); });
@@ -1314,7 +1319,7 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
   const listItems = EXPORTS.map(function (e) {
     return '<li>' + esc(e.country) + ': ' + (e.radiators === null
       ? 'destination confirmed, detail pending'
-      : e.radiators + ' radiators, ' + e.orders + ' orders, through ' + esc(e.customers.join(', ')) + ', ' + esc(e.period)) + '</li>';
+      : e.radiators + ' radiators, ' + (e.jobs != null ? e.jobs + ' transformer jobs' : e.orders + ' orders') + ', through ' + esc(e.customers.join(', ')) + ', ' + esc(e.period)) + '</li>';
   }).concat(
     '<li>' + esc(WORKS.name) + ': ' + esc(WORKS.title) + ', ' + esc(WORKS.body) + '</li>',
     INDIA_LOCATIONS.map(function (l) { return '<li>' + esc(l.name) + ': ' + esc(l.title) + ', ' + esc(l.body) + '</li>'; })
@@ -1632,20 +1637,24 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     { id: 'tanzania-grid-400', international: true,
       critical: { project: 'International Grid Project', region: 'Tanzania', rating: '50 MVA', voltage: '400 kV', qty: '33' } },
 
+    /* Turkmenistan / TBEA — verified against the client's "TBEA Turkmenistan –
+       Radiator Supply" sheet (2026-09-24). Total across both rows below:
+       532 radiators, 25 transformer jobs. Internal job numbers (IM10011/…,
+       IM10012/…, IM10013/…) are intentionally not published on the site. */
     { id: 'turkmenistan-500-220-35', international: true,
-      critical: { project: 'International Transmission Projects', region: 'Turkmenistan', rating: '167 MVA', voltage: '500/220/35 kV', qty: '340' },
-      featured: { customer: 'TBEA Energy', project: 'International Transmission Project', ratingVoltage: '500/220 kV', scope: 'Radiator Supply' },
+      critical: { project: 'International Transmission Projects', region: 'Turkmenistan', rating: '167 MVA', voltage: '500/220/35 & 500/220/10 kV', qty: '340' },
+      featured: { customer: 'TBEA Energy', project: 'International Transmission Project', ratingVoltage: '167 MVA & 125 MVA', scope: '532 Radiators' },
       spotlight: {
-        title: '500 kV International Transmission Project',
-        summary: '167 MVA  |  500/220/35 kV  |  340 Radiators',
+        title: 'TBEA · Turkmenistan',
+        summary: '532 Radiators · 25 Transformer Jobs',
         customer: 'TBEA Energy',
         endCustomer: 'Turkmenistan',
         application: 'Power Transmission',
-        rating: '167 MVA',
-        voltage: '500/220/35 kV',
-        qty: '340',
-        range: '–33°C to +110°C',
-        line: 'Supplied through TBEA Energy for a critical international transmission application in Turkmenistan.'
+        rating: '167 MVA & 125 MVA',
+        voltage: '500/220/35, 500/220/10 & 220/110/10 kV',
+        qty: '532',
+        range: '–33°C to 110°C',
+        line: '17 × 167 MVA transformers (500/220/35 kV — 14 jobs; 500/220/10 kV — 3 jobs) and 8 × 125 MVA transformers (220/110/10 kV) — 532 radiators supplied through TBEA Energy across 25 transformer jobs in Turkmenistan.'
       } },
 
     { id: 'turkmenistan-220-110-10', international: true,
@@ -1659,13 +1668,13 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
   ];
 
   /* Stat rail — a curated set of 4, each one traceable to a row above/below
-     (765 kV -> POWERGRID row; 340 units -> the TBEA/Turkmenistan row; 2,200+
+     (765 kV -> POWERGRID row; 532 units -> the TBEA/Turkmenistan rows; 2,200+
      -> the RDSO row; the temperature range is the general proven operating
      spec, not tied to one row). Do NOT reinstate 500 MVA or 420 kV here —
      both contradicted the supply table and that's why 03 was deleted. */
   var STAT_RAIL = [
     { value: '765', unit: 'kV', caption: 'Highest voltage class delivered', source: 'POWERGRID transmission' },
-    { value: '340', unit: 'units', caption: 'Radiators on a single transmission project', source: 'TBEA Energy · Turkmenistan' },
+    { value: '532', unit: 'units', caption: 'Radiators across 25 transformer jobs', source: 'TBEA · Turkmenistan' },
     { value: '2,200', unit: '+', caption: 'Radiators in a single RDSO order', source: 'Railway electrification' },
     { value: '–33 / +110', unit: '°C', caption: 'Proven operating range', source: 'International supply' }
   ];

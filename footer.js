@@ -10,12 +10,14 @@
     { label: 'Home', href: 'index.html' },
     { label: 'Product', href: 'products.html' },
     { label: 'Credentials', href: 'credentials.html' },
-    { label: 'Milestones', href: 'milestones.html' }
+    { label: 'Milestones', href: 'milestones.html' },
+    { label: 'Gallery', href: 'gallery.html' }
   ];
   var FOOT_COMPANY = [
     { label: 'Triveni Group', href: 'triveni-group.html' },
     { label: 'Clients', href: 'clientele.html' },
     { label: 'Careers', href: 'careers.html' },
+    { label: 'Life @ Triveni', href: 'careers.html#life-at-triveni' },
     { label: 'Contact us', href: 'contact.html' }
   ];
   var FOOT_LINKEDIN = 'https://www.linkedin.com/company/triveni-electroplast-pvt-ltd';
