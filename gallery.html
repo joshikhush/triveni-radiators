@@ -144,11 +144,6 @@ button { font:inherit; background:none; border:none; cursor:pointer; }
 .gh-head h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(36px,4.5vw,64px); color:var(--ink); line-height:1.05; }
 .gh-head h2 em { font-style:italic; color:var(--violet); }
 .gh-head-intro { margin-top:1.1rem; font-size:18px; line-height:1.7; color:var(--muted); max-width:620px; }
-.gh-contact-btn {
-  flex-shrink:0; font-size:16px; font-weight:600; color:#fff; background:var(--violet);
-  padding:16px 30px; border-radius:999px; transition:background .2s;
-}
-.gh-contact-btn:hover, .gh-contact-btn:focus-visible { background:var(--violet-hover); }
 .gh-chips { display:flex; gap:10px; margin-top:32px; }
 .gh-chip {
   font-size:14px; font-weight:500; padding:10px 18px; border-radius:999px;
@@ -304,11 +299,9 @@ button { font:inherit; background:none; border:none; cursor:pointer; }
         <h2>Radiators <em>in the field</em></h2>
         <p class="gh-head-intro">Every image below is from a real Triveni installation, shared by our customers in India and abroad.</p>
       </div>
-      <a href="contact.html" class="gh-contact-btn reveal reveal-d1">Contact Us</a>
     </div>
     <div class="gh-chips reveal reveal-d1" id="ghChips">
       <button class="gh-chip active" type="button" data-filter="all" aria-pressed="true">All</button>
-      <button class="gh-chip" type="button" data-filter="india" aria-pressed="false">India</button>
       <button class="gh-chip" type="button" data-filter="international" aria-pressed="false">International</button>
     </div>
   </div>
@@ -381,13 +374,19 @@ var ghChips = document.querySelectorAll('.gh-chip');
 var activeFilter = 'all';
 
 ghGrid.innerHTML = GALLERY_INSTALLATIONS.map(function(item, i){
-  var media = item.image
-    ? '<img src="' + esc(item.image) + '" alt="' + esc(item.title + ', ' + item.location) + '" loading="lazy" decoding="async">'
+  var gridSrc = item.thumb || item.image;
+  var altText = item.alt || (item.location ? item.title + ', ' + item.location : item.title);
+  var eager = i < 3; // first 3 tiles load eagerly, the rest lazily
+  var media = gridSrc
+    ? '<img src="' + esc(gridSrc) + '" alt="' + esc(altText) + '"' + (eager ? ' decoding="async"' : ' loading="lazy" decoding="async"') + '>'
     : galPlaceholderHTML();
-  return '<button class="gh-tile' + (item.orientation === 'portrait' ? ' is-portrait' : '') + '" type="button" data-region="' + esc(item.region) + '" data-i="' + i + '">' +
-    '<span class="gh-region-pill">' + esc(regionLabel(item.region)) + '</span>' +
+  var pill = item.region ? '<span class="gh-region-pill">' + esc(regionLabel(item.region)) + '</span>' : '';
+  var subParts = [item.location, item.customer].filter(Boolean);
+  var sub = subParts.length ? '<span class="gh-caption-sub">' + esc(subParts.join(' · ')) + '</span>' : '';
+  return '<button class="gh-tile' + (item.orientation === 'portrait' ? ' is-portrait' : '') + '" type="button" data-region="' + esc(item.region || '') + '" data-i="' + i + '">' +
+    pill +
     media +
-    '<span class="gh-caption"><span class="gh-caption-title">' + esc(item.title) + '</span><span class="gh-caption-sub">' + esc(item.location) + (item.customer ? ' · ' + esc(item.customer) : '') + '</span></span>' +
+    '<span class="gh-caption"><span class="gh-caption-title">' + esc(item.title) + '</span>' + sub + '</span>' +
   '</button>';
 }).join('');
 
@@ -454,17 +453,31 @@ function openLightbox(itemIndex){
   document.addEventListener('keydown', onLbKeydown);
 }
 
+/* shows a dl row only when its value is verified — no empty labels, no
+   placeholder dashes, per the "no unverified data on the live page" rule */
+function lbSetRow(dd, value, prefix){
+  var row = dd.parentElement;
+  if (value) {
+    dd.textContent = prefix ? prefix + value : value;
+    row.hidden = false;
+  } else {
+    dd.textContent = '';
+    row.hidden = true;
+  }
+}
+
 function paintLightbox(){
   var item = GALLERY_INSTALLATIONS[lbFilterList[lbPos]];
   lbImgWrap.innerHTML = item.image
-    ? '<img src="' + esc(item.image) + '" alt="' + esc(item.title) + '">'
+    ? '<img src="' + esc(item.image) + '" alt="' + esc(item.alt || item.title) + '">'
     : galPlaceholderHTML();
-  lbCountry.textContent = item.country;
+  lbCountry.textContent = item.country || '';
+  lbCountry.hidden = !item.country;
   lbTitle.textContent = item.title;
-  lbCustomer.textContent = item.customer;
-  lbLocation.textContent = item.location;
-  lbRating.textContent = item.rating;
-  lbCredit.textContent = item.credit ? ('Courtesy of ' + item.credit) : '—';
+  lbSetRow(lbCustomer, item.customer);
+  lbSetRow(lbLocation, item.location);
+  lbSetRow(lbRating, item.rating);
+  lbSetRow(lbCredit, item.credit, 'Courtesy of ');
   var multi = lbFilterList.length > 1;
   lbPrev.style.display = multi ? '' : 'none';
   lbNext.style.display = multi ? '' : 'none';
