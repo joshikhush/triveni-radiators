@@ -1091,7 +1091,6 @@ img { display:block; max-width:100%; }
 <script src="end-customers-data.js"></script>
 <script src="assets/js/vendor/d3.v7.min.js"></script>
 <script src="assets/js/vendor/topojson-client.min.js"></script>
-<script src="assets/js/review-marks.js" defer></script>
 
 <script>
 /* ── nav toggle + scroll pin/hide (identical to Milestones / Triveni Group) ── */
@@ -1536,7 +1535,6 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
   let current = null;           // current camera view [cx, cy, w] in plane units
   let viewName = 'world';
   let arrivedToken = 0;
-  let placementBad = 0;       // labels that found no conflict-free spot (0 = clean), exposed on the stage for QA
 
   function measureStage() {
     W = stageEl.clientWidth; H = stageEl.clientHeight;
@@ -1818,7 +1816,6 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       drawCityLabels(items, token);
       drawStateNames(items, dotObs, blocks, token);
     }
-    stageEl.dataset.placementBad = placementBad;
   }
 
   function fadeIn(nodes, token) {
@@ -1831,23 +1828,18 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
   }
   function drawLabels(items, token) {
     const nodes = [];
-    let bad = 0;
     items.forEach(function (it) {
-      bad += it.place.bad;
       const g = el('g', { class: 'gr-lab', 'data-key': it.key, 'data-bad': it.place.bad }, labelsG);
       const t = el('text', { class: it.cls, x: it.place.box.x.toFixed(1), y: (it.place.box.y + it.h - 1.5).toFixed(1) }, g);
       t.textContent = it.text;
       nodes.push(g);
       const l = drawLead(it, it.key); if (l) nodes.push(l);
     });
-    placementBad = bad;
     fadeIn(nodes, token);
   }
   function drawCityLabels(items, token) {
     const nodes = [];
-    let bad = 0;
     items.forEach(function (it) {
-      bad += it.place.bad;
       const b = it.place.box, c = it.city;
       const g = el('g', { class: 'gr-lab gr-cl' + (c.works ? ' is-works' : ''), 'data-key': c.key, 'data-bad': it.place.bad, tabindex: '-1' }, labelsG);
       el('rect', { class: 'gr-cl-hit', x: b.x - 3, y: b.y - 2, width: b.w + 6, height: b.h + 4, rx: 4 }, g);
@@ -1863,7 +1855,6 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       nodes.push(g);
       const l = drawLead(it, c.key); if (l) nodes.push(l);
     });
-    placementBad = bad;
     if (activeKey) setActive(activeKey);
     fadeIn(nodes, token);
   }
@@ -1881,7 +1872,6 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     const nodes = [];
     const c = cam(current);
     const placed = [];
-    let bad = 0;
     const small = !DESKTOP_MQ.matches;
     const H_TAG = small ? 16 : 19, BADGE_H = small ? 11 : 13;
     function clear(box, anywhere) {
@@ -1956,7 +1946,6 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       }
     });
     pending.forEach(function (j) {
-      bad++;
       j.label = j.code;
       j.res = { box: { x: j.mid.x - j.codeW / 2, y: j.mid.y - H_TAG / 2, w: j.codeW, h: H_TAG }, lead: null };
     });
@@ -1980,7 +1969,6 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
       nodes.push(g);
     });
-    placementBad = bad;
     fadeIn(nodes, token);
   }
 
