@@ -622,6 +622,7 @@ img { display:block; max-width:100%; }
 .pp-group-toggle[aria-expanded="true"] .pp-group-chev { transform:rotate(225deg); margin-top:-2px; }
 .pp-record-note { margin-top:.9rem; font-size:12px; font-style:italic; color:rgba(255,255,255,.45); }
 .pp-row-subtotal td:last-child { color:#CBA76C; }
+.pp-row-note { display:block; margin-top:.2rem; font-size:11.5px; color:rgba(255,255,255,.45); }
 
 /* ---- spotlight panel ---- */
 .ppsc-list { display:flex; flex-direction:column; gap:1.4rem; }
@@ -633,6 +634,7 @@ img { display:block; max-width:100%; }
 .ppsc-title { font-family:'Fraunces',serif; font-weight:300; font-size:1.5rem; line-height:1.22; color:#fff; }
 .ppsc-summary { margin-top:.5rem; font-size:.8rem; font-weight:600; letter-spacing:.02em; color:#CBA76C; }
 .ppsc-line { margin-top:1rem; font-size:.88rem; line-height:1.72; color:rgba(255,255,255,.7); }
+.ppsc-onrequest { margin-top:1rem; font-size:.8rem; font-style:italic; color:rgba(203,167,108,.85); }
 .ppsc-specs { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem 1.4rem; }
 .ppsc-specs > div { display:flex; flex-direction:column; gap:.3rem; }
 .ppsc-specs dt { font-size:.6rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:rgba(255,255,255,.4); }
@@ -929,7 +931,7 @@ img { display:block; max-width:100%; }
 
     <div class="gr-header reveal">
       <p class="gr-eyebrow"><span class="gr-eyebrow-num">01</span><span class="gr-eyebrow-dot">&middot;</span>Global reach</p>
-      <h2 class="gr-h2">Exported to <em>ten countries.</em></h2>
+      <h2 class="gr-h2">Exported to <em id="grCountWord">ten countries.</em></h2>
       <p class="gr-lede">From our Prayagraj works to transformer projects and OEM partners across four continents — every location here traces to a documented supply.</p>
     </div>
 
@@ -1089,6 +1091,7 @@ img { display:block; max-width:100%; }
 <script src="footer.js" defer></script>
 <script src="whatsapp.js"></script>
 <script src="end-customers-data.js"></script>
+<script src="clients-data.js"></script>
 <script src="assets/js/vendor/d3.v7.min.js"></script>
 <script src="assets/js/vendor/topojson-client.min.js"></script>
 <script src="assets/js/review-marks.js" defer></script>
@@ -1157,50 +1160,46 @@ if (reduce) {
 
 /* ===================================================
    GLOBAL REACH — data for the drill-down map below
-   EXPORTS (world view) and INDIA_CITIES + INDIA_CUSTOMERS (India views) are the single
-   source for markers, the legend and the stat rail — nothing duplicated
-   or hardcoded. A null field means the client hasn't supplied it — it is
-   left out of the card/labels, never invented.
-   Moldova, Oman and USA come from the client's "international sites details
-   for global map" sheet (2026-09-26): party, quantity and dispatch dates only.
-   These three carry inStats:false — per client instruction (2026-09-26) the
-   stat rail's figures (export orders, radiators exported, supply window) stay
-   exactly as the client supplied them; the new sheet only adds detail to the
-   map markers and cards. `dispatched` is the sheet's own wording, shown on
-   the card; `period` is the Indian financial year of dispatch.
-   ===================================================
-   FLAG — Malaysia: 4.2,101.9 places this marker on Peninsular Malaysia
-   (this supersedes an earlier Borneo-centroid placement from before these
-   coordinates were supplied).
+   Every export figure now comes from clients-data.js (window.CLIENTS_DATA) —
+   the single source of truth. EXPORTS below is derived: one aggregated marker
+   per destination country. INDIA_CITIES + INDIA_CUSTOMERS (India views) drive
+   the India markers. Nothing is duplicated or hardcoded.
+
+   DIRECT vs INDIRECT (client, 2026-09-27): the only direct export is AYR, USA
+   (154). Everything else is indirect — supplied to Indian customers for their
+   export jobs; e.indianCustomers names them. ArcelorMittal's destination is
+   pending, so it is counted in the totals below but not plotted (mapped:false
+   in clients-data.js). "Wilson" beside Bulgaria in the source doc is NOT
+   published (pending client).
    =================================================== */
-const EXPORTS = [
-  // Verified from client sheet "TBEA Turkmenistan – Radiator Supply" (532 radiators, 25 jobs).
-  // period 2021-23 (was 2021-22): TBEA's certificate dates jobs 1–10 2021-22 and 11–25 2022-23,
-  // matching the Project Proof supply record.
-  // Previously 654 incl. SEIL — pending client confirmation of any SEIL supply. If confirmed, add SEIL qty to radiators and 'SEIL' back to customers.
-  // orders:4 restored (2026-09-25) so the sitewide "Export orders" total is correct again —
-  // the map card still shows "Transformer Jobs · 25" (jobs takes priority over orders in the
-  // card template below), so this doesn't reintroduce the old "4 orders" display.
-  { country: 'Turkmenistan', lat: 38.9, lon: 59.6,   radiators: 532, orders: 4, jobs: 25, customers: ['TBEA'], period: '2021-23', continent: 'Asia' },
-  { country: 'Bangladesh',   lat: 23.7, lon: 90.4,   radiators: 92,  orders: 3, customers: ['Prolec GE', 'Siemens'], period: '2016-18', continent: 'Asia' },
-  { country: 'Bhutan',       lat: 27.5, lon: 90.4,   radiators: 84,  orders: 2, customers: ['GE T&D', 'Hitachi'], period: '2021-23', continent: 'Asia' },
-  { country: 'Nepal',        lat: 28.4, lon: 84.1,   radiators: 62,  orders: 3, customers: ['TBEA'], period: '2020-23', continent: 'Asia' },
-  { country: 'Niger',        lat: 17.6, lon: 8.1,    radiators: 30,  orders: 1, customers: ['TBEA'], period: '2020-21', continent: 'Africa' },
-  // Corrected 22 -> 149 (2026-09-26) to match TBEA's signed performance certificate
-  // (25 Sep 2026, assets/docs/performance certificates/): jobs TI4217 = 80, TI4215 = 36,
-  // TI4228 = 33, all 2022-23 — the same three rows as the Project Proof supply record.
-  // The old 22 came from the earlier "Triveni Export Jobs" list (WO 14215/14212).
-  // orders stays 1 so the client's "Export orders" total (15) is unchanged; jobs: 3
-  // takes priority on the card, as for Turkmenistan.
-  { country: 'Tanzania',     lat: -6.4, lon: 34.9,   radiators: 149, orders: 1, jobs: 3, customers: ['TBEA'], period: '2022-23', continent: 'Africa' },
-  { country: 'Malaysia',     lat: 4.2,  lon: 101.9,  radiators: 8,   orders: 1, customers: ['Prolec-GE'], period: '2015-16', continent: 'Asia' },
-  // sheet spells it "Maldova"
-  { country: 'Moldova',      lat: 47.0, lon: 28.4,   radiators: 88,  orders: null, customers: ['Siemens Energy'], period: '2023-24', dispatched: 'May – June 2023', inStats: false, continent: 'Europe' },
-  // sheet gives the dispatch date as 01-06-2026
-  { country: 'Oman',         lat: 21.5, lon: 56.0,   radiators: 144, orders: null, customers: ['Wilson Power Solutions'], period: '2026-27', dispatched: 'June 2026', inStats: false, continent: 'Asia' },
-  // five dispatches: 66 (May), 16 (Jun), 24 (Aug), 24 (Sep), 24 (Nov) — all 2025
-  { country: 'USA',          lat: 39.8, lon: -98.6,  radiators: 154, orders: null, customers: ['AYR Energy'], period: '2025-26', dispatched: 'May – Nov 2025', shipments: 5, inStats: false, continent: 'North America' }
-];
+var CD = window.CLIENTS_DATA || { SUPPLIES: [], COUNTRY_META: {}, SPOTLIGHTS: {} };
+function uniqPush(arr, v) { if (v && arr.indexOf(v) === -1) arr.push(v); }
+
+/* One marker per mapped destination country, aggregated from CD.SUPPLIES. */
+const EXPORTS = (function () {
+  var byCountry = {};
+  CD.SUPPLIES.forEach(function (s) {
+    if (!s.country || s.mapped === false) return;   // unmapped supplies (ArcelorMittal) count in totals only
+    var meta = CD.COUNTRY_META[s.country] || {};
+    var e = byCountry[s.country] || (byCountry[s.country] = {
+      country: s.country, lat: meta.lat, lon: meta.lon, continent: meta.continent,
+      radiators: 0, direct: 0, indirect: 0, indianCustomers: [], directTo: [],
+      y0: Infinity, y1: -Infinity, spotlight: null
+    });
+    e.radiators += s.qty;
+    if (s.mode === 'direct') { e.direct += s.qty; uniqPush(e.directTo, s.endCustomer); }
+    else { e.indirect += s.qty; uniqPush(e.indianCustomers, s.indianCustomer); }
+    if (s.years) { e.y0 = Math.min(e.y0, s.years[0]); e.y1 = Math.max(e.y1, s.years[1]); }
+    if (s.spotlight) e.spotlight = s.spotlight;
+  });
+  return Object.keys(byCountry).map(function (k) {
+    var e = byCountry[k];
+    e.period = e.y0 === e.y1 ? String(e.y0) : e.y0 + '–' + e.y1;
+    var sp = CD.SPOTLIGHTS[e.spotlight];
+    e.jobs = (sp && typeof sp.jobs === 'number') ? sp.jobs : null;   // e.g. Turkmenistan · 25 transformer jobs
+    return e;
+  });
+})();
 
 const WORKS = { key: 'prayagraj', name: 'Prayagraj', title: 'Triveni works', body: 'Unit III · automated radiator line' };
 
@@ -1228,17 +1227,14 @@ const WORKS = { key: 'prayagraj', name: 'Prayagraj', title: 'Triveni works', bod
      - SkipperSeil Ltd. — no address in the sheet.
    TBEA Energy (India) Pvt. Ltd. has no address in the new sheet; its
    Vadodara location is kept from this site's earlier confirmed data.
-   FLAG: Meiden T&D — sheet gives "Nellore District: Tirupati, AP 524126";
-   PIN 524126 is Naidupeta, so the marker is placed and labelled there —
-   please confirm with the client. */
+   Meiden T&D — Naidupeta (PIN 524126) is CONFIRMED by the client (2026-09-27). */
 var INDIA_CUSTOMERS = [
   { name: 'ABB India Limited', locationConfirmed: true, location: { cityKey: 'vadodara', city: 'Vadodara', state: 'Gujarat' } },
   { name: 'ALSTOM T&D India Limited', locationConfirmed: true, location: { cityKey: 'vadodara', city: 'Vadodara', state: 'Gujarat' } },
   { name: 'Atlanta Electricals Pvt. Ltd.', locationConfirmed: true, location: { cityKey: 'anand', city: 'Anand', state: 'Gujarat' } },
   { name: 'AYR Energy Inc.', locationConfirmed: false, location: null },
-  // dispatches: client sheet "Dispatch Details (Toshiba GEP & AYR)" (AYR tab), up to 21 Sep 2026
-  { name: 'AYR Energy India Private Limited', locationConfirmed: true, location: { cityKey: 'hyderabad', city: 'Hyderabad', state: 'Telangana' },
-    dispatch: { radiators: 523, from: 'Jul 2025', to: '21 Sep 2026' } },
+  // AYR Energy India's 523 radiators are USA indirect exports — held in clients-data.js, not here.
+  { name: 'AYR Energy India Private Limited', locationConfirmed: true, location: { cityKey: 'hyderabad', city: 'Hyderabad', state: 'Telangana' } },
   { name: 'Bharat Heavy Electricals Ltd.', locationConfirmed: true, location: { cityKey: 'jhansi', city: 'Jhansi', state: 'Uttar Pradesh' } },
   { name: 'BTW Atlanta Transformers India Pvt. Ltd.', locationConfirmed: true, location: { cityKey: 'bharuch', city: 'Bharuch', state: 'Gujarat' } },
   { name: 'CG Power and Industrial Solutions Limited', locationConfirmed: true, location: { cityKey: 'mandideep', city: 'Mandideep, Raisen', state: 'Madhya Pradesh' } },
@@ -1267,9 +1263,9 @@ var INDIA_CUSTOMERS = [
   { name: 'TBEA (India) Transformer Private Limited', locationConfirmed: true, location: { cityKey: 'vadodara', city: 'Vadodara', state: 'Gujarat' } },
   { name: 'TBEA Energy (India) Pvt. Ltd.', locationConfirmed: true, location: { cityKey: 'vadodara', city: 'Vadodara', state: 'Gujarat' } },
   { name: 'Technical Associates Limited', locationConfirmed: true, location: { cityKey: 'usnagar', city: 'Udham Singh Nagar', state: 'Uttarakhand' } },
-  // dispatches: client sheet "Dispatch Details (Toshiba GEP & AYR)" (GEP tab; same data as "GEP - TOSHIBA.xlsx"), up to 21 Sep 2026
-  { name: 'Toshiba Transmission & Distribution Systems India Pvt Ltd', locationConfirmed: true, location: { cityKey: 'sangareddy', city: 'Sangareddy', state: 'Telangana' },
-    dispatch: { radiators: 1816, from: 'Nov 2024', to: '21 Sep 2026' } },
+  // Location: Hyderabad (client, 2026-09-27; was Sangareddy). Toshiba's 1,816
+  // radiators are USA indirect exports — held in clients-data.js, not here.
+  { name: 'Toshiba Transmission & Distribution Systems India Pvt Ltd', locationConfirmed: true, location: { cityKey: 'hyderabad', city: 'Hyderabad', state: 'Telangana' } },
   { name: 'Transformer & Rectifiers (India) Ltd.', locationConfirmed: true, location: { cityKey: 'ahmedabad', city: 'Ahmedabad', state: 'Gujarat' } },
   { name: 'Voltamp Transformers Ltd.', locationConfirmed: true, location: { cityKey: 'savli', city: 'Savli, Vadodara', state: 'Gujarat' } },
   { name: 'Western Transformer & Equipment Pvt. Ltd.', locationConfirmed: true, location: { cityKey: 'bharatpur', city: 'Bharatpur', state: 'Rajasthan' } },
@@ -1301,7 +1297,8 @@ const INDIA_CITIES = [
   { key: 'mandideep',     name: 'Mandideep',         lat: 23.10, lon: 77.53 },
   { key: 'kolkata',       name: 'Kolkata',           lat: 22.57, lon: 88.36 },
   { key: 'hyderabad',     name: 'Hyderabad',         lat: 17.39, lon: 78.49 },
-  { key: 'sangareddy',    name: 'Sangareddy',        lat: 17.62, lon: 78.09 },
+  /* Sangareddy marker removed (client, 2026-09-27): Toshiba moved to Hyderabad
+     and it was the only customer there, so no city marker remains. */
   { key: 'bengaluru',     name: 'Bengaluru',         lat: 12.97, lon: 77.59 },
   { key: 'chennai',       name: 'Chennai',           lat: 13.08, lon: 80.27 },
   { key: 'sriperumbudur', name: 'Sriperumbudur',     lat: 12.97, lon: 79.95 },
@@ -1315,29 +1312,29 @@ function customersAtCity(key) {
 
 function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
-/* "25 transformer jobs, " / "3 orders, " / "5 shipments, " — whichever the client has given */
-function exportVolume(e) {
-  if (e.jobs != null) return e.jobs + ' transformer jobs, ';
-  if (e.orders != null) return e.orders + ' orders, ';
-  if (e.shipments != null) return e.shipments + ' shipments, ';
-  return '';
+function fmtN(n) { return Number(n).toLocaleString('en-IN'); }
+
+/* Who a country's radiators went through — indirect (Indian customers) and/or
+   direct (end customer). Used in the map card, the aria label and the a11y list. */
+function throughText(e) {
+  var parts = [];
+  if (e.indirect > 0 && e.indianCustomers.length) parts.push('through ' + e.indianCustomers.join(', '));
+  if (e.direct > 0 && e.directTo.length) parts.push('direct to ' + e.directTo.join(', '));
+  return parts.join('; ');
 }
 
-/* ---- derived figures for the stat rail — computed from EXPORTS every load ---- */
-function parsePeriod(str) {
-  var parts = str.split('-');
-  var startYear = Number(parts[0]);
-  var endYear = Math.floor(startYear / 100) * 100 + Number(parts[1]);
-  return { startYear: startYear, endYear: endYear };
-}
-const documentedExports = EXPORTS.filter(function (e) { return e.radiators !== null && e.inStats !== false; });
-const exportCountryCount = EXPORTS.length;
-const exportOrderCount = documentedExports.reduce(function (s, e) { return s + (e.orders || 0); }, 0);
-const exportRadiatorTotal = documentedExports.reduce(function (s, e) { return s + e.radiators; }, 0);
+/* ---- derived figures for the stat rail — computed from the data every load ----
+   Totals sum EVERY supply in clients-data.js (direct + indirect, mapped or not),
+   so "Radiators exported" includes ArcelorMittal's 26 even though it isn't mapped.
+   The "15+ direct export orders" stat was removed per client (2026-09-27). */
+const exportCountryCount = EXPORTS.length;                                   // distinct mapped destination countries
+const exportRadiatorTotal = CD.SUPPLIES.reduce(function (s, x) { return s + x.qty; }, 0);
+const exportDirectTotal = CD.SUPPLIES.reduce(function (s, x) { return s + (x.mode === 'direct' ? x.qty : 0); }, 0);
+const exportIndirectTotal = exportRadiatorTotal - exportDirectTotal;
 const exportContinentCount = new Set(EXPORTS.map(function (e) { return e.continent; })).size;
-const exportPeriods = documentedExports.map(function (e) { return parsePeriod(e.period); });
-const exportMinYear = Math.min.apply(null, exportPeriods.map(function (p) { return p.startYear; }));
-const exportMaxYear = Math.max.apply(null, exportPeriods.map(function (p) { return p.endYear; }));
+const exportYears = CD.SUPPLIES.filter(function (x) { return x.years; }).map(function (x) { return x.years; });
+const exportMinYear = Math.min.apply(null, exportYears.map(function (y) { return y[0]; }));
+const exportMaxYear = Math.max.apply(null, exportYears.map(function (y) { return y[1]; }));
 const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2);
 
 /* ===================================================
@@ -1368,19 +1365,22 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
   /* ---- stat rail + accessible list render even if the map can't load ---- */
   const STATS = [
     { value: exportCountryCount, caption: 'Countries supplied' },
-    { value: exportOrderCount, caption: 'Export orders' },
-    { value: exportRadiatorTotal.toLocaleString('en-IN'), caption: 'Radiators exported' },
+    { value: fmtN(exportRadiatorTotal), caption: 'Radiators exported' },
     { value: exportContinentCount, caption: 'Continents' },
     { value: exportYearWindow, caption: 'Supply window' }
   ];
   statRailEl.innerHTML = STATS.map(function (s) {
     return '<div class="gr-statcell"><div class="gr-stat-figure">' + s.value + '</div><div class="gr-stat-caption">' + esc(s.caption) + '</div></div>';
   }).join('');
+  /* hero heading count — driven by the data so it can't drift from the map */
+  var COUNT_WORDS = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen'];
+  var h2em = document.getElementById('grCountWord');
+  if (h2em) h2em.textContent = (COUNT_WORDS[exportCountryCount] || exportCountryCount) + ' countries.';
   if (countryListEl) {
     countryListEl.innerHTML = EXPORTS.map(function (e) {
-      return '<li>' + esc(e.country) + ': ' + (e.radiators === null
-        ? 'destination confirmed, detail pending'
-        : e.radiators + ' radiators, ' + exportVolume(e) + 'through ' + esc(e.customers.join(', ')) + ', ' + esc(e.dispatched ? 'dispatched ' + e.dispatched : e.period)) + '</li>';
+      return '<li>' + esc(e.country) + ': ' + fmtN(e.radiators) + ' radiators' +
+        (e.jobs != null ? ', ' + e.jobs + ' transformer jobs' : '') +
+        (throughText(e) ? ', ' + esc(throughText(e)) : '') + ', ' + esc(e.period) + '</li>';
     }).concat(INDIA_CUSTOMERS.filter(function (c) { return c.locationConfirmed && c.location; }).map(function (c) {
       return '<li>' + esc(c.name) + ': ' + esc(c.location.city + ', ' + c.location.state) + '</li>';
     })).join('');
@@ -1408,7 +1408,7 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     { key: 'north',   name: 'North',          cities: ['sonipat', 'meerut', 'gurugram', 'bhiwadi', 'jaipur', 'bharatpur', 'agra', 'usnagar'] },
     { key: 'west',    name: 'West',           cities: ['ahmedabad', 'anand', 'savli', 'vadodara', 'bharuch', 'mumbai', 'thane', 'navimumbai'] },
     { key: 'central', name: 'Central & East', cities: ['jhansi', 'mandideep', 'prayagraj', 'kolkata'] },
-    { key: 'south',   name: 'South',          cities: ['hyderabad', 'sangareddy', 'bengaluru', 'chennai', 'sriperumbudur', 'naidupeta'] }
+    { key: 'south',   name: 'South',          cities: ['hyderabad', 'bengaluru', 'chennai', 'sriperumbudur', 'naidupeta'] }
   ];
   const REGION_OF_CITY = {};
   REGIONS.forEach(function (r) { r.cities.forEach(function (k) { REGION_OF_CITY[k] = r.key; }); });
@@ -1494,22 +1494,21 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
   function closeCard() { infoCardEl.hidden = true; setActive(null); }
   document.getElementById('grInfoClose').addEventListener('click', closeCard);
   function exportCardHTML(e) {
-    if (e.radiators === null) {
-      return '<div class="gr-ic-country">' + esc(e.country) + '</div>' +
-        '<p class="gr-ic-empty">Detail pending</p>' +
-        '<dl class="gr-ic-rows"><div class="gr-ic-row"><dt>Status</dt><dd>Confirmed destination</dd></div></dl>';
+    /* Only rows the data supports render — no "—" placeholders (client points 6-8).
+       A country can carry both an indirect total (through Indian customers) and,
+       for USA, a direct total (AYR). */
+    var rows = '';
+    if (e.jobs != null) rows += '<div class="gr-ic-row"><dt>Transformer Jobs</dt><dd>' + e.jobs + '</dd></div>';
+    if (e.indirect > 0 && e.direct > 0) {
+      rows += '<div class="gr-ic-row"><dt>Indirect</dt><dd>' + fmtN(e.indirect) + ' radiators</dd></div>';
+      rows += '<div class="gr-ic-row"><dt>Direct</dt><dd>' + fmtN(e.direct) + ' radiators</dd></div>';
     }
+    if (e.indirect > 0 && e.indianCustomers.length) rows += '<div class="gr-ic-row"><dt>Through</dt><dd>' + esc(e.indianCustomers.join(', ')) + '</dd></div>';
+    if (e.direct > 0 && e.directTo.length) rows += '<div class="gr-ic-row"><dt>Direct to</dt><dd>' + esc(e.directTo.join(', ')) + '</dd></div>';
+    rows += '<div class="gr-ic-row"><dt>Year</dt><dd>' + esc(e.period) + '</dd></div>';
     return '<div class="gr-ic-country">' + esc(e.country) + '</div>' +
-      '<div class="gr-ic-qty">' + e.radiators + ' radiators</div>' +
-      '<dl class="gr-ic-rows">' +
-        (e.jobs != null ? '<div class="gr-ic-row"><dt>Transformer Jobs</dt><dd>' + e.jobs + '</dd></div>'
-          : e.orders != null ? '<div class="gr-ic-row"><dt>Orders</dt><dd>' + e.orders + '</dd></div>'
-          : e.shipments != null ? '<div class="gr-ic-row"><dt>Shipments</dt><dd>' + e.shipments + '</dd></div>' : '') +
-        '<div class="gr-ic-row"><dt>Through</dt><dd>' + esc(e.customers.join(', ')) + '</dd></div>' +
-        (e.dispatched
-          ? '<div class="gr-ic-row"><dt>Dispatched</dt><dd>' + esc(e.dispatched) + '</dd></div>'
-          : '<div class="gr-ic-row"><dt>Year</dt><dd>' + esc(e.period) + '</dd></div>') +
-      '</dl>';
+      '<div class="gr-ic-qty">' + fmtN(e.radiators) + ' radiators</div>' +
+      '<dl class="gr-ic-rows">' + rows + '</dl>';
   }
   function cityCardHTML(c) {
     const custs = customersAtCity(c.key);
@@ -1519,9 +1518,7 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       (c.works ? '<p class="gr-ic-desc">' + esc(WORKS.body) + '</p>' : '') +
       '<ul class="gr-ic-custs">' + custs.map(function (cu) {
         return '<li><span class="gr-ic-cust-name">' + esc(cu.name) + '</span>' +
-          '<span class="gr-ic-cust-loc">' + esc(cu.location.city + ', ' + cu.location.state) + '</span>' +
-          (cu.dispatch ? '<span class="gr-ic-cust-supply">' + cu.dispatch.radiators.toLocaleString('en-IN') + ' radiators · ' +
-            esc(cu.dispatch.from) + ' – ' + esc(cu.dispatch.to) + '</span>' : '') + '</li>';
+          '<span class="gr-ic-cust-loc">' + esc(cu.location.city + ', ' + cu.location.state) + '</span></li>';
       }).join('') + '</ul>';
   }
   let activeKey = null;
@@ -1598,13 +1595,13 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     dotNodes = [];
     EXPORTS.forEach(function (e) {
       const key = 'export-' + e.country.toLowerCase();
-      const pending = e.radiators === null;
-      const g = el('g', { class: 'gr-dot is-export' + (pending ? ' is-pending' : ''), 'data-key': key }, dotsG);
+      const g = el('g', { class: 'gr-dot is-export', 'data-key': key }, dotsG);
       el('circle', { class: 'gr-hit', r: 10 }, g);
       el('circle', { class: 'gr-dot-core', r: 3.6 }, g);
       g.setAttribute('role', 'button');
-      g.setAttribute('aria-label', e.country + (pending ? ', destination confirmed, detail pending'
-        : ', ' + e.radiators + ' radiators' + (exportVolume(e) ? ', ' + exportVolume(e).replace(/, $/, '') : '') + ', through ' + e.customers.join(', ')));
+      g.setAttribute('aria-label', e.country + ', ' + fmtN(e.radiators) + ' radiators' +
+        (e.jobs != null ? ', ' + e.jobs + ' transformer jobs' : '') +
+        (throughText(e) ? ', ' + throughText(e) : ''));
       bindClick(g, function () { setActive(key); openCard(exportCardHTML(e)); });
       dotNodes.push({ key: key, kind: 'export', e: e, p: projection([e.lon, e.lat]), node: g, r: 3.6 });
     });
@@ -2068,15 +2065,19 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       legendEl.innerHTML =
         '<div class="gr-legend-row"><span class="gr-legend-dot is-works"></span>Triveni works, Prayagraj</div>' +
         '<div class="gr-legend-row"><span class="gr-legend-dot is-export"></span>Documented export supply</div>' +
-        (EXPORTS.some(function (e) { return e.radiators === null; })
-          ? '<div class="gr-legend-row"><span class="gr-legend-dot is-pending"></span>Confirmed destination, detail pending</div>' : '') +
         '<p class="gr-legend-note">Select India to explore ' + INDIA_CITIES.filter(function (c) { return customersAtCity(c.key).length; }).length + ' customer cities.</p>';
     } else {
+      /* "Direct customers across N states" (client point 10) — N is the live
+         count of distinct states with a confirmed direct customer, so it can't
+         contradict the pan-India "20+ states supplied" claim (that counts
+         transformer sites supplied, not direct-customer locations). */
+      var directStateCount = Object.keys(STATE_COUNTS).length;
       legendEl.innerHTML =
         '<div class="gr-legend-row"><span class="gr-legend-dot is-works"></span>Triveni works, Prayagraj</div>' +
         '<div class="gr-legend-row"><span class="gr-legend-dot is-export"></span>Customer city · badge = customers there</div>' +
-        '<p class="gr-legend-note">' + mappedCustomers + ' of ' + INDIA_CUSTOMERS.length + ' direct customers plotted across ' + CITIES.length + ' cities' +
-          (INDIA_CUSTOMERS.length > mappedCustomers ? ' — the other ' + (INDIA_CUSTOMERS.length - mappedCustomers) + ' have no Indian site address in the client\'s list' : '') + '. Radiators supplied through these OEMs run in transmission networks nationwide.</p>';
+        '<p class="gr-legend-note"><strong>Direct customers across ' + directStateCount + ' states.</strong> ' +
+          mappedCustomers + ' of ' + INDIA_CUSTOMERS.length + ' direct customers plotted across ' + CITIES.length + ' cities' +
+          (INDIA_CUSTOMERS.length > mappedCustomers ? ' — the other ' + (INDIA_CUSTOMERS.length - mappedCustomers) + ' have no Indian site address in the client\'s list' : '') + '. Radiators supplied through these OEMs run in transformer sites nationwide.</p>';
     }
   }
 
@@ -2293,6 +2294,8 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     { name: 'ABB', logo: 'assets/logos/abb.svg', supplies: 'RDSO & POWERGRID transformers', voltageClass: '', location: 'Vadodara', partnerSince: '2019' },
     { name: 'TBEA Energy India', logo: 'assets/logos/tbea.png', supplies: 'HV large power transformers', voltageClass: '', location: 'Vadodara', partnerSince: '2015' },
     { name: 'CG Power', logo: 'assets/logos/cgpower.svg', supplies: 'Power transformers', voltageClass: 'To 420 kV', location: 'Mandideep', partnerSince: '2022' },
+    // TODO: Toshiba start year pending client confirmation (client confirms separately, 2026-09-27).
+    // Currently showing 2024 (first dated dispatch, Nov 2024). Location: Hyderabad.
     { name: 'Toshiba T&D', logo: 'assets/logos/major-customers/toshiba.jpeg', supplies: 'Transmission & distribution systems', voltageClass: '', location: 'Hyderabad', partnerSince: '2024' }
   ];
   var EM_DASH = '—';
@@ -2407,56 +2410,64 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
 /* ===================================================
    04 — PROJECT PROOF — midnight & gold, one tabbed section.
    Replaces the old separate "Proof of Delivery" (03) stats AND the old
-   four-tier scroll-jump layout. PROJECTS drives the Featured table and
-   the Spotlight; SUPPLY_RECORD (below) drives the Supply record tab.
-   Every figure is a client claim, copied verbatim — never rounded,
-   reformatted or extrapolated. Do not add spotlight content without it
-   being confirmed by the client first.
+   four-tier scroll-jump layout. PROJECTS drives the Featured table and the
+   Spotlight; EXPORT_GROUPS (built from clients-data.js) drives the Supply
+   record tab, which now lists export supplies only (client point 11).
+   Every export figure comes from clients-data.js — copied verbatim, never
+   rounded, reformatted or extrapolated. Do not add spotlight content without
+   it being confirmed by the client first.
    =================================================== */
 (function () {
+  var CD = window.CLIENTS_DATA || { SUPPLIES: [], SPOTLIGHTS: {} };
+  function fmtQty(n) { return Number(n).toLocaleString('en-IN'); }
+  /* qty totals read from clients-data.js so featured/spotlight scopes can never
+     drift from the map and supply record. */
+  function sumWhere(pred) { return CD.SUPPLIES.reduce(function (s, x) { return s + (pred(x) ? x.qty : 0); }, 0); }
+  var turkmenistanQty = sumWhere(function (x) { return x.country === 'Turkmenistan'; });   // 532
+  var arcelorQty = sumWhere(function (x) { return x.region === 'ArcelorMittal'; });         // 26
+
+  /* Map a clients-data.js spotlight to the render shape; qty is derived. Only
+     fields the client confirmed are present, so the render omits the rest. */
+  function makeSpot(id, qty) {
+    var s = CD.SPOTLIGHTS[id]; if (!s) return null;
+    var jobsNum = typeof s.jobs === 'number';
+    return {
+      title: s.title,
+      summary: fmtQty(qty) + ' Radiators' + (jobsNum ? ' · ' + s.jobs + ' Transformer Jobs' : ''),
+      through: s.indianCustomer,
+      endCustomer: s.endCustomer,
+      application: s.application,
+      rating: s.rating,
+      voltage: s.voltage,
+      qty: fmtQty(qty),
+      jobsRef: jobsNum ? null : s.jobs,     // Moldova/Bulgaria job references (I320/1–4, I348/1,2)
+      dispatched: s.dispatched,
+      range: s.range,
+      line: s.line
+    };
+  }
+
+  /* Featured projects: ArcelorMittal + TBEA/Turkmenistan scopes come from the
+     data file; POWERGRID (765 kV) and the RDSO 2,200+ order are domestic proof
+     kept from the customers' performance letters (the 2,200+ figure and its
+     July 2021 ABB Power Products & Systems India letter are RETAINED per client
+     point 9). Spotlights: Turkmenistan, Moldova (point 7), Bulgaria (point 8). */
   var PROJECTS = [
-    { id: 'arcelormittal-hdg', international: false,
-      featured: { customer: 'ArcelorMittal', project: 'Power Transformer Application', ratingVoltage: '165 MVA / 220 kV', scope: '26 Radiators' } },
+    { id: 'arcelormittal-hdg', international: true,
+      featured: { customer: 'ArcelorMittal', project: 'Power Transformer Application (HDG)', ratingVoltage: '165 MVA', scope: fmtQty(arcelorQty) + ' Radiators' } },
 
-    /* Turkmenistan / TBEA — verified against the client's "TBEA Turkmenistan –
-       Radiator Supply" sheet (2026-09-24). Total across both rows below:
-       532 radiators, 25 transformer jobs. Internal job numbers (IM10011/…,
-       IM10012/…, IM10013/…) are intentionally not published on the site. */
-    { id: 'turkmenistan-500-220-35', international: true,
-      featured: { customer: 'TBEA', project: 'International Transmission Project', ratingVoltage: '167 MVA & 125 MVA', scope: '532 Radiators' },
-      spotlight: {
-        title: 'TBEA · Turkmenistan',
-        summary: '532 Radiators · 25 Transformer Jobs',
-        customer: 'TBEA',
-        endCustomer: 'Turkmenistan',
-        application: 'Power Transmission',
-        rating: '167 MVA & 125 MVA',
-        voltage: '500/220/35, 500/220/10 & 220/110/10 kV',
-        qty: '532',
-        range: '-33°C to 110°C',
-        line: '17 × 167 MVA transformers (500/220/35 kV — 14 jobs; 500/220/10 kV — 3 jobs) and 8 × 125 MVA transformers (220/110/10 kV) — 532 radiators supplied through TBEA across 25 transformer jobs in Turkmenistan.'
-      } },
+    { id: 'turkmenistan', international: true,
+      featured: { customer: 'TBEA', project: 'International Transmission Project', ratingVoltage: '167 MVA & 125 MVA', scope: fmtQty(turkmenistanQty) + ' Radiators' },
+      spotlight: makeSpot('turkmenistan', turkmenistanQty) },
 
-    /* Moldova / Siemens Energy — from the client's "international sites details
-       for global map" sheet (2026-09-26): Siemens Energy India Limited, 88 radiators,
-       dispatched May – June 2023 (the sheet spells it "Maldova"). The sheet gives
-       no rating, voltage, application or operating range, so those spec rows are
-       left out rather than guessed — add them here once the client supplies them.
-       Its supply-record row (SUPPLY_RECORD, 'exports' group) links here. */
-    { id: 'moldova-siemens', international: true,
-      spotlight: {
-        title: 'Siemens Energy · Moldova',
-        summary: '88 Radiators',
-        customer: 'Siemens Energy India Limited',
-        endCustomer: 'Moldova',
-        qty: '88',
-        dispatched: 'May – June 2023',
-        line: '88 radiators supplied through Siemens Energy India Limited for Moldova, dispatched May – June 2023.'
-      } },
+    { id: 'moldova', international: true,
+      spotlight: makeSpot('moldova', sumWhere(function (x) { return x.country === 'Moldova'; })) },
 
-    /* TODO: Bulgaria — no Bulgaria supply appears in any client file yet (the
-       international sites sheet, TBEA certificate or export-jobs list). Add its
-       spotlight entry here once the client sends the details. */
+    { id: 'bulgaria', international: true,
+      spotlight: makeSpot('bulgaria', sumWhere(function (x) { return x.country === 'Bulgaria'; })) },
+
+    { id: 'oman', international: true,
+      spotlight: makeSpot('oman', sumWhere(function (x) { return x.country === 'Oman'; })) },
 
     { id: 'powergrid-765', international: false,
       featured: { customer: 'POWERGRID', project: 'High-Voltage Transmission', ratingVoltage: '765 kV', scope: 'Radiator Supply' } },
@@ -2465,171 +2476,32 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       featured: { customer: 'RDSO / OEM Partner', project: 'Railway Electrification', ratingVoltage: 'RDSO Application', scope: '2,200+ Radiators' } }
   ];
 
-  /* ---- SUPPLY RECORD — every dated job the client's own documents list ----
-     One group per source document (the customer who signed it). Figures are
-     copied verbatim from each letter; a cell the letter leaves blank shows an
-     em dash — nothing is inferred. Internal work-order / job numbers are not
-     published (same rule as the Turkmenistan rows). Application wording:
-     MVAr ratings are reactors and MVA ratings transformers, as each letter
-     describes its supplies; RDSO rows keep the letter's own RDSO labels.
-     Sources (assets/docs/performance certificates/ and triveni_docs/):
-       tbea    — TBEA performance certificate, 25 Sep 2026
-       siemens — Siemens letters, 7 Aug 2021 (2016–2021 jobs) and 13 Jul 2026 (2025-26 jobs)
-       abbppsi — ABB Power Products & Systems India letter, 1 Jul 2021 (no years given)
-                 FLAG: this entity was removed from the customer directory per client
-                 feedback (2026-09-25); its supply record is kept here because the
-                 2,200-radiator RDSO order in the stat rail comes from this letter.
-       abb     — ABB India letter, 24 Apr 2019 (no years given)
-       cg      — CG Power performance letter, 2025
-       ssel    — Shirdi Sai Electricals letter, 21 Jan 2025
-       toshiba / ayrindia — dispatch sheet "Dispatch Details (Toshiba GEP & AYR)", 26 Sep 2026
-       exports — Triveni export-jobs list + "international sites details for global map"
-                 sheet: no rating or voltage given. Excluded: SEIL's 14 Turkmenistan
-                 radiators (pending client confirmation) and the list's old Tanzania 22
-                 (superseded by TBEA's certificate). */
-  var DASH = '—';
-  var SUPPLY_RECORD = [
-    { key: 'tbea', customer: 'TBEA Energy (India) · Vadodara', source: 'TBEA performance certificate · Sep 2026', open: true, rows: [
-      { year: '2021-23', project: 'International Transmission Projects', region: 'Turkmenistan', intl: true, rating: '167 MVA', voltage: '500/220/35 & 500/220/10 kV', qty: 340, spotlight: 'turkmenistan-500-220-35' },
-      { year: '2021-23', project: 'International Transmission Projects', region: 'Turkmenistan', intl: true, rating: '125 MVA', voltage: '220/110/10 kV', qty: 192 },
-      { subtotal: 'Turkmenistan total', qty: 532 },
-      { year: '2022-23', project: 'International Power Transmission Projects', region: 'Tanzania', intl: true, rating: '250 MVA', voltage: '400/220/33 kV', qty: 80 },
-      { year: '2022-23', project: 'International Power Transmission Projects', region: 'Tanzania', intl: true, rating: '250 MVA', voltage: '220/132/33 kV', qty: 36 },
-      { year: '2022-23', project: 'International Grid Project', region: 'Tanzania', intl: true, rating: '50 MVA', voltage: '400 kV', qty: 33 },
-      { subtotal: 'Tanzania total', qty: 149 },
-      { year: '2023-24', project: 'High Voltage Transmission Project in HDG', region: 'ArcelorMittal', rating: '165 MVA', voltage: '220/33 kV', qty: 26 }
-    ] },
-    { key: 'siemens', customer: 'Siemens Energy India · Navi Mumbai', source: 'Siemens performance letters · Aug 2021 & Jul 2026', rows: [
-      { year: '2016', project: 'Power transformer', rating: '500 MVA', voltage: '765 kV', qty: 252 },
-      { year: '2017', project: 'Power transformer', rating: '500 MVA', voltage: '765 kV', qty: 252 },
-      { year: '2017', project: 'Power transformer', rating: '500 MVA', voltage: '765 kV', qty: 252 },
-      { year: '2017', project: 'Power transformer', rating: '500 MVA', voltage: '765 kV', qty: 252 },
-      { year: '2017', project: 'Shunt reactor', rating: '80 MVAr', voltage: '420 kV', qty: 24 },
-      { year: '2017', project: 'Shunt reactor', rating: '63 MVAr', voltage: '420 kV', qty: 24 },
-      { year: '2021', project: 'Shunt reactor', rating: '125 MVAr', voltage: '420 kV', qty: 12 },
-      { year: '2021', project: 'Shunt reactor', rating: '125 MVAr', voltage: '420 kV', qty: 32 },
-      { year: '2025-26', project: 'Power transformer', region: 'MEIL', rating: '500 MVA', voltage: '400/220/33 kV', qty: 40 },
-      { year: '2025-26', project: 'Power transformer', region: 'KRTL', rating: '80 MVA', voltage: '400 kV', qty: 10 },
-      { year: '2025-26', project: 'Power transformer', region: 'GSECL', rating: '315 MVA', voltage: '33/400 kV', qty: 80 },
-      { year: '2025-26', project: 'Power transformer', region: 'PGCIL', rating: '500 MVA', voltage: '765/400/33 kV', qty: 216 },
-      { year: '2025-26', project: 'Power transformer', region: 'PGCIL', rating: '125 MVA', voltage: '400 kV', qty: 168 },
-      { year: '2025-26', project: 'Power transformer', region: 'UPPTCL', rating: '500 MVA', voltage: '400/220/33 kV', qty: 20 },
-      { year: '2025-26', project: 'Power transformer', region: 'PGCIL', rating: '500 MVA', voltage: '765/400/33 kV', qty: 60 },
-      { year: '2025-26', project: 'Power transformer', region: 'PGCIL', rating: '500 MVA', voltage: '400/220/33 kV', qty: 24 }
-    ] },
-    { key: 'cg', customer: 'CG Power · Mandideep', source: 'CG Power performance letter · 2025', rows: [
-      { year: '2022', project: 'RDSO / Trackside', region: 'RDSO', rating: '30.3 MVA', voltage: '132 kV', qty: 250 },
-      { year: '2022', project: 'Transformer', qty: 64 },
-      { year: '2023', project: 'RDSO / Trackside', region: 'RDSO', rating: '30.3 MVA', voltage: '132 kV', qty: 380 },
-      { year: '2023', project: 'RDSO / Auto', region: 'RDSO', rating: '16.5 MVA', voltage: '55/27.5 kV', qty: 145 },
-      { year: '2023', project: 'V-Connected / RDSO', region: 'RDSO', rating: '63 MVA', voltage: '132 kV', qty: 168 },
-      { year: '2023', project: 'Power transformer', region: 'Amara Raja', rating: '315 MVA', voltage: '420 kV', qty: 84 },
-      { year: '2024', project: 'RDSO / Trackside', region: 'RDSO', rating: '30.3 MVA', voltage: '132 kV', qty: 70 },
-      { year: '2024', project: 'RDSO / Auto', region: 'RDSO', rating: '16.5 MVA', voltage: '55/27.5 kV', qty: 140 },
-      { year: '2024', project: 'Power transformer', region: 'Amara Raja', rating: '315 MVA', voltage: '420 kV', qty: 84 },
-      { year: '2024', project: 'Power transformer', region: 'Powerica', rating: '125 MVA', voltage: '220 kV', qty: 60 },
-      { year: '2025', project: 'V-Connected / RDSO', region: 'RDSO', rating: '63 MVA', voltage: '132 kV', qty: 42 },
-      { year: '2025', project: 'RDSO / Auto', region: 'RDSO', rating: '16.5 MVA', voltage: '55/27.5 kV', qty: 10 },
-      { year: '2025', project: 'RDSO / Trackside', region: 'RDSO', rating: '30.3 MVA', voltage: '132 kV', qty: 50 },
-      { year: '2025', project: 'Power transformer', region: 'Serentica', rating: '500 MVA', voltage: '400 kV', qty: 32 }
-    ] },
-    { key: 'abbppsi', customer: 'ABB Power Products & Systems India · Vadodara', source: 'ABB performance letter · Jul 2021', rows: [
-      { project: 'Railway transformer (RDSO)', region: 'RDSO', rating: '30.24 MVA', voltage: '132 kV', qty: 2200 },
-      { project: 'Railway transformer (RDSO)', region: 'RDSO', rating: '30.24 MVA', voltage: '220 kV', qty: 180 },
-      { project: 'Railway transformer (RDSO)', region: 'RDSO', rating: '42 MVA', voltage: '132 kV', qty: 196 },
-      { project: 'Railway transformer (RDSO)', region: 'RDSO', rating: '30.24 MVA', voltage: '66 kV', qty: 230 },
-      { project: 'Railway transformer (RDSO)', region: 'RDSO', rating: '30.24 MVA', voltage: '132 kV', qty: 40 },
-      { project: 'Shunt reactor', region: 'BGR', rating: '110 MVAr', qty: 24 },
-      { project: 'Power transformer', region: 'POWERGRID', rating: '500 MVA', qty: 128 }
-    ] },
-    { key: 'abb', customer: 'ABB India · Vadodara', source: 'ABB performance letter · Apr 2019', rows: [
-      { project: 'Transformer', rating: '30.24 MVA', voltage: '132/26 kV', qty: 350 },
-      { project: 'Transformer', rating: '30.24 MVA', voltage: '220/26 kV', qty: 10 },
-      { project: 'Transformer', rating: '42 MVA', voltage: '132/26 kV', qty: 28 }
-    ] },
-    { key: 'ssel', customer: 'Shirdi Sai Electricals · Prayagraj', source: 'Shirdi Sai performance letter · Jan 2025', rows: [
-      { year: '2023', project: 'Transformer', rating: '13 MVA', voltage: '132/11 kV', qty: 14 },
-      { year: '2023', project: 'Transformer', rating: '42 MVA', voltage: '132/11 kV', qty: 11 },
-      { year: '2023', project: 'Transformer', rating: '30 MVA', voltage: '132/33 kV', qty: 16 },
-      { year: '2023', project: 'Transformer', rating: '24 MVA', voltage: '127/11 kV', qty: 42 },
-      { year: '2023', project: 'Transformer', rating: '30 MVA', voltage: '132/11 kV', qty: 28 },
-      { year: '2023', project: 'Transformer', rating: '13 MVA', voltage: '132/11 kV', qty: 18 },
-      { year: '2023', project: 'General transformer', rating: '10 MVA', qty: 24 },
-      { year: '2023', project: 'Transformer', rating: '200 MVA', voltage: '400/33 kV', qty: 20 },
-      { year: '2024', project: 'Transformer', rating: '200 MVA', voltage: '400/33 kV', qty: 20 },
-      { year: '2024', project: 'Transformer', rating: '16/25 MVA', voltage: '21/6.9 kV', qty: 20 },
-      { year: '2024', project: 'Transformer', rating: '150 MVA', voltage: '220/33 kV', qty: 48 },
-      { year: '2024', project: 'Transformer', rating: '27.62 MVA', voltage: '132/11 kV', qty: 10 },
-      { year: '2024', project: 'Transformer', rating: '160 MVA', voltage: '230/110 kV', qty: 8 },
-      { year: '2024', project: 'Transformer', rating: '66.67 MVA', voltage: '400/33 kV', qty: 60 },
-      { year: '2024', project: 'Transformer', rating: '180 MVA', voltage: '220/33 kV', qty: 60 }
-    ] },
-    /* Toshiba and AYR Energy India — client dispatch sheet "Dispatch Details
-       (Toshiba GEP & AYR)" (26 Sep 2026), month by month up to 21 Sep 2026;
-       subtotals are the sheet's own financial-year totals (its "F.Y. 20226-27"
-       label read as 2026-27). The sheet gives radiator size, not transformer
-       rating/voltage, so those cells show an em dash. Domestic customers —
-       not part of the "Radiators exported" stat. */
-    { key: 'toshiba', customer: 'Toshiba Transmission & Distribution Systems India · Sangareddy', source: 'Toshiba dispatch sheet · to 21 Sep 2026', unit: 'dispatch', rows: [
-      { year: 'Nov 2024', project: 'Radiators 1600×520×12', qty: 5 },
-      { year: 'Mar 2025', project: 'Radiators 1600×520×12', qty: 5 },
-      { year: 'Mar 2025', project: 'Radiators 1600×520×12', qty: 5 },
-      { subtotal: 'FY 2024-25 total', qty: 15 },
-      { year: 'Apr 2025', project: 'Radiators 1600×520×12', qty: 80 },
-      { year: 'Apr 2025', project: 'Radiators 1600×520×17', qty: 20 },
-      { year: 'May 2025', project: 'Radiators 1600×520×12', qty: 85 },
-      { year: 'Jun 2025', project: 'Radiators 1600×520×12', qty: 64 },
-      { year: 'Jul 2025', project: 'Radiators 1600×520×12', qty: 1 },
-      { year: 'Aug 2025', project: 'Radiators 1600×520×12', qty: 68 },
-      { year: 'Aug 2025', project: 'Radiators 1600×520×17', qty: 17 },
-      { year: 'Oct 2025', project: 'Radiators 1600×520×12', qty: 150 },
-      { year: 'Nov 2025', project: 'Radiators 1600×520×12', qty: 80 },
-      { year: 'Dec 2025', project: 'Radiators 1600×520×12', qty: 20 },
-      { year: 'Jan 2026', project: 'Radiators 1600×520×12', qty: 16 },
-      { year: 'Feb 2026', project: 'Radiators 1600×520×12', qty: 24 },
-      { year: 'Mar 2026', project: 'Radiators 1600×520×12', qty: 156 },
-      { subtotal: 'FY 2025-26 total', qty: 781 },
-      { year: 'Apr 2026', project: 'Radiators 1600×520×12', qty: 142 },
-      { year: 'May 2026', project: 'Radiators 1600×520×12', qty: 198 },
-      { year: 'Jun 2026', project: 'Radiators 1600×520×12', qty: 206 },
-      { year: 'Jul 2026', project: 'Radiators 1600×520×12', qty: 282 },
-      { year: 'Aug 2026', project: 'Radiators 1600×520×12', qty: 128 },
-      { year: 'Sep 2026 (to 21st)', project: 'Radiators 1600×520×12', qty: 64 },
-      { subtotal: 'FY 2026-27 total (to 21 Sep)', qty: 1020 }
-    ] },
-    { key: 'ayrindia', customer: 'AYR Energy India · Hyderabad', source: 'AYR dispatch sheet · to 21 Sep 2026', unit: 'dispatch', rows: [
-      { year: 'Jul 2025', project: 'Radiator supply', qty: 30 },
-      { year: 'Aug 2025', project: 'Radiator supply', qty: 179 },
-      { year: 'Sep 2025', project: 'Radiator supply', qty: 30 },
-      { year: 'Dec 2025', project: 'Radiator supply', qty: 56 },
-      { year: 'Feb 2026', project: 'Radiator supply', qty: 6 },
-      { subtotal: 'FY 2025-26 total', qty: 301 },
-      { year: 'May 2026', project: 'Radiator supply', qty: 40 },
-      { year: 'Jun 2026', project: 'Radiator supply', qty: 88 },
-      { year: 'Jul 2026', project: 'Radiator supply', qty: 20 },
-      { year: 'Aug 2026', project: 'Radiator supply', qty: 74 },
-      { subtotal: 'FY 2026-27 total (to 21 Sep)', qty: 222 }
-    ] },
-    { key: 'exports', customer: 'Other export supplies', source: 'Export jobs list & international sites sheet', rows: [
-      { year: '2015-16', project: 'Prolec GE', region: 'Malaysia', intl: true, qty: 8 },
-      { year: '2016-17', project: 'Prolec GE', region: 'Bangladesh', intl: true, qty: 36 },
-      { year: '2016-17', project: 'Prolec GE', region: 'Bangladesh', intl: true, qty: 8 },
-      { year: '2017-18', project: 'Siemens', region: 'Bangladesh', intl: true, qty: 48 },
-      { year: '2020-21', project: 'TBEA', region: 'Nepal', intl: true, qty: 24 },
-      { year: '2020-21', project: 'TBEA', region: 'Nepal', intl: true, qty: 32 },
-      { year: '2020-21', project: 'TBEA', region: 'Niger', intl: true, qty: 30 },
-      { year: '2021-22', project: 'GE T&D', region: 'Bhutan', intl: true, qty: 36 },
-      { year: '2022-23', project: 'TBEA', region: 'Nepal', intl: true, qty: 6 },
-      { year: '2022-23', project: 'Hitachi', region: 'Bhutan', intl: true, qty: 48 },
-      { year: '2023', project: 'Siemens Energy India', region: 'Moldova', intl: true, qty: 88, spotlight: 'moldova-siemens' },
-      { year: '2025', project: 'AYR Energy', region: 'USA', intl: true, qty: 154 },
-      { year: '2026', project: 'Wilson Power Solutions', region: 'Oman', intl: true, qty: 144 }
-    ] }
-  ];
-  function jobRows(g) { return g.rows.filter(function (r) { return !r.subtotal; }); }
-  function groupTotal(g) { return jobRows(g).reduce(function (s, r) { return s + r.qty; }, 0); }
-  var supplyJobCount = SUPPLY_RECORD.reduce(function (s, g) { return s + jobRows(g).length; }, 0);
-  function fmtQty(n) { return Number(n).toLocaleString('en-IN'); }
+  /* ---- SUPPLY RECORD — indirect export supplies only (client point 11) ----
+     Lists ONLY the export supplies held in clients-data.js — the same data
+     plotted on the world map. Every domestic performance-letter group (Siemens,
+     CG Power, ABB India, ABB Power Products & Systems India, Shirdi Sai) and the
+     Toshiba / AYR India month-by-month dispatch detail were removed. Toshiba's
+     1,816 and AYR India's 523 are now counted as USA indirect exports (their FY
+     rows in clients-data.js). The 2,200+ RDSO figure and its July 2021 ABB Power
+     Products & Systems India letter are RETAINED in the stat rail and Featured
+     tab per client point 9.
+     One collapsible group per destination (a country, or ArcelorMittal whose
+     destination country is pending). A field the client hasn't given is left
+     blank — never "—" (client point 6). */
+  var EXPORT_GROUPS = (function () {
+    var order = [], byKey = {};
+    CD.SUPPLIES.forEach(function (s) {
+      var name = s.country || s.region || 'Other';
+      var key = 'exp-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      var g = byKey[key];
+      if (!g) { g = byKey[key] = { key: key, name: name, mapped: s.mapped !== false, rows: [], direct: 0, indirect: 0 }; order.push(g); }
+      g.rows.push(s);
+      if (s.mode === 'direct') g.direct += s.qty; else g.indirect += s.qty;
+    });
+    return order;
+  })();
+  function groupTotal(g) { return g.direct + g.indirect; }
+  var supplyJobCount = EXPORT_GROUPS.reduce(function (s, g) { return s + g.rows.length; }, 0);
 
   /* Stat rail — a curated set of 4, each one traceable to a row above/below
      (765 kV -> POWERGRID row; 532 units -> the TBEA/Turkmenistan rows; 2,200+
@@ -2638,8 +2510,10 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
      both contradicted the supply table and that's why 03 was deleted. */
   var STAT_RAIL = [
     { value: '765', unit: 'kV', caption: 'Highest voltage class delivered', source: 'POWERGRID transmission' },
-    { value: '532', unit: 'units', caption: 'Radiators across 25 transformer jobs', source: 'TBEA · Turkmenistan' },
-    { value: '2,200', unit: '+', caption: 'Radiators in a single RDSO order', source: 'Railway electrification' },
+    { value: fmtQty(turkmenistanQty), unit: 'units', caption: 'Radiators across 25 transformer jobs', source: 'TBEA · Turkmenistan' },
+    /* 2,200+ RDSO order — retained per client point 9 (source: ABB Power
+       Products & Systems India performance letter, July 2021). */
+    { value: '2,200', unit: '+', caption: 'Radiators in a single RDSO order', source: 'ABB PP&S India · RDSO railway' },
     { value: '-33°C to 110°C', unit: '', caption: 'Proven operating range', source: 'International supply' }
   ];
 
@@ -2682,43 +2556,44 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       '</button>';
   }).join('');
 
-  function recordRegion(r) {
-    if (!r.region) return DASH;
-    return '<span class="pp-region"><span class="pp-region-dot"></span>' + esc(r.region) +
-      (r.intl ? '<span class="pp-intl-tag">INTL</span>' : '') + '</span>';
-  }
-
-  /* one collapsible group per source document: header (customer · jobs ·
-     radiators · source), then its job rows; TBEA starts open */
+  /* one collapsible group per export destination: header (destination · N
+     supplies · radiators · export mode), then its supply rows; first group
+     (USA) starts open. Blank cells are details the client hasn't given. */
   function renderRecord() {
-    var groups = SUPPLY_RECORD.map(function (g) {
-      var jobs = jobRows(g), open = !!g.open;
-      var head = '<tbody class="pp-group"><tr class="pp-row-grouphead"><th colspan="6" scope="rowgroup">' +
+    var groups = EXPORT_GROUPS.map(function (g, gi) {
+      var open = gi === 0;
+      var modeLabel = (g.direct > 0 && g.indirect > 0) ? 'Direct + indirect export'
+        : (g.direct > 0 ? 'Direct export' : 'Indirect export');
+      var dest = g.mapped ? g.name : g.name + ' · destination pending';
+      var head = '<tbody class="pp-group"><tr class="pp-row-grouphead"><th colspan="5" scope="rowgroup">' +
         '<button type="button" class="pp-group-toggle" aria-expanded="' + open + '" aria-controls="ppg-' + g.key + '">' +
-          '<span class="pp-group-name">' + esc(g.customer) + '</span>' +
-          '<span class="pp-group-meta">' + jobs.length + ' ' + (g.unit || 'job') + (jobs.length === 1 ? '' : (g.unit === 'dispatch' ? 'es' : 's')) + ' · ' + fmtQty(groupTotal(g)) + ' radiators</span>' +
-          '<span class="pp-group-src">' + esc(g.source) + '</span>' +
+          '<span class="pp-group-name">' + esc(dest) + '</span>' +
+          '<span class="pp-group-meta">' + g.rows.length + ' suppl' + (g.rows.length === 1 ? 'y' : 'ies') + ' · ' + fmtQty(groupTotal(g)) + ' radiators</span>' +
+          '<span class="pp-group-src">' + esc(modeLabel) + '</span>' +
           '<span class="pp-group-chev" aria-hidden="true"></span>' +
         '</button></th></tr></tbody>';
       var rows = g.rows.map(function (r) {
-        if (r.subtotal) {
-          return '<tr class="pp-row-subtotal">' + cell('Year', '') + cell('Project / Application', esc(r.subtotal)) +
-            cell('End Customer / Region', '') + cell('Rating', '') + cell('Voltage Class', '') + cell('Qty.', fmtQty(r.qty)) + '</tr>';
-        }
-        var name = r.spotlight
-          ? '<button type="button" class="pp-row-link" data-open-spotlight="' + r.spotlight + '">' + esc(r.project) + ' <span class="arw">&rarr;</span></button>'
-          : esc(r.project);
-        return '<tr class="pp-row-grouped">' + cell('Year', esc(r.year || DASH)) + cell('Project / Application', name) +
-          cell('End Customer / Region', recordRegion(r)) + cell('Rating', esc(r.rating || DASH)) +
-          cell('Voltage Class', esc(r.voltage || DASH)) + cell('Qty.', fmtQty(r.qty)) + '</tr>';
+        var through = r.mode === 'direct'
+          ? 'Direct export' + (r.endCustomer ? ' — ' + esc(r.endCustomer) : '')
+          : (r.indianCustomer ? esc(r.indianCustomer) : '');
+        var ref = esc(r.jobs || r.ref || '') + (r.note ? '<span class="pp-row-note">' + esc(r.note) + '</span>' : '');
+        var period = r.spotlight
+          ? '<button type="button" class="pp-row-link" data-open-spotlight="' + r.spotlight + '">' + esc(r.period) + ' <span class="arw">&rarr;</span></button>'
+          : esc(r.period);
+        return '<tr class="pp-row-grouped">' +
+          cell('Period', period) +
+          cell('Reference', ref) +
+          cell('Supplied to / through', through) +
+          cell('Rating', esc(r.rating || '')) +
+          cell('Qty.', fmtQty(r.qty)) + '</tr>';
       }).join('');
       return head + '<tbody class="pp-group-rows" id="ppg-' + g.key + '"' + (open ? '' : ' hidden') + '>' + rows + '</tbody>';
     }).join('');
     return '<div class="pp-tablewrap"><table class="pp-table pp-table--record">' +
-      '<caption class="pp-sr-only">Supply record — every dated supply in the customers\' own performance letters, grouped by customer</caption>' +
-      '<thead><tr><th scope="col">Year</th><th scope="col">Project / Application</th><th scope="col">End Customer / Region</th><th scope="col">Rating</th><th scope="col">Voltage Class</th><th scope="col">Qty.</th></tr></thead>' +
+      '<caption class="pp-sr-only">Export supply record — the direct and indirect export supplies plotted on the world map, grouped by destination</caption>' +
+      '<thead><tr><th scope="col">Period</th><th scope="col">Reference</th><th scope="col">Supplied to / through</th><th scope="col">Rating</th><th scope="col">Qty.</th></tr></thead>' +
       groups + '</table></div>' +
-      '<p class="pp-record-note">Figures as stated in each customer\'s performance letter; “—” where the letter doesn\'t give that detail.</p>';
+      '<p class="pp-record-note">Indirect exports are radiators supplied to Indian customers for their export jobs; the only direct export is AYR, USA. Blank cells are details the client hasn\'t provided.</p>';
   }
 
   function renderFeatured() {
@@ -2743,19 +2618,22 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
   function renderSpotlight() {
     return '<div class="ppsc-list">' + spotlightRows.map(function (p) {
       var s = p.spotlight;
+      /* only the specs the client has confirmed for this project are shown */
+      var specs = [['Supplied through', s.through], ['End Customer', s.endCustomer], ['Application', s.application],
+           ['Transformer Rating', s.rating], ['Voltage Class', s.voltage], ['Radiators Supplied', s.qty],
+           ['Jobs', s.jobsRef], ['Dispatched', s.dispatched], ['Operating Range', s.range]]
+            .filter(function (row) { return row[1]; });
+      /* thin card (client point 6): offer detail on request */
+      var onRequest = specs.length < 4 ? '<p class="ppsc-onrequest">Project details available on request.</p>' : '';
       return '<article class="pp-spotlight-card" id="spotlight-' + p.id + '">' +
         '<div class="ppsc-main">' +
           '<h3 class="ppsc-title">' + esc(s.title) + '</h3>' +
           '<p class="ppsc-summary">' + s.summary + '</p>' +
           '<p class="ppsc-line">' + esc(s.line) + '</p>' +
+          onRequest +
         '</div>' +
-        /* only the specs the client has confirmed for this project are shown */
         '<dl class="ppsc-specs">' +
-          [['Customer', s.customer], ['End Customer', s.endCustomer], ['Application', s.application],
-           ['Transformer Rating', s.rating], ['Voltage Class', s.voltage], ['Radiators Supplied', s.qty],
-           ['Dispatched', s.dispatched], ['Operating Range', s.range]]
-            .filter(function (row) { return row[1]; })
-            .map(function (row) { return '<div><dt>' + row[0] + '</dt><dd>' + esc(row[1]) + '</dd></div>'; }).join('') +
+          specs.map(function (row) { return '<div><dt>' + row[0] + '</dt><dd>' + esc(row[1]) + '</dd></div>'; }).join('') +
         '</dl>' +
       '</article>';
     }).join('') + '</div>';

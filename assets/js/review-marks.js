@@ -19,50 +19,23 @@
   var page = (location.pathname.split('/').pop() || 'index.html').replace('.html', '') || 'index';
   var CLIENT = 'Needs client input', YOU = 'Your decision';
 
+  /* Marks resolved by the client's 2026-09-27 answers were removed per the
+     file's own rule ("Remove an entry here once the item is resolved"):
+     Toshiba location (→ Hyderabad), Export-orders stat (removed), Meiden
+     Naidupeta (confirmed), 2,200+ RDSO stat + ABB PP&S group (kept figure,
+     dropped group), Tanzania project names, and the Siemens/CG/ABB India/
+     Shirdi Sai/Toshiba-dispatch/AYR-India/Other-export rows (supply record is
+     now export-only), the Credentials Jul-2021 ABB letter (retained), and the
+     Careers "20+ states" figure (kept). What remains below is genuinely still
+     open with the client. */
   var MARKS = [
     /* ---- Clients page: Our Customers ---- */
     { page: 'clientele', sel: '.oc-row', has: 'Toshiba T&D', who: CLIENT,
-      note: 'Toshiba start year 2024 comes from the dispatch sheet (first dispatch Nov 2024). Milestones & Triveni Group pages mention Toshiba from 2018 — confirm the real start year.' },
-    { page: 'clientele', sel: '#ocFeatureInner', has: 'Toshiba T&D', who: YOU,
-      note: 'Toshiba location: "Hyderabad" here, "Sangareddy" on the map and supply record (address: Sangareddy district, Hyderabad). Pick one.' },
-
-    /* ---- Clients page: Global Reach ---- */
-    { page: 'clientele', sel: '.gr-statcell', has: 'Export orders', who: CLIENT,
-      note: 'Export orders (15) excludes Moldova, Oman and USA — the international sites sheet gives no order counts for them.' },
-    { page: 'clientele', sel: '.gr-infocard', has: 'Naidupeta', who: CLIENT,
-      note: 'Meiden T&D is placed at Naidupeta (sheet: "Nellore District: Tirupati 524126"; PIN 524126 = Naidupeta). Confirm.' },
+      note: 'Toshiba start year 2024 comes from the dispatch sheet (first dispatch Nov 2024); Milestones & Triveni Group pages mention Toshiba from 2018. Client is confirming the real start year (expected 2026-09-28).' },
 
     /* ---- Clients page: Project Proof ---- */
-    { page: 'clientele', sel: '.pp-statcell', has: 'single RDSO order', who: YOU,
-      note: 'The 2,200+ RDSO order comes from the ABB Power Products & Systems India letter — that customer was removed from the directory. Keep or drop this stat together with its supply-record group.' },
-    { page: 'clientele', sel: '.pp-row-grouphead', has: 'TBEA Energy', who: YOU,
-      note: 'Tanzania rows use two project names ("International Power Transmission Projects" / "International Grid Project"); the certificate names neither. Choose one, or keep as is.' },
-    { page: 'clientele', sel: '.pp-row-grouphead', has: 'Siemens Energy India', who: CLIENT,
-      note: 'The Aug 2021 Siemens letter gives no end customer for its 8 jobs (shown "—").' },
-    { page: 'clientele', sel: '.pp-row-grouphead', has: 'CG Power', who: CLIENT,
-      note: 'One 2022 row (64 radiators, job BH11290) has no rating, voltage or end customer in the letter.' },
-    { page: 'clientele', sel: '.pp-row-grouphead', has: 'ABB Power Products', who: YOU,
-      note: 'Customer removed from the directory per client, but its Jul 2021 letter is still listed here (and feeds the 2,200+ RDSO stat). Keep or remove. The letter also gives no years.' },
-    { page: 'clientele', sel: '.pp-row-grouphead', has: 'ABB India', who: CLIENT,
-      note: 'The Apr 2019 ABB India letter gives no years or end customers (shown "—").' },
-    { page: 'clientele', sel: '.pp-row-grouphead', has: 'Shirdi Sai', who: CLIENT,
-      note: 'The Jan 2025 Shirdi Sai letter gives no end customers (shown "—").' },
-    { page: 'clientele', sel: '.pp-row-grouphead', has: 'Toshiba Transmission', who: YOU,
-      note: 'Toshiba radiators go into GE USA transformers ("Toshiba GEP") — count as exports or keep domestic? The sheet gives sizes, not rating/voltage.' },
-    { page: 'clientele', sel: '.pp-row-grouphead', has: 'AYR Energy India', who: CLIENT,
-      note: 'The AYR dispatch sheet gives quantities and months only — no radiator size, rating or voltage.' },
-    { page: 'clientele', sel: '.pp-row-grouphead', has: 'Other export supplies', who: CLIENT,
-      note: 'Export list / sheet give no rating or voltage for these 13 supplies. SEIL\'s 14 Turkmenistan radiators are left out pending client confirmation.' },
-    { page: 'clientele', sel: '.pp-spotlight-card', has: 'Moldova', who: CLIENT,
-      note: 'Moldova: awaiting application, transformer rating, voltage class and operating range. Bulgaria: no data received yet — its Spotlight card can\'t be added.' },
-
-    /* ---- Credentials (the Jul 2021 "ABB" letter is ABB Power Products & Systems India's) ---- */
-    { page: 'credentials', sel: '.crd-perf-card', html: 'abb-2021.jpg', who: YOU,
-      note: 'This "ABB" letter (Jul 2021) is from ABB Power Products & Systems India — a customer removed from the directory. Keep or remove. (milestones.html also lists it in PROOF_LIBRARY, which is data only and not shown.)' },
-
-    /* ---- Careers ---- */
-    { page: 'careers', sel: '.cr-nstat', has: 'States Supplied', who: CLIENT,
-      note: '"20+ States Supplied" — the customer map shows direct customers in 12 states. Confirm the figure (radiators may reach more states through OEM transformers).' }
+    { page: 'clientele', sel: '.pp-row-grouphead', has: 'ArcelorMittal', who: CLIENT,
+      note: 'Source: TBEA international-sites performance certificate (p.3) names end customer "Arcelor Mittal" (via TBEA) but gives NO destination country. Its 26 radiators are in the export total but kept off the map. Confirm the country to plot it.' }
   ];
   var mine = MARKS.filter(function (m) { return m.page === page; });
   if (!mine.length) return;
