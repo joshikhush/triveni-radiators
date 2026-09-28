@@ -19,20 +19,17 @@
   var page = (location.pathname.split('/').pop() || 'index.html').replace('.html', '') || 'index';
   var CLIENT = 'Needs client input', YOU = 'Your decision';
 
-  /* Marks resolved by the client's 2026-09-27 answers were removed per the
-     file's own rule ("Remove an entry here once the item is resolved"):
-     Toshiba location (→ Hyderabad), Export-orders stat (removed), Meiden
-     Naidupeta (confirmed), 2,200+ RDSO stat + ABB PP&S group (kept figure,
-     dropped group), Tanzania project names, and the Siemens/CG/ABB India/
-     Shirdi Sai/Toshiba-dispatch/AYR-India/Other-export rows (supply record is
-     now export-only), the Credentials Jul-2021 ABB letter (retained), and the
-     Careers "20+ states" figure (kept). What remains below is genuinely still
-     open with the client. */
-  var MARKS = [
-    /* ---- Clients page: Our Customers ---- */
-    { page: 'clientele', sel: '.oc-row', has: 'Toshiba T&D', who: CLIENT,
-      note: 'Toshiba start year 2024 comes from the dispatch sheet (first dispatch Nov 2024); Milestones & Triveni Group pages mention Toshiba from 2018. Client is confirming the real start year.' }
-  ];
+  /* All Clients-page review items are now resolved by the client's 2026-09-27/28
+     answers (removed per the file's own rule "Remove an entry here once the item
+     is resolved"): Toshiba location (→ Hyderabad) and start year (FY 2014-15),
+     Export-orders stat (removed), Meiden Naidupeta (confirmed), 2,200+ RDSO stat
+     + ABB PP&S group (figure kept, group dropped), Tanzania project names, the
+     Siemens/CG/ABB India/Shirdi Sai/Toshiba-dispatch/AYR-India/Other-export rows
+     (supply record is now export-only), ArcelorMittal (moved to a Spotlight
+     showcase), "Wilson" (= Wilson Power Solutions, the Oman customer), Moldova/
+     Oman/USA specs (final), the Credentials Jul-2021 ABB letter (retained) and
+     the Careers "20+ states" figure (kept). Add new marks here if more arise. */
+  var MARKS = [];
   var mine = MARKS.filter(function (m) { return m.page === page; });
   if (!mine.length) return;
 
