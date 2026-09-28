@@ -2424,6 +2424,12 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
      drift from the map and supply record. */
   function sumWhere(pred) { return CD.SUPPLIES.reduce(function (s, x) { return s + (pred(x) ? x.qty : 0); }, 0); }
   var turkmenistanQty = sumWhere(function (x) { return x.country === 'Turkmenistan'; });   // 532
+  /* per-project export quantities for Featured — all derived from the data file */
+  var usaToshibaQty = sumWhere(function (x) { return x.country === 'USA' && x.indianCustomer === 'Toshiba T&D India'; });        // 1,816
+  var usaAyrQty = sumWhere(function (x) { return x.country === 'USA' && (x.indianCustomer === 'AYR Energy India' || x.mode === 'direct'); }); // 523 + 154
+  var moldovaQty = sumWhere(function (x) { return x.country === 'Moldova'; });
+  var bulgariaQty = sumWhere(function (x) { return x.country === 'Bulgaria'; });
+  var omanQty = sumWhere(function (x) { return x.country === 'Oman'; });
 
   /* Map a clients-data.js spotlight to the render shape; qty is derived. Only
      fields the client confirmed are present, so the render omits the rest. */
@@ -2446,35 +2452,39 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     };
   }
 
-  /* Featured projects: TBEA/Turkmenistan scope comes from the data file;
-     POWERGRID (765 kV) and the RDSO 2,200+ order are domestic proof kept from
-     the customers' performance letters (the 2,200+ figure and its July 2021 ABB
-     Power Products & Systems India letter are RETAINED per client point 9).
-     Spotlights: Turkmenistan, Moldova, Bulgaria, Oman, and ArcelorMittal — the
-     last is Triveni's single HDG job (client 2026-09-28), shown as a showcase
-     only; its 26 radiators are NOT in the export total or supply record. */
+  /* Featured projects (client, 2026-09-28): the marquee export projects, using
+     the client's Customer / Country / Type table. USA splits into its two
+     customers (Toshiba — Inverter Duty / Renewable; AYR — Medium Power / Data
+     Centre). All quantities are derived from the data file. Moldova, Bulgaria,
+     Oman and Turkmenistan also carry a Spotlight (the customer cell links to it);
+     ArcelorMittal is Spotlight-only. POWERGRID and RDSO were removed earlier
+     (their 765 kV and 2,200+ figures remain in the Project Proof stat rail). */
   var PROJECTS = [
+    { id: 'usa-toshiba', international: true,
+      featured: { customer: 'Toshiba T&D India', application: 'Renewable', categorization: 'Inverter Duty Transformer', country: 'USA', quantity: fmtQty(usaToshibaQty) } },
+
+    { id: 'usa-ayr', international: true,
+      featured: { customer: 'AYR Energy', application: 'Data Centre', categorization: 'Medium Power Transformer', country: 'USA', quantity: fmtQty(usaAyrQty) } },
+
     { id: 'turkmenistan', international: true,
       featured: { customer: 'TBEA', application: 'International Transmission Project', categorization: 'Power Transformer', country: 'Turkmenistan', quantity: fmtQty(turkmenistanQty) },
       spotlight: makeSpot('turkmenistan', turkmenistanQty) },
 
+    { id: 'oman', international: true,
+      featured: { customer: 'Wilson', application: 'Renewable', categorization: 'Inverter Duty Transformer', country: 'Oman', quantity: fmtQty(omanQty) },
+      spotlight: makeSpot('oman', omanQty) },
+
     { id: 'moldova', international: true,
-      spotlight: makeSpot('moldova', sumWhere(function (x) { return x.country === 'Moldova'; })) },
+      featured: { customer: 'Siemens', application: '', categorization: 'Power Transformer', country: 'Moldova', quantity: fmtQty(moldovaQty) },
+      spotlight: makeSpot('moldova', moldovaQty) },
 
     { id: 'bulgaria', international: true,
-      spotlight: makeSpot('bulgaria', sumWhere(function (x) { return x.country === 'Bulgaria'; })) },
-
-    { id: 'oman', international: true,
-      spotlight: makeSpot('oman', sumWhere(function (x) { return x.country === 'Oman'; })) },
+      featured: { customer: 'Siemens', application: '', categorization: 'Power Transformer', country: 'Bulgaria', quantity: fmtQty(bulgariaQty) },
+      spotlight: makeSpot('bulgaria', bulgariaQty) },
 
     /* ArcelorMittal — single HDG job showcase; qty 26 passed in (not in SUPPLIES) */
     { id: 'arcelormittal-hdg', international: true,
       spotlight: makeSpot('arcelormittal', 26) }
-
-    /* POWERGRID and RDSO removed from Featured (client, 2026-09-28): they don't
-       fit the Customer/Application/Categorization/Country/Quantity schema
-       (no radiator quantity for POWERGRID, no clean categorization for RDSO).
-       Their 765 kV and 2,200+ figures remain in the Project Proof stat rail. */
   ];
 
   /* ---- SUPPLY RECORD — indirect export supplies only (client point 11) ----
