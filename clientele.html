@@ -2469,15 +2469,12 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
 
     /* ArcelorMittal — single HDG job showcase; qty 26 passed in (not in SUPPLIES) */
     { id: 'arcelormittal-hdg', international: true,
-      spotlight: makeSpot('arcelormittal', 26) },
+      spotlight: makeSpot('arcelormittal', 26) }
 
-    /* POWERGRID quantity and RDSO categorization are left blank — not in our
-       data; awaiting the client (the 2,200+ RDSO figure is retained per point 9). */
-    { id: 'powergrid-765', international: false,
-      featured: { customer: 'POWERGRID', application: 'High-Voltage Transmission (765 kV)', categorization: 'Power Transformer', country: 'India', quantity: '' } },
-
-    { id: 'rdso-railway', international: false,
-      featured: { customer: 'RDSO / OEM Partner', application: 'Railway Electrification', categorization: '', country: 'India', quantity: '2,200+' } }
+    /* POWERGRID and RDSO removed from Featured (client, 2026-09-28): they don't
+       fit the Customer/Application/Categorization/Country/Quantity schema
+       (no radiator quantity for POWERGRID, no clean categorization for RDSO).
+       Their 765 kV and 2,200+ figures remain in the Project Proof stat rail. */
   ];
 
   /* ---- SUPPLY RECORD — indirect export supplies only (client point 11) ----
