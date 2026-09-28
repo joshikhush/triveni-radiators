@@ -60,17 +60,17 @@ var GALLERY_INSTALLATIONS = [
   { id: 'tanzania-tbea-1', image: 'assets/gallery/tanzania-tbea-1-web.jpg', thumb: 'assets/gallery/tanzania-tbea-1-thumb.jpg',
     alt: 'Transformer with radiator banks and a TBEA nameplate at an outdoor substation',
     title: 'Triveni radiators in service', location: null, country: 'Tanzania', region: 'international',
-    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape' },
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'tanzania' },
 
   { id: 'tanzania-tbea-2', image: 'assets/gallery/tanzania-tbea-2-web.jpg', thumb: 'assets/gallery/tanzania-tbea-2-thumb.jpg',
     alt: 'Transformer with radiator banks and a TBEA nameplate under a dramatic cloudy sky',
     title: 'Triveni radiators in service', location: null, country: 'Tanzania', region: 'international',
-    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape' },
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'tanzania' },
 
   { id: 'tanzania-tbea-3', image: 'assets/gallery/tanzania-tbea-3-web.jpg', thumb: 'assets/gallery/tanzania-tbea-3-thumb.jpg',
     alt: 'Transformer with radiator banks and a TBEA nameplate at an outdoor substation',
     title: 'Triveni radiators in service', location: null, country: 'Tanzania', region: 'international',
-    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape' },
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'tanzania' },
 
   /* AYR Energy — customer confirmed from a legible "AYR ENERGY" nameplate
      on the transformer tank. No site, city or country verifiable. */
