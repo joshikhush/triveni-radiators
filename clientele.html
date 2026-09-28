@@ -2578,13 +2578,14 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
         var through = r.mode === 'direct'
           ? 'Direct export' + (r.endCustomer ? ' — ' + esc(r.endCustomer) : '')
           : (r.indianCustomer ? esc(r.indianCustomer) : '');
-        var ref = esc(r.jobs || r.ref || '') + (r.note ? '<span class="pp-row-note">' + esc(r.note) + '</span>' : '');
+        /* "Type" replaces the old size/job-number column — the client does not
+           want sizes or job numbers shown in the supply list or on the map. */
         var period = r.spotlight
           ? '<button type="button" class="pp-row-link" data-open-spotlight="' + r.spotlight + '">' + esc(r.period) + ' <span class="arw">&rarr;</span></button>'
           : esc(r.period);
         return '<tr class="pp-row-grouped">' +
           cell('Period', period) +
-          cell('Reference', ref) +
+          cell('Type', esc(r.type || '')) +
           cell('Supplied to / through', through) +
           cell('Rating', esc(r.rating || '')) +
           cell('Qty.', fmtQty(r.qty)) + '</tr>';
@@ -2593,7 +2594,7 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     }).join('');
     return '<div class="pp-tablewrap"><table class="pp-table pp-table--record">' +
       '<caption class="pp-sr-only">Export supply record — the direct and indirect export supplies plotted on the world map, grouped by destination</caption>' +
-      '<thead><tr><th scope="col">Period</th><th scope="col">Reference</th><th scope="col">Supplied to / through</th><th scope="col">Rating</th><th scope="col">Qty.</th></tr></thead>' +
+      '<thead><tr><th scope="col">Period</th><th scope="col">Type</th><th scope="col">Supplied to / through</th><th scope="col">Rating</th><th scope="col">Qty.</th></tr></thead>' +
       groups + '</table></div>' +
       '<p class="pp-record-note">Indirect exports are radiators supplied to Indian customers for their export jobs; the only direct export is AYR, USA. Blank cells are details the client hasn\'t provided.</p>';
   }
