@@ -2455,7 +2455,7 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
      only; its 26 radiators are NOT in the export total or supply record. */
   var PROJECTS = [
     { id: 'turkmenistan', international: true,
-      featured: { customer: 'TBEA', project: 'International Transmission Project', ratingVoltage: '167 MVA & 125 MVA', scope: fmtQty(turkmenistanQty) + ' Radiators' },
+      featured: { customer: 'TBEA', application: 'International Transmission Project', categorization: 'Power Transformer', country: 'Turkmenistan', quantity: fmtQty(turkmenistanQty) },
       spotlight: makeSpot('turkmenistan', turkmenistanQty) },
 
     { id: 'moldova', international: true,
@@ -2471,11 +2471,13 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     { id: 'arcelormittal-hdg', international: true,
       spotlight: makeSpot('arcelormittal', 26) },
 
+    /* POWERGRID quantity and RDSO categorization are left blank — not in our
+       data; awaiting the client (the 2,200+ RDSO figure is retained per point 9). */
     { id: 'powergrid-765', international: false,
-      featured: { customer: 'POWERGRID', project: 'High-Voltage Transmission', ratingVoltage: '765 kV', scope: 'Radiator Supply' } },
+      featured: { customer: 'POWERGRID', application: 'High-Voltage Transmission (765 kV)', categorization: 'Power Transformer', country: 'India', quantity: '' } },
 
     { id: 'rdso-railway', international: false,
-      featured: { customer: 'RDSO / OEM Partner', project: 'Railway Electrification', ratingVoltage: 'RDSO Application', scope: '2,200+ Radiators' } }
+      featured: { customer: 'RDSO / OEM Partner', application: 'Railway Electrification', categorization: '', country: 'India', quantity: '2,200+' } }
   ];
 
   /* ---- SUPPLY RECORD — indirect export supplies only (client point 11) ----
@@ -2607,14 +2609,15 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
         : esc(f.customer);
       return '<tr>' +
         cell('Customer', customerCell) +
-        cell('Project / Application', esc(f.project)) +
-        cell('Rating / Voltage', esc(f.ratingVoltage)) +
-        cell('Scope', esc(f.scope)) +
+        cell('Project / Application', esc(f.application)) +
+        cell('Categorization', esc(f.categorization || '')) +
+        cell('Country', esc(f.country || '')) +
+        cell('Quantity', esc(f.quantity || '')) +
         '</tr>';
     }).join('');
     return '<div class="pp-tablewrap"><table class="pp-table pp-table--featured">' +
       '<caption class="pp-sr-only">Featured projects</caption>' +
-      '<thead><tr><th scope="col">Customer</th><th scope="col">Project / Application</th><th scope="col">Rating / Voltage</th><th scope="col">Scope</th></tr></thead>' +
+      '<thead><tr><th scope="col">Customer</th><th scope="col">Project / Application</th><th scope="col">Categorization</th><th scope="col">Country</th><th scope="col">Quantity</th></tr></thead>' +
       '<tbody>' + rows + '</tbody></table></div>';
   }
 
