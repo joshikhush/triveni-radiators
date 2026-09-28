@@ -31,11 +31,7 @@
   var MARKS = [
     /* ---- Clients page: Our Customers ---- */
     { page: 'clientele', sel: '.oc-row', has: 'Toshiba T&D', who: CLIENT,
-      note: 'Toshiba start year 2024 comes from the dispatch sheet (first dispatch Nov 2024); Milestones & Triveni Group pages mention Toshiba from 2018. Client is confirming the real start year (expected 2026-09-28).' },
-
-    /* ---- Clients page: Project Proof ---- */
-    { page: 'clientele', sel: '.pp-row-grouphead', has: 'ArcelorMittal', who: CLIENT,
-      note: 'Source: TBEA international-sites performance certificate (p.3) names end customer "Arcelor Mittal" (via TBEA) but gives NO destination country. Its 26 radiators are in the export total but kept off the map. Confirm the country to plot it.' }
+      note: 'Toshiba start year 2024 comes from the dispatch sheet (first dispatch Nov 2024); Milestones & Triveni Group pages mention Toshiba from 2018. Client is confirming the real start year.' }
   ];
   var mine = MARKS.filter(function (m) { return m.page === page; });
   if (!mine.length) return;

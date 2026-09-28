@@ -2424,7 +2424,6 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
      drift from the map and supply record. */
   function sumWhere(pred) { return CD.SUPPLIES.reduce(function (s, x) { return s + (pred(x) ? x.qty : 0); }, 0); }
   var turkmenistanQty = sumWhere(function (x) { return x.country === 'Turkmenistan'; });   // 532
-  var arcelorQty = sumWhere(function (x) { return x.region === 'ArcelorMittal'; });         // 26
 
   /* Map a clients-data.js spotlight to the render shape; qty is derived. Only
      fields the client confirmed are present, so the render omits the rest. */
@@ -2447,15 +2446,14 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     };
   }
 
-  /* Featured projects: ArcelorMittal + TBEA/Turkmenistan scopes come from the
-     data file; POWERGRID (765 kV) and the RDSO 2,200+ order are domestic proof
-     kept from the customers' performance letters (the 2,200+ figure and its
-     July 2021 ABB Power Products & Systems India letter are RETAINED per client
-     point 9). Spotlights: Turkmenistan, Moldova (point 7), Bulgaria (point 8). */
+  /* Featured projects: TBEA/Turkmenistan scope comes from the data file;
+     POWERGRID (765 kV) and the RDSO 2,200+ order are domestic proof kept from
+     the customers' performance letters (the 2,200+ figure and its July 2021 ABB
+     Power Products & Systems India letter are RETAINED per client point 9).
+     Spotlights: Turkmenistan, Moldova, Bulgaria, Oman, and ArcelorMittal — the
+     last is Triveni's single HDG job (client 2026-09-28), shown as a showcase
+     only; its 26 radiators are NOT in the export total or supply record. */
   var PROJECTS = [
-    { id: 'arcelormittal-hdg', international: true,
-      featured: { customer: 'ArcelorMittal', project: 'Power Transformer Application (HDG)', ratingVoltage: '165 MVA', scope: fmtQty(arcelorQty) + ' Radiators' } },
-
     { id: 'turkmenistan', international: true,
       featured: { customer: 'TBEA', project: 'International Transmission Project', ratingVoltage: '167 MVA & 125 MVA', scope: fmtQty(turkmenistanQty) + ' Radiators' },
       spotlight: makeSpot('turkmenistan', turkmenistanQty) },
@@ -2468,6 +2466,10 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
 
     { id: 'oman', international: true,
       spotlight: makeSpot('oman', sumWhere(function (x) { return x.country === 'Oman'; })) },
+
+    /* ArcelorMittal — single HDG job showcase; qty 26 passed in (not in SUPPLIES) */
+    { id: 'arcelormittal-hdg', international: true,
+      spotlight: makeSpot('arcelormittal', 26) },
 
     { id: 'powergrid-765', international: false,
       featured: { customer: 'POWERGRID', project: 'High-Voltage Transmission', ratingVoltage: '765 kV', scope: 'Radiator Supply' } },

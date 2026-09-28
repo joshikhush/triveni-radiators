@@ -23,11 +23,11 @@
    HIDDEN-FIELD RULE (client points 6-8): a field the client hasn't given
    is left out entirely (null / omitted) — never shown as "—" or blank-labelled.
 
-   PENDING (surfaced to the client, not published) — only two remain:
+   PENDING (surfaced to the client, not published) — only one remains:
      - Toshiba start year — client confirms separately (see clientele.html).
-     - ArcelorMittal destination country — the TBEA international-sites
-       certificate (p.3) names the end customer but gives no country, so
-       ArcelorMittal is counted in totals but NOT placed on the map (mapped:false).
+   ArcelorMittal (client, 2026-09-28): moved to a Spotlight showcase as Triveni's
+   single HDG job; removed from the supply record AND the export total (HDG was
+   discontinued — outsourced, supply-chain constraints).
    Client keeps website spec detail intentionally minimal — do not chase
    rating/application/operating-range fields; show only what is given.
    FINAL (client, 2026-09-27): Moldova, Oman and USA are complete — quantities,
@@ -113,15 +113,10 @@
     { country: 'Tanzania', mode: 'indirect', indianCustomer: 'TBEA',
       period: '2022-23', ref: 'TI4228', rating: '50 MVA', qty: 33, years: [2022, 2023] },
 
-    /* ---- ArcelorMittal (indirect, via TBEA) — destination country PENDING, so not mapped.
-       Source: assets/docs/performance certificates/performance certificate TBEA international
-       sites.pdf, p.3 — 26 HDG radiators supplied to TBEA Energy (India), end customer
-       "Arcelor Mittal", job T14245/1, 3200×32×520, 165 MVA, 220/33 kV, 2023-24. That page
-       (unlike the Turkmenistan/Tanzania pages) has NO "End Customer Country" column, so the
-       destination country is genuinely absent from the document. ---- */
-    { country: null, region: 'ArcelorMittal', mapped: false, mode: 'indirect', indianCustomer: 'TBEA',
-      period: '2023-24', ref: 'T14245/1', rating: '165 MVA', voltage: '220/33 kV', note: 'HDG radiators 3200×32×520',
-      qty: 26, years: [2023, 2024] },
+    /* ArcelorMittal is NOT listed here (client, 2026-09-28): it was Triveni's
+       single HDG job and is shown only as a Spotlight showcase (SPOTLIGHTS.
+       arcelormittal), so it is deliberately excluded from the export total and
+       the supply record. */
 
     /* ---- Retained documented country supplies (indirect, via Indian OEMs) ---- */
     { country: 'Bangladesh', mode: 'indirect', indianCustomer: 'Prolec GE', period: '2016-17', qty: 36, years: [2016, 2017] },
@@ -182,6 +177,21 @@
       dispatched: 'June 2026',
       jobs: '2052/1–12',
       line: 'Supplied through Wilson for their Oman export job — 17.6 MVA, 33/4x0.69 kV inverter transformers, dispatched June 2026 (jobs 2052/1–12).'
+    },
+    arcelormittal: {
+      /* client 2026-09-28: Triveni's SINGLE HDG (Hot-Dip Galvanized) job. Triveni
+         chose not to pursue HDG further (outsourced, supply-chain constraints).
+         Shown only as this showcase — NOT in SUPPLIES, so excluded from the
+         export total and the supply record. Source: TBEA international-sites
+         performance certificate, p.3 (qty 26 is passed in via makeSpot). */
+      title: 'ArcelorMittal · HDG',
+      indianCustomer: 'TBEA',
+      endCustomer: 'ArcelorMittal',
+      application: 'Power Transformer (HDG)',
+      rating: '165 MVA',
+      voltage: '220/33 kV',
+      jobs: 'T14245/1',
+      line: 'Triveni’s single Hot-Dip Galvanized (HDG) radiator job — 26 HDG radiators (165 MVA, 220/33 kV, 3200×32×520; job T14245/1, 2023–24) supplied through TBEA for ArcelorMittal. Triveni chose not to pursue HDG further, as it was outsourced and carried supply-chain constraints.'
     }
   };
 
