@@ -190,6 +190,18 @@ button { font:inherit; background:none; border:none; cursor:pointer; }
   background:rgba(12,24,48,.72); color:#fff; font-size:11px; font-weight:600;
   letter-spacing:.06em; padding:4px 9px; border-radius:999px; pointer-events:none;
 }
+.gh-tile-arrow {
+  position:absolute; top:50%; transform:translateY(-50%); z-index:3;
+  width:34px; height:34px; border-radius:50%; border:0; cursor:pointer;
+  background:rgba(12,24,48,.55); color:#fff; display:flex; align-items:center; justify-content:center;
+  opacity:.55; transition:opacity .2s, background .2s;
+}
+.gh-tile-arrow svg { width:16px; height:16px; }
+.gh-tile-arrow:hover, .gh-tile-arrow:focus-visible { opacity:1; background:rgba(12,24,48,.8); }
+.gh-tile-arrow:focus-visible { outline:2px solid var(--gold-light); outline-offset:2px; }
+.gh-tile--group:hover .gh-tile-arrow { opacity:.9; }
+.gh-tile-prev { left:10px; } .gh-tile-next { right:10px; }
+@media(hover:none){ .gh-tile-arrow { opacity:.8; } } /* touch: keep visible */
 .gh-tile-dots { position:absolute; bottom:12px; left:0; right:0; z-index:3;
   display:flex; gap:6px; justify-content:center; }
 .gh-tile-dot { width:7px; height:7px; border-radius:50%; padding:0; border:0; cursor:pointer;
@@ -438,24 +450,33 @@ ghGrid.innerHTML = galUnits.map(function(unit){
     return '<button class="gh-tile-slide" type="button" data-i="' + s.i + '">' +
       '<img src="' + esc(s.item.thumb || s.item.image) + '" alt="' + esc(s.item.alt || s.item.title) + '" loading="lazy" decoding="async"></button>';
   }).join('');
-  var dots = unit.slides.map(function(s, k){
-    return '<button class="gh-tile-dot' + (k === 0 ? ' is-active' : '') + '" type="button" data-k="' + k + '" aria-label="Show photo ' + (k + 1) + '"></button>';
-  }).join('');
+  /* dots only for small sets; large sets rely on the counter + arrows */
+  var dots = unit.slides.length <= 8
+    ? '<div class="gh-tile-dots">' + unit.slides.map(function(s, k){
+        return '<button class="gh-tile-dot' + (k === 0 ? ' is-active' : '') + '" type="button" data-k="' + k + '" aria-label="Show photo ' + (k + 1) + '"></button>';
+      }).join('') + '</div>'
+    : '';
+  var arrows =
+    '<button class="gh-tile-arrow gh-tile-prev" type="button" aria-label="Previous photo">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>' +
+    '<button class="gh-tile-arrow gh-tile-next" type="button" aria-label="Next photo">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>';
   return '<div class="gh-tile gh-tile--group' + portrait + '" data-region="' + esc(head.region || '') + '">' +
     '<div class="gh-tile-scroll">' + slides + '</div>' +
+    arrows +
     pill +
     '<span class="gh-tile-count"><span class="gh-tile-count-n">1</span> / ' + unit.slides.length + '</span>' +
     galCaption(head) +
-    '<div class="gh-tile-dots">' + dots + '</div>' +
+    dots +
   '</div>';
 }).join('');
 
-/* wire each group carousel: dots + counter follow the scroll; dots scroll to a photo */
+/* wire each group carousel: dots (small sets) + arrows + counter follow the scroll */
 ghGrid.querySelectorAll('.gh-tile--group').forEach(function(tile){
   var scroll = tile.querySelector('.gh-tile-scroll');
   var dots = Array.prototype.slice.call(tile.querySelectorAll('.gh-tile-dot'));
   var countN = tile.querySelector('.gh-tile-count-n');
-  var n = dots.length;
+  var n = tile.querySelectorAll('.gh-tile-slide').length;
   function activeIndex(){
     var w = scroll.clientWidth || 1;
     return Math.max(0, Math.min(n - 1, Math.round(scroll.scrollLeft / w)));
@@ -470,6 +491,9 @@ ghGrid.querySelectorAll('.gh-tile--group').forEach(function(tile){
   dots.forEach(function(d, k){
     d.addEventListener('click', function(e){ e.stopPropagation(); scroll.scrollTo({ left: k * scroll.clientWidth, behavior:'smooth' }); });
   });
+  var prev = tile.querySelector('.gh-tile-prev'), next = tile.querySelector('.gh-tile-next');
+  if (prev) prev.addEventListener('click', function(e){ e.stopPropagation(); scroll.scrollBy({ left: -scroll.clientWidth, behavior:'smooth' }); });
+  if (next) next.addEventListener('click', function(e){ e.stopPropagation(); scroll.scrollBy({ left: scroll.clientWidth, behavior:'smooth' }); });
 });
 
 function currentFilterIndices(){
