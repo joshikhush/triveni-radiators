@@ -158,7 +158,7 @@
       voltage: '330 kV',
       dispatched: 'June 2023',
       jobs: 'I320/1–4',
-      line: 'Supplied through Siemens for their Moldova export job — 330 kV, dispatched June 2023 (jobs I320/1–4).'
+      line: 'Supplied through Siemens for their Moldova export job — 330 kV, dispatched June 2023.'
     },
     bulgaria: {
       /* client 2026-09-27: via Siemens; 160/80/80 MVA, 420/33/33 kV power transformer. */
@@ -169,7 +169,7 @@
       voltage: '420/33/33 kV',
       dispatched: 'December 2023',
       jobs: 'I348/1,2',
-      line: 'Supplied through Siemens for their Bulgaria export job — 160/80/80 MVA, 420/33/33 kV power transformers, dispatched December 2023 (jobs I348/1,2).'
+      line: 'Supplied through Siemens for their Bulgaria export job — 160/80/80 MVA, 420/33/33 kV power transformers, dispatched December 2023.'
     },
     oman: {
       /* client 2026-09-27: via Wilson; 17.6 MVA, 33/4x0.69 kV inverter transformer. */
@@ -180,7 +180,7 @@
       voltage: '33/4x0.69 kV',
       dispatched: 'June 2026',
       jobs: '2052/1–12',
-      line: 'Supplied through Wilson for their Oman export job — 17.6 MVA, 33/4x0.69 kV inverter transformers, dispatched June 2026 (jobs 2052/1–12).'
+      line: 'Supplied through Wilson for their Oman export job — 17.6 MVA, 33/4x0.69 kV inverter transformers, dispatched June 2026.'
     },
     arcelormittal: {
       /* client 2026-09-28: Triveni's SINGLE HDG (Hot-Dip Galvanized) job. Triveni
@@ -195,7 +195,7 @@
       rating: '165 MVA',
       voltage: '220/33 kV',
       jobs: 'T14245/1',
-      line: 'Triveni’s single Hot-Dip Galvanized (HDG) radiator job — 26 HDG radiators (165 MVA, 220/33 kV, 3200×32×520; job T14245/1, 2023–24) supplied through TBEA for ArcelorMittal. Triveni chose not to pursue HDG further, as it was outsourced and carried supply-chain constraints.'
+      line: 'Triveni’s single Hot-Dip Galvanized (HDG) radiator job — 26 HDG radiators (165 MVA, 220/33 kV, 2023–24) supplied through TBEA for ArcelorMittal. Triveni chose not to pursue HDG further, as it was outsourced and carried supply-chain constraints.'
     }
   };
 

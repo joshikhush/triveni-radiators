@@ -2282,8 +2282,8 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     { name: 'ABB', logo: 'assets/logos/abb.svg', supplies: 'RDSO & POWERGRID transformers', voltageClass: '', location: 'Vadodara', partnerSince: '2019' },
     { name: 'TBEA Energy India', logo: 'assets/logos/tbea.png', supplies: 'HV large power transformers', voltageClass: '', location: 'Vadodara', partnerSince: '2015' },
     { name: 'CG Power', logo: 'assets/logos/cgpower.svg', supplies: 'Power transformers', voltageClass: 'To 420 kV', location: 'Mandideep', partnerSince: '2022' },
-    // Start year confirmed by client (2026-09-28): FY 2014-15. Location: Hyderabad.
-    { name: 'Toshiba T&D', logo: 'assets/logos/major-customers/toshiba.jpeg', supplies: 'Transmission & distribution systems', voltageClass: '', location: 'Hyderabad', partnerSince: '2014-15' }
+    // Start year confirmed by client (2026-09-28): 2014. Location: Hyderabad.
+    { name: 'Toshiba T&D', logo: 'assets/logos/major-customers/toshiba.jpeg', supplies: 'Transmission & distribution systems', voltageClass: '', location: 'Hyderabad', partnerSince: '2014' }
   ];
   var EM_DASH = '—';
 
@@ -2432,7 +2432,6 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       rating: s.rating,
       voltage: s.voltage,
       qty: fmtQty(qty),
-      jobsRef: jobsNum ? null : s.jobs,     // Moldova/Bulgaria job references (I320/1–4, I348/1,2)
       dispatched: s.dispatched,
       range: s.range,
       line: s.line
@@ -2462,11 +2461,11 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
       spotlight: makeSpot('oman', omanQty) },
 
     { id: 'moldova', international: true,
-      featured: { customer: 'Siemens', application: '', categorization: 'Power Transformer', country: 'Moldova', quantity: fmtQty(moldovaQty) },
+      featured: { customer: 'Siemens', application: 'International Grid Project', categorization: 'Power Transformer', country: 'Moldova', quantity: fmtQty(moldovaQty) },
       spotlight: makeSpot('moldova', moldovaQty) },
 
     { id: 'bulgaria', international: true,
-      featured: { customer: 'Siemens', application: '', categorization: 'Power Transformer', country: 'Bulgaria', quantity: fmtQty(bulgariaQty) },
+      featured: { customer: 'Siemens', application: 'International Grid Project', categorization: 'Power Transformer', country: 'Bulgaria', quantity: fmtQty(bulgariaQty) },
       spotlight: makeSpot('bulgaria', bulgariaQty) },
 
     /* ArcelorMittal — single HDG job showcase; qty 26 passed in (not in SUPPLIES) */
@@ -2598,11 +2597,10 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
   function renderFeatured() {
     var rows = featuredRows.map(function (p) {
       var f = p.featured;
-      var customerCell = p.spotlight
-        ? '<button type="button" class="pp-row-link" data-open-spotlight="' + p.id + '">' + esc(f.customer) + ' <span class="arw">&rarr;</span></button>'
-        : esc(f.customer);
+      /* Customer name is plain text — no spotlight link in the Featured table
+         (client, 2026-09-28). Spotlight cards are still available via their tab. */
       return '<tr>' +
-        cell('Customer', customerCell) +
+        cell('Customer', esc(f.customer)) +
         cell('Project / Application', esc(f.application)) +
         cell('Categorization', esc(f.categorization || '')) +
         cell('Country', esc(f.country || '')) +
@@ -2619,9 +2617,11 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
     return '<div class="ppsc-list">' + spotlightRows.map(function (p) {
       var s = p.spotlight;
       /* only the specs the client has confirmed for this project are shown */
+      /* No "Jobs" row — we don't publish job numbers explicitly (client, 2026-09-28).
+         Turkmenistan's job count stays in its summary line as a count, not a number. */
       var specs = [['Supplied through', s.through], ['End Customer', s.endCustomer], ['Application', s.application],
            ['Transformer Rating', s.rating], ['Voltage Class', s.voltage], ['Radiators Supplied', s.qty],
-           ['Jobs', s.jobsRef], ['Dispatched', s.dispatched], ['Operating Range', s.range]]
+           ['Dispatched', s.dispatched], ['Operating Range', s.range]]
             .filter(function (row) { return row[1]; });
       /* thin card (client point 6): offer detail on request */
       var onRequest = specs.length < 4 ? '<p class="ppsc-onrequest">Project details available on request.</p>' : '';
