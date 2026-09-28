@@ -2544,7 +2544,7 @@ const exportYearWindow = exportMinYear + '→' + String(exportMaxYear).slice(-2)
   var spotlightRows = PROJECTS.filter(function (p) { return p.spotlight; });
 
   var TABS = [
-    { key: 'record', label: 'Supply record', count: supplyJobCount },
+    { key: 'record', label: 'International Supply Record', count: supplyJobCount },
     { key: 'featured', label: 'Featured projects', count: featuredRows.length }
   ];
   if (spotlightRows.length) TABS.push({ key: 'spotlight', label: 'Spotlight', count: null });
