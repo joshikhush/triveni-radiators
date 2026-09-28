@@ -72,6 +72,46 @@ var GALLERY_INSTALLATIONS = [
     title: 'Triveni radiators in service', location: null, country: 'Tanzania', region: 'international',
     customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'tanzania' },
 
+  /* TBEA · Turkmenistan — 8 curated photos of the transformer/reactor
+     installations (the 532-radiator / 25-job TBEA project). Country from the
+     original filenames ("Turmenistan-N.JPG", in assets/installations/);
+     customer "TBEA" from the TBEA international-sites performance certificate
+     (assets/docs/performance certificates/), which documents Turkmenistan as
+     TBEA's project. `group:'turkmenistan'` renders these as one scrollable
+     tile. No specific city, rating or date is verifiable, so those stay null. */
+  { id: 'turkmenistan-tbea-1', image: 'assets/gallery/turkmenistan-tbea-1-web.jpg', thumb: 'assets/gallery/turkmenistan-tbea-1-thumb.jpg',
+    alt: 'Power transformer with radiator banks at a Turkmenistan substation',
+    title: 'Triveni radiators in service', location: null, country: 'Turkmenistan', region: 'international',
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'turkmenistan' },
+  { id: 'turkmenistan-tbea-2', image: 'assets/gallery/turkmenistan-tbea-2-web.jpg', thumb: 'assets/gallery/turkmenistan-tbea-2-thumb.jpg',
+    alt: 'Power transformer with a full radiator bank at a Turkmenistan substation',
+    title: 'Triveni radiators in service', location: null, country: 'Turkmenistan', region: 'international',
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'turkmenistan' },
+  { id: 'turkmenistan-tbea-3', image: 'assets/gallery/turkmenistan-tbea-3-web.jpg', thumb: 'assets/gallery/turkmenistan-tbea-3-thumb.jpg',
+    alt: 'Transformer with conservator and radiator banks at a Turkmenistan substation',
+    title: 'Triveni radiators in service', location: null, country: 'Turkmenistan', region: 'international',
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'turkmenistan' },
+  { id: 'turkmenistan-tbea-4', image: 'assets/gallery/turkmenistan-tbea-4-web.jpg', thumb: 'assets/gallery/turkmenistan-tbea-4-thumb.jpg',
+    alt: 'Transformer with radiator banks in a gravelled substation yard, Turkmenistan',
+    title: 'Triveni radiators in service', location: null, country: 'Turkmenistan', region: 'international',
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'turkmenistan' },
+  { id: 'turkmenistan-tbea-5', image: 'assets/gallery/turkmenistan-tbea-5-web.jpg', thumb: 'assets/gallery/turkmenistan-tbea-5-thumb.jpg',
+    alt: 'Transformer and radiator banks under a wide sky at a Turkmenistan substation',
+    title: 'Triveni radiators in service', location: null, country: 'Turkmenistan', region: 'international',
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'turkmenistan' },
+  { id: 'turkmenistan-tbea-6', image: 'assets/gallery/turkmenistan-tbea-6-web.jpg', thumb: 'assets/gallery/turkmenistan-tbea-6-thumb.jpg',
+    alt: 'Front view of a transformer cooling bank at a Turkmenistan substation',
+    title: 'Triveni radiators in service', location: null, country: 'Turkmenistan', region: 'international',
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'turkmenistan' },
+  { id: 'turkmenistan-tbea-7', image: 'assets/gallery/turkmenistan-tbea-7-web.jpg', thumb: 'assets/gallery/turkmenistan-tbea-7-thumb.jpg',
+    alt: 'Transformer with bushings and radiator banks in a substation yard, Turkmenistan',
+    title: 'Triveni radiators in service', location: null, country: 'Turkmenistan', region: 'international',
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'turkmenistan' },
+  { id: 'turkmenistan-tbea-8', image: 'assets/gallery/turkmenistan-tbea-8-web.jpg', thumb: 'assets/gallery/turkmenistan-tbea-8-thumb.jpg',
+    alt: 'Rows of transformers with radiator banks at a Turkmenistan substation',
+    title: 'Triveni radiators in service', location: null, country: 'Turkmenistan', region: 'international',
+    customer: 'TBEA', rating: null, credit: 'TBEA', orientation: 'landscape', group: 'turkmenistan' },
+
   /* AYR Energy — customer confirmed from a legible "AYR ENERGY" nameplate
      on the transformer tank. No site, city or country verifiable. */
   { id: 'ayr-1', image: 'assets/gallery/ayr-1-web.jpg', thumb: 'assets/gallery/ayr-1-thumb.jpg',
