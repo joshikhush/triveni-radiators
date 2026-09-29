@@ -7,7 +7,7 @@
 <meta name="description" content="Build a career with Triveni Radiators, one of India's largest transformer radiator manufacturers. We hire for integrity first.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Schibsted+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Schibsted+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Fraunces:opsz,wght@9..144,400&family=Inter:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="footer.css">
 <style>
 /* ===================================================
@@ -558,7 +558,9 @@ button { font:inherit; }
    from the Sustainability page, same story-block/media pattern
    verbatim, since these are not CSR/community activities)
    =================================================== */
-.sec--life { background:var(--stone); }
+.sec--life { background:var(--ivory); padding:6.5rem 0 0; }
+.sec--life .sec-inner { max-width:1200px; padding:0 24px; margin:0 auto; }
+.sec--life .sec-head { margin-bottom:0; padding-bottom:48px; }
 .story-kicker { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; }
 .story-block { display:grid; grid-template-columns:1.1fr 1fr; gap:3.5rem; align-items:center; }
 .story-block.rev { grid-template-columns:1fr 1.1fr; }
@@ -588,6 +590,69 @@ button { font:inherit; }
   .story-block.rev .story-media-wrap { order:-1; }
   .story-divider { margin:3rem 0; }
 }
+
+/* ===================================================
+   LIFE @ TRIVENI — Happy Moments + Health/SBI/Safety collages
+   (verbatim per reference spec; scoped to .lt-wrap)
+   =================================================== */
+.lt-wrap{max-width:1200px;margin:0 auto;padding:72px 24px;border-top:1px solid #DAD4C9}
+.lt-wrap .eyebrow{font-size:13px;letter-spacing:.2em;font-weight:600;color:#B08A4A;text-transform:uppercase;margin:0 0 12px}
+.lt-wrap h2{font-family:Fraunces,serif;font-weight:400;font-size:clamp(28px,3.5vw,42px);margin:0}
+.lt-wrap h3{font-family:Fraunces,serif;font-weight:400;font-size:clamp(24px,2.4vw,32px);line-height:1.2;margin:0 0 14px}
+.lt-sub{font-size:17px;line-height:1.7;color:#6B6A7A;margin:12px 0 36px;max-width:560px}
+.lt-wrap p.body{font-size:16px;line-height:1.75;color:#6B6A7A;margin:0}
+
+.ph{background:#d9d2c6 center/cover no-repeat;border-radius:16px;cursor:zoom-in;position:relative;overflow:hidden}
+.ph::after{content:"";position:absolute;inset:0;background:#1E2350;opacity:0;transition:opacity .25s}
+.ph:hover::after{opacity:.08}
+.cap{position:absolute;left:12px;bottom:12px;z-index:1;background:rgba(255,255,255,.92);color:#1E2350;font:600 11px Inter,sans-serif;letter-spacing:.1em;padding:5px 12px;border-radius:99px;text-transform:uppercase}
+.more{position:absolute;inset:0;z-index:1;background:rgba(30,35,80,.55);color:#fff;display:flex;align-items:center;justify-content:center;font:500 18px Inter,sans-serif}
+
+.bento{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:230px 230px;gap:14px}
+.bento .ph:first-child{grid-row:span 2}
+.bento .ph:nth-child(4){grid-column:span 2}
+
+.fc{display:grid;gap:14px}
+.txt{background:#E7E1D6;border-radius:16px;padding:36px;display:flex;flex-direction:column;justify-content:center}
+.txt .count{margin-top:22px;font-size:13px;color:#1E2350;font-weight:500;letter-spacing:.04em}
+
+.l1{grid-template-columns:1fr 1.3fr 1fr;grid-template-rows:220px 220px}
+.l1 .txt{grid-row:span 2}
+.l1 .a{grid-row:span 2}
+
+.l2{grid-template-columns:1fr 1.3fr 1fr;grid-template-rows:220px 220px}
+.l2 .a{grid-column:2;grid-row:1/3}
+.l2 .b{grid-column:1;grid-row:1}
+.l2 .c{grid-column:1;grid-row:2}
+.l2 .txt{grid-column:3;grid-row:1/3}
+
+.l3{grid-template-columns:1.2fr 1fr 1fr 1fr;grid-template-rows:300px 200px}
+.l3 .txt{grid-row:span 2}
+.l3 .a{grid-column:2/5}
+
+@media(max-width:860px){
+ .lt-wrap{padding:52px 24px}
+ .bento{grid-template-columns:1fr 1fr;grid-template-rows:260px 160px 160px}
+ .bento .ph:first-child{grid-column:span 2;grid-row:auto}
+ .bento .ph:nth-child(4){grid-column:auto}
+ .fc{grid-template-columns:1fr 1fr!important;grid-template-rows:auto!important}
+ .fc .txt{grid-column:1/-1!important;grid-row:1!important;padding:28px}
+ .fc .a{grid-column:1/-1!important;grid-row:auto!important;height:240px}
+ .fc .ph:not(.a){grid-column:auto!important;grid-row:auto!important;height:150px}
+}
+@media(prefers-reduced-motion:reduce){.ph::after{transition:none}}
+
+/* shared lightbox */
+.lbx{position:fixed;inset:0;z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(15,15,30,.92);padding:24px}
+.lbx[hidden]{display:none}
+.lbx-img{width:min(1000px,90vw);aspect-ratio:4/3;max-height:78vh;border-radius:12px;background:#000 center/cover no-repeat}
+.lbx-cap{font:14px Inter,sans-serif;color:rgba(255,255,255,.8);text-align:center}
+.lbx-close{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lbx-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lbx-prev{left:20px}.lbx-next{right:20px}
+.lbx-close:hover,.lbx-nav:hover,.lbx-close:focus-visible,.lbx-nav:focus-visible{background:rgba(255,255,255,.24)}
+.lbx-nav svg,.lbx-close svg{width:20px;height:20px}
+@media(max-width:600px){.lbx-nav{width:40px;height:40px}.lbx-prev{left:8px}.lbx-next{right:8px}}
 
 /* FOOTER — now a shared component; see footer.css and footer.js. Nothing
    footer-related should be styled here. */
@@ -747,54 +812,34 @@ button { font:inherit; }
       <h2 class="cr-h2"><span class="hi">Caring</span> for the People Who Build Triveni</h2>
       <p class="cr-lead" style="margin-top:1.2rem;">Beyond the work itself, we invest in the health, safety and everyday wellbeing of our team.</p>
     </div>
-
-    <div class="story-block reveal">
-      <div class="story-media-wrap">
-        <div class="media-pair">
-          <div class="mp-main"><img src="assets/sustainabilty/dental camp/PHOTO-2025-04-23-19-29-40 copy.jpg" alt="A dentist attending to a Triveni team member at an in-plant dental camp" loading="lazy"></div>
-          <div class="mp-sub"><img src="assets/sustainabilty/dental camp/PHOTO-2025-04-23-19-29-40 copy 2.jpg" alt="A dentist consulting a Triveni team member at an in-plant dental camp" loading="lazy"></div>
-        </div>
-      </div>
-      <div class="story-body">
-        <div class="story-kicker">Our People</div>
-        <h3>Health &amp; Wellbeing at Work</h3>
-        <p>Regular dental and medical camps held at the plant give our team easy access to basic health check-ups.</p>
-      </div>
-    </div>
-
-    <hr class="story-divider">
-
-    <div class="story-block rev reveal">
-      <div class="story-media-wrap">
-        <div class="media-single"><img src="assets/sustainabilty/sbi litracy trainings/PHOTO-2025-09-06-18-23-44 2.jpg" alt="A trainer leading an SBI financial literacy session for Triveni employees" loading="lazy"></div>
-      </div>
-      <div class="story-body">
-        <div class="story-kicker">Our People</div>
-        <h3>Financial Literacy with SBI</h3>
-        <p>Sessions conducted with SBI help our team build confidence in managing their finances.</p>
-      </div>
-    </div>
-
-    <hr class="story-divider">
-
-    <div class="story-block reveal">
-      <div class="story-media-wrap">
-        <div class="media-pair">
-          <div class="mp-main"><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22.jpg" alt="Triveni employees practising CPR on training mannequins during a first-aid session" loading="lazy"></div>
-          <div class="ps-thumbs">
-            <figure><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22 4.jpg" alt="A trainer presenting stroke-recognition guidance during the first-aid session" loading="lazy"><figcaption>Recognising a Stroke</figcaption></figure>
-            <figure><img src="assets/sustainabilty/first aid trainings/PHOTO-2026-03-21-20-13-22 6.jpg" alt="A trainer presenting electrical-shock response guidance during the first-aid session" loading="lazy"><figcaption>Electrical Shock</figcaption></figure>
-          </div>
-        </div>
-      </div>
-      <div class="story-body">
-        <div class="story-kicker">Safety</div>
-        <h3>Safety Starts With Preparedness</h3>
-        <p>First-aid training helps our people respond confidently and effectively during emergencies, covering practical response alongside hazards relevant to a manufacturing environment.</p>
-      </div>
-    </div>
   </div>
 </section>
+
+<!-- Happy Moments -->
+<section class="lt-wrap">
+  <div class="eyebrow">Celebrations</div>
+  <h2>Happy Moments at Triveni</h2>
+  <p class="lt-sub">From festivals on the shop floor to cricket on weekends, the moments we share together.</p>
+  <div class="bento" id="hmGrid"></div>
+</section>
+
+<!-- Health & Wellbeing -->
+<section class="lt-wrap"><div class="fc l1" data-feature="health"></div></section>
+
+<!-- Financial Literacy with SBI -->
+<section class="lt-wrap"><div class="fc l2" data-feature="sbi"></div></section>
+
+<!-- Safety -->
+<section class="lt-wrap"><div class="fc l3" data-feature="safety"></div></section>
+
+<!-- Shared lightbox (background-image, 4:3) -->
+<div class="lbx" id="lbx" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lbx-close" id="lbxClose" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lbx-nav lbx-prev" id="lbxPrev" type="button" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <button class="lbx-nav lbx-next" id="lbxNext" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+  <div class="lbx-img" id="lbxImg" role="img" aria-label=""></div>
+  <div class="lbx-cap" id="lbxCap"></div>
+</div>
 
 <!-- ===== 02 — CAREER AREAS ===== -->
 <section class="sec sec--areas" id="areas">
@@ -1215,6 +1260,116 @@ if (!reduceMotion) {
     }, { passive:true });
   }
 }
+
+/* ===== Life @ Triveni — Happy Moments + Health/SBI/Safety collages + lightbox =====
+   Photo tiles are background-image <div>s (role="img"); data lives in the arrays
+   below ({src, caption}) so photos can be swapped later. Happy Moments uses the real
+   "Life @ Triveni" photos (captions taken only from what's visible/dated: Holi and
+   Independence Day; neutral "Life at Triveni" otherwise). Health/SBI/Safety reuse the
+   existing plant photos. */
+(function(){
+  var P = 'assets/sustainabilty/';
+  var L = 'assets/life at triveni/';
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  var CELEBRATIONS = [
+    { src:L+'PHOTO-2026-03-03-14-16-47 3.jpg', caption:'Holi 2026' },
+    { src:L+'PHOTO-2025-08-15-10-55-02.jpg',   caption:'Independence Day 2025' },
+    { src:L+'PHOTO-2026-03-03-14-16-47 2.jpg', caption:'Life at Triveni 2026' },
+    { src:L+'PHOTO-2025-03-08-18-43-30.jpg',   caption:'Life at Triveni 2025' },
+    { src:L+'PHOTO-2026-06-11-14-02-34 2.jpg', caption:'Life at Triveni 2026' },
+    { src:L+'PHOTO-2025-08-15-12-10-24.jpg',   caption:'Independence Day 2025' },
+    { src:L+'PHOTO-2025-08-15-13-14-20.jpg',   caption:'Independence Day 2025' },
+    { src:L+'PHOTO-2025-08-20-20-14-13.jpg',   caption:'Life at Triveni 2025' }
+  ];
+  var FEATURES = {
+    health: { kicker:'Our People', title:'Health & Wellbeing at Work',
+      body:'Regular dental and medical camps held at the plant give our team easy access to basic health check-ups.',
+      photos:[
+        { src:P+'dental camp/PHOTO-2025-04-23-19-29-40 copy.jpg',   caption:'Health Camp' },
+        { src:P+'dental camp/PHOTO-2025-04-23-19-29-40 copy 2.jpg', caption:'Health Camp' },
+        { src:P+'dental camp/PHOTO-2025-04-23-19-29-40.jpg',        caption:'Health Camp' }
+      ] },
+    sbi: { kicker:'Our People', title:'Financial Literacy with SBI',
+      body:'Sessions conducted with SBI help our team build confidence in managing their finances.',
+      photos:[
+        { src:P+'sbi litracy trainings/PHOTO-2025-09-06-18-23-44.jpg',   caption:'SBI Session' },
+        { src:P+'sbi litracy trainings/PHOTO-2025-09-06-18-23-44 2.jpg', caption:'SBI Session' },
+        { src:P+'sbi litracy trainings/PHOTO-2025-09-06-18-23-44 3.jpg', caption:'SBI Session' }
+      ] },
+    safety: { kicker:'Safety', title:'Safety Starts With Preparedness',
+      body:'First-aid training helps our people respond confidently and effectively during emergencies, covering practical response alongside hazards relevant to a manufacturing environment.',
+      photos:[
+        { src:P+'first aid trainings/PHOTO-2026-03-21-20-13-22.jpg',   caption:'First-aid training' },
+        { src:P+'first aid trainings/PHOTO-2026-03-21-20-13-22 4.jpg', caption:'Recognising a stroke' },
+        { src:P+'first aid trainings/PHOTO-2026-03-21-20-13-22 6.jpg', caption:'Electrical shock' },
+        { src:P+'first aid trainings/PHOTO-2026-03-21-20-13-22 2.jpg', caption:'First-aid training' },
+        { src:P+'first aid trainings/PHOTO-2026-03-21-20-13-22 3.jpg', caption:'First-aid training' },
+        { src:P+'first aid trainings/PHOTO-2026-03-21-20-13-22 5.jpg', caption:'First-aid training' },
+        { src:P+'first aid trainings/PHOTO-2026-03-21-20-13-22 7.jpg', caption:'First-aid training' },
+        { src:P+'first aid trainings/PHOTO-2026-03-21-20-13-22 8.jpg', caption:'First-aid training' }
+      ] }
+  };
+
+  /* ---- shared lightbox (background-image, 4:3) ---- */
+  var lbx=document.getElementById('lbx'), lbxImg=document.getElementById('lbxImg'), lbxCap=document.getElementById('lbxCap');
+  var lbxList=[], lbxPos=0, lbxReturn=null;
+  function paintLbx(){ var it=lbxList[lbxPos]; lbxImg.style.backgroundImage="url('"+encodeURI(it.src)+"')"; lbxImg.setAttribute('aria-label',it.caption||''); lbxCap.textContent=(it.caption?it.caption+' · ':'')+(lbxPos+1)+' / '+lbxList.length; }
+  function openLbx(list,i){ if(!list||!list.length)return; lbxList=list; lbxPos=i||0; lbxReturn=document.activeElement; paintLbx(); lbx.hidden=false; document.body.style.overflow='hidden'; document.getElementById('lbxClose').focus(); document.addEventListener('keydown',onLbxKey); }
+  function closeLbx(){ lbx.hidden=true; document.body.style.overflow=''; document.removeEventListener('keydown',onLbxKey); if(lbxReturn&&lbxReturn.focus)lbxReturn.focus(); }
+  function stepLbx(d){ if(lbxList.length<2)return; lbxPos=(lbxPos+d+lbxList.length)%lbxList.length; paintLbx(); }
+  function onLbxKey(e){ if(e.key==='Escape')closeLbx(); else if(e.key==='ArrowRight')stepLbx(1); else if(e.key==='ArrowLeft')stepLbx(-1); }
+  if(lbx){
+    document.getElementById('lbxClose').addEventListener('click',closeLbx);
+    document.getElementById('lbxPrev').addEventListener('click',function(){stepLbx(-1);});
+    document.getElementById('lbxNext').addEventListener('click',function(){stepLbx(1);});
+    lbx.addEventListener('click',function(e){ if(e.target===lbx)closeLbx(); });
+  }
+
+  /* one photo tile: background-image div, optional caption pill or "+N more" overlay */
+  function tile(p, idx, cls, opts){
+    opts = opts || {};
+    var inner = opts.more ? '<div class="more">+'+opts.more+' more</div>'
+      : (opts.pill && p.caption ? '<span class="cap">'+esc(p.caption)+'</span>' : '');
+    return '<div class="ph'+(cls?' '+cls:'')+'" role="img" aria-label="'+esc(p.caption||'Triveni team photo')+'"'+
+      ' data-open="'+(opts.more?0:idx)+'" style="background-image:url(\''+encodeURI(p.src)+'\')">'+inner+'</div>';
+  }
+  function wire(container, list){
+    container.querySelectorAll('.ph').forEach(function(t){
+      t.addEventListener('click',function(){ openLbx(list, parseInt(t.getAttribute('data-open'),10)); });
+    });
+  }
+
+  /* ---- Happy Moments (.bento): 4 tiles, tiles 1-3 captioned, last = "+N more" ---- */
+  var hmGrid=document.getElementById('hmGrid');
+  if(hmGrid){
+    var hm=CELEBRATIONS, hmMore=hm.length-3; // hidden(len-4)+1 = len-3
+    hmGrid.innerHTML =
+      tile(hm[0],0,'',{pill:true}) + tile(hm[1],1,'',{pill:true}) + tile(hm[2],2,'',{pill:true}) +
+      tile(hm[3],3,'', hmMore>0 ? {more:hmMore} : {pill:true});
+    wire(hmGrid, hm);
+  }
+
+  /* ---- Health (.l1) / SBI (.l2) / Safety (.l3) ---- */
+  function renderFeature(key){
+    var el=document.querySelector('[data-feature="'+key+'"]'); if(!el)return;
+    var f=FEATURES[key], ph=f.photos, n=ph.length;
+    var txt='<div class="txt"><div class="eyebrow">'+esc(f.kicker)+'</div><h3>'+esc(f.title)+'</h3>'+
+      '<p class="body">'+esc(f.body)+'</p><p class="count">'+n+(n===1?' photo':' photos')+'</p></div>';
+    var moreN = n - 3; // last tile "+N more" when more photos than tiles
+    var html;
+    if(key==='safety'){
+      html = txt + tile(ph[0],0,'a',{}) + tile(ph[1],1,'b',{pill:true}) +
+        tile(ph[2],2,'c',{pill:true}) + tile(ph[3],3,'d', moreN>0?{more:moreN}:{});
+    } else {
+      html = txt + tile(ph[0],0,'a',{}) + tile(ph[1],1,'b',{}) +
+        tile(ph[2],2,'c', moreN>0?{more:moreN}:{});
+    }
+    el.innerHTML=html;
+    wire(el, ph);
+  }
+  ['health','sbi','safety'].forEach(renderFeature);
+})();
 </script>
 </body>
 </html>
