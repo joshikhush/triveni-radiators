@@ -282,7 +282,7 @@ ul{margin:0;padding:0;list-style:none;}
   --half:586px;                 /* spine Y / UPPER zone height — tallest upper panel + a little air (the
                                    divider circle now hangs from a long stem, so no extra buffer here) */
   --zlow:710px;                 /* LOWER zone height — tallest lower panel + a little air */
-  --sec-w:138px; --edge:60px;}
+  --sec-w:200px; --edge:100px;}
 #journey.tg-journey{padding-top:26px;padding-bottom:24px;}
 @media(max-width:900px){#journey.tg-journey{padding-top:18px;}}
 
@@ -294,7 +294,7 @@ ul{margin:0;padding:0;list-style:none;}
 @media(prefers-reduced-motion:reduce){.tg-tl-viewport{scroll-behavior:auto;}}
 
 .tg-tl-track{position:relative;display:flex;align-items:flex-start;width:max-content;
-  padding:0 var(--edge) 0 calc(var(--edge) + 150px);height:calc(var(--half) + var(--zlow));}
+  padding:0 var(--edge);height:calc(var(--half) + var(--zlow));}
 
 /* the ONE straight continuous spine — strong dark charcoal, dead centre */
 .tg-tl-track::before{content:'';position:absolute;left:0;right:0;top:var(--half);height:2px;
@@ -348,6 +348,13 @@ ul{margin:0;padding:0;list-style:none;}
   overflow:hidden;background:#e9e9f0;}
 .tg-ms-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s var(--ez);}
 .tg-ms:hover .tg-ms-img img{transform:scale(1.03);}
+/* ---- logo lockup — treated differently from a photograph: white card, contained,
+   never cropped and never upscaled past the logo's natural size (so small marks stay crisp) ---- */
+.tg-ms-img.tl-logo{height:180px;background:#fff;border:1px solid rgba(37,37,37,.5);
+  border-radius:12px;padding:24px;display:flex;align-items:center;justify-content:center;}
+.tg-ms-img.tl-logo img{width:auto;height:auto;max-width:100%;max-height:100%;
+  object-fit:contain;transition:none;}
+.tg-ms:hover .tg-ms-img.tl-logo img{transform:none;}
 /* empty, clearly-marked slot standing in for a milestone photo not yet
    supplied -- same box/reveal treatment as a real .tg-ms-img, dashed instead
    of solid so it never reads as a broken image */
@@ -357,35 +364,24 @@ ul{margin:0;padding:0;list-style:none;}
 .tg-ms-placeholder-icon{width:22px;height:22px;color:var(--muted);opacity:.55;}
 .tg-ms-placeholder-label{font-size:11px;font-weight:500;color:var(--muted);line-height:1.4;}
 
-/* ---- section chapter marker — dark navy oval that HANGS BELOW the spine
-   (node on the spine · short stem · oval), placed before the era's first
-   milestone; never counts in the alternation ---- */
-/* section markers are OUT of the flex flow (absolute) so they add ZERO width and
-   never disturb the master milestone interval. JS positions each one horizontally
-   inside the gap just before its era's first milestone. */
-/* section chapter divider — a dark-navy circle ABOVE the spine, joined to it by a
-   short vertical connector that ends in a node sitting exactly on the timeline.
-   Absolute + JS-placed at the section boundary, so it never affects milestone
-   spacing, widths or the horizontal scroll length. */
-.tg-era{position:absolute;left:0;bottom:var(--zlow);   /* bottom edge rests on the spine */
-  width:var(--sec-w);z-index:6;
-  display:flex;flex-direction:column;align-items:center;}
-.tg-era-inner{width:116px;height:116px;border-radius:50%;background:#101827;text-align:center;
+/* ---- section chapter marker — a dark-navy oval that sits centred ON the spine,
+   as its OWN column in the timeline flow, placed in the gap before the era's first
+   milestone. It never counts in the two-row alternation. No stem, no tall vertical
+   line: the oval straddles the axis (the spine passes behind it, masked by the ring)
+   and that IS its only contact with the axis. Because it's an in-flow column the
+   cards on either side move apart to make room — nothing overlaps. ---- */
+.tg-era{position:relative;flex:0 0 var(--sec-w);
+  height:calc(var(--half) + var(--zlow));z-index:6;}
+.tg-era-inner{position:absolute;left:50%;top:var(--half);
+  width:116px;height:116px;border-radius:50%;background:#101827;text-align:center;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  box-shadow:0 0 0 5px #FAF9F5;                         /* clean cut against whatever sits behind */
-  opacity:0;transform:translateY(10px);transition:opacity .6s var(--ez),transform .6s var(--ez);}
-.tg-tl.in .tg-era-inner{opacity:1;transform:none;}
-.tg-era-stem{width:1.5px;height:calc(var(--half) * 0.56);background:#252525;
-  opacity:0;transition:opacity .5s var(--ez) .2s;}   /* long connector — circle rides high, up beside the milestone content */
-.tg-tl.in .tg-era-stem{opacity:1;}
+  box-shadow:0 0 0 6px #FAF9F5;                         /* clean cut where the spine passes behind */
+  opacity:0;transform:translate(-50%,calc(-50% + 10px));
+  transition:opacity .6s var(--ez),transform .6s var(--ez);}
+.tg-tl.in .tg-era-inner{opacity:1;transform:translate(-50%,-50%);}
 .tg-era-n{font-family:'Newsreader',serif;font-weight:400;font-size:21px;line-height:1;color:#fff;}
 .tg-era-name{font-size:8px;font-weight:700;letter-spacing:.08em;line-height:1.35;color:#fff;padding:0 9px;}
 .tg-era-range{font-size:8px;font-weight:600;letter-spacing:.04em;color:rgba(255,255,255,.6);}
-.tg-era-node{position:absolute;left:50%;bottom:0;width:13px;height:13px;border-radius:50%;
-  background:#101827;border:2px solid #FAF9F5;z-index:4;
-  transform:translate(-50%,50%) scale(.4);opacity:0;
-  transition:opacity .4s var(--ez),transform .4s var(--ez);}
-.tg-tl.in .tg-era-node{opacity:1;transform:translate(-50%,50%) scale(1);}
 
 /* ---- right-edge fade cue ---- */
 .tg-tl-fade{position:absolute;top:0;right:0;bottom:0;width:84px;pointer-events:none;z-index:5;
@@ -396,11 +392,11 @@ ul{margin:0;padding:0;list-style:none;}
 
 @media(prefers-reduced-motion:reduce){
   .tg-tl-track::before,.tg-ms::after,.tg-ms-text,.tg-ms-img,
-  .tg-era-inner,.tg-era-stem,.tg-era-node{transition:none!important;}
+  .tg-era-inner{transition:none!important;}
   .tg-tl-track::before{transform:scaleX(1);}
-  .tg-ms::after,.tg-ms-text,.tg-ms-img,.tg-era-inner,.tg-era-stem{opacity:1;transform:none;}
+  .tg-ms::after,.tg-ms-text,.tg-ms-img{opacity:1;transform:none;}
   .tg-ms::after{transform:translate(-50%,-50%);}
-  .tg-era-node{opacity:1;transform:translate(-50%,-50%);}
+  .tg-era-inner{opacity:1;transform:translate(-50%,-50%);}
 }
 
 /* ---- responsive: same continuous two-row grid, tighter column + stride ---- */
@@ -649,10 +645,10 @@ var TL_MILESTONES = [
        Switch" -- same component as the "Lid Switch" named in the copy, likely just
        a different name for it; flag if that's actually a different part. */
     imageAlt:'Washing machine lid/door switch product' },
-  { ei:1, year:'2007', title:'Microwave Oven Harness',
+  { ei:1, year:'2007', title:'Microwave Oven Harness', img:'assets/timeline/microwave-wiring-harness-1353165.webp', imageAlt:'Microwave oven wiring harness assembly',
     body:['Develops wiring harness assemblies for Microwave Oven OBUs, expanding Triveni’s portfolio across LG’s key home appliance categories.'] },
   { ei:1, year:'2007', title:'First Major Award', img:'assets/timeline/lg-qcd-excellence-award-2008.jpg',
-    body:['Receives the Excellence Award from LGEIL for outstanding performance in Quality, Cost &amp; Delivery (QCD) within the Electrical category — marking Triveni’s first formal recognition from a global OEM.'],
+    body:['Receives the Excellence Award from LGEIL for outstanding performance in Quality, Cost & Delivery (QCD) within the Electrical category — marking Triveni’s first formal recognition from a global OEM.'],
     /* found on trivenielectroplast.com/awards.htm, exactly as the client described --
        the plaque itself reads "Great Business Partners Q2,08 Meet", i.e. this award
        was presented in 2008, not 2007. Kept under 2007 to match where the client's
@@ -669,28 +665,28 @@ var TL_MILESTONES = [
   { ei:2, year:'2012', title:'Unit III Established — Transformer Radiators', img:'assets/timeline/2012.jpg',
     body:['Capitalizing on expansion across the national energy grid, the company sets up Triveni Radiators / Triveni Electroplast Pvt Ltd (Radiator Division) in Prayagraj (Naini), Allahabad, to supply cooling equipment to power and distribution transformer manufacturers — signing an MOU with a French global entity to start dispatches. Right from inception, the facility deploys the nation’s pioneer fully automatic panel production line designed for pressed steel radiator manufacturing.'] },
   /* wording matched to the Radiator Division (Milestones page) timeline's 2013 entry */
-  { ei:2, year:'2013', title:'First PGCIL Approval', img:'assets/logos/major-customers/alstom.jpeg',
-    body:['Secures PGCIL approval for supply of radiators for 400 kV class Transformers &amp; Reactors, initiated by M/s Alstom T&amp;D — validating the new division’s quality within a year of operations.'] },
+  { ei:2, year:'2013', title:'First PGCIL Approval', img:'assets/logos/major-customers/alstom.jpeg', logo:true,
+    body:['Secures PGCIL approval for supply of radiators for 400 kV class Transformers & Reactors, initiated by M/s Alstom T&D — validating the new division’s quality within a year of operations.'] },
   /* wording matched to the Radiator Division (Milestones page) timeline's 2015 entry */
-  { ei:2, year:'2015', title:'765 kV Approval', img:'assets/logos/siemens-energy.svg',
-    body:['PGCIL extends approval to the 765 kV class — the highest voltage level on India’s transmission network — initiated by M/s Siemens T&amp;D.'] },
+  { ei:2, year:'2015', title:'765 kV Approval', img:'assets/logos/siemens-energy.svg', logo:true,
+    body:['PGCIL extends approval to the 765 kV class — the highest voltage level on India’s transmission network — initiated by M/s Siemens T&D.'] },
   { ei:2, year:'2016', title:'Unit II Extension, Noida', img:'assets/timeline/2016.jpg',
     body:['Achieved two key milestones in a single year: Triveni established an additional facility as an extension of Unit II in Noida to expand wiring harness production capacity.'] },
   { ei:2, year:'2016', title:'Largest Radiator Order — Siemens, Bhuj', img:'assets/installations/siemens-site-1.jpg',
     body:['Concurrently, Triveni Electroplast Pvt Ltd (Radiator Division) fulfilled its largest order to date, supplying 1,008 radiators for 765 kV, 500 MVA class transformers to PGCIL, delivered to Bhuj for M/s Siemens Ltd.'] },
 
-  { ei:3, year:'2017', title:'Strategic Supplier Status',
+  { ei:3, year:'2017', title:'Strategic Supplier Status', imagePlaceholder:'LG Best of Best Supplier Award, 2017',
     body:['Earned designation as a Strategic Supplier for LG Electronics (Q1) while securing the Best of Best Supplier Award for 2017 (1st Prize) from LGEIL. Concurrently, Triveni Electroplast Pvt Ltd (Radiator Division) executed its first major international project, supplying radiator units to Bangladesh on behalf of M/s Siemens Ltd.'] },
   /* reused from the Radiator Division (Milestones page) timeline's 2018 entry */
   { ei:3, year:'2018', title:'Largest Radiator Supplier in India', img:'assets/timeline/2018.JPG',
-    body:['Triveni Electroplast Pvt Ltd (Radiator Division) grows into a leading vendor for key transformer producers nationwide, including GE T&amp;D, Toshiba Transmission &amp; Distribution Systems, Siemens Ltd, TBEA India, and Hitachi Energy India. The division secures the Best Supplier Award presented by M/s TBEA Energy (India) Pvt Ltd.'] },
-  { ei:3, year:'2019', title:'RDSO, ISO, and New Production Lines',
-    body:['A pivotal milestone for the business: Triveni Electroplast Pvt Ltd (Radiator Division) emerges as a primary supplier of cooling units for RDSO (Research Design &amp; Standards Organisation) equipment, catering to Hitachi Energy India along with various railway transformer builders. In parallel, Triveni establishes a dedicated Wire Harness Assembly manufacturing line dedicated to NIDEC India Pvt. Ltd.’s SPMS segment, while successfully earning ISO 14001:2015 and ISO 45001:2018 accreditations to advance sustainability and workplace safety standards.'] },
+    body:['Triveni Electroplast Pvt Ltd (Radiator Division) grows into a leading vendor for key transformer producers nationwide, including GE T&D, Toshiba Transmission & Distribution Systems, Siemens Ltd, TBEA India, and Hitachi Energy India. The division secures the Best Supplier Award presented by M/s TBEA Energy (India) Pvt Ltd.'] },
+  { ei:3, year:'2019', title:'RDSO, ISO, and New Production Lines', img:'assets/logos/rdso-transparent.png', logo:true, imageAlt:'RDSO — Research Design & Standards Organisation',
+    body:['A pivotal milestone for the business: Triveni Electroplast Pvt Ltd (Radiator Division) emerges as a primary supplier of cooling units for RDSO (Research Design & Standards Organisation) equipment, catering to Hitachi Energy India along with various railway transformer builders. In parallel, Triveni establishes a dedicated Wire Harness Assembly manufacturing line dedicated to NIDEC India Pvt. Ltd.’s SPMS segment, while successfully earning ISO 14001:2015 and ISO 45001:2018 accreditations to advance sustainability and workplace safety standards.'] },
   { ei:3, year:'2020', title:'Resilience Through COVID-19', img:'assets/timeline/2020.jpg',
     body:['Notwithstanding the worldwide pandemic, Triveni Electroplast Pvt Ltd (Radiator Division) sustained continuous, reliable cooling unit deliveries across all clientele. Additionally, the organisation secured the CII GreenCo Certification (Silver Grade) awarded by the Confederation of Indian Industry in acknowledgement of its eco-friendly operational standards.'],
     imageAlt:'Radiators packed and dispatched from the factory floor' },
 
-  { ei:4, year:'2021', title:'Sole Strategic Supplier for LG',
+  { ei:4, year:'2021', title:'Sole Strategic Supplier for LG', imagePlaceholder:'LG Sole Strategic Supplier recognition',
     body:['Achieves distinction as LGEIL’s sole Strategic Supplier in the Electrical category out of ten group-wide partners, capping almost twenty years of collaboration. Concurrently, Triveni Electroplast Pvt Ltd (Radiator Division) starts dispatches to Hitachi Energy India’s Power Division while actively seeking global market expansion.'] },
   { ei:4, year:'2022', title:'Best Quality Performance Award',
     body:['Secures the Best Quality Performance Award for 2022 (1st Prize) presented by LG Electronics.'],
@@ -700,13 +696,13 @@ var TL_MILESTONES = [
        used on the 2007 entry -- plus 6 Bharti/Beetel). No 2022 LG award photo
        exists at either source; still needs sourcing from the client directly. */
     imagePlaceholder:'available at trivenielectroplast.com/awards.htm' },
-  { ei:4, year:'2022–23', title:'PGCIL Grade A & IEEE Certification',
+  { ei:4, year:'2022–23', title:'PGCIL Grade A & IEEE Certification', img:'assets/logos/end-customers/pgcil.png', logo:true, imageAlt:'POWERGRID (PGCIL) logo',
     body:['Marking a momentous period in corporate history, Power Grid Corporation of India bestows its esteemed Grade A rating upon the firm, extending formal endorsement through 2027.'],
     lead:'During this time frame, Triveni Electroplast Pvt Ltd (Radiator Division):',
     bullets:[
       'attains IEEE qualification targeting North American markets;',
       'launches trial runs for Hot Dip Galvanised offerings internationally;',
-      'expands portfolio options by supplying offset design variants to M/s Toshiba Transmission &amp; Distribution Systems India.'
+      'expands portfolio options by supplying offset design variants to M/s Toshiba Transmission & Distribution Systems India.'
     ] },
   { ei:4, year:'2023', title:'New Production Line for NIDEC NTMC', img:'assets/timeline/wiring-harness-product.jpg',
     body:['Triveni establishes a dedicated Wire Harness Assembly manufacturing line dedicated to NIDEC India Pvt. Ltd.’s NTMC division, broadening the operational scope of Unit II.'],
@@ -716,13 +712,13 @@ var TL_MILESTONES = [
        product match. */
     imageAlt:'Wire harness assembly product' },
 
-  { ei:5, year:'2023–24', title:'Productivity and Market Recognition',
+  { ei:5, year:'2023–24', title:'Productivity and Market Recognition', img:'assets/installations/ge-site-1.jpg', imageAlt:'Triveni pressed-steel radiators fitted to a GE transformer in service',
     body:['Triveni Electroplast Pvt Ltd (Radiator Division) resolves manufacturing bottlenecks to enhance operational throughput while integrating automated welding systems for superior precision. Domestic equipment manufacturers establish Triveni as a primary partner for painted radiator exports. The division emerges as a key source of cooling units for power infrastructure under PGCIL and RDSO, dispatching over 1,500 offset radiator variants.'] },
-  { ei:5, year:'2024', title:'Best Delivery Performance Award',
+  { ei:5, year:'2024', title:'Best Delivery Performance Award', imagePlaceholder:'LG Best Delivery Performance Award, 2024',
     body:['Secures the Best Delivery Performance Award in November 2024 presented by LG Electronics — reinforcing a twenty-year track record of dependable supply alongside the organization’s initial key manufacturing client.'] },
-  { ei:5, year:'2024–25', title:'The Export Journey Begins',
-    body:['Triveni Electroplast Pvt Ltd (Radiator Division) broadens its client footprint both domestically and internationally. The division captures a definitive purchase order covering 190 cooling units from Toshiba Transmission &amp; Distribution Systems bound for GE USA solar transformer deployments, alongside additional delivery agreements through 2025–26. Initiates direct shipments into the US market, pushing overseas earnings to 5% of total revenue. Furthermore, the unit sets up an added manufacturing line by December 2025 and commences setup of a semi-automated conveyorized paint facility, following the completion of ISO 3834 welding standards training in August 2025.'] },
-  { ei:5, year:'2025–26', title:'What’s Next',
+  { ei:5, year:'2024–25', title:'The Export Journey Begins', img:'assets/installations/AYR.jpg', imageAlt:'AYR Energy transformer fitted with Triveni radiators — direct USA export',
+    body:['Triveni Electroplast Pvt Ltd (Radiator Division) broadens its client footprint both domestically and internationally. The division captures a definitive purchase order covering 190 cooling units from Toshiba Transmission & Distribution Systems bound for GE USA solar transformer deployments, alongside additional delivery agreements through 2025–26. Initiates direct shipments into the US market, pushing overseas earnings to 5% of total revenue. Furthermore, the unit sets up an added manufacturing line by December 2025 and commences setup of a semi-automated conveyorized paint facility, following the completion of ISO 3834 welding standards training in August 2025.'] },
+  { ei:5, year:'2025–26', title:'What’s Next', imagePlaceholder:'New semi-automated conveyorized paint facility',
     body:['Installation of the upgraded painting facility stands successfully completed. Moving into the future — scaling up cooling unit production, broadening global reach, and advancing technological automation across facilities — the core purpose established in 1991 remains the guiding force propelling the organization.'] }
 ];
 
@@ -769,15 +765,13 @@ TL_MILESTONES.forEach(function(m){ m.hl = []; });
       var num = parts[0], name = (parts[1] || era.n);
       var e = document.createElement('div');
       e.className = 'tg-era';
-      /* node (on the spine) · short stem · oval — the marker hangs below the spine */
+      /* an in-flow column carrying only the oval, which straddles the spine */
       e.innerHTML =
         '<div class="tg-era-inner">' +
           '<span class="tg-era-n">' + esc(num) + '</span>' +
           '<span class="tg-era-name">' + esc(name).toUpperCase() + '</span>' +
           '<span class="tg-era-range">' + esc(era.range) + '</span>' +
-        '</div>' +
-        '<span class="tg-era-stem" aria-hidden="true"></span>' +
-        '<span class="tg-era-node" aria-hidden="true"></span>';
+        '</div>';
       frag.appendChild(e);
       lastEra = m.ei;
     }
@@ -796,7 +790,9 @@ TL_MILESTONES.forEach(function(m){ m.hl = []; });
        supplied, or nothing at all when the entry has neither (no photo noted). */
     var imgHtml = '';
     if (m.img) {
-      imgHtml = '<div class="tg-ms-img"><img src="' + m.img + '" alt="' + esc(m.year + ' — ' + m.title) + '" loading="lazy"></div>';
+      var isLogo = m.logo || /\/logos\//.test(m.img);
+      var imgAlt = m.imageAlt || (m.year + ' — ' + m.title);
+      imgHtml = '<div class="tg-ms-img' + (isLogo ? ' tl-logo' : '') + '"><img src="' + m.img + '" alt="' + esc(imgAlt) + '" loading="lazy"></div>';
     } else if (m.imagePlaceholder) {
       imgHtml = '<div class="tg-ms-img is-placeholder">' +
         '<svg class="tg-ms-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10.5" r="1.5"/><path d="m21 15-5-5-9 9"/></svg>' +
@@ -824,36 +820,9 @@ TL_MILESTONES.forEach(function(m){ m.hl = []; });
 
   track.appendChild(frag);
 
-  /* ---- section markers: each gets its OWN dedicated anchor in the horizontal
-     rhythm, clear of every milestone column and node. They're position:absolute,
-     so this never shifts a milestone — the master interval stays fixed.
-     Chapter 01 leads the timeline; every later chapter sits in the empty slot
-     midway between its section's 1st and 2nd milestone (the only overlap-free
-     position — panels are wider than the interval, so nothing is clear *before*
-     a section's first milestone). ---- */
-  var eraEls = [].slice.call(track.querySelectorAll('.tg-era'));
-  function nextMs(el){
-    var m = el.nextElementSibling;
-    while (m && !/(^|\s)tg-ms(\s|$)/.test(m.className)) m = m.nextElementSibling;
-    return m;
-  }
-  function positionEras(){
-    eraEls.forEach(function(eEl, i){
-      var a = nextMs(eEl);                 /* section's 1st milestone */
-      if (!a) return;
-      var target;
-      if (i === 0){
-        target = a.offsetLeft - 150;       /* opening marker, ahead of the first milestone */
-      } else {
-        var b = nextMs(a);                 /* section's 2nd milestone */
-        target = b ? (a.offsetLeft + b.offsetLeft) / 2 : a.offsetLeft + 150;
-      }
-      eEl.style.left = Math.max(4, target - eEl.offsetWidth / 2) + 'px';
-    });
-  }
-  positionEras();
-  addEventListener('resize', positionEras);
-  addEventListener('load', positionEras);
+  /* Section markers are now real in-flow columns (see .tg-era): each sits in the
+     gap before its era's first milestone, so the browser lays them out — no manual
+     left: calculation, and nothing can land on top of a card. */
 
   /* ---- reveal: spine draws + everything fades in once the section scrolls into view ---- */
   var railIO = new IntersectionObserver(function(entries){
