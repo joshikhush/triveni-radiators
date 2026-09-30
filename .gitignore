@@ -6,3 +6,5 @@ triveni_template*
 node_modules
 assets/videos/*.mov
 *audit*.txt
+# Raw Google Drive photo dumps — kept locally as sources, never committed (only web-optimized copies are)
+assets/drive-download-*/

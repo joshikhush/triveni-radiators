@@ -183,6 +183,9 @@ button{font:inherit;background:none;border:none;cursor:pointer;}
 .feat-plate-vis{aspect-ratio:5/4;display:flex;align-items:center;justify-content:center;padding:2rem;background-color:var(--ivory);background-image:linear-gradient(var(--line-cool) 1px,transparent 1px),linear-gradient(90deg,var(--line-cool) 1px,transparent 1px);background-size:26px 26px;}
 .feat-plate-vis svg{width:100%;max-width:320px;height:auto;color:var(--violet-deep);transition:transform .45s cubic-bezier(.16,1,.3,1);}
 .feat-media:hover .feat-plate-vis svg{transform:scale(1.03);}
+.feat-plate-vis.has-photo{padding:0;background-image:none;}
+.feat-plate-vis img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .45s cubic-bezier(.16,1,.3,1);}
+.feat-media:hover .feat-plate-vis.has-photo img{transform:scale(1.03);}
 .feat-plate{transition:border-color .4s ease,box-shadow .4s ease;}
 .feat-media:hover .feat-plate{border-color:rgba(106,69,192,.35);}
 .feat-plate-cap{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1.3rem;border-top:1px solid var(--line-cool);}
@@ -300,26 +303,8 @@ button{font:inherit;background:none;border:none;cursor:pointer;}
 
       <div class="feat-media reveal d1">
         <div class="feat-plate">
-          <div class="feat-plate-vis">
-            <svg viewBox="0 0 440 300" fill="none" role="img" aria-label="Stylised profile of a header type radiator">
-              <rect class="draw-line" x="70" y="44" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2" stroke-dasharray="640" stroke-dashoffset="640"/>
-              <rect class="draw-line" x="70" y="236" width="300" height="20" rx="10" stroke="#4A2E82" stroke-width="2.2" stroke-dasharray="640" stroke-dashoffset="640" style="transition-delay:.15s"/>
-              <rect x="84" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
-              <rect x="114" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
-              <rect x="144" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
-              <rect x="174" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
-              <rect x="204" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
-              <rect x="234" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
-              <rect x="264" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
-              <rect x="294" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
-              <rect x="324" y="72" width="16" height="156" rx="8" stroke="#6A45C0" stroke-width="1.5" opacity=".7"/>
-              <line x1="70" y1="54" x2="42" y2="54" stroke="#4A2E82" stroke-width="2.2"/>
-              <line x1="42" y1="44" x2="42" y2="64" stroke="#B8935A" stroke-width="3"/>
-              <line x1="70" y1="246" x2="42" y2="246" stroke="#4A2E82" stroke-width="2.2"/>
-              <line x1="42" y1="236" x2="42" y2="256" stroke="#B8935A" stroke-width="3"/>
-            </svg>
-          </div>
-          <div class="feat-plate-cap"><span><b>01</b> &middot; Header Type</span><span>Stylised profile</span></div>
+          <div class="feat-plate-vis has-photo"><img src="assets/products/range/radiator-galv-front.jpg" alt="Triveni Header Type transformer radiator, as delivered" loading="lazy"></div>
+          <div class="feat-plate-cap"><span><b>01</b> &middot; Header Type</span><span>As delivered</span></div>
         </div>
         <div class="spec-table-wrap">
           <div class="spec-table-head"><span>Technical Specification</span></div>
