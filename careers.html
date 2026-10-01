@@ -561,8 +561,10 @@ button { font:inherit; }
 .sec--life { background:var(--ivory); padding:4.5rem 0; }
 .sec--life .sec-inner { max-width:1200px; padding:0 24px; margin:0 auto; }
 .sec--life .sec-head { margin-bottom:0; padding-bottom:48px; }
-/* Life @ Triveni — merged two-column intro: text left (~34%), carousel right (~66%), centred */
-.life-intro{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:34% 1fr;gap:clamp(32px,4.5vw,64px);align-items:center}
+/* Life @ Triveni — one section, three sub-parts stacked with a consistent gap */
+.life-stack{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;flex-direction:column;gap:clamp(32px,4vw,48px)}
+/* merged two-column intro: text left (~34%), carousel right (~66%), centred */
+.life-intro{display:grid;grid-template-columns:34% 1fr;gap:clamp(32px,4.5vw,64px);align-items:center}
 .life-copy .cr-lead{margin-top:1.1rem}
 .hm-label{font-size:12px;letter-spacing:.2em;font-weight:600;color:#B08A4A;text-transform:uppercase;margin:0 0 10px}
 .story-kicker { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; }
@@ -682,6 +684,7 @@ button { font:inherit; }
  .bento{grid-template-columns:1fr 1fr;grid-template-rows:260px 160px 160px}
  .bento .ph:first-child{grid-column:span 2;grid-row:auto}
  .bento .ph:nth-child(4){grid-column:auto}
+ .life-stack{gap:24px}
  .life-intro{grid-template-columns:1fr;gap:24px}
  .hm-stack{aspect-ratio:4/3;max-height:none}
  .hm-card.peek1{transform:translate(4%,3%) rotate(3deg) scale(.94)}
@@ -858,27 +861,27 @@ button { font:inherit; }
      Sustainability page; these are internal employee activities, not
      CSR/community work, so they live here rather than on csr.html) ===== -->
 <section class="sec sec--life" id="life-at-triveni">
-  <div class="life-intro reveal">
-    <div class="life-copy">
-      <div class="cr-eyebrow">Life @ Triveni</div>
-      <h2 class="cr-h2"><span class="hi">Caring</span> for the People Who Build Triveni</h2>
-      <p class="cr-lead">Beyond the work itself, we invest in our team&rsquo;s health, safety and everyday wellbeing &mdash; and celebrate the moments we share together, from festivals on the shop floor to cricket on weekends.</p>
+  <div class="life-stack">
+    <!-- Happy Moments -->
+    <div class="life-intro reveal">
+      <div class="life-copy">
+        <div class="cr-eyebrow">Life @ Triveni</div>
+        <h2 class="cr-h2"><span class="hi">Caring</span> for the People Who Build Triveni</h2>
+        <p class="cr-lead">Beyond the work itself, we invest in our team&rsquo;s health, safety and everyday wellbeing &mdash; and celebrate the moments we share together, from festivals on the shop floor to cricket on weekends.</p>
+      </div>
+      <div class="life-media">
+        <div class="hm-label">Happy Moments</div>
+        <div class="hm-car" id="hmCar"></div>
+      </div>
     </div>
-    <div class="life-media">
-      <div class="hm-label">Happy Moments</div>
-      <div class="hm-car" id="hmCar"></div>
-    </div>
+    <!-- Our People — Health & Wellbeing -->
+    <div class="fc l1" data-feature="health"></div>
+    <!-- Our People — Financial Literacy with SBI -->
+    <div class="fc l2" data-feature="sbi"></div>
+    <!-- Safety -->
+    <div class="fc l3" data-feature="safety"></div>
   </div>
 </section>
-
-<!-- Health & Wellbeing -->
-<section class="lt-wrap"><div class="fc l1" data-feature="health"></div></section>
-
-<!-- Financial Literacy with SBI -->
-<section class="lt-wrap"><div class="fc l2" data-feature="sbi"></div></section>
-
-<!-- Safety -->
-<section class="lt-wrap"><div class="fc l3" data-feature="safety"></div></section>
 
 <!-- Shared lightbox (background-image, 4:3) -->
 <div class="lbx" id="lbx" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
