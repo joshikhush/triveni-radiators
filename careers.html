@@ -618,17 +618,46 @@ button { font:inherit; }
 
 /* Happy Moments carousel — one large image at a time, arrows + counter */
 .hm-car{position:relative}
-.hm-viewport{position:relative;overflow:hidden;border-radius:16px;background:#d9d2c6;aspect-ratio:3/2;max-height:65vh;box-shadow:0 24px 60px -28px rgba(30,35,80,.4)}
-.hm-track{display:flex;height:100%;transition:transform .55s cubic-bezier(.16,1,.3,1);will-change:transform}
-.hm-slide{flex:0 0 100%;height:100%}
-.hm-slide img{width:100%;height:100%;object-fit:cover;display:block}
-.hm-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.55);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1E2350;box-shadow:0 6px 18px rgba(30,35,80,.2);transition:background .2s,transform .2s}
-.hm-nav:hover{background:rgba(255,255,255,.95);transform:translateY(-50%) scale(1.08)}
-.hm-nav:active{transform:translateY(-50%) scale(.95)}
-.hm-nav svg{width:20px;height:20px}
-.hm-prev{left:14px} .hm-next{right:14px}
-.hm-counter{text-align:center;margin-top:16px;font:500 14px Inter,sans-serif;color:#1E2350;letter-spacing:.05em}
-@media(prefers-reduced-motion:reduce){.hm-track{transition:none}}
+/* decorative blurred circle behind the stack */
+.hm-deco{position:absolute;z-index:0;width:58%;aspect-ratio:1;right:-5%;top:-9%;border-radius:50%;
+  background:radial-gradient(circle at 32% 32%,rgba(106,69,192,.20),rgba(184,138,74,.14) 58%,transparent 72%);
+  filter:blur(30px);pointer-events:none}
+/* photo stack */
+.hm-stack{position:relative;z-index:1;aspect-ratio:3/2;max-height:65vh}
+.hm-card{position:absolute;inset:0;border-radius:18px;overflow:hidden;background:#d9d2c6;
+  box-shadow:0 34px 80px -34px rgba(20,24,55,.6);
+  transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .5s cubic-bezier(.22,1,.36,1);
+  will-change:transform,opacity}
+.hm-ph{position:absolute;inset:0;background:#d9d2c6 center/cover no-repeat}
+.hm-card.front{z-index:3;transform:none;opacity:1}
+.hm-card.front .hm-ph{animation:hmKen 6s ease-out forwards}
+.hm-card.peek1{z-index:2;transform:translate(5%,3.5%) rotate(3.5deg) scale(.93);opacity:.6}
+.hm-card.peek2{z-index:1;transform:translate(9%,7%) rotate(6.5deg) scale(.86);opacity:.32}
+.hm-card.exit{z-index:4;transform:translate(-34%,1%) rotate(-8deg) scale(.9);opacity:0}
+.hm-card.enter{z-index:4;transform:translate(34%,1%) rotate(8deg) scale(.9);opacity:0}
+.hm-card .grad{position:absolute;left:0;right:0;bottom:0;height:40%;z-index:1;background:linear-gradient(0deg,rgba(14,16,38,.62),transparent);opacity:0;transition:opacity .3s}
+.hm-card.has-cap .grad{opacity:1}
+.hm-cap{position:absolute;left:20px;bottom:16px;z-index:2;color:#fff;font:500 14px Inter,sans-serif;letter-spacing:.01em}
+@keyframes hmKen{from{transform:scale(1)}to{transform:scale(1.06)}}
+.hm-car:hover .hm-card.front .hm-ph{animation-play-state:paused}
+/* compact control bar */
+.hm-controls{margin-top:22px;max-width:300px}
+.hm-bar{display:flex;align-items:center;gap:16px}
+.hm-ctrl{width:34px;height:34px;border-radius:50%;border:1px solid rgba(30,35,80,.28);background:transparent;color:#1E2350;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s,border-color .2s}
+.hm-ctrl:hover{background:#1E2350;color:#fff;border-color:#1E2350}
+.hm-ctrl svg{width:16px;height:16px}
+.hm-count{font:600 13px Inter,sans-serif;letter-spacing:.16em;color:#1E2350;min-width:66px;text-align:center}
+.hm-count b{color:#B08A4A;font-weight:700}
+.hm-progress{margin-top:14px;height:2px;background:rgba(30,35,80,.14);border-radius:2px;overflow:hidden}
+.hm-progress i{display:block;height:100%;width:0;background:#B08A4A}
+.hm-car.playing .hm-progress i{animation:hmFill 5s linear forwards}
+.hm-car.paused .hm-progress i,.hm-car.paused .hm-card.front .hm-ph{animation-play-state:paused}
+@keyframes hmFill{from{width:0}to{width:100%}}
+@media(prefers-reduced-motion:reduce){
+  .hm-card{transition:none}
+  .hm-card.front .hm-ph{animation:none;transform:none}
+  .hm-progress i,.hm-car.playing .hm-progress i{animation:none;width:0}
+}
 
 .fc{display:grid;gap:14px}
 .txt{background:#E7E1D6;border-radius:16px;padding:36px;display:flex;flex-direction:column;justify-content:center}
@@ -654,9 +683,10 @@ button { font:inherit; }
  .bento .ph:first-child{grid-column:span 2;grid-row:auto}
  .bento .ph:nth-child(4){grid-column:auto}
  .life-intro{grid-template-columns:1fr;gap:24px}
- .hm-viewport{aspect-ratio:4/3;max-height:none}
- .hm-nav{width:38px;height:38px}
- .hm-prev{left:10px} .hm-next{right:10px}
+ .hm-stack{aspect-ratio:4/3;max-height:none}
+ .hm-card.peek1{transform:translate(4%,3%) rotate(3deg) scale(.94)}
+ .hm-card.peek2{transform:translate(7%,6%) rotate(5.5deg) scale(.88)}
+ .hm-deco{width:70%}
  .fc{grid-template-columns:1fr 1fr!important;grid-template-rows:auto!important}
  .fc .txt{grid-column:1/-1!important;grid-row:1!important;padding:28px}
  .fc .a{grid-column:1/-1!important;grid-row:auto!important;height:240px}
@@ -1360,32 +1390,66 @@ if (!reduceMotion) {
     });
   }
 
-  /* ---- Happy Moments: one large image at a time (arrows · swipe · keys · counter) ---- */
+  /* ---- Happy Moments: editorial photo-stack (3 revolving cards · autoplay · progress) ---- */
   var hmCar=document.getElementById('hmCar');
   if(hmCar){
-    var hm=CELEBRATIONS, pos=0;
+    var hm=CELEBRATIONS, N=hm.length, pos=0;
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var CH=function(d){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="'+d+'"/></svg>';};
-    var slides=hm.map(function(p){return '<div class="hm-slide"><img src="'+encodeURI(p.src)+'" alt="'+esc(p.caption||'Triveni team photo')+'" loading="lazy"></div>';}).join('');
+    var cardHTML='<div class="hm-card"><div class="hm-ph"></div><div class="grad"></div><span class="hm-cap"></span></div>';
     hmCar.innerHTML =
-      '<div class="hm-viewport">'+
-        '<div class="hm-track" id="hmTrack">'+slides+'</div>'+
-        '<button class="hm-nav hm-prev" id="hmPrev" type="button" aria-label="Previous photo">'+CH('M15 18l-6-6 6-6')+'</button>'+
-        '<button class="hm-nav hm-next" id="hmNext" type="button" aria-label="Next photo">'+CH('M9 18l6-6-6-6')+'</button>'+
-      '</div>'+
-      '<div class="hm-counter" id="hmCounter" aria-live="polite"></div>';
-    var track=document.getElementById('hmTrack'), counter=document.getElementById('hmCounter');
-    function go(i){ pos=(i%hm.length+hm.length)%hm.length; track.style.transform='translateX('+(-pos*100)+'%)'; counter.textContent=(pos+1)+' / '+hm.length; }
-    document.getElementById('hmPrev').addEventListener('click',function(){ go(pos-1); });
-    document.getElementById('hmNext').addEventListener('click',function(){ go(pos+1); });
-    hmCar.setAttribute('tabindex','0');
-    hmCar.setAttribute('role','group');
-    hmCar.setAttribute('aria-label','Happy Moments photo carousel');
-    hmCar.addEventListener('keydown',function(e){ if(e.key==='ArrowLeft'){ e.preventDefault(); go(pos-1); } else if(e.key==='ArrowRight'){ e.preventDefault(); go(pos+1); } });
+      '<div class="hm-deco" aria-hidden="true"></div>'+
+      '<div class="hm-stack" id="hmStack">'+cardHTML+cardHTML+cardHTML+'</div>'+
+      '<div class="hm-controls"><div class="hm-bar">'+
+        '<button class="hm-ctrl hm-prev" type="button" aria-label="Previous photo">'+CH('M15 18l-6-6 6-6')+'</button>'+
+        '<span class="hm-count" id="hmCount" aria-live="polite"></span>'+
+        '<button class="hm-ctrl hm-next" type="button" aria-label="Next photo">'+CH('M9 18l6-6-6-6')+'</button>'+
+      '</div><div class="hm-progress"><i id="hmFill"></i></div></div>';
+    var stack=document.getElementById('hmStack');
+    var slots=[].slice.call(stack.children);
+    var countEl=document.getElementById('hmCount'), fill=document.getElementById('hmFill');
+    function setBg(c,i){ var p=hm[((i%N)+N)%N]; c.querySelector('.hm-ph').style.backgroundImage="url('"+encodeURI(p.src)+"')"; var cap=p.caption||''; c.classList.toggle('has-cap',!!cap); c.querySelector('.hm-cap').textContent=cap; c.setAttribute('role','img'); c.setAttribute('aria-label',cap||'Triveni team photo'); }
+    function pad(n){ return (n<10?'0':'')+n; }
+    function count(){ countEl.innerHTML='<b>'+pad(pos+1)+'</b> / '+pad(N); }
+    function restartFill(){ if(reduce)return; fill.style.animation='none'; void fill.offsetWidth; fill.style.animation=''; }
+    var busy=false;
+    function next(){
+      if(busy)return; busy=true;
+      var exiting=slots[0];
+      exiting.className='hm-card exit';
+      slots.push(slots.shift()); pos=(pos+1)%N;
+      slots[0].className='hm-card front';
+      slots[1].className='hm-card peek1';
+      setTimeout(function(){ exiting.style.transition='none'; exiting.className='hm-card peek2'; setBg(exiting,pos+2); void exiting.offsetWidth; exiting.style.transition=''; busy=false; }, reduce?0:500);
+      count(); restartFill();
+    }
+    function prev(){
+      if(busy)return; busy=true;
+      var incoming=slots[2];
+      incoming.style.transition='none'; incoming.className='hm-card enter'; setBg(incoming,pos-1); void incoming.offsetWidth; incoming.style.transition='';
+      slots.unshift(slots.pop()); pos=(pos-1+N)%N;
+      slots[0].className='hm-card front';
+      slots[1].className='hm-card peek1';
+      slots[2].className='hm-card peek2';
+      setTimeout(function(){ busy=false; }, reduce?0:500);
+      count(); restartFill();
+    }
+    // initial layout
+    slots[0].className='hm-card front'; slots[1].className='hm-card peek1'; slots[2].className='hm-card peek2';
+    setBg(slots[0],pos); setBg(slots[1],pos+1); setBg(slots[2],pos+2); count();
+    hmCar.querySelector('.hm-next').addEventListener('click',next);
+    hmCar.querySelector('.hm-prev').addEventListener('click',prev);
+    /* autoplay: progress bar drives advance via animationend; pause on hover / hidden tab */
+    fill.addEventListener('animationend',function(){ next(); });
+    hmCar.addEventListener('mouseenter',function(){ hmCar.classList.add('paused'); });
+    hmCar.addEventListener('mouseleave',function(){ hmCar.classList.remove('paused'); });
+    document.addEventListener('visibilitychange',function(){ hmCar.classList.toggle('paused',document.hidden); });
+    hmCar.setAttribute('tabindex','0'); hmCar.setAttribute('role','group'); hmCar.setAttribute('aria-label','Happy Moments photo carousel');
+    hmCar.addEventListener('keydown',function(e){ if(e.key==='ArrowLeft'){ e.preventDefault(); prev(); } else if(e.key==='ArrowRight'){ e.preventDefault(); next(); } });
     var sx=null;
-    var vp=hmCar.querySelector('.hm-viewport');
-    vp.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; },{passive:true});
-    vp.addEventListener('touchend',function(e){ if(sx===null)return; var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) go(dx<0?pos+1:pos-1); sx=null; },{passive:true});
-    go(0);
+    stack.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; },{passive:true});
+    stack.addEventListener('touchend',function(e){ if(sx===null)return; var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40){ if(dx<0)next(); else prev(); } sx=null; },{passive:true});
+    if(!reduce){ hmCar.classList.add('playing'); restartFill(); }
   }
 
   /* ---- Health (.l1) / SBI (.l2) / Safety (.l3) ---- */
