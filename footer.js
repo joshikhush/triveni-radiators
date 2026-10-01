@@ -56,6 +56,7 @@
       + '<div class="fx-container fx-cols">'
       +   '<div class="fx-col-brand">'
       +     '<a href="index.html" class="fx-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>'
+      +     '<p class="fx-tagline">We Value Values</p>'
       +     '<p class="fx-desc">Precision built radiators for power transformers, trusted by India’s leading OEMs and utilities.</p>'
       +     '<div class="fx-brand-links">'
       +       '<a href="' + FOOT_LINKEDIN + '" target="_blank" rel="noopener" class="fx-icon-link" aria-label="LinkedIn">'

@@ -20,7 +20,8 @@
 .fx-cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:48px;padding:56px 0 46px;}
 .fx-logo{display:inline-block;}
 .fx-logo img{height:42px;width:auto;display:block;}
-.fx-desc{font-size:14.5px;line-height:1.7;color:rgba(255,255,255,.75);max-width:32ch;margin:16px 0 14px;}
+.fx-tagline{font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:19px;line-height:1.2;color:#CBA76C;margin:14px 0 0;letter-spacing:.005em;}
+.fx-desc{font-size:14.5px;line-height:1.7;color:rgba(255,255,255,.75);max-width:32ch;margin:12px 0 14px;}
 .fx-brand-links{display:flex;flex-direction:row;align-items:center;gap:18px;}
 .fx-icon-link{
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
