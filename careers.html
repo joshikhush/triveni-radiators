@@ -1460,7 +1460,7 @@ if (!reduceMotion) {
     var el=document.querySelector('[data-feature="'+key+'"]'); if(!el)return;
     var f=FEATURES[key], ph=f.photos, n=ph.length;
     var txt='<div class="txt"><div class="eyebrow">'+esc(f.kicker)+'</div><h3>'+esc(f.title)+'</h3>'+
-      '<p class="body">'+esc(f.body)+'</p><p class="count">'+n+(n===1?' photo':' photos')+'</p></div>';
+      '<p class="body">'+esc(f.body)+'</p></div>';
     var moreN = n - 3; // last tile "+N more" when more photos than tiles
     var html;
     if(key==='safety'){
