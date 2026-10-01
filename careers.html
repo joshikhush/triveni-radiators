@@ -558,9 +558,13 @@ button { font:inherit; }
    from the Sustainability page, same story-block/media pattern
    verbatim, since these are not CSR/community activities)
    =================================================== */
-.sec--life { background:var(--ivory); padding:6.5rem 0 0; }
+.sec--life { background:var(--ivory); padding:4.5rem 0; }
 .sec--life .sec-inner { max-width:1200px; padding:0 24px; margin:0 auto; }
 .sec--life .sec-head { margin-bottom:0; padding-bottom:48px; }
+/* Life @ Triveni — merged two-column intro: text left (~34%), carousel right (~66%), centred */
+.life-intro{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:34% 1fr;gap:clamp(32px,4.5vw,64px);align-items:center}
+.life-copy .cr-lead{margin-top:1.1rem}
+.hm-label{font-size:12px;letter-spacing:.2em;font-weight:600;color:#B08A4A;text-transform:uppercase;margin:0 0 10px}
 .story-kicker { font-family:'Poppins',sans-serif; font-size:.66rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; }
 .story-block { display:grid; grid-template-columns:1.1fr 1fr; gap:3.5rem; align-items:center; }
 .story-block.rev { grid-template-columns:1fr 1.1fr; }
@@ -614,15 +618,15 @@ button { font:inherit; }
 
 /* Happy Moments carousel — one large image at a time, arrows + counter */
 .hm-car{position:relative}
-.hm-viewport{position:relative;overflow:hidden;border-radius:16px;background:#d9d2c6}
-.hm-track{display:flex;transition:transform .55s cubic-bezier(.16,1,.3,1);will-change:transform}
-.hm-slide{flex:0 0 100%;aspect-ratio:3/2}
+.hm-viewport{position:relative;overflow:hidden;border-radius:16px;background:#d9d2c6;aspect-ratio:3/2;max-height:65vh;box-shadow:0 24px 60px -28px rgba(30,35,80,.4)}
+.hm-track{display:flex;height:100%;transition:transform .55s cubic-bezier(.16,1,.3,1);will-change:transform}
+.hm-slide{flex:0 0 100%;height:100%}
 .hm-slide img{width:100%;height:100%;object-fit:cover;display:block}
-.hm-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.92);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1E2350;box-shadow:0 6px 20px rgba(30,35,80,.18);transition:background .2s,transform .2s}
-.hm-nav:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
-.hm-nav:active{transform:translateY(-50%) scale(.96)}
-.hm-nav svg{width:22px;height:22px}
-.hm-prev{left:16px} .hm-next{right:16px}
+.hm-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.55);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1E2350;box-shadow:0 6px 18px rgba(30,35,80,.2);transition:background .2s,transform .2s}
+.hm-nav:hover{background:rgba(255,255,255,.95);transform:translateY(-50%) scale(1.08)}
+.hm-nav:active{transform:translateY(-50%) scale(.95)}
+.hm-nav svg{width:20px;height:20px}
+.hm-prev{left:14px} .hm-next{right:14px}
 .hm-counter{text-align:center;margin-top:16px;font:500 14px Inter,sans-serif;color:#1E2350;letter-spacing:.05em}
 @media(prefers-reduced-motion:reduce){.hm-track{transition:none}}
 
@@ -649,8 +653,9 @@ button { font:inherit; }
  .bento{grid-template-columns:1fr 1fr;grid-template-rows:260px 160px 160px}
  .bento .ph:first-child{grid-column:span 2;grid-row:auto}
  .bento .ph:nth-child(4){grid-column:auto}
- .hm-slide{aspect-ratio:4/3}
- .hm-nav{width:40px;height:40px}
+ .life-intro{grid-template-columns:1fr;gap:24px}
+ .hm-viewport{aspect-ratio:4/3;max-height:none}
+ .hm-nav{width:38px;height:38px}
  .hm-prev{left:10px} .hm-next{right:10px}
  .fc{grid-template-columns:1fr 1fr!important;grid-template-rows:auto!important}
  .fc .txt{grid-column:1/-1!important;grid-row:1!important;padding:28px}
@@ -823,21 +828,17 @@ button { font:inherit; }
      Sustainability page; these are internal employee activities, not
      CSR/community work, so they live here rather than on csr.html) ===== -->
 <section class="sec sec--life" id="life-at-triveni">
-  <div class="sec-inner">
-    <div class="sec-head reveal">
+  <div class="life-intro reveal">
+    <div class="life-copy">
       <div class="cr-eyebrow">Life @ Triveni</div>
       <h2 class="cr-h2"><span class="hi">Caring</span> for the People Who Build Triveni</h2>
-      <p class="cr-lead" style="margin-top:1.2rem;">Beyond the work itself, we invest in the health, safety and everyday wellbeing of our team.</p>
+      <p class="cr-lead">Beyond the work itself, we invest in our team&rsquo;s health, safety and everyday wellbeing &mdash; and celebrate the moments we share together, from festivals on the shop floor to cricket on weekends.</p>
+    </div>
+    <div class="life-media">
+      <div class="hm-label">Happy Moments</div>
+      <div class="hm-car" id="hmCar"></div>
     </div>
   </div>
-</section>
-
-<!-- Happy Moments -->
-<section class="lt-wrap">
-  <div class="eyebrow">Celebrations</div>
-  <h2>Happy Moments at Triveni</h2>
-  <p class="lt-sub">From festivals on the shop floor to cricket on weekends, the moments we share together.</p>
-  <div class="hm-car" id="hmCar"></div>
 </section>
 
 <!-- Health & Wellbeing -->
