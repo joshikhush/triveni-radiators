@@ -662,8 +662,18 @@ button { font:inherit; }
 }
 
 .fc{display:grid;gap:14px}
-.txt{background:#E7E1D6;border-radius:16px;padding:36px;display:flex;flex-direction:column;justify-content:center}
-.txt .count{margin-top:22px;font-size:13px;color:#1E2350;font-weight:500;letter-spacing:.04em}
+/* Life @ Triveni text cards — one consistent editorial style for all */
+.fc .txt{background:#E7E1D6;border-radius:16px;padding:40px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.fc .txt>*{position:relative;z-index:1}
+.fc .txt .bignum{position:absolute;right:20px;bottom:2px;z-index:0;font-family:'Fraunces',serif;font-weight:400;font-size:clamp(88px,9vw,140px);line-height:.8;color:rgba(30,35,80,.06);pointer-events:none}
+.fc .txt .eyebrow{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#B08A4A;margin:0}
+.fc .txt .rule{width:40px;height:2px;background:#B08A4A;border:none;margin:14px 0 16px}
+.fc .txt h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(24px,2.4vw,32px);line-height:1.15;color:#1E2350;margin:0 0 14px}
+.fc .txt .body{font-size:16px;line-height:1.6;color:#6B6A7A;margin:0;max-width:34ch}
+.fc .txt .photos{margin-top:22px;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:none;border:none;padding:0;cursor:pointer;font:600 13px Inter,sans-serif;letter-spacing:.03em;color:#1E2350;transition:color .2s}
+.fc .txt .photos:hover{color:#B08A4A}
+.fc .txt .photos svg{width:15px;height:15px}
+.fc .txt .photos .cam{width:16px;height:16px}
 
 .l1{grid-template-columns:1fr 1.3fr 1fr;grid-template-rows:220px 220px}
 .l1 .txt{grid-row:span 2}
@@ -691,7 +701,7 @@ button { font:inherit; }
  .hm-card.peek2{transform:translate(7%,6%) rotate(5.5deg) scale(.88)}
  .hm-deco{width:70%}
  .fc{grid-template-columns:1fr 1fr!important;grid-template-rows:auto!important}
- .fc .txt{grid-column:1/-1!important;grid-row:1!important;padding:28px}
+ .fc .txt{grid-column:1/-1!important;grid-row:1!important;padding:24px}
  .fc .a{grid-column:1/-1!important;grid-row:auto!important;height:240px}
  .fc .ph:not(.a){grid-column:auto!important;grid-row:auto!important;height:150px}
 }
@@ -1456,22 +1466,31 @@ if (!reduceMotion) {
   }
 
   /* ---- Health (.l1) / SBI (.l2) / Safety (.l3) ---- */
-  function renderFeature(key){
+  function renderFeature(key, idx){
     var el=document.querySelector('[data-feature="'+key+'"]'); if(!el)return;
     var f=FEATURES[key], ph=f.photos, n=ph.length;
-    var txt='<div class="txt"><div class="eyebrow">'+esc(f.kicker)+'</div><h3>'+esc(f.title)+'</h3>'+
-      '<p class="body">'+esc(f.body)+'</p></div>';
+    var CAM='<svg class="cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+    var ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    var txt='<div class="txt">'+
+      '<span class="bignum" aria-hidden="true">'+(idx+1<10?'0':'')+(idx+1)+'</span>'+
+      '<div class="eyebrow">'+esc(f.kicker)+'</div>'+
+      '<hr class="rule">'+
+      '<h3>'+esc(f.title)+'</h3>'+
+      '<p class="body">'+esc(f.body)+'</p>'+
+      '<button class="photos" type="button">'+CAM+'<span>'+n+(n===1?' photo':' photos')+'</span>'+ARR+'</button>'+
+    '</div>';
     var moreN = n - 3; // last tile "+N more" when more photos than tiles
     var html;
     if(key==='safety'){
-      html = txt + tile(ph[0],0,'a',{}) + tile(ph[1],1,'b',{pill:true}) +
-        tile(ph[2],2,'c',{pill:true}) + tile(ph[3],3,'d', moreN>0?{more:moreN}:{});
+      html = txt + tile(ph[0],0,'a',{}) + tile(ph[1],1,'b',{}) +
+        tile(ph[2],2,'c',{}) + tile(ph[3],3,'d', moreN>0?{more:moreN}:{});
     } else {
       html = txt + tile(ph[0],0,'a',{}) + tile(ph[1],1,'b',{}) +
         tile(ph[2],2,'c', moreN>0?{more:moreN}:{});
     }
     el.innerHTML=html;
     wire(el, ph);
+    var pb=el.querySelector('.photos'); if(pb) pb.addEventListener('click',function(){ openLbx(ph,0); });
   }
   ['health','sbi','safety'].forEach(renderFeature);
 })();
