@@ -916,12 +916,23 @@ ul{margin:0;padding:0;list-style:none;}
    matching Milestones' own "View Full Timeline" link (.link-ind/.ar-badge,
    reused as-is). No cards, no map, no stats — ~450-600px tall by design.
    ========================================================== */
-.oc{background:#FCFBF9;padding:96px 0;}
+.oc{
+  background:
+    radial-gradient(800px 400px at 50% 0%, #E6E0F8, transparent 70%),
+    #EFEBFA;
+  border-top:1px solid #E2DCF5;border-bottom:1px solid #E2DCF5;
+  padding:96px 0;
+}
 .oc-inner{max-width:760px;margin:0 auto;text-align:center;}
+.oc-eyebrow{
+  font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.4em;
+  text-transform:uppercase;color:#B08A4A;margin:0 0 16px;
+}
 .oc-h{
   font-family:'Newsreader',serif;font-weight:400;letter-spacing:-.032em;
-  font-size:clamp(34px,4.8vw,68px);line-height:1.06;color:var(--color-gold);margin:0;
+  font-size:clamp(34px,4.8vw,68px);line-height:1.06;color:#141A44;margin:0;
 }
+.oc-h em{color:#5B45C9;font-style:italic;}
 .oc-marquee{
   position:relative;overflow:hidden;margin-top:52px;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 64px,#000 calc(100% - 64px),transparent 100%);
@@ -935,11 +946,22 @@ ul{margin:0;padding:0;list-style:none;}
 .oc-marquee-item{flex-shrink:0;display:flex;align-items:center;height:28px;}
 .oc-marquee-item img{
   height:100%;width:auto;max-width:140px;object-fit:contain;
-  filter:brightness(0);opacity:.62;transition:opacity .3s var(--ez);
+  /* flatten each logo to the site navy (#141A44) so they read cleanly on lavender */
+  filter:brightness(0) saturate(100%) invert(10%) sepia(37%) saturate(2693%) hue-rotate(216deg) brightness(93%) contrast(97%);
+  opacity:.85;transition:opacity .3s var(--ez);
 }
-.oc-marquee-item:hover img{opacity:.92;}
+.oc-marquee-item:hover img{opacity:1;}
+/* thin outline / monogram logos (GE, Siemens, BHEL, Hitachi) have far less ink
+   than the bold wordmarks, so they read lighter at 85% — give them full opacity
+   so every logo looks equally dark navy */
+.oc-marquee-item img[src*="ge.svg"],
+.oc-marquee-item img[src*="siemens-energy"],
+.oc-marquee-item img[src*="bhel"],
+.oc-marquee-item img[src*="hitachi-energy"]{opacity:1;}
 @keyframes ocMarquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .oc-cta-row{margin-top:40px;}
+.oc-cta-row .link-ind{color:#141A44;}
+.oc-cta-row .link-ind:hover,.oc-cta-row .link-ind:focus-visible{color:#141A44;}
 @media(prefers-reduced-motion:reduce){
   .oc-marquee{-webkit-mask-image:none;mask-image:none;}
   .oc-marquee-track{animation:none;flex-wrap:wrap;width:auto;row-gap:16px;}
@@ -1400,7 +1422,8 @@ ul{margin:0;padding:0;list-style:none;}
 <!-- ===================== OUR CUSTOMERS (compact trust strip) ===================== -->
 <section class="oc" id="customers">
   <div class="w oc-inner">
-    <h2 class="oc-h rv">Our Customers</h2>
+    <p class="oc-eyebrow rv">Trusted By</p>
+    <h2 class="oc-h rv">Our <em>Customers</em></h2>
   </div>
   <div class="w">
     <div class="oc-marquee rv">
