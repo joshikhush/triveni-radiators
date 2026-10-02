@@ -185,6 +185,9 @@ button{font:inherit;background:none;border:none;cursor:pointer;}
 .feat-media:hover .feat-plate-vis svg{transform:scale(1.03);}
 .feat-plate-vis.has-photo{padding:0;background-image:none;}
 .feat-plate-vis img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .45s cubic-bezier(.16,1,.3,1);}
+/* product photos are tall studio shots on white — contain (not cover) so the
+   whole radiator fits inside the 5/4 card instead of being cropped top/bottom */
+.feat-plate-vis.has-photo img{object-fit:contain;}
 .feat-media:hover .feat-plate-vis.has-photo img{transform:scale(1.03);}
 .feat-plate{transition:border-color .4s ease,box-shadow .4s ease;}
 .feat-media:hover .feat-plate{border-color:rgba(106,69,192,.35);}
