@@ -122,27 +122,12 @@ img { display:block; max-width:100%; }
 /* FOOTER — now a shared component; see footer.css and footer.js. Nothing
    footer-related should be styled here. */
 </style>
+<link rel="stylesheet" href="nav.css">
 </head>
 <body id="top">
 
 <!-- NAV -->
-<nav id="nav">
-  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="products.html">Product</a></li>
-
-    <li><a href="sustainability.html">Sustainability</a></li>
-    <li><a href="credentials.html">Credential</a></li>
-    <li><a href="milestones.html">Milestones</a></li>
-    <li><a href="triveni-group.html">Triveni Group</a></li>
-    <li><a href="clientele.html" class="on">Clients</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="careers.html">Careers</a></li>
-  </ul>
-  <a href="contact.html" class="nav-cta btn-p">Contact Us</a>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav>
+<nav id="site-nav"></nav>
 
 <!-- HEADER -->
 <header class="dh">
@@ -183,112 +168,6 @@ img { display:block; max-width:100%; }
 <footer id="site-footer"></footer>
 <script src="footer.js" defer></script>
 <script src="end-customers-data.js"></script>
-
-<script>
-/* nav — hides on scroll down (past 120px), reappears and pins to position:fixed on
-   scroll up, same behavior as the home page's nav. See index.html for the fuller
-   comment explaining the thresholds. */
-var nav = document.getElementById('nav');
-var navMenuEl = document.getElementById('navLinks');
-var navLastY = window.scrollY;
-var navTicking = false;
-var NAV_DIR_THRESHOLD = 6;
-var NAV_HIDE_AFTER = 120;
-var navHeightCache = nav.offsetHeight;
-addEventListener('resize', function(){ navHeightCache = nav.offsetHeight; });
-
-function updateNav(){
-  var y = Math.max(0, window.scrollY);
-  var delta = y - navLastY;
-  if (Math.abs(delta) <= NAV_DIR_THRESHOLD) return;
-  var goingDown = delta > 0;
-  navLastY = y;
-
-  if (y <= navHeightCache) {
-    nav.classList.remove('nav-pinned', 'nav-hidden', 'nav-shadow');
-    return;
-  }
-  nav.classList.add('nav-pinned', 'nav-shadow');
-
-  var menuOpen = navMenuEl.classList.contains('open');
-  if (goingDown && y > NAV_HIDE_AFTER && !menuOpen) {
-    nav.classList.add('nav-hidden');
-  } else if (!goingDown || menuOpen) {
-    nav.classList.remove('nav-hidden');
-  }
-}
-addEventListener('scroll', function(){
-  if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
-}, {passive:true});
-
-var navToggle = document.getElementById('navToggle');
-navToggle.addEventListener('click', function(){
-  var open = navMenuEl.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', open);
-});
-navMenuEl.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navMenuEl.classList.remove('open'); }); });
-
-/* ---- END CUSTOMERS ----
-   Data + category labels come from end-customers-data.js — the single
-   shared source with clientele.html's homepage preview, so the two can't
-   word categories differently again. Full legal names render here (the
-   directory) only; the homepage preview stays short-name. */
-var LP = window.END_CUSTOMER_LOGO_PATH;
-var CATS = window.END_CUSTOMER_CATS;
-var EC = window.END_CUSTOMERS;
-
-var groupsEl = document.getElementById('groups');
-var countEl = document.getElementById('count');
-var qEl = document.getElementById('q');
-var filtersEl = document.getElementById('filters');
-var activeCat = 'all';
-function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-
-/* filter buttons are generated from CATS, not hardcoded */
-filtersEl.innerHTML = '<button class="filter active" data-f="all">All</button>' +
-  CATS.map(function (c) { return '<button class="filter" data-f="' + c.key + '">' + esc(c.title) + '</button>'; }).join('');
-
-function tileHTML(r) {
-  var mark = r[3]
-    ? '<img src="' + LP + r[3] + '" alt="' + esc(r[1]) + ' logo">'
-    : '<span class="tile-logo--wordmark">' + esc(r[1]) + '</span>';
-  var full = r[2] ? '<span class="tile-full">' + esc(r[2]) + '</span>' : '';
-  var name = r[3] ? '<span class="tile-name">' + esc(r[1]) + '</span>' : '';
-  return '<div class="tile"><span class="tile-logo">' + mark + '</span>' + name + full + '</div>';
-}
-
-function render() {
-  var q = qEl.value.trim().toLowerCase();
-  var rows = EC.filter(function (r) {
-    var okC = activeCat === 'all' || r[0] === activeCat;
-    var okQ = !q || (r[1] + ' ' + r[2]).toLowerCase().indexOf(q) !== -1;
-    return okC && okQ;
-  });
-  countEl.textContent = rows.length + (rows.length === 1 ? ' organisation' : ' organisations');
-
-  if (!rows.length) { groupsEl.innerHTML = '<div class="empty">No organisations match your search.</div>'; return; }
-
-  groupsEl.innerHTML = CATS.map(function (c) {
-    var gr = rows.filter(function (r) { return r[0] === c.key; });
-    if (!gr.length) return '';
-    return '<section class="grp">' +
-      '<div class="grp-head"><span class="grp-title">' + esc(c.title) + '</span>' +
-      '<span class="grp-n">' + gr.length + (gr.length === 1 ? ' organisation' : ' organisations') + '</span></div>' +
-      '<div class="tiles">' + gr.map(tileHTML).join('') + '</div>' +
-      '</section>';
-  }).join('');
-}
-
-filtersEl.addEventListener('click', function (e) {
-  var b = e.target.closest('.filter');
-  if (!b) return;
-  filtersEl.querySelectorAll('.filter').forEach(function (x) { x.classList.remove('active'); });
-  b.classList.add('active');
-  activeCat = b.getAttribute('data-f');
-  render();
-});
-qEl.addEventListener('input', render);
-render();
-</script>
+<script src="nav.js" defer></script>
 </body>
 </html>

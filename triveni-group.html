@@ -466,27 +466,12 @@ ul{margin:0;padding:0;list-style:none;}
 /* FOOTER — now a shared component; see footer.css and footer.js. Nothing
    footer-related should be styled here. */
 </style>
+<link rel="stylesheet" href="nav.css">
 </head>
 <body id="top">
 
 <!-- ===================== NAV ===================== -->
-<nav id="nav">
-  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="products.html">Product</a></li>
-
-    <li><a href="sustainability.html">Sustainability</a></li>
-    <li><a href="credentials.html">Credential</a></li>
-    <li><a href="milestones.html">Milestones</a></li>
-    <li><a href="triveni-group.html" class="on">Triveni Group</a></li>
-    <li><a href="clientele.html">Clients</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="careers.html">Careers</a></li>
-  </ul>
-  <a href="contact.html" class="nav-cta">Contact Us</a>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav>
+<nav id="site-nav"></nav>
 
 <!-- ===================== 01 — HERO ===================== -->
 <header class="tg-hero" id="tgHero">
@@ -907,39 +892,6 @@ TL_MILESTONES.forEach(function(m){ m.hl = []; });
   mClose.addEventListener('click', closeModal);
 })();
 
-/* ── nav toggle + scroll pin/hide ── */
-var nav = document.getElementById('nav');
-var navToggle = document.getElementById('navToggle'), navLinksEl = document.getElementById('navLinks');
-navToggle.addEventListener('click', function(){
-  var open = navLinksEl.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', open);
-});
-navLinksEl.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navLinksEl.classList.remove('open'); }); });
-
-var navLastY = window.scrollY, navTicking = false;
-var NAV_DIR_THRESHOLD = 6, NAV_HIDE_AFTER = 120;
-var navHeightCache = nav.offsetHeight;
-document.documentElement.style.setProperty('--header-height', navHeightCache + 'px');
-addEventListener('resize', function(){
-  navHeightCache = nav.offsetHeight;
-  document.documentElement.style.setProperty('--header-height', navHeightCache + 'px');
-});
-function updateNav(){
-  var y = Math.max(0, window.scrollY);
-  var delta = y - navLastY;
-  if (Math.abs(delta) <= NAV_DIR_THRESHOLD) return;
-  var goingDown = delta > 0;
-  navLastY = y;
-  if (y <= navHeightCache) { nav.classList.remove('nav-pinned', 'nav-hidden', 'nav-shadow'); return; }
-  nav.classList.add('nav-pinned', 'nav-shadow');
-  var menuOpen = navLinksEl.classList.contains('open');
-  if (goingDown && y > NAV_HIDE_AFTER && !menuOpen) nav.classList.add('nav-hidden');
-  else if (!goingDown || menuOpen) nav.classList.remove('nav-hidden');
-}
-addEventListener('scroll', function(){
-  if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
-}, { passive: true });
-
 /* ── hero entrance ── */
 requestAnimationFrame(function(){ document.getElementById('tgHero').classList.add('in'); });
 
@@ -949,5 +901,6 @@ var io = new IntersectionObserver(function(entries){
 }, { threshold: .12 });
 document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
 </script>
+<script src="nav.js" defer></script>
 </body>
 </html>

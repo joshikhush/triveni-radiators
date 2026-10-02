@@ -55,25 +55,11 @@
     gap:18px;background:#050B22;padding:24px 28px 30px;}
 }
 </style>
+<link rel="stylesheet" href="nav.css">
 </head>
 <body id="top">
 
-<nav id="nav">
-  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="products.html">Product</a></li>
-    <li><a href="sustainability.html">Sustainability</a></li>
-    <li><a href="credentials.html">Credential</a></li>
-    <li><a href="milestones.html">Milestones</a></li>
-    <li><a href="triveni-group.html">Triveni Group</a></li>
-    <li><a href="clientele.html">Clients</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="careers.html">Careers</a></li>
-  </ul>
-  <a href="contact.html" class="nav-cta btn-p">Contact Us</a>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav>
+<nav id="site-nav"></nav>
 
 <header class="page-hero">
   <div class="hero-orb" data-depth="0.18"></div>
@@ -128,48 +114,6 @@
 <script src="footer.js" defer></script>
 
 <script src="script.js?v=5"></script>
-<script>
-/* nav — hides on scroll down (past 120px), reappears and pins to position:fixed on
-   scroll up, same behavior as the home page's nav. */
-var nav = document.getElementById('nav');
-var navMenuEl = document.getElementById('navLinks');
-var navLastY = window.scrollY;
-var navTicking = false;
-var NAV_DIR_THRESHOLD = 6;
-var NAV_HIDE_AFTER = 120;
-var navHeightCache = nav.offsetHeight;
-addEventListener('resize', function(){ navHeightCache = nav.offsetHeight; });
-
-function updateNav(){
-  var y = Math.max(0, window.scrollY);
-  var delta = y - navLastY;
-  if (Math.abs(delta) <= NAV_DIR_THRESHOLD) return;
-  var goingDown = delta > 0;
-  navLastY = y;
-
-  if (y <= navHeightCache) {
-    nav.classList.remove('nav-pinned', 'nav-hidden', 'nav-shadow');
-    return;
-  }
-  nav.classList.add('nav-pinned', 'nav-shadow');
-
-  var menuOpen = navMenuEl.classList.contains('open');
-  if (goingDown && y > NAV_HIDE_AFTER && !menuOpen) {
-    nav.classList.add('nav-hidden');
-  } else if (!goingDown || menuOpen) {
-    nav.classList.remove('nav-hidden');
-  }
-}
-addEventListener('scroll', function(){
-  if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
-}, {passive:true});
-
-var navToggle = document.getElementById('navToggle');
-navToggle.addEventListener('click', function(){
-  var open = navMenuEl.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', open);
-});
-navMenuEl.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navMenuEl.classList.remove('open'); }); });
-</script>
+<script src="nav.js" defer></script>
 </body>
 </html>

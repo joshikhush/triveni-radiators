@@ -727,26 +727,12 @@ button { font:inherit; }
   * { animation-duration:.01ms !important; animation-iteration-count:1 !important; }
 }
 </style>
+<link rel="stylesheet" href="nav.css">
 </head>
 <body id="top">
 
 <!-- ===================== NAV ===================== -->
-<nav id="nav">
-  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="products.html">Product</a></li>
-    <li><a href="sustainability.html">Sustainability</a></li>
-    <li><a href="credentials.html">Credential</a></li>
-    <li><a href="milestones.html">Milestones</a></li>
-    <li><a href="triveni-group.html">Triveni Group</a></li>
-    <li><a href="clientele.html">Clients</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="careers.html" class="on">Careers</a></li>
-  </ul>
-  <a href="contact.html" class="nav-cta">Contact Us</a>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav>
+<nav id="site-nav"></nav>
 
 <!-- ===== HERO ===== -->
 <header class="cr-hero" id="heroSec">
@@ -1098,34 +1084,6 @@ button { font:inherit; }
 <script src="footer.js" defer></script>
 
 <script>
-/* ── nav toggle + scroll pin/hide (identical to Clients / Milestones / Triveni Group) ── */
-var nav = document.getElementById('nav');
-var navToggle = document.getElementById('navToggle'), navLinksEl = document.getElementById('navLinks');
-navToggle.addEventListener('click', function(){
-  var open = navLinksEl.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', open);
-});
-navLinksEl.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navLinksEl.classList.remove('open'); }); });
-
-var navLastY = window.scrollY, navTicking = false;
-var NAV_DIR_THRESHOLD = 6, NAV_HIDE_AFTER = 120;
-var navHeightCache = nav.offsetHeight;
-addEventListener('resize', function(){ navHeightCache = nav.offsetHeight; });
-function updateNav(){
-  var y = Math.max(0, window.scrollY);
-  var delta = y - navLastY;
-  if (Math.abs(delta) <= NAV_DIR_THRESHOLD) return;
-  var goingDown = delta > 0;
-  navLastY = y;
-  if (y <= navHeightCache) { nav.classList.remove('nav-pinned', 'nav-hidden', 'nav-shadow'); return; }
-  nav.classList.add('nav-pinned', 'nav-shadow');
-  var menuOpen = navLinksEl.classList.contains('open');
-  if (goingDown && y > NAV_HIDE_AFTER && !menuOpen) nav.classList.add('nav-hidden');
-  else if (!goingDown || menuOpen) nav.classList.remove('nav-hidden');
-}
-addEventListener('scroll', function(){
-  if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
-}, { passive: true });
 
 /* ---- reveal ---- */
 const io = new IntersectionObserver(es => {
@@ -1496,5 +1454,6 @@ if (!reduceMotion) {
   ['health','sbi','safety'].forEach(renderFeature);
 })();
 </script>
+<script src="nav.js" defer></script>
 </body>
 </html>

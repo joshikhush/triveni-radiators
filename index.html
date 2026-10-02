@@ -1309,26 +1309,12 @@ ul{margin:0;padding:0;list-style:none;}
   .contact-grid{grid-template-columns:1fr;}
 }
 </style>
+<link rel="stylesheet" href="nav.css">
 </head>
 <body id="top">
 
 <!-- ===================== NAV ===================== -->
-<nav id="nav">
-  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html" class="on">Home</a></li>
-    <li><a href="products.html">Product</a></li>
-    <li><a href="sustainability.html">Sustainability</a></li>
-    <li><a href="credentials.html">Credential</a></li>
-    <li><a href="milestones.html">Milestones</a></li>
-    <li><a href="triveni-group.html">Triveni Group</a></li>
-    <li><a href="clientele.html">Clients</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="careers.html">Careers</a></li>
-  </ul>
-  <a href="contact.html" class="nav-cta btn-p">Contact Us</a>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav>
+<nav id="site-nav"></nav>
 
 <!-- ===================== HERO ===================== -->
 <!-- Full-screen cinematic redesign: the drone clip is the sole visual, full-bleed. Legibility
@@ -1899,46 +1885,6 @@ ul{margin:0;padding:0;list-style:none;}
 <script src="footer.js" defer></script>
 
 <script>
-/* nav — hides on scroll down (past 120px), reappears and pins to position:fixed on scroll
-   up, and returns to its normal in-flow position once back near the top (within its own
-   height) so no gap shows above the hero. Direction changes smaller than 6px are ignored
-   so alternating small scroll deltas don't flicker it. Single scroll listener, rAF-
-   throttled, passive; recomputes read fresh values each frame so no separate resize
-   listener is needed. */
-var nav = document.getElementById('nav');
-var navMenuEl = document.getElementById('navLinks');
-var navLastY = window.scrollY;
-var navTicking = false;
-var NAV_DIR_THRESHOLD = 6;
-var NAV_HIDE_AFTER = 120;
-/* cached rather than read fresh every scroll frame -- offsetHeight forces a synchronous
-   layout read, which is unnecessary here since nav's height only changes on resize */
-var navHeightCache = nav.offsetHeight;
-addEventListener('resize', function(){ navHeightCache = nav.offsetHeight; });
-
-function updateNav(){
-  var y = Math.max(0, window.scrollY);
-  var delta = y - navLastY;
-  if (Math.abs(delta) <= NAV_DIR_THRESHOLD) return;
-  var goingDown = delta > 0;
-  navLastY = y;
-
-  if (y <= navHeightCache) {
-    nav.classList.remove('nav-pinned', 'nav-hidden', 'nav-shadow');
-    return;
-  }
-  nav.classList.add('nav-pinned', 'nav-shadow');
-
-  var menuOpen = navMenuEl.classList.contains('open');
-  if (goingDown && y > NAV_HIDE_AFTER && !menuOpen) {
-    nav.classList.add('nav-hidden');
-  } else if (!goingDown || menuOpen) {
-    nav.classList.remove('nav-hidden');
-  }
-}
-addEventListener('scroll', function(){
-  if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
-}, {passive:true});
 
 /* hero background video — single drone clip (video 1 only), silent, muted, natively looping
    via the `loop` attribute. No crossfade/second-clip logic needed now that there's only one
@@ -2031,14 +1977,6 @@ if (spySections.length) {
   }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
   spySections.forEach(function(s){ spyIO.observe(s.el); });
 }
-
-/* mobile nav toggle */
-var navToggle = document.getElementById('navToggle'), navLinks = document.getElementById('navLinks');
-navToggle.addEventListener('click', function(){
-  var open = navLinks.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', open);
-});
-navLinks.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navLinks.classList.remove('open'); }); });
 
 /* reveal on scroll */
 var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2355,5 +2293,6 @@ if (reduced) {
   });
 })();
 </script>
+<script src="nav.js" defer></script>
 </body>
 </html>

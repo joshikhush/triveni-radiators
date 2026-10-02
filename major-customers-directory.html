@@ -114,27 +114,12 @@ img { display:block; max-width:100%; }
 /* FOOTER — now a shared component; see footer.css and footer.js. Nothing
    footer-related should be styled here. */
 </style>
+<link rel="stylesheet" href="nav.css">
 </head>
 <body id="top">
 
 <!-- NAV -->
-<nav id="nav">
-  <a href="index.html" class="nav-logo"><img src="assets/triveni-logo.png" alt="Triveni Radiators"></a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="products.html">Product</a></li>
-
-    <li><a href="sustainability.html">Sustainability</a></li>
-    <li><a href="credentials.html">Credential</a></li>
-    <li><a href="milestones.html">Milestones</a></li>
-    <li><a href="triveni-group.html">Triveni Group</a></li>
-    <li><a href="clientele.html" class="on">Clients</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="careers.html">Careers</a></li>
-  </ul>
-  <a href="contact.html" class="nav-cta btn-p">Contact Us</a>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav>
+<nav id="site-nav"></nav>
 
 <!-- HEADER -->
 <header class="dh">
@@ -171,145 +156,6 @@ img { display:block; max-width:100%; }
 <!-- FOOTER -->
 <footer id="site-footer"></footer>
 <script src="footer.js" defer></script>
-
-<script>
-/* nav — hides on scroll down (past 120px), reappears and pins to position:fixed on
-   scroll up, same behavior as the home page's nav. See index.html for the fuller
-   comment explaining the thresholds. */
-var nav = document.getElementById('nav');
-var navMenuEl = document.getElementById('navLinks');
-var navLastY = window.scrollY;
-var navTicking = false;
-var NAV_DIR_THRESHOLD = 6;
-var NAV_HIDE_AFTER = 120;
-var navHeightCache = nav.offsetHeight;
-addEventListener('resize', function(){ navHeightCache = nav.offsetHeight; });
-
-function updateNav(){
-  var y = Math.max(0, window.scrollY);
-  var delta = y - navLastY;
-  if (Math.abs(delta) <= NAV_DIR_THRESHOLD) return;
-  var goingDown = delta > 0;
-  navLastY = y;
-
-  if (y <= navHeightCache) {
-    nav.classList.remove('nav-pinned', 'nav-hidden', 'nav-shadow');
-    return;
-  }
-  nav.classList.add('nav-pinned', 'nav-shadow');
-
-  var menuOpen = navMenuEl.classList.contains('open');
-  if (goingDown && y > NAV_HIDE_AFTER && !menuOpen) {
-    nav.classList.add('nav-hidden');
-  } else if (!goingDown || menuOpen) {
-    nav.classList.remove('nav-hidden');
-  }
-}
-addEventListener('scroll', function(){
-  if (!navTicking) { requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
-}, {passive:true});
-
-var navToggle = document.getElementById('navToggle');
-navToggle.addEventListener('click', function(){
-  var open = navMenuEl.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', open);
-});
-navMenuEl.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ navMenuEl.classList.remove('open'); }); });
-
-/* ---- MAJOR CUSTOMERS ----
-   Verbatim from "Customers List & Logos.xlsx" (Sheet1, originally 40 rows),
-   re-grouped into 4 categories per client feedback (18 Sept 2026), one
-   legal-entity correction (Crompton Greaves Limited → Crompton Greaves
-   Consumer Electricals Ltd., a different demerged entity from the parent —
-   FLAG: confirm the reused crompton-greaves.png logo still fits that entity).
-   38 rows as of client feedback (2026-09-25): removed "ABB Power Products
-   and Systems India Limited" and "GE Power Conversion India Private
-   Limited" (both distinct legal entities from ABB India Limited / GE
-   Vernova T&D India Limited, which remain listed) — FLAG: this changes the
-   "40 direct customers" figure referenced elsewhere on the site to 38;
-   confirm with client before that wording is updated anywhere else.
-   [ S.No , Customer name , category key , logo file | null ]
-   Logos extracted from that file → assets/logos/major-customers/  */
-var LP = 'assets/logos/major-customers/';
-var CATS = [
-  { key: 'transformer',   title: 'Transformer Manufacturers & Transformer Solutions' },
-  { key: 'transmission',  title: 'Power Transmission & Distribution' },
-  { key: 'electrical',    title: 'Electrical & Power Equipment' },
-  { key: 'energy',        title: 'Energy, Engineering & Industrial Solutions' }
-];
-var MC = [
-  [1,  "ABB India Limited", "transmission", "abb.png"],
-  [2,  "ALSTOM T&D India Limited", "transmission", "alstom.jpeg"],
-  [3,  "Atlanta Electricals Pvt. Ltd.", "transformer", "atlanta-electricals.jpeg"],
-  [4,  "AYR Energy Inc.", "energy", "ayr-energy.png"],
-  [5,  "AYR Energy India Private Limited", "energy", "ayr-energy.png"],
-  [6,  "Bharat Heavy Electricals Ltd.", "electrical", "bhel.png"],
-  [7,  "BTW Atlanta Transformers India Pvt. Ltd.", "transformer", "btw-atlanta.jpeg"],
-  [8,  "CG Power and Industrial Solutions Limited", "transmission", "cg-power.jpeg"],
-  [9,  "Crompton Greaves Consumer Electricals Ltd.", "energy", "crompton-greaves.png"],
-  [10, "Danish Private Limited", "energy", "danish.jpeg"],
-  [11, "ECE Industries Ltd.", "electrical", "ece-industries.jpeg"],
-  [12, "EMCO Limited", "electrical", "emco.jpeg"],
-  [13, "EMT Megatherm Pvt. Ltd.", "electrical", "emt-megatherm.jpeg"],
-  [14, "GE Vernova T&D India Limited", "transmission", "ge.jpeg"],
-  [15, "Hitachi Energy India Limited", "transmission", "hitachi-energy.png"],
-  [16, "Hitachi Energy USA Inc.", "transmission", "hitachi-energy.png"],
-  [17, "Indo Tech Transformers Limited", "transformer", "indo-tech.jpeg"],
-  [18, "Kanohar Electricals Limited", "transformer", "kanohar.jpeg"],
-  [19, "Kotsons Pvt. Ltd.", "transformer", "kotsons.png"],
-  [20, "Marson's Electrical Industries", "electrical", "marsons.png"],
-  [21, "Meiden T&D (India) Limited", "transmission", "meiden.png"],
-  [22, "Power Grid Corporation of India Ltd", "transmission", "powergrid.jpeg"],
-  [23, "RIMA Transformers and Conductors Pvt. Ltd.", "transformer", null],
-  [24, "Schneider Electric Infrastructure Limited", "transmission", "schneider-electric.png"],
-  [25, "Shilchar Technologies Limited", "transformer", "shilchar.jpeg"],
-  [26, "Shirdi Sai Electricals Ltd.", "energy", "shirdi-sai.jpeg"],
-  [27, "Shree Abirami Engineering Works", "energy", "shree-abirami.png"],
-  [28, "Siemens Energy India Limited", "transmission", "siemens-energy.png"],
-  [29, "Skipper Electricals (India) Ltd.", "electrical", null],
-  [30, "SkipperSeil Ltd.", "electrical", "skipperseil.jpeg"],
-  [31, "TBEA (India) Transformer Private Limited", "transformer", "tbea.png"],
-  [32, "TBEA Energy (India) Pvt. Ltd.", "transformer", "tbea.png"],
-  [33, "Technical Associates Limited", "energy", "technical-associates.png"],
-  [34, "Toshiba Transmission & Distribution Systems India Pvt Ltd", "transmission", "toshiba.jpeg"],
-  [35, "Transformer & Rectifiers (India) Ltd.", "transformer", "transformers-rectifiers-india.png"],
-  [36, "Voltamp Transformers Ltd.", "transformer", "voltamp.png"],
-  [37, "Western Transformer & Equipment Pvt. Ltd.", "transformer", "western-transformers.jpeg"],
-  [38, "Wilson Power Solutions India Pvt. Ltd.", "energy", "wilson-power.jpeg"]
-];
-
-var regEl = document.getElementById('reg');
-var countEl = document.getElementById('count');
-var qEl = document.getElementById('q');
-function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-
-function rowHTML(r) {
-  var logo = r[3]
-    ? '<img src="' + LP + r[3] + '" alt="' + esc(r[1]) + ' logo">'
-    : '<span class="reg-logo--none">—</span>';
-  return '<div class="reg-row">' +
-    '<div class="reg-logo">' + logo + '</div>' +
-    '<div class="reg-name">' + esc(r[1]) + '<span class="reg-sn">#' + r[0] + '</span></div>' +
-    '</div>';
-}
-
-function render() {
-  var q = qEl.value.trim().toLowerCase();
-  var list = MC.filter(function (r) { return !q || r[1].toLowerCase().indexOf(q) !== -1; });
-  countEl.textContent = list.length + (list.length === 1 ? ' company' : ' companies');
-
-  if (!list.length) { regEl.innerHTML = '<div class="empty">No customers match your search.</div>'; return; }
-
-  regEl.innerHTML = CATS.map(function (c) {
-    var rows = list.filter(function (r) { return r[2] === c.key; });
-    if (!rows.length) return '';
-    return '<div class="reg-group"><div class="reg-alpha"><span>' + esc(c.title) + '</span>' +
-      '<span class="reg-cat-n">' + rows.length + (rows.length === 1 ? ' company' : ' companies') + '</span></div>' +
-      rows.map(rowHTML).join('') + '</div>';
-  }).join('');
-}
-qEl.addEventListener('input', render);
-render();
-</script>
+<script src="nav.js" defer></script>
 </body>
 </html>
