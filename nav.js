@@ -7,6 +7,7 @@
    ========================================================== */
 (function(){
   var TOP = [
+    { key:'home',           label:'Home',           href:'index.html' },
     { key:'products',       label:'Products',       href:'products.html' },
     { key:'sustainability', label:'Sustainability', href:'sustainability.html' },
     { key:'clients',        label:'Clients',        href:'clientele.html' },
@@ -23,6 +24,7 @@
 
   /* which top-level item owns the current page (incl. pages not in the bar) */
   var OWNER = {
+    'index.html':'home',
     'products.html':'products', 'products-all.html':'products',
     'sustainability.html':'sustainability',
     'clientele.html':'clients', 'major-customers-directory.html':'clients', 'end-customers-directory.html':'clients',
