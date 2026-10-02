@@ -677,112 +677,92 @@ ul{margin:0;padding:0;list-style:none;}
    from other sections).
    ========================================================== */
 .cred-sec{background:#FFFFFF;}
-.cred-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;}
-.cred-sec .secnum{color:#B8935A;font-size:10.5px;letter-spacing:.26em;}
-.cred-sec h2{color:#101828;}
-.cred-sec h2 .l2{color:#98A2B3;}
 
-/* --- pill tabs --- */
-.cred-tabs{display:flex;gap:12px;flex-wrap:wrap;margin:40px 0 32px;}
-.cred-tab{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:9px 18px;border-radius:999px;border:1px solid #E4E7EC;background:none;
-  font-size:13.5px;color:#667085;cursor:pointer;
-  transition:border-color .25s var(--ez),color .25s var(--ez),background .25s var(--ez);
+/* --- outer lavender panel: soft radial glows framing a statement --- */
+.cred-panel{
+  position:relative;overflow:hidden;border-radius:8px;
+  background:#F4F1FB;border:1px solid #E6E1F4;padding:20px;
 }
-.cred-tab:hover{border-color:#6A45C0;color:#4A2E82;}
-.cred-tab.active{background:#EFECF9;border-color:#E2DDF3;color:#4A2E82;font-weight:500;}
-.cred-tab-count{color:#B8935A;font-size:10.5px;}
-.cred-tab:focus-visible{outline:2px solid #4A2E82;outline-offset:4px;}
-
-/* --- stage: feature plate (left) + detail column w/ filmstrip (right) --- */
-.cred-stage{
-  position:relative;overflow:hidden;
-  background:#F6F4FC;border:1px solid #E2DDF3;border-radius:6px;
-  padding:48px 44px;
+.cred-panel::before{
+  content:'';position:absolute;left:-120px;top:-140px;width:520px;height:520px;z-index:0;
+  background:radial-gradient(circle,rgba(var(--color-accent-rgb),.16),transparent 70%);pointer-events:none;
 }
-.cred-glow{
-  position:absolute;left:6%;top:-46%;width:560px;height:560px;z-index:0;
-  background:radial-gradient(circle,rgba(139,140,240,.2),transparent 68%);
-  filter:blur(10px);pointer-events:none;
-}
-.cred-stage-inner{
-  position:relative;z-index:1;
-  display:grid;grid-template-columns:300px 1fr;gap:54px;align-items:center;
+.cred-panel::after{
+  content:'';position:absolute;right:-150px;bottom:-170px;width:540px;height:540px;z-index:0;
+  background:radial-gradient(circle,rgba(184,147,90,.12),transparent 70%);pointer-events:none;
 }
 
-.cred-plate{
-  background:#FFFFFF;border:1px solid #E2DDF3;border-radius:3px;padding:14px;
-  box-shadow:0 18px 44px -28px rgba(16,24,40,.35);
-}
-.cred-plate img{
-  display:block;width:100%;aspect-ratio:1/1.38;object-fit:cover;object-position:top;
-  opacity:1;transition:opacity .28s var(--ez);
-}
-@media(prefers-reduced-motion:reduce){
-  .cred-plate img{transition:none;}
+/* --- inner gold frame: border + a second faint gold line (outline/offset) --- */
+.cred-frame{
+  position:relative;z-index:1;text-align:center;border-radius:4px;
+  background:rgba(255,255,255,.55);
+  border:1px solid var(--color-gold);
+  outline:1px solid rgba(184,147,90,.4);outline-offset:8px;
+  padding:128px 40px;
 }
 
-.cred-detail{min-width:0;}
-.cred-kicker{font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#B8935A;margin-bottom:14px;}
-.cred-title{font-family:'Newsreader',serif;font-weight:400;font-size:30px;line-height:1.18;color:#101828;margin:0 0 8px;}
-.cred-name{font-size:14px;color:#667085;margin-bottom:20px;}
-.cred-rows{display:flex;flex-direction:column;}
-.cred-row2{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid #E2DDF3;font-size:13px;}
-.cred-row2:last-child{border-bottom:none;}
-.cred-row2 span:first-child{color:#667085;}
-.cred-row2 span:last-child{color:#101828;font-weight:500;text-align:right;}
-.cred-link{
-  display:inline-flex;align-items:center;gap:6px;width:fit-content;margin-top:20px;
-  font-size:13px;font-weight:500;color:#6A45C0;text-decoration:none;
-  border-bottom:1px solid transparent;
+/* --- eyebrow with a 48px gold line on each side --- */
+.cred-eyebrow{
+  display:flex;align-items:center;justify-content:center;gap:16px;margin:0 0 30px;
+  font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--color-gold);
 }
-.cred-link:hover,.cred-link:focus-visible{border-bottom-color:#6A45C0;}
-.cred-link:focus-visible{outline:2px solid #4A2E82;outline-offset:4px;}
+.cred-eyebrow::before,.cred-eyebrow::after{content:'';width:48px;height:1px;background:var(--color-gold);}
 
-/* --- filmstrip: five thumbs share the detail column's width --- */
-.cred-strip{display:flex;gap:14px;margin-top:26px;}
-.cred-thumb2{
-  flex:1;min-width:0;background:#FFFFFF;border:1px solid #E2DDF3;border-radius:3px;padding:6px;
-  cursor:pointer;opacity:.6;
-  transition:opacity .4s var(--ez),transform .4s var(--ez),border-color .4s var(--ez),box-shadow .4s var(--ez);
+/* --- heading --- */
+.cred-h{
+  margin:0 auto;max-width:17ch;
+  font-family:'Newsreader',Georgia,serif;font-weight:400;line-height:1.08;letter-spacing:-.01em;
+  font-size:clamp(40px,6vw,72px);
 }
-.cred-thumb2 img{display:block;width:100%;aspect-ratio:1/1.38;object-fit:cover;object-position:top;border-radius:2px;}
-.cred-thumb2:hover{opacity:.9;transform:translateY(-3px);}
-.cred-thumb2.active{opacity:1;border-color:#6A45C0;box-shadow:0 14px 34px -22px rgba(74,46,130,.5);}
-.cred-thumb2:focus-visible{outline:2px solid #4A2E82;outline-offset:4px;}
-@media(prefers-reduced-motion:reduce){
-  .cred-thumb2{transition:opacity .2s var(--ez),border-color .2s var(--ez),box-shadow .2s var(--ez);}
-  .cred-thumb2:hover{transform:none;}
+.cred-h-navy{display:block;color:var(--color-ink);}
+.cred-h-slate{display:block;color:var(--color-text-muted);}
+.cred-h .pp{color:var(--color-accent);font-style:italic;}
+
+/* --- supporting line --- */
+.cred-sub{
+  margin:26px auto 0;max-width:48ch;
+  font-size:16px;line-height:1.6;color:var(--color-text-muted);
 }
+
+/* --- standards row: diamond-separated, uppercase, navy --- */
+.cred-stds{
+  list-style:none;margin:40px 0 0;padding:0;
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+}
+.cred-stds li{
+  display:inline-flex;align-items:center;
+  font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--color-ink);
+}
+.cred-stds li:not(:first-child)::before{
+  content:'';flex:none;width:5px;height:5px;margin:0 22px;
+  background:var(--color-accent);transform:rotate(45deg);
+}
+
+/* --- view-all link: 1px underline shrinks to 35% on hover --- */
+.cred-view{
+  display:inline-block;position:relative;margin-top:44px;padding-bottom:7px;
+  font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--color-accent);text-decoration:none;
+}
+.cred-view::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--color-accent);transition:right .35s var(--ez);
+}
+.cred-view:hover::after,.cred-view:focus-visible::after{right:65%;}
+.cred-view:focus-visible{outline:2px solid var(--color-accent-dark);outline-offset:4px;}
+@media(prefers-reduced-motion:reduce){.cred-view::after{transition:none;}}
 
 @media(max-width:1080px){
-  .cred-stage{padding:30px 22px;}
-  .cred-stage-inner{grid-template-columns:1fr;gap:30px;}
-  .cred-plate{max-width:300px;margin:0 auto;}
+  .cred-frame{padding:96px 34px;}
 }
 @media(max-width:620px){
-  .cred-strip{overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:4px;}
-  .cred-strip::-webkit-scrollbar{display:none;}
-  .cred-thumb2{flex:0 0 84px;scroll-snap-align:start;}
-}
-
-/* --- footer CTA: centred "View All Credentials" button below the stage --- */
-.cred-footer-cta{display:flex;justify-content:center;margin-top:48px;}
-.cred-footer-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:14px 28px;border-radius:999px;border:1px solid #6A45C0;
-  color:#6A45C0;font-size:14px;font-weight:500;text-decoration:none;
-  transition:background .25s var(--ez),color .25s var(--ez),transform .25s var(--ez),box-shadow .25s var(--ez);
-}
-.cred-footer-btn:hover,.cred-footer-btn:focus-visible{
-  background:#6A45C0;color:#fff;transform:translateY(-2px);
-  box-shadow:0 14px 30px -14px rgba(106,69,192,.5);
-}
-.cred-footer-btn:focus-visible{outline:2px solid #4A2E82;outline-offset:4px;}
-@media(prefers-reduced-motion:reduce){
-  .cred-footer-btn{transition:background .25s var(--ez),color .25s var(--ez);}
-  .cred-footer-btn:hover,.cred-footer-btn:focus-visible{transform:none;}
+  .cred-panel{padding:14px;}
+  .cred-frame{padding:72px 22px;outline-offset:6px;}
+  .cred-sub{font-size:15px;}
+  .cred-stds{flex-direction:column;gap:14px;}
+  .cred-stds li:not(:first-child)::before{display:none;}
 }
 
 /* ==========================================================
@@ -1519,42 +1499,28 @@ ul{margin:0;padding:0;list-style:none;}
 </section>
 
 <!-- ===================== 03 — CREDENTIAL ===================== -->
-<!-- Rebuilt per client reference brief, "Layout 1 · Feature + filmstrip". Driven
-     entirely from the CRED_DATA array in the script below — no markup is hardcoded per
-     certificate. Only the Certification tab has documents right now, so Approval /
-     Performance Certificate stay hidden until their arrays get entries (see the
-     tabs-rendering note in the script). validUntil is intentionally "[TBC]"
-     everywhere: real dates to follow from the client, not read off the scans. -->
+<!-- Minimal framed statement (no certificate viewer / tabs / thumbnails). The full
+     set of certificates lives on credentials.html; this section only states the
+     standards and links there. Purely static — no script drives it. -->
 <section class="sec cred-sec" id="credential">
   <div class="w">
-    <div class="cred-head">
-      <div class="rv">
-        <div class="secnum">Credentials</div>
-        <h2>Approved and Verified<span class="l2">by India's Toughest Clients</span></h2>
+    <div class="cred-panel rv">
+      <div class="cred-frame">
+        <p class="cred-eyebrow">Credentials</p>
+        <h2 class="cred-h">
+          <span class="cred-h-navy">Approved and verified</span>
+          <span class="cred-h-slate">by <em class="pp">India&rsquo;s toughest</em> clients</span>
+        </h2>
+        <p class="cred-sub">Five independent certifications stand behind every radiator we make.</p>
+        <ul class="cred-stds">
+          <li>ISO 9001</li>
+          <li>ISO 14001</li>
+          <li>ISO 45001</li>
+          <li>EN ISO 3834-2</li>
+          <li>ZED Gold</li>
+        </ul>
+        <a class="cred-view" href="credentials.html">View all credentials</a>
       </div>
-    </div>
-
-    <div class="cred-tabs rv" id="credTabs" data-d="1" role="tablist" aria-label="Credential categories"></div>
-
-    <div class="cred-stage rv" data-d="2">
-      <div class="cred-glow" aria-hidden="true"></div>
-      <div class="cred-stage-inner">
-        <div class="cred-plate">
-          <img id="credPlateImg" src="" alt="">
-        </div>
-        <div class="cred-detail" id="credDetail" aria-live="polite">
-          <div class="cred-kicker" id="credKicker"></div>
-          <h3 class="cred-title" id="credTitle"></h3>
-          <div class="cred-name" id="credName"></div>
-          <div class="cred-rows" id="credRows"></div>
-          <a class="cred-link" id="credLink" href="#" target="_blank" rel="noopener">Open full certificate <span aria-hidden="true">&#8599;</span></a>
-          <div class="cred-strip" id="credStrip" role="tablist" aria-label="Certificates"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="cred-footer-cta rv" data-d="3">
-      <a href="credentials.html" class="cred-footer-btn">View All Credentials <span aria-hidden="true">&#8599;</span></a>
     </div>
   </div>
 </section>
@@ -2291,205 +2257,6 @@ if (reduced) {
   syncPagerUI();
 })();
 
-/* credential feature + filmstrip (Layout 1) — a single CRED_DATA array drives the
-   tabs, the feature plate + detail column, and the filmstrip; nothing here is
-   hardcoded per certificate. Real client documents currently exist only for
-   "certification", so "approval" and "performance" render no tab at all (see
-   renderTabs) until their arrays get entries — at that point the matching tab
-   appears on its own, no code change needed. */
-(function(){
-  var CRED_DATA = [
-    {
-      std: 'ISO 9001:2015',
-      name: 'Quality Management Systems',
-      issuer: 'Royal Assessments Pvt. Ltd.',
-      accreditation: 'IAF · EGAC',
-      validUntil: '[TBC]',
-      thumb: 'assets/docs/thumbs/iso-9001.jpg',
-      fullImage: 'assets/docs/iso-9001.jpg',
-      tab: 'certification'
-    },
-    {
-      std: 'ISO 14001:2015',
-      name: 'Environmental Management',
-      issuer: 'Royal Assessments Pvt. Ltd.',
-      accreditation: 'IAF · EGAC',
-      validUntil: '[TBC]',
-      thumb: 'assets/docs/thumbs/iso-14001.jpg',
-      fullImage: 'assets/docs/iso-14001.jpg',
-      tab: 'certification'
-    },
-    {
-      std: 'ISO 45001:2018',
-      name: 'Occupational Health & Safety',
-      issuer: 'AKG Assessment Pvt. Ltd.',
-      accreditation: 'IAF',
-      validUntil: '[TBC]',
-      thumb: 'assets/docs/thumbs/iso-45001.jpg',
-      fullImage: 'assets/docs/iso-45001.jpg',
-      tab: 'certification'
-    },
-    {
-      std: 'EN ISO 3834-2',
-      name: 'Fusion Welding of Metallic Materials',
-      issuer: 'Prva Zvaracska a.s.',
-      accreditation: 'EN ISO 3834-2:2021',
-      validUntil: '[TBC]',
-      thumb: 'assets/docs/thumbs/iso-3834.jpg',
-      fullImage: 'assets/docs/iso-3834.jpg',
-      tab: 'certification'
-    },
-    {
-      std: 'ZED Gold',
-      name: 'Zero Defect Zero Effect',
-      issuer: 'Ministry of MSME',
-      accreditation: 'ZED Scheme',
-      validUntil: '[TBC]',
-      thumb: 'assets/docs/thumbs/zed-gold.jpg',
-      fullImage: 'assets/docs/zed-gold.jpg',
-      tab: 'certification'
-    }
-  ];
-  var TAB_DEFS = [
-    { key: 'certification', label: 'Certification' },
-    { key: 'approval', label: 'Approval' },
-    { key: 'performance', label: 'Performance Certificate' }
-  ];
-
-  var sec = document.getElementById('credential');
-  if (!sec) return;
-  var tabsEl = document.getElementById('credTabs');
-  var plateImgEl = document.getElementById('credPlateImg');
-  var kickerEl = document.getElementById('credKicker');
-  var titleEl = document.getElementById('credTitle');
-  var nameEl = document.getElementById('credName');
-  var rowsEl = document.getElementById('credRows');
-  var linkEl = document.getElementById('credLink');
-  var stripEl = document.getElementById('credStrip');
-  if (!tabsEl || !plateImgEl || !stripEl) return;
-
-  var certs = [];
-  var active = 0;
-  var thumbEls = [];
-
-  function pad(n){ return n < 10 ? '0' + n : '' + n; }
-  function certsForTab(key){ return CRED_DATA.filter(function(c){ return c.tab === key; }); }
-
-  function renderTabs(){
-    tabsEl.innerHTML = '';
-    TAB_DEFS.forEach(function(t){
-      var list = certsForTab(t.key);
-      if (!list.length) return; // no documents yet — don't ship a tab to an empty stage
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'cred-tab';
-      btn.setAttribute('role', 'tab');
-      btn.dataset.tab = t.key;
-      btn.innerHTML = t.label + ' <span class="cred-tab-count">' + pad(list.length) + '</span>';
-      btn.addEventListener('click', function(){ selectTab(t.key); });
-      tabsEl.appendChild(btn);
-    });
-  }
-
-  function selectTab(key){
-    certs = certsForTab(key);
-    active = 0;
-    [].slice.call(tabsEl.children).forEach(function(btn){
-      var on = btn.dataset.tab === key;
-      btn.classList.toggle('active', on);
-      btn.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-    renderStrip();
-    renderPlateAndDetail(true);
-  }
-
-  function renderStrip(){
-    stripEl.innerHTML = '';
-    thumbEls = certs.map(function(c, idx){
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'cred-thumb2';
-      btn.setAttribute('role', 'tab');
-      btn.setAttribute('aria-label', c.std + ', ' + c.issuer);
-      var img = document.createElement('img');
-      img.src = c.thumb;
-      img.alt = c.std + ', ' + c.issuer;
-      img.loading = 'lazy';
-      btn.appendChild(img);
-      btn.addEventListener('click', function(){ setActive(idx); });
-      btn.addEventListener('keydown', function(e){
-        if (e.key === 'ArrowRight') { e.preventDefault(); setActive(Math.min(active + 1, certs.length - 1)); thumbEls[active].focus(); }
-        else if (e.key === 'ArrowLeft') { e.preventDefault(); setActive(Math.max(active - 1, 0)); thumbEls[active].focus(); }
-      });
-      stripEl.appendChild(btn);
-      return btn;
-    });
-  }
-
-  // cross-fades the plate image: fade out .18s, swap src, fade in .28s. The two
-  // phases need different durations, so transitionDuration is set per-phase here
-  // rather than fixed in CSS; forcing a reflow before restoring opacity:1 makes
-  // sure the fade-in actually animates from 0 instead of jumping straight to 1.
-  function setPlateImage(c){
-    var alt = c.std + ', ' + c.issuer;
-    if (reduced) { plateImgEl.src = c.fullImage; plateImgEl.alt = alt; return; }
-    plateImgEl.style.transitionDuration = '.18s';
-    plateImgEl.style.opacity = '0';
-    clearTimeout(setPlateImage._t);
-    setPlateImage._t = setTimeout(function(){
-      plateImgEl.src = c.fullImage;
-      plateImgEl.alt = alt;
-      plateImgEl.style.transitionDuration = '.28s';
-      void plateImgEl.offsetWidth; // reflow so the fade-in animates from 0
-      plateImgEl.style.opacity = '1';
-    }, 180);
-  }
-
-  function renderPlateAndDetail(immediate){
-    var c = certs[active];
-    if (!c) return;
-    if (immediate) {
-      plateImgEl.style.transitionDuration = '0s';
-      plateImgEl.src = c.fullImage;
-      plateImgEl.alt = c.std + ', ' + c.issuer;
-      plateImgEl.style.opacity = '1';
-    } else {
-      setPlateImage(c);
-    }
-    if (kickerEl) kickerEl.textContent = 'Certificate ' + pad(active + 1) + ' of ' + pad(certs.length);
-    if (titleEl) titleEl.textContent = c.std;
-    if (nameEl) nameEl.textContent = c.name;
-    if (rowsEl) {
-      rowsEl.innerHTML = '';
-      [['Issuing Body', c.issuer], ['Accreditation', c.accreditation], ['Valid Until', c.validUntil]].forEach(function(pair){
-        var row = document.createElement('div');
-        row.className = 'cred-row2';
-        var label = document.createElement('span');
-        label.textContent = pair[0];
-        var value = document.createElement('span');
-        value.textContent = pair[1];
-        row.appendChild(label);
-        row.appendChild(value);
-        rowsEl.appendChild(row);
-      });
-    }
-    if (linkEl) linkEl.href = c.fullImage;
-    thumbEls.forEach(function(el, idx){
-      var on = idx === active;
-      el.classList.toggle('active', on);
-      el.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-  }
-
-  function setActive(i){
-    active = Math.max(0, Math.min(i, certs.length - 1));
-    renderPlateAndDetail(false);
-  }
-
-  renderTabs();
-  var firstTab = TAB_DEFS.filter(function(t){ return certsForTab(t.key).length; })[0];
-  if (firstTab) selectTab(firstTab.key);
-})();
 
 /* enquiry form — client-side validation + drop-zone file handling only; there is
    still no backend behind this (same as the version it replaces), so nothing is
