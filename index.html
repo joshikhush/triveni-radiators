@@ -505,12 +505,13 @@ ul{margin:0;padding:0;list-style:none;}
 
 /* --- zig-zag image row: pops in one shot at a time, only after the text --- */
 .wwa-gallery{
-  max-width:1140px;margin:0 auto;padding:76px var(--pad) 120px;
-  display:grid;grid-template-columns:1.05fr 1.18fr .88fr 1.1fr;gap:32px;align-items:start;
+  max-width:1200px;margin:0 auto;padding:72px var(--pad) 104px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:22px;align-items:start;
 }
 .wwa-shot{margin:0;}
 .wwa-shot-inner{
-  position:relative;width:100%;background:var(--wwa-shot);overflow:hidden;isolation:isolate;
+  position:relative;width:100%;aspect-ratio:4/5;background:var(--wwa-shot);overflow:hidden;isolation:isolate;
+  border-radius:14px;border:1px solid rgba(255,255,255,.15);box-shadow:0 18px 40px -26px rgba(0,0,0,.55);
   opacity:0;transform:translateY(25px) scale(.96);
   transition:opacity .8s var(--ez),transform .8s var(--ez);
 }
@@ -522,25 +523,17 @@ ul{margin:0;padding:0;list-style:none;}
 .wwa-gallery.is-in .wwa-shot-2 .wwa-shot-inner{transition-delay:.2s;}
 .wwa-gallery.is-in .wwa-shot-3 .wwa-shot-inner{transition-delay:.4s;}
 .wwa-gallery.is-in .wwa-shot-4 .wwa-shot-inner{transition-delay:.6s;}
-/* one horizontal row of four smallish frames, vertical zig-zag offsets + varied heights */
+/* four equal-size rounded frames in a clean zig-zag (even tiles dropped down) */
 .wwa-shot-1{margin-top:0;}
-.wwa-shot-1 .wwa-shot-inner{aspect-ratio:4/5;}
-.wwa-shot-2{margin-top:88px;}
-.wwa-shot-2 .wwa-shot-inner{aspect-ratio:4/5;}
-.wwa-shot-3{margin-top:28px;}
-.wwa-shot-3 .wwa-shot-inner{aspect-ratio:4/5;}
-.wwa-shot-4{margin-top:126px;}
-.wwa-shot-4 .wwa-shot-inner{aspect-ratio:4/5;}
+.wwa-shot-2{margin-top:64px;}
+.wwa-shot-3{margin-top:0;}
+.wwa-shot-4{margin-top:64px;}
 /* placeholder = photographic frame, not a UI card: a hairline crop tick + a small
    caption, no border or shadow around the block itself. */
 .wwa-shot-label{
   position:absolute;left:15px;right:12px;bottom:13px;z-index:2;
   font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:var(--color-gold);
-}
-.wwa-shot-inner::before{
-  content:'';position:absolute;left:13px;top:13px;width:13px;height:13px;z-index:2;
-  border-left:1px solid rgba(20,26,42,.26);border-top:1px solid rgba(20,26,42,.26);
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -557,13 +550,11 @@ ul{margin:0;padding:0;list-style:none;}
   .wwa-stage{max-width:680px;}
   .wwa-heading{font-size:clamp(34px,4.8vw,53px);}
   .wwa-line{font-size:clamp(17px,2.5vw,22px);}
-  .wwa-gallery{grid-template-columns:repeat(2,1fr);gap:24px;padding:56px var(--pad) 100px;}
+  .wwa-gallery{grid-template-columns:repeat(2,1fr);gap:22px;padding:56px var(--pad) 100px;}
   .wwa-shot-1{margin-top:0;}
-  .wwa-shot-2{margin-top:52px;}
+  .wwa-shot-2{margin-top:48px;}
   .wwa-shot-3{margin-top:0;}
-  .wwa-shot-4{margin-top:52px;}
-  .wwa-shot-3 .wwa-shot-inner{aspect-ratio:4/5;}
-  .wwa-shot-4 .wwa-shot-inner{aspect-ratio:5/6;}
+  .wwa-shot-4{margin-top:48px;}
 }
 
 /* mobile — no pinned track: the whole stage still uncovers left -> right, but once on
