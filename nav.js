@@ -7,16 +7,16 @@
    ========================================================== */
 (function(){
   var TOP = [
-    { key:'home',           label:'Home',           href:'index.html' },
-    { key:'products',       label:'Products',       href:'products.html' },
-    { key:'sustainability', label:'Sustainability', href:'sustainability.html' },
-    { key:'clients',        label:'Clients',        href:'clientele.html' },
-    { key:'gallery',        label:'Gallery',        href:'gallery.html' }
+    { key:'home',        label:'Home',        href:'index.html' },
+    { key:'products',    label:'Products',    href:'products.html' },
+    { key:'credentials', label:'Credentials', href:'credentials.html' },
+    { key:'clients',     label:'Clients',     href:'clientele.html' },
+    { key:'gallery',     label:'Gallery',     href:'gallery.html' }
   ];
   var COMPANY = [
     { label:'Triveni Group', href:'triveni-group.html' },
     { label:'Milestones',    href:'milestones.html' },
-    { label:'Credentials',   href:'credentials.html' },
+    { label:'Sustainability', href:'sustainability.html' },
     { label:'Careers',       href:'careers.html' }
   ];
   var CONTACT = { label:'Contact Us', href:'contact.html' };
@@ -26,10 +26,10 @@
   var OWNER = {
     'index.html':'home',
     'products.html':'products', 'products-all.html':'products',
-    'sustainability.html':'sustainability',
+    'credentials.html':'credentials',
     'clientele.html':'clients', 'major-customers-directory.html':'clients', 'end-customers-directory.html':'clients',
     'gallery.html':'gallery',
-    'triveni-group.html':'company', 'milestones.html':'company', 'credentials.html':'company',
+    'triveni-group.html':'company', 'milestones.html':'company', 'sustainability.html':'company',
     'careers.html':'company', 'leadership.html':'company'
   };
 
