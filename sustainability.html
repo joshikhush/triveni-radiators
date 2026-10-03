@@ -362,6 +362,10 @@ button { font:inherit; }
 
 .csr-tile-clickable { appearance:none; -webkit-appearance:none; cursor:pointer; text-align:left; }
 .csr-tile-clickable:focus-visible { outline:2px solid #E2CBA0; outline-offset:3px; }
+/* partner website link inside a CSR tile (sits above the photo-viewer click) */
+.csr-tile-link { position:relative; z-index:2; display:inline-flex; align-items:center; gap:5px; width:fit-content; margin-top:2px; font-family:'Poppins',sans-serif; font-size:13px; font-weight:600; letter-spacing:.015em; color:#E2CBA0; text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s ease; }
+.csr-tile-link:hover, .csr-tile-link:focus-visible { border-bottom-color:#E2CBA0; }
+.csr-tile-link svg { width:13px; height:13px; }
 
 @media(max-width:1100px){
   .csr-inner { padding:72px 24px; }
@@ -701,16 +705,17 @@ button { font:inherit; }
            Rajasthan, so the city/state is now named in the copy below, but the
            home's specific name is still withheld pending client confirmation. -->
       <!-- TODO: confirm activity details with client; update if donations or other support were involved -->
-      <button type="button" class="csr-tile csr-tile-clickable reveal reveal-d2" data-tile="elder" aria-label="View 2 photos: Time With Our Elders">
+      <div class="csr-tile csr-tile-clickable reveal reveal-d2" role="button" tabindex="0" data-tile="elder" aria-label="View 2 photos: Time With Our Elders">
         <div class="csr-tile-media">
-          <img src="assets/sustainabilty/csr/b4ea4cf3-0aa5-4f3d-996c-fc17b6717b0b-web.jpg" alt="Triveni team members sharing a meal with residents at an old age home" loading="lazy" style="object-position:50% 42%;">
+          <img src="assets/sustainabilty/csr/b4ea4cf3-0aa5-4f3d-996c-fc17b6717b0b-web.jpg" alt="Triveni team members sharing a meal with residents at Tara Sansthan old age home" loading="lazy" style="object-position:50% 42%;">
         </div>
         <div class="csr-tile-body">
           <div class="csr-tile-label">Elder Care</div>
           <h3>Time With Our Elders</h3>
-          <p>Our team spent time with residents at an old age home in Udaipur, Rajasthan, sharing a meal and conversation.</p>
+          <p>Our team spent time with residents at <strong>Tara Sansthan</strong>, a home for the elderly in Udaipur, Rajasthan, sharing a meal and conversation.</p>
+          <a class="csr-tile-link" href="https://www.tarasansthan.org" target="_blank" rel="noopener">Visit Tara Sansthan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
         </div>
-      </button>
+      </div>
 
       <!-- Girl Child Education — 3 photos in assets/sustainabilty/csr/, all from
            the same school visit. edu 1 (widest, clearest group shot) is the main
@@ -720,17 +725,17 @@ button { font:inherit; }
            the mural whenever the box does crop vertically (e.g. the tablet
            horizontal-card layout). edu 3 (a different, smaller classroom) was
            considered but edu 1/2 better represent "classroom/group" at scale. -->
-      <!-- TODO: confirm type of support (kits/fees/scholarships), number of girls and location with client -->
-      <button type="button" class="csr-tile csr-tile-clickable reveal reveal-d3" data-tile="girlchild" aria-label="View 3 photos: Supporting Girl Child Education">
+      <div class="csr-tile csr-tile-clickable reveal reveal-d3" role="button" tabindex="0" data-tile="girlchild" aria-label="View 3 photos: Supporting Girl Child Education">
         <div class="csr-tile-media">
-          <img src="assets/sustainabilty/csr/girl child edu 1-web.jpg" alt="Triveni team members with schoolgirls supported through the girl child education programme" loading="lazy" style="object-position:50% 62%;">
+          <img src="assets/sustainabilty/csr/girl child edu 1-web.jpg" alt="Triveni team members with schoolgirls supported through Shuruaat Ek Jyoti Siksha Ki" loading="lazy" style="object-position:50% 62%;">
         </div>
         <div class="csr-tile-body">
           <div class="csr-tile-label">Education</div>
           <h3>Supporting Girl Child Education</h3>
-          <p>Supporting the education of young girls at a local school, helping them stay in the classroom and build a brighter future.</p>
+          <p>Supporting <strong>Shuruaat Ek Jyoti Siksha Ki</strong>, a Prayagraj-based NGO for girl-child education — helping young girls stay in the classroom and build a brighter future.</p>
+          <a class="csr-tile-link" href="https://www.shuruaat.org" target="_blank" rel="noopener">Visit Shuruaat <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
         </div>
-      </button>
+      </div>
     </div>
 
     <!-- Shared lightbox for the Old Age Home + Girl Child Education tiles -->
@@ -986,6 +991,17 @@ var CSR_TILE_IMAGES = {
   document.querySelectorAll('.csr-tile-clickable').forEach(function(tile){
     tile.addEventListener('click', function(){
       openCsrLightbox(tile.getAttribute('data-tile'), tile);
+    });
+    /* div tiles (role=button) need explicit keyboard activation; native <button> tiles already have it */
+    if (tile.tagName !== 'BUTTON') {
+      tile.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCsrLightbox(tile.getAttribute('data-tile'), tile); }
+      });
+    }
+    /* partner website links must not open the photo viewer */
+    tile.querySelectorAll('.csr-tile-link').forEach(function(a){
+      a.addEventListener('click', function(e){ e.stopPropagation(); });
+      a.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });
     });
   });
 })();
