@@ -245,8 +245,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
 .mfg-tile:hover img,.app-card:hover img{transform:scale(1.06);}
 .mfg-tile::after,.app-card::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(14,23,48,.92) 0%,rgba(14,23,48,.6) 38%,rgba(14,23,48,.12) 66%,transparent 82%);}
 .mfg-tile-label{position:absolute;left:1.4rem;bottom:1.4rem;right:1.4rem;z-index:2;}
+.mfg-eyebrow{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--copper-lt);margin-bottom:.5rem;}
 .mfg-name{font-family:var(--serif);font-weight:400;font-size:1.08rem;color:#fff;line-height:1.28;}
 .mfg-desc{font-size:.82rem;line-height:1.55;color:rgba(255,255,255,.8);margin-top:.55rem;}
+/* reserve a consistent text height in the multi-column layouts so the labels
+   and titles line up across all four cards (dropped in single-column) */
+@media(min-width:768px){.mfg-desc{min-height:3.7rem;}}
 
 .app-card-body{position:absolute;left:1.3rem;bottom:1.25rem;right:1.3rem;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:.6rem;}
 .app-card-name{font-family:var(--serif);font-weight:400;font-size:1.12rem;color:#fff;line-height:1.28;}
@@ -513,19 +517,19 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-off
     <div class="mfg-grid">
       <div class="mfg-tile reveal">
         <img src="assets/products/panel/facility-aerial.jpg" alt="Aerial view of Triveni's manufacturing facility" loading="lazy">
-        <div class="mfg-tile-label"><div class="mfg-name">State-of-the-Art Manufacturing Facility</div><div class="mfg-desc">India's fastest growing radiator manufacturer with a state-of-the-art manufacturing facility spanning 6,320 sq metres.</div></div>
+        <div class="mfg-tile-label"><div class="mfg-eyebrow">Facility</div><div class="mfg-name">Manufacturing Facility</div><div class="mfg-desc">A 6,320 sq m facility built for scale, precision and consistent output.</div></div>
       </div>
       <div class="mfg-tile reveal d1">
         <img src="assets/products/panel/paint-shop.jpg" alt="Radiator in Triveni's conveyorized paint shop" loading="lazy">
-        <div class="mfg-tile-label"><div class="mfg-name">Conveyorized Paint Shop</div><div class="mfg-desc">Conveyorized, state-of-the-art paint shop for best-in-class corrosion protection and final finish.</div></div>
+        <div class="mfg-tile-label"><div class="mfg-eyebrow">Finishing</div><div class="mfg-name">Conveyorized Paint Shop</div><div class="mfg-desc">Automated painting for uniform coating, corrosion protection and a lasting finish.</div></div>
       </div>
       <div class="mfg-tile reveal d2">
         <img src="assets/products/panel/plasma-cutting.jpg" alt="Plasma cutting of radiator child parts at Triveni" loading="lazy">
-        <div class="mfg-tile-label"><div class="mfg-name">Plasma Machines</div><div class="mfg-desc">Cutting of child parts performed with Plasma machines.</div></div>
+        <div class="mfg-tile-label"><div class="mfg-eyebrow">Cutting</div><div class="mfg-name">Plasma Cutting</div><div class="mfg-desc">Child parts cut on plasma machines for clean edges and exact dimensions.</div></div>
       </div>
       <div class="mfg-tile reveal d3">
         <img src="assets/products/panel/critical-welding.jpg" alt="Automated critical welding at Triveni" loading="lazy">
-        <div class="mfg-tile-label"><div class="mfg-name">Automated Critical Welding</div><div class="mfg-desc">Automated critical welding processes maintain consistent quality.</div></div>
+        <div class="mfg-tile-label"><div class="mfg-eyebrow">Welding</div><div class="mfg-name">Automated Welding</div><div class="mfg-desc">Automated welding on critical joints for consistent, leak-tight quality.</div></div>
       </div>
     </div>
   </div>
