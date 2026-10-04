@@ -156,6 +156,92 @@ img { display:block; max-width:100%; }
 <!-- FOOTER -->
 <footer id="site-footer"></footer>
 <script src="footer.js" defer></script>
+<script>
+/* ---- MAJOR CUSTOMERS ----
+   Verbatim from "Customers List & Logos.xlsx" (Sheet1, 40 rows).
+   [ S.No , Customer name , logo file | null ]
+   Logos extracted from that file → assets/logos/major-customers/  */
+var LP = 'assets/logos/major-customers/';
+var MC = [
+  [1,  "ABB India Limited", "abb.png"],
+  [2,  "ABB Power Products and Systems India Limited", "abb.png"],
+  [3,  "ALSTOM T&D India Limited", "alstom.jpeg"],
+  [4,  "Atlanta Electricals Pvt.Ltd.", "atlanta-electricals.jpeg"],
+  [5,  "AYR ENERGY INC.", "ayr-energy.png"],
+  [6,  "AYR ENERGY INDIA PRIVATE LIMITED", "ayr-energy.png"],
+  [7,  "Bharat Heavy Electricals Ltd.", "bhel.png"],
+  [8,  "BTW Atlanta Transformers India Pvt Ltd", "btw-atlanta.jpeg"],
+  [9,  "CG Power and Industrial Solutions Limited", "cg-power.jpeg"],
+  [10, "Crompton Greaves Limited", "crompton-greaves.png"],
+  [11, "Danish Private Limited", "danish.jpeg"],
+  [12, "ECE Industries Ltd.", "ece-industries.jpeg"],
+  [13, "EMCO Limited.", "emco.jpeg"],
+  [14, "EMT MEGATHERM PVT. LTD.", "emt-megatherm.jpeg"],
+  [15, "GE Power Conversion India Private Limited", "ge.jpeg"],
+  [16, "GE Vernova T&D India Limited", "ge.jpeg"],
+  [17, "Hitachi Energy India Limited", "hitachi-energy.png"],
+  [18, "Hitachi Energy USA Inc.", "hitachi-energy.png"],
+  [19, "Indo Tech Transformers Limited", "indo-tech.jpeg"],
+  [20, "Kanohar Electricals Limited", "kanohar.jpeg"],
+  [21, "Kotsons Pvt. Ltd.", "kotsons.png"],
+  [22, "MARSON’S ELECTRICAL INDUSTRIES", "marsons.png"],
+  [23, "MEIDEN T&D (INDIA) LIMITED", "meiden.png"],
+  [24, "POWER GRID CORPORATION OF INDIA LTD", "powergrid.jpeg"],
+  [25, "RIMA Transformers and Conductors Pvt. Ltd.", null],
+  [26, "Schneider Electric Infrastructure Limited.", "schneider-electric.png"],
+  [27, "SHILCHAR TECHNOLOGIES LIMITED", "shilchar.jpeg"],
+  [28, "SHIRDI SAI ELECTRICALS LTD", "shirdi-sai.jpeg"],
+  [29, "Shree Abirami Enggineering Works", "shree-abirami.png"],
+  [30, "Siemens Energy India Limited", "siemens-energy.png"],
+  [31, "Skipper Electricals (India) Ltd.", null],
+  [32, "SkipperSeil Ltd", "skipperseil.jpeg"],
+  [33, "TBEA (India) Transformer Private Limited", "tbea.png"],
+  [34, "TBEA Energy (India) Pvt Ltd.", "tbea.png"],
+  [35, "TECHNICAL ASSOCIATES LIMITED", "technical-associates.png"],
+  [36, "TOSHIBA TRANSMISSION & DISTRIBUTION SYSTEMS INDIA PVT LTD", "toshiba.jpeg"],
+  [37, "TRANSFORMER & RECTIFIERS (INDIA) LTD.", "transformers-rectifiers-india.png"],
+  [38, "Voltamp Transformers Ltd.", "voltamp.png"],
+  [39, "Western Transformer & Equipment Pvt. Ltd.", "western-transformers.jpeg"],
+  [40, "WILSON POWER SOLUTIONS INDIA PVT. LTD.", "wilson-power.jpeg"]
+];
+
+var regEl = document.getElementById('reg');
+var countEl = document.getElementById('count');
+var qEl = document.getElementById('q');
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+function rowHTML(r) {
+  var logo = r[2]
+    ? '<img src="' + LP + r[2] + '" alt="' + esc(r[1]) + ' logo">'
+    : '<span class="reg-logo--none">—</span>';
+  return '<div class="reg-row">' +
+    '<div class="reg-logo">' + logo + '</div>' +
+    '<div class="reg-name">' + esc(r[1]) + '<span class="reg-sn">#' + r[0] + '</span></div>' +
+    '</div>';
+}
+
+function render() {
+  var q = qEl.value.trim().toLowerCase();
+  var list = MC.filter(function (r) { return !q || r[1].toLowerCase().indexOf(q) !== -1; });
+  countEl.textContent = list.length + (list.length === 1 ? ' company' : ' companies');
+
+  if (!list.length) { regEl.innerHTML = '<div class="empty">No customers match your search.</div>'; return; }
+
+  var groups = [], cur = null;
+  list.forEach(function (r) {
+    var L0 = (r[1].replace(/[^A-Za-z]/, '').charAt(0) || '#').toUpperCase();
+    if (!cur || cur.letter !== L0) { cur = { letter: L0, rows: [] }; groups.push(cur); }
+    cur.rows.push(r);
+  });
+
+  regEl.innerHTML = groups.map(function (g) {
+    return '<div class="reg-group"><div class="reg-alpha">' + g.letter + '</div>' +
+      g.rows.map(rowHTML).join('') + '</div>';
+  }).join('');
+}
+qEl.addEventListener('input', render);
+render();
+</script>
 <script src="nav.js" defer></script>
 </body>
 </html>
