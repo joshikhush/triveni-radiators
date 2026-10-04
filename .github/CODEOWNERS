@@ -1,0 +1,9 @@
+# Changes to these paths need the owner's review once branch protection has
+# "Require review from Code Owners" turned on.
+/.github/ @Tresto2025
+/.vscode/ @Tresto2025
+postcss.config.* @Tresto2025
+tailwind.config.* @Tresto2025
+vite.config.* @Tresto2025
+next.config.* @Tresto2025
+package.json @Tresto2025
