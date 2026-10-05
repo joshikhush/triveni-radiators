@@ -1,2 +1,3 @@
 # sha256  path - build-config files locked against tampering (see malware guard)
 da8d8a1ce8756002a6f6661caa158249cbc787d62c74c8a392c1e6e5ee04ae55  vercel.json
+72bcedc8c328f8e77867f253ef3d87041200a9d567ffb624dc5287dee22c313e  deploy/safe-update.sh
