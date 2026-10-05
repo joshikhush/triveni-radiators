@@ -1,0 +1,3 @@
+#!/bin/sh
+# Refuse the push when the malware guard flags any tracked file.
+exec "$(dirname "$0")/run-malware-guard"

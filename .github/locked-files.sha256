@@ -1,3 +1,7 @@
 # sha256  path - build-config files locked against tampering (see malware guard)
 da8d8a1ce8756002a6f6661caa158249cbc787d62c74c8a392c1e6e5ee04ae55  vercel.json
 72bcedc8c328f8e77867f253ef3d87041200a9d567ffb624dc5287dee22c313e  deploy/safe-update.sh
+f18aa02b335a0416ea58094f2ffcc4e868729b3cd431e865bb70b265be66488a  .githooks/run-malware-guard
+7dedb9220a8b2bbb42f3e0f965de7db65b59ae98b80981ea4701d434c7e58ced  .githooks/pre-commit
+14eb826e380b889c360a3444a214a43829b5e22891ca476564694f07992bd22e  .githooks/pre-push
+e82d74c60ec19f89cd823f9d689d9a79d3bb8a44c8855c468515e46f9743f080  .claude/hooks/malware-guard.sh

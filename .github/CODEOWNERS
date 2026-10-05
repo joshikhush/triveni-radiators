@@ -7,3 +7,5 @@ tailwind.config.* @Tresto2025
 vite.config.* @Tresto2025
 next.config.* @Tresto2025
 package.json @Tresto2025
+/.githooks/ @Tresto2025
+/.claude/ @Tresto2025
