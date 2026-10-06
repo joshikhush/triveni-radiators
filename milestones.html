@@ -283,6 +283,8 @@ ul{margin:0;padding:0;list-style:none;}
   transition:opacity .4s var(--ez),transform .4s var(--ez),color .4s var(--ez);}
 .ms-gtl-year::after{content:'';position:absolute;left:50%;bottom:-12px;width:1px;height:0;
   background:#6A45C0;transform:translateX(-50%);transition:height .4s var(--ez) .05s;}
+/* financial-year labels ("FY 2022–23") are longer than a single year — set smaller so they clear the cards */
+.ms-gtl-year.is-fy{font-size:clamp(20px,1.7vw,23px);}
 .ms-gtl-row.in .ms-gtl-year{opacity:1;transform:none;}
 .ms-gtl-row.active .ms-gtl-year{color:#6A45C0;}
 .ms-gtl-row.active .ms-gtl-year::after{height:12px;}
@@ -365,6 +367,7 @@ ul{margin:0;padding:0;list-style:none;}
   .ms-gtl-card.major{padding:30px 28px;}
   .ms-gtl-era{grid-template-columns:1fr 70px 1fr;column-gap:20px;}
   .ms-gtl-year{font-size:clamp(24px,2.2vw,28px);padding:0 2px;}
+  .ms-gtl-year.is-fy{font-size:18px;}
 }
 @media(max-width:720px){
   .ms-gtl::before,.ms-gtl-progress{left:21px;transform:none;}
@@ -479,7 +482,7 @@ ul{margin:0;padding:0;list-style:none;}
     <div class="ms-ov-grid">
       <div class="ms-ov-text">
         <div class="ms-ov-h2-mask"><h2 class="h2 ms-ov-h2">From manufacturing roots<br>to <span class="ac">industrial scale.</span></h2></div>
-        <p class="lede ms-ov-lede">Triveni Group's story begins in 1991, with a single unit in Allahabad serving the telecom industry. What followed was two decades of steady expansion — a two-decade partnership with LG Electronics beginning in 2004, a second unit in Noida the same year, and in 2012 a third unit dedicated entirely to power-transformer radiators, later joined by a Unit II extension. Today the Group spans four manufacturing units across two locations and a national customer base, built one delivery at a time.</p>
+        <p class="lede ms-ov-lede">Triveni Group's story begins in 1991, with a single unit in Prayagraj serving the telecom industry. What followed was two decades of steady expansion — a two-decade partnership with LG Electronics beginning in 2004, a second unit in Noida the same year, and in 2012 a third unit dedicated entirely to power-transformer radiators, later joined by a Unit II extension. Today the Group spans four manufacturing units across two locations and a national customer base, built one delivery at a time.</p>
       </div>
       <div class="ms-ov-media">
         <img src="assets/intro%20section%20img.jpg" alt="Aerial view of Triveni's manufacturing unit in Naini, Prayagraj" loading="lazy" style="object-position:38% 55%;">
@@ -556,7 +559,7 @@ ul{margin:0;padding:0;list-style:none;}
     <p class="lede">Thirty-six years of manufacturing experience, decades of customer trust and a continuing programme of expansion — the same engineering discipline behind every unit the Group has built.</p>
     <div class="ms-cta-btns">
       <a href="products.html" class="btn btn-p">Explore Our Capabilities <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
-      <a href="contact.html" class="btn btn-ghost-dark">Let's Connect <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
+      <a href="contact.html" class="btn btn-ghost-dark">Contact Us <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -606,7 +609,7 @@ var RADIATOR_PHASES = [
 
 var RADIATORS_MILESTONES = [
   { era:'foundation', year:'2012', cat:'Expansion', icon:'layers', title:'Unit III Established — Transformer Radiators', major:true,
-    desc:'Triveni Electroplast Pvt Ltd (Radiator Division) is established at Prayagraj (Naini), Allahabad, to manufacture radiators for power and distribution transformer manufacturers — Triveni’s entry into the power sector. The division enters into an MOU with a French multinational to initiate supplies, and introduces India’s first fully automatic panel production line for pressed steel radiators from day one.',
+    desc:'Triveni Electroplast Pvt Ltd (Radiator Division) is established at Naini, Prayagraj, to manufacture radiators for power and distribution transformer manufacturers — Triveni’s entry into the power sector. The division enters into an MOU with a French multinational to initiate supplies, and introduces India’s first fully automatic panel production line for pressed steel radiators from day one.',
     stats:[{ v:'8,300 sq. m', l:'Unit III facility' },{ v:'1st in India', l:'Automatic panel production line' }],
     image:'assets/timeline/2012.jpg', imageAlt:'Aerial drone view of the Unit III plant, Prayagraj' },
 
@@ -644,17 +647,17 @@ var RADIATORS_MILESTONES = [
        so the dark-on-white major-customers version is used instead. */
     image:'assets/logos/major-customers/hitachi-energy.png', imageAlt:'Hitachi Energy logo' },
 
-  { era:'global', year:'2022–23', cat:'Certification', icon:'award', title:'Grade A, IEEE &amp; Product Expansion', major:true,
+  { era:'global', year:'FY 2022–23', cat:'Certification', icon:'award', title:'Grade A, IEEE &amp; Product Expansion', major:true,
     desc:'Power Grid Corporation of India confers its esteemed Grade A rating upon the company, extending official endorsement until 2027. Triveni Electroplast Pvt Ltd (Radiator Division) secures IEEE qualification targeting North American markets, launches trial runs for Hot Dip Galvanised offerings internationally, and expands portfolio options by supplying offset design variants to M/s Toshiba Transmission &amp; Distribution Systems India.',
     image:'assets/logos/powergrid.svg', imageAlt:'POWERGRID (PGCIL) logo' },
 
-  { era:'automation', year:'2023–24', cat:'Growth', icon:'trend', title:'Automation, Productivity &amp; Offset Radiators', major:true,
+  { era:'automation', year:'FY 2023–24', cat:'Growth', icon:'trend', title:'Automation, Productivity &amp; Offset Radiators', major:true,
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) resolves operational bottlenecks to boost manufacturing output while integrating automated welding technologies to enhance precision. Domestic transformer manufacturers establish Triveni as a primary partner for painted radiator exports. Furthermore, Triveni Electroplast Pvt Ltd (Radiator Division) emerges as a premier supplier for PGCIL and RDSO power projects, successfully dispatching over 1,500 offset radiator units.',
     image:'assets/timeline/2023-24.jpg', imageAlt:'Radiators undergoing hot-dip galvanising on the Triveni plant floor' },
-  { era:'automation', year:'2024–25', cat:'Exports', icon:'trend', title:'Direct US Export Journey', major:true,
+  { era:'automation', year:'FY 2024–25', cat:'Exports', icon:'trend', title:'Direct US Export Journey', major:true,
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) expands its customer base domestically and internationally. Secures a firm order for 190 radiators from Toshiba Transmission &amp; Distribution Systems for GE USA’s solar transformers, with further commitments for 2025–26. Initiates direct exports to the United States, with export revenue reaching 5% of total sales.',
     image:'assets/timeline/2024-25.jpg', imageAlt:'GE power transformer fitted with Triveni radiators, built for US export' },
-  { era:'automation', year:'2025–26', cat:'Development', icon:'trend', title:'Manufacturing &amp; Quality Development',
+  { era:'automation', year:'FY 2025–26', cat:'Development', icon:'trend', title:'Manufacturing &amp; Quality Development',
     desc:'Triveni Electroplast Pvt Ltd (Radiator Division) completes ISO 3834 welding-quality training by August 2025. By December 2025, the division installs a new manufacturing line along with a semi-automatic conveyorized painting facility to streamline operations and enhance quality control.',
     image:'assets/timeline/2025-26.jpg', imageAlt:'Painted radiator in Triveni new conveyorized paint shop' }
 ];
@@ -812,7 +815,7 @@ var PROOF_LIBRARY = [
 
       row.innerHTML =
         '<div class="ms-gtl-marker">' +
-          '<div class="ms-gtl-year">' + m.year + '</div>' +
+          '<div class="ms-gtl-year' + (/^FY/.test(m.year) ? ' is-fy' : '') + '">' + m.year + '</div>' +
           '<div class="ms-gtl-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' + (GTL_ICONS[m.icon] || '') + '</svg></div>' +
         '</div>' +
         '<div class="ms-gtl-card' + (m.major ? ' major' : '') + '">' +

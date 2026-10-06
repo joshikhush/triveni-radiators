@@ -18,7 +18,7 @@
     { label: 'Clients', href: 'clientele.html' },
     { label: 'Careers', href: 'careers.html' },
     { label: 'Life @ Triveni', href: 'careers.html#life-at-triveni' },
-    { label: 'Contact us', href: 'contact.html' }
+    { label: 'Contact Us', href: 'contact.html' }
   ];
   var FOOT_LINKEDIN = 'https://www.linkedin.com/company/triveni-electroplast-pvt-ltd';
   var FOOT_ADDRESS = 'B-2, UPSIDC Industrial Area, Naini, Prayagraj – 211010, Uttar Pradesh, India';

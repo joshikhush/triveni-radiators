@@ -381,7 +381,7 @@ ul{margin:0;padding:0;list-style:none;}
 }
 .hero-fact:hover .hero-fact-val{transform:translateY(-3px);}
 /* colour-coded per figure, not per-number-differently: "+" is the one muted-violet accent,
-   "kV" is the one muted-gold accent, "9" and "2,012" stay plain ink. Both accents
+   "kV" is the one muted-gold accent, "9" and "2012" stay plain ink. Both accents
    darken slightly on hover, in step with the rest of the micro-interaction. */
 .hero-fact-suffix{transition:color .3s var(--ez);}
 .hero-fact-suffix-plus{color:var(--color-accent);}
@@ -1360,7 +1360,7 @@ ul{margin:0;padding:0;list-style:none;}
       <p class="hero-sub">Engineered at our facility for the transformers that keep industries moving.</p>
       <div class="hero-ctas">
         <a href="products.html" class="btn btn-primary btn-p">Explore Radiators <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
-        <a href="contact.html" class="btn btn-ghost-dark">Let's Connect <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
+        <a href="contact.html" class="btn btn-ghost-dark">Contact Us <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
       </div>
     </div>
   </div>
@@ -1374,12 +1374,12 @@ ul{margin:0;padding:0;list-style:none;}
 <section class="hero-stats">
   <div class="w">
     <div class="hero-band">
-      <!-- 2,700+ indirect exports and 9 export markets are on the unverified-claims list --
+      <!-- 2,700+ radiators for export projects (indirect exports) and 9 export markets are on the unverified-claims list --
            confirm with the client before publishing. 2012 and 765kV are already verified
            elsewhere on the page (Milestones, Credential). -->
       <div class="hero-facts">
-        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="2012" data-comma="1">0</span></div><div class="hero-fact-label">Year Founded</div></div>
-        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="2700" data-comma="1">0</span><span class="hero-fact-suffix hero-fact-suffix-plus hero-fact-suffix-end">+</span></div><div class="hero-fact-label">Indirect Exports</div></div>
+        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="2012">0</span></div><div class="hero-fact-label">Year Founded</div></div>
+        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="2700" data-comma="1">0</span><span class="hero-fact-suffix hero-fact-suffix-plus hero-fact-suffix-end">+</span></div><div class="hero-fact-label">Radiators for Export Projects</div></div>
         <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="765">0</span><span class="hero-fact-suffix hero-fact-suffix-gold">kV</span></div><div class="hero-fact-label">Highest Rating</div></div>
         <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="9">0</span></div><div class="hero-fact-label">Export Markets</div></div>
       </div>
@@ -1792,17 +1792,17 @@ ul{margin:0;padding:0;list-style:none;}
             <textarea id="f-req" name="requirement" placeholder="Radiator type, kV class, quantity, delivery location"></textarea>
           </div>
           <div class="ctb-field ctb-field-full">
-            <label for="f-file">Drawing or spec sheet</label>
+            <label for="f-file">Upload Drawing or Spec Sheet</label>
             <div class="ctb-drop" id="ctbDrop">
-              <input id="f-file" name="file" type="file" accept=".pdf,.dwg,.dxf,.png,.jpg" aria-describedby="f-file-hint f-file-err">
-              <span class="ctb-drop-text" id="ctbDropText">Attach a PDF or DWG, up to 10 MB</span>
+              <input id="f-file" name="file" type="file" accept=".pdf,.dwg,.dxf,.jpg,.jpeg,.png" aria-describedby="f-file-hint f-file-err">
+              <span class="ctb-drop-text" id="ctbDropText">Choose a file to upload</span>
               <button type="button" class="ctb-drop-remove" id="ctbDropRemove" hidden aria-label="Remove attached file">&times;</button>
             </div>
-            <span class="ctb-hint" id="f-file-hint">PDF, DWG, DXF, PNG or JPG. 10 MB max.</span>
+            <span class="ctb-hint" id="f-file-hint">PDF, DWG, DXF, JPG or PNG. 4 MB max.</span>
             <span class="ctb-err" id="f-file-err" role="alert"></span>
           </div>
           <div class="ctb-foot">
-            <button type="submit" class="ctb-submit">Send enquiry <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></button>
+            <button type="submit" class="ctb-submit">Send Enquiry <span class="ar-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span></button>
             <p class="ctb-note">We reply to drawings within two working days.</p>
           </div>
         </div>
@@ -2250,8 +2250,8 @@ if (reduced) {
   var dropRemove = document.getElementById('ctbDropRemove');
   var fileErr = document.getElementById('f-file-err');
 
-  var ALLOWED_EXT = ['pdf', 'dwg', 'dxf', 'png', 'jpg'];
-  var MAX_BYTES = 10 * 1024 * 1024;
+  var ALLOWED_EXT = ['pdf', 'dwg', 'dxf', 'jpg', 'jpeg', 'png'];
+  var MAX_BYTES = 4 * 1024 * 1024;
   var DEFAULT_DROP_TEXT = dropText ? dropText.textContent : '';
 
   function extOf(name){
@@ -2277,12 +2277,12 @@ if (reduced) {
       if (!file) { clearFile(); return; }
       var ext = extOf(file.name);
       if (ALLOWED_EXT.indexOf(ext) === -1) {
-        setFieldError(fileInput, fileErr, 'Use a PDF, DWG, DXF, PNG or JPG file.');
+        setFieldError(fileInput, fileErr, 'Use a PDF, DWG, DXF, JPG or PNG file.');
         clearFile(true);
         return;
       }
       if (file.size > MAX_BYTES) {
-        setFieldError(fileInput, fileErr, 'That file is over 10 MB, please attach a smaller one.');
+        setFieldError(fileInput, fileErr, 'That file is over 4 MB, please attach a smaller one.');
         clearFile(true);
         return;
       }

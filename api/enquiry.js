@@ -30,13 +30,20 @@ const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB per file — Vercel's Node functio
                                         // 4.5MB total, so this leaves headroom
                                         // for two files + form fields.
 const MAX_FIELD_SIZE = 5000;
-const ALLOWED_EXT = ['.pdf', '.dwg', '.jpg', '.jpeg', '.png'];
+const ALLOWED_EXT = ['.pdf', '.dwg', '.dxf', '.jpg', '.jpeg', '.png'];
 
+// Kept deliberately short — the first enquiry only needs who is asking plus the
+// kV class and quantity. Must match the starred fields in contact.html.
 const REQUIRED_FIELDS = [
+  'firstName', 'lastName', 'companyName', 'workEmail', 'transformerRating', 'quantity',
+];
+
+// Every text field the form can send, in the order it appears in the email.
+const FIELD_ORDER = [
   'firstName', 'lastName', 'companyName', 'jobTitle', 'workEmail', 'phone',
-  'organization', 'radiatorInterest', 'radiatorSize', 'radiatorWidth',
-  'numElements', 'paintScheme', 'transformerRating', 'quantity',
-  'deliveryTimeline', 'deliveryLocation',
+  'organization', 'transformerRating', 'quantity', 'radiatorInterest',
+  'radiatorSize', 'radiatorWidth', 'numElements', 'paintScheme',
+  'deliveryTimeline', 'deliveryLocation', 'remarks',
 ];
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -139,7 +146,7 @@ async function sendEnquiryEmail(fields, files) {
     auth: { user: SMTP_USER, pass: SMTP_PASS },
   });
 
-  const rows = REQUIRED_FIELDS.concat(['remarks'])
+  const rows = FIELD_ORDER
     .filter((k) => fields[k])
     .map((k) => [k, fields[k]]);
   const additionalInterest = fields.additionalInterest
@@ -242,7 +249,7 @@ module.exports = async (req, res) => {
     return fail(res, 413, 'FILE_TOO_LARGE', 'One of the uploaded files exceeds the 4MB limit.');
   }
   if (invalidFileType) {
-    return fail(res, 400, 'INVALID_FILE_TYPE', 'Uploaded files must be PDF, DWG, JPG or PNG.');
+    return fail(res, 400, 'INVALID_FILE_TYPE', 'Uploaded files must be PDF, DWG, DXF, JPG or PNG.');
   }
 
   const missing = REQUIRED_FIELDS.filter((k) => !fields[k] || !String(fields[k]).trim());

@@ -662,6 +662,10 @@ button { font:inherit; }
 }
 
 .fc{display:grid;gap:14px}
+/* photo wrapper: invisible on desktop (tiles sit straight in the .fc grid);
+   on mobile it becomes a swipe row so every photo set on this page — Happy
+   Moments included — is a carousel, not a mix of carousel and stacked tiles */
+.fc-photos{display:contents}
 /* Life @ Triveni text cards — one consistent editorial style for all */
 .fc .txt{background:#E7E1D6;border-radius:16px;padding:40px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
 .fc .txt>*{position:relative;z-index:1}
@@ -700,10 +704,12 @@ button { font:inherit; }
  .hm-card.peek1{transform:translate(4%,3%) rotate(3deg) scale(.94)}
  .hm-card.peek2{transform:translate(7%,6%) rotate(5.5deg) scale(.88)}
  .hm-deco{width:70%}
- .fc{grid-template-columns:1fr 1fr!important;grid-template-rows:auto!important}
- .fc .txt{grid-column:1/-1!important;grid-row:1!important;padding:24px}
- .fc .a{grid-column:1/-1!important;grid-row:auto!important;height:240px}
- .fc .ph:not(.a){grid-column:auto!important;grid-row:auto!important;height:150px}
+ .fc{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto!important}
+ .fc .txt{grid-column:1!important;grid-row:1!important;padding:24px}
+ .fc-photos{display:flex;grid-column:1;grid-row:2;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+   -webkit-overflow-scrolling:touch;scrollbar-width:none;min-width:0}
+ .fc-photos::-webkit-scrollbar{display:none}
+ .fc-photos .ph{flex:0 0 84%;height:230px;scroll-snap-align:start}
 }
 @media(prefers-reduced-motion:reduce){.ph::after{transition:none}}
 
@@ -754,7 +760,7 @@ button { font:inherit; }
       </h1>
       <p class="cr-hero-sub">We hire for integrity first. If you want to build products the entire Indian transformer industry depends on, we'd like to hear from you.</p>
       <div class="cr-hero-ctas">
-        <a href="#profile" class="btn btn-primary">Submit your profile <span>&rarr;</span></a>
+        <a href="#profile" class="btn btn-primary">Submit Your Profile <span>&rarr;</span></a>
         <a href="#life-at-triveni" class="btn btn-ghost-dark">Life @ Triveni <span>&darr;</span></a>
       </div>
     </div>
@@ -951,7 +957,7 @@ button { font:inherit; }
         <div class="cr-eyebrow">Talent First</div>
         <h2 class="cr-h2">Sometimes the right person arrives before <span class="hi">the right role.</span></h2>
         <p class="cr-lead" style="margin-top:1.2rem;">We don't want to lose good people simply because there isn't a vacancy today. Share your profile with us, and we'll keep it on file for future opportunities at Triveni.</p>
-        <a href="#profile" class="btn btn-primary">Enter the Talent Pool <span>&rarr;</span></a>
+        <a href="#profile" class="btn btn-primary">Submit Your Profile <span>&rarr;</span></a>
       </div>
       <div class="cr-talent-media reveal reveal-d1">
         <div class="cr-talent-frame">
@@ -1028,7 +1034,7 @@ button { font:inherit; }
           <label for="crConsent">I agree that Triveni Radiators may store my details and CV to consider me for current and future roles, in line with the <a href="privacy.html" style="color:var(--violet);text-decoration:underline;">Privacy Policy</a>.</label>
         </div>
 
-        <button type="submit" class="btn btn-primary cr-fsubmit">Submit Profile <span>&rarr;</span></button>
+        <button type="submit" class="btn btn-primary cr-fsubmit">Submit Your Profile <span>&rarr;</span></button>
       </form>
 
       <div class="cr-form-success" id="profileSuccess">
@@ -1073,7 +1079,7 @@ button { font:inherit; }
     <div class="cr-final-divider" aria-hidden="true"></div>
     <div class="cr-final-right reveal reveal-d1">
       <p class="cr-final-text">Send us your profile, and we'll be in touch when the right opportunity comes along.</p>
-      <a href="#profile" class="cr-final-cta">Submit your profile <span>&rarr;</span></a>
+      <a href="#profile" class="cr-final-cta">Submit Your Profile <span>&rarr;</span></a>
     </div>
   </div>
   <div class="cr-final-meta reveal reveal-d2">Careers<br>Triveni Radiators</div>
@@ -1441,11 +1447,11 @@ if (!reduceMotion) {
     var moreN = n - 3; // last tile "+N more" when more photos than tiles
     var html;
     if(key==='safety'){
-      html = txt + tile(ph[0],0,'a',{}) + tile(ph[1],1,'b',{}) +
-        tile(ph[2],2,'c',{}) + tile(ph[3],3,'d', moreN>0?{more:moreN}:{});
+      html = txt + '<div class="fc-photos">' + tile(ph[0],0,'a',{}) + tile(ph[1],1,'b',{}) +
+        tile(ph[2],2,'c',{}) + tile(ph[3],3,'d', moreN>0?{more:moreN}:{}) + '</div>';
     } else {
-      html = txt + tile(ph[0],0,'a',{}) + tile(ph[1],1,'b',{}) +
-        tile(ph[2],2,'c', moreN>0?{more:moreN}:{});
+      html = txt + '<div class="fc-photos">' + tile(ph[0],0,'a',{}) + tile(ph[1],1,'b',{}) +
+        tile(ph[2],2,'c', moreN>0?{more:moreN}:{}) + '</div>';
     }
     el.innerHTML=html;
     wire(el, ph);

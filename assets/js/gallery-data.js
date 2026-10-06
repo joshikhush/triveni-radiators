@@ -20,6 +20,9 @@
       null if not verified (see below). The filter chips and country pill
       depend on this exact value; null tiles show under "All" only and
       carry no region pill.
+   4b. Optional validation fields "rating" (kV class, e.g. '400 kV') and
+      "year" (project year) show in the tile caption and lightbox as soon
+      as they are filled in. Leave them null until verified.
    5. "orientation" is "landscape" or "portrait", taken from the REAL
       image's own dimensions — it controls tile height in the masonry grid.
 
@@ -213,35 +216,38 @@ var GALLERY_INSTALLATIONS = [
      "SIEMENS energy" nameplate; site 2 has no legible nameplate text in
      frame, so its customer comes from the filename only ("siemens-site-2")
      — still a valid source per the rule above, just weaker than site 1's.
-     No city/country verifiable for either. */
+     No city/country verifiable for either. Both share group:'siemens' so
+     every multi-photo customer renders the same way (one swipeable tile) —
+     the grid no longer mixes carousels with loose stacked tiles. */
   { id: 'siemens-site-1', image: 'assets/gallery/siemens-site-1-web.jpg', thumb: 'assets/gallery/siemens-site-1-thumb.jpg',
     alt: 'Transformer with radiator banks and a Siemens Energy nameplate at an outdoor substation',
     title: 'Triveni radiators in service', location: null, country: null, region: null,
-    customer: 'Siemens Energy', rating: null, credit: 'Siemens Energy', orientation: 'portrait' },
+    customer: 'Siemens Energy', rating: null, credit: 'Siemens Energy', orientation: 'portrait', group: 'siemens' },
 
   { id: 'siemens-site-2', image: 'assets/gallery/siemens-site-2-web.jpg', thumb: 'assets/gallery/siemens-site-2-thumb.jpg',
     alt: 'Transformer with radiator banks at an outdoor substation, under scaffolding',
     title: 'Triveni radiators in service', location: null, country: null, region: null,
-    customer: 'Siemens Energy', rating: null, credit: 'Siemens Energy', orientation: 'portrait' },
+    customer: 'Siemens Energy', rating: null, credit: 'Siemens Energy', orientation: 'portrait', group: 'siemens' },
 
   /* GE — ge-site-1's customer is confirmed from a legible "GE" roundel
      nameplate; ge-site-2 and ge-site-4 (same construction site, wider and
      tighter crops) have no legible nameplate in frame, so their customer
-     comes from the filename only. No city/country verifiable for any. */
+     comes from the filename only. No city/country verifiable for any.
+     group:'ge' — one swipeable tile, same as the other multi-photo sets. */
   { id: 'ge-site-1', image: 'assets/gallery/ge-site-1-web.jpg', thumb: 'assets/gallery/ge-site-1-thumb.jpg',
     alt: 'Transformer with radiator banks and a GE nameplate at an outdoor substation',
     title: 'Triveni radiators in service', location: null, country: null, region: null,
-    customer: 'GE', rating: null, credit: 'GE', orientation: 'landscape' },
+    customer: 'GE', rating: null, credit: 'GE', orientation: 'landscape', group: 'ge' },
 
   { id: 'ge-site-4', image: 'assets/gallery/ge-site-4-web.jpg', thumb: 'assets/gallery/ge-site-4-thumb.jpg',
     alt: 'Two transformers with radiator banks at an outdoor substation under construction',
     title: 'Triveni radiators in service', location: null, country: null, region: null,
-    customer: 'GE', rating: null, credit: 'GE', orientation: 'landscape' },
+    customer: 'GE', rating: null, credit: 'GE', orientation: 'landscape', group: 'ge' },
 
   { id: 'ge-site-2', image: 'assets/gallery/ge-site-2-web.jpg', thumb: 'assets/gallery/ge-site-2-thumb.jpg',
     alt: 'Transformer radiator bank at an outdoor substation under construction',
     title: 'Triveni radiators in service', location: null, country: null, region: null,
-    customer: 'GE', rating: null, credit: 'GE', orientation: 'landscape' },
+    customer: 'GE', rating: null, credit: 'GE', orientation: 'landscape', group: 'ge' },
 
   /* Toshiba — customer from filename only ("Toshiba.HEIC"); no legible
      nameplate text in frame, no city/country verifiable. Used in place of

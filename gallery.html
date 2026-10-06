@@ -415,10 +415,13 @@ function galTileMedia(item, i){
     ? '<img src="' + esc(gridSrc) + '" alt="' + esc(altText) + '"' + (eager ? ' decoding="async"' : ' loading="lazy" decoding="async"') + '>'
     : galPlaceholderHTML();
 }
+/* caption = customer first, then whatever validation detail is verified:
+   location / country · kV class · project year. Null fields simply don't render. */
 function galCaption(item){
-  var subParts = [item.location, item.customer].filter(Boolean);
+  var place = [item.location, item.country].filter(Boolean).join(', ');
+  var subParts = [place, item.rating, item.year].filter(Boolean);
   var sub = subParts.length ? '<span class="gh-caption-sub">' + esc(subParts.join(' · ')) + '</span>' : '';
-  return '<span class="gh-caption"><span class="gh-caption-title">' + esc(item.title) + '</span>' + sub + '</span>';
+  return '<span class="gh-caption"><span class="gh-caption-title">' + esc(item.customer || item.title) + '</span>' + sub + '</span>';
 }
 
 ghGrid.innerHTML = galUnits.map(function(unit){
