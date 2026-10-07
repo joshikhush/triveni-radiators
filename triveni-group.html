@@ -415,6 +415,45 @@ ul{margin:0;padding:0;list-style:none;}
   .tg-journey-head{gap:10px;}
 }
 
+/* ---- phones (<768px): ONE vertical line 20px from the left edge, every milestone
+   stacked full-width beside it in the same order — node on the line · short
+   horizontal connector · year · title · text · image. Nothing scrolls sideways.
+   Lines use explicit px sizes and no transforms so iOS Safari always paints them. ---- */
+@media(max-width:767px){
+  .tg-tl{margin-top:30px;}
+  .tg-tl-fade{display:none;}
+  .tg-tl-viewport{overflow:visible;}
+  .tg-tl-track{display:block;width:auto;height:auto;padding:0 20px 8px 0;}
+  .tg-tl-track::before,.tg-tl.in .tg-tl-track::before{display:block;left:20px;right:auto;top:0;bottom:0;
+    width:2px;height:auto;transform:none;transition:none;}
+
+  .tg-ms{display:block;height:auto;padding:0 0 40px 46px;}
+  /* short horizontal connector: line → card */
+  .tg-ms.upper::before,.tg-ms.lower::before{display:block;left:21px;top:16px;width:17px;height:2px;
+    background:#252525;z-index:1;}
+  /* node on the line */
+  .tg-ms::after,.tg-ms.in::after{display:block;left:21px;top:17px;z-index:2;transform:translate(-50%,-50%);}
+  .tg-ms .tg-ms-body{position:static;width:auto;padding-left:0;border-left:0;}
+  .tg-ms-year{font-size:34px;}
+
+  .tg-ms-img{height:auto;}
+  .tg-ms-img img{width:100%;height:auto;max-width:100%;}
+  .tg-ms-img.tl-logo{height:auto;padding:20px;}
+  .tg-ms-img.tl-logo img{width:auto;max-height:140px;}
+  .tg-ms-img.is-placeholder{min-height:140px;}
+
+  /* chapter marker: the circle becomes a compact badge fully inside the screen */
+  .tg-era{height:auto;padding:0 0 26px 46px;}
+  .tg-era::before{content:'';display:block;position:absolute;left:21px;top:19px;width:13px;height:13px;
+    margin:-6.5px 0 0 -6.5px;border-radius:50%;background:#101827;box-shadow:0 0 0 4px #FAF9F5;}
+  .tg-tl .tg-era-inner,.tg-tl.in .tg-era-inner{position:static;width:auto;height:auto;max-width:100%;
+    display:inline-flex;flex-direction:row;flex-wrap:wrap;align-items:baseline;justify-content:flex-start;
+    gap:3px 9px;padding:10px 15px;border-radius:12px;box-shadow:none;text-align:left;transform:none;}
+  .tg-era-n{font-size:18px;}
+  .tg-era-name{font-size:10px;padding:0;}
+  .tg-era-range{font-size:10px;}
+}
+
 /* ---- READ MORE modal ---- */
 .tg-modal[hidden]{display:none;}
 .tg-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;}
@@ -458,6 +497,7 @@ ul{margin:0;padding:0;list-style:none;}
 @media(max-width:820px){
   .tg-cta-strip{padding:24px 22px;gap:16px;}
   .tg-cta-div{display:none;}
+  .tg-cta-head{flex:1 1 180px;min-width:0;}   /* let the heading wrap instead of pushing past the screen */
 }
 
 /* ==========================================================
