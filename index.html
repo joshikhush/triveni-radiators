@@ -381,15 +381,13 @@ ul{margin:0;padding:0;list-style:none;}
 }
 .hero-fact:hover .hero-fact-val{transform:translateY(-3px);}
 /* colour-coded per figure, not per-number-differently: "+" is the one muted-violet accent,
-   the units (MT, m², kV) are the muted-gold accent, the numerals stay plain ink. Both accents
-   darken slightly on hover, in step with the rest of the micro-interaction. The gold here is
-   a darker step than --color-gold, for this row only: the token is 2.64:1 on --color-bg,
-   these are 3.56:1 and 4.45:1. */
+   "kV" is the one muted-gold accent, "9" and "2012" stay plain ink. Both accents
+   darken slightly on hover, in step with the rest of the micro-interaction. */
 .hero-fact-suffix{transition:color .3s var(--ez);}
 .hero-fact-suffix-plus{color:var(--color-accent);}
 .hero-fact:hover .hero-fact-suffix-plus{color:var(--color-accent-dark);}
-.hero-fact-suffix-gold{color:#A07C45;}
-.hero-fact:hover .hero-fact-suffix-gold{color:#8F6C38;}
+.hero-fact-suffix-gold{color:var(--color-gold);}
+.hero-fact:hover .hero-fact-suffix-gold{color:var(--color-gold-light);}
 .hero-fact-suffix-end{opacity:0;transition:opacity .25s var(--ez);}
 .hero-fact-suffix-end.show{opacity:1;}
 .hero-fact-label{
@@ -430,13 +428,6 @@ ul{margin:0;padding:0;list-style:none;}
 }
 @media(max-width:480px){
   .hero{aspect-ratio:3/4.4;}
-}
-@media(max-width:360px){
-  /* narrowest phones: "7,200 MT" and the two-word labels need a little more room to stay
-     on one line inside the 2x2 grid */
-  .hero-fact{padding:0 14px;}
-  .hero-fact-val{font-size:28px;}
-  .hero-fact-label{font-size:10px;letter-spacing:.08em;}
 }
 
 /* ==========================================================
@@ -1383,12 +1374,14 @@ ul{margin:0;padding:0;list-style:none;}
 <section class="hero-stats">
   <div class="w">
     <div class="hero-band">
-      <!-- Figures match Careers page stats block. Keep both in sync. -->
+      <!-- 2,700+ radiators for export projects (indirect exports) and 9 export markets are on the unverified-claims list --
+           confirm with the client before publishing. 2012 and 765kV are already verified
+           elsewhere on the page (Milestones, Credential). -->
       <div class="hero-facts">
-        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="7200" data-comma="1">0</span><span class="hero-fact-suffix hero-fact-suffix-gold">&nbsp;MT</span></div><div class="hero-fact-label">Annual Capacity</div></div>
-        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="8300" data-comma="1">0</span><span class="hero-fact-suffix hero-fact-suffix-gold">&nbsp;m&sup2;</span></div><div class="hero-fact-label">Works Area</div></div>
+        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="2012">0</span></div><div class="hero-fact-label">Year Founded</div></div>
+        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="2700" data-comma="1">0</span><span class="hero-fact-suffix hero-fact-suffix-plus hero-fact-suffix-end">+</span></div><div class="hero-fact-label">Radiators for Export Projects</div></div>
         <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="765">0</span><span class="hero-fact-suffix hero-fact-suffix-gold">kV</span></div><div class="hero-fact-label">Highest Rating</div></div>
-        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="20">0</span><span class="hero-fact-suffix hero-fact-suffix-plus hero-fact-suffix-end">+</span></div><div class="hero-fact-label">States Supplied</div></div>
+        <div class="hero-fact"><div class="hero-fact-val"><span class="hero-fact-num" data-target="9">0</span></div><div class="hero-fact-label">Export Markets</div></div>
       </div>
     </div>
   </div>
